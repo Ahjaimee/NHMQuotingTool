@@ -1,64 +1,73 @@
-/* Page Background and Font */
+/* Page Setup */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  padding: 20px;
+  padding: 30px 15px;
   color: #27488f;
 }
 
-/* Page Title */
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #27488f;
-}
-
-/* NHM Logo Styling */
+/* Logo Styling */
 .logo-container {
   text-align: center;
   margin-bottom: 10px;
 }
 
 .logo {
-  height: 80px;
+  height: 60px;
+  max-width: 100%;
 }
 
-/* Form and Quote Box */
+/* Page Title */
+h1 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 28px;
+}
+
+/* Form and Estimate Box */
 form, .quote-section {
   background-color: #ffffff;
-  max-width: 600px;
-  margin: 0 auto 20px;
-  padding: 20px;
+  max-width: 480px;
+  margin: 0 auto 25px;
+  padding: 25px 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-left: 6px solid #27488f;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #27488f;
+}
+
+/* Headings */
+h2 {
+  font-size: 18px;
+  margin-top: 0;
+  color: #27488f;
 }
 
 /* Labels and Inputs */
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   font-weight: bold;
 }
 
 input, select {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
   box-sizing: border-box;
 }
 
-/* Quote Display Box */
+/* Estimate Result Box */
 #estimate {
   background-color: #eef7ec;
   padding: 15px;
   border-left: 5px solid #f58020;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
-
 
