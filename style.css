@@ -1,3 +1,4 @@
+/* Body and overall page */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f4f4;
@@ -6,13 +7,15 @@ body {
   color: #333;
 }
 
+/* Page header */
 h1 {
   text-align: center;
   margin-bottom: 30px;
 }
 
+/* Form and quote box */
 form, .quote-section {
-  background-color: #fff;
+  background-color: #ffffff;
   max-width: 600px;
   margin: 0 auto 20px;
   padding: 20px;
@@ -20,26 +23,30 @@ form, .quote-section {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Labels and spacing */
 label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-weight: bold;
 }
 
+/* Inputs and dropdowns */
 input, select {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
+/* Estimate output box */
 #estimate {
-  margin-top: 20px;
-  padding: 15px;
   background-color: #eef7ec;
-  border-left: 4px solid #4CAF50;
+  padding: 15px;
+  border-left: 5px solid #4CAF50;
   border-radius: 8px;
+  font-size: 1rem;
 }
+
