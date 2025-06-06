@@ -63,14 +63,20 @@ input[type="text"], select {
 }
 
 /* === Checkbox Styling === */
-input[type="checkbox"] {
-  margin-right: 8px;
-  transform: scale(1.2);
-  vertical-align: middle;
-  margin-top: 5px;
+label[for="supplyOnly"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
-/* === Estimate Box === */
+input[type="checkbox"] {
+  transform: scale(1.2);
+  margin: 0;
+}
+
+/* === Estimate Result Box === */
 #estimate {
   background-color: #eef7ec;
   padding: 15px;
@@ -79,4 +85,5 @@ input[type="checkbox"] {
   font-size: 0.95rem;
   line-height: 1.5;
 }
+
 
