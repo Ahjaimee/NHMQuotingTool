@@ -9,38 +9,39 @@
 
   <h1>Quote Estimator</h1>
 
-  <!-- Customer Details Section -->
-  <h2>Customer Details</h2>
-  <label for="customerName">
-    Customer Name:
-    <input type="text" id="customerName" />
-  </label>
-  <br>
-  <label for="quoteNumber">
-    Job/Quote Number:
-    <input type="text" id="quoteNumber" />
-  </label>
+  <form>
+    <h2>Customer Details</h2>
 
-  <hr>
+    <label for="customerName">
+      Customer Name:
+      <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
+    </label>
 
-  <!-- Dropdown Menus -->
-  <label for="assetSelect">Asset Type:
-    <select id="assetSelect"></select>
-  </label>
-  <br>
-  <label for="makeSelect">Make/Model:
-    <select id="makeSelect"></select>
-  </label>
-  <br>
-  <label for="repairSelect">Repair Type:
-    <select id="repairSelect"></select>
-  </label>
+    <label for="quoteNumber">
+      Job/Quote Number:
+      <input type="text" id="quoteNumber" placeholder="e.g. Q12345" />
+    </label>
 
-  <!-- Quote Output -->
-  <div id="estimate"></div>
+    <h2>Repair Details</h2>
 
-  <!-- JavaScript -->
+    <label for="assetSelect">Asset Type:
+      <select id="assetSelect"></select>
+    </label>
+
+    <label for="makeSelect">Make/Model:
+      <select id="makeSelect"></select>
+    </label>
+
+    <label for="repairSelect">Repair Type:
+      <select id="repairSelect"></select>
+    </label>
+  </form>
+
+  <div class="quote-section">
+    <div id="estimate"></div>
+  </div>
+
   <script src="script.js"></script>
-
 </body>
 </html>
+
