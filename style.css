@@ -1,19 +1,30 @@
-/* Body and overall page */
+/* Page Background and Font */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
   padding: 20px;
-  color: #333;
+  color: #27488f;
 }
 
-/* Page header */
+/* Page Title */
 h1 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  color: #27488f;
 }
 
-/* Form and quote box */
+/* NHM Logo Styling */
+.logo-container {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.logo {
+  height: 80px;
+}
+
+/* Form and Quote Box */
 form, .quote-section {
   background-color: #ffffff;
   max-width: 600px;
@@ -21,16 +32,16 @@ form, .quote-section {
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid #27488f;
 }
 
-/* Labels and spacing */
+/* Labels and Inputs */
 label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-/* Inputs and dropdowns */
 input, select {
   width: 100%;
   padding: 10px;
@@ -41,12 +52,13 @@ input, select {
   box-sizing: border-box;
 }
 
-/* Estimate output box */
+/* Quote Display Box */
 #estimate {
   background-color: #eef7ec;
   padding: 15px;
-  border-left: 5px solid #4CAF50;
+  border-left: 5px solid #f58020;
   border-radius: 8px;
   font-size: 1rem;
 }
+
 
