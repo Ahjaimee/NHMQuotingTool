@@ -1,4 +1,4 @@
-// Sample data (update as needed)
+// Sample data (expand as needed)
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
@@ -16,13 +16,13 @@ const data = {
   }
 };
 
-// Populate dropdowns
+// Populate dropdowns on page load
 document.addEventListener("DOMContentLoaded", () => {
   const assetSelect = document.getElementById('assetSelect');
   const makeSelect = document.getElementById('makeSelect');
   const repairSelect = document.getElementById('repairSelect');
 
-  // Populate asset types
+  // Load Asset Types
   for (let asset in data) {
     const option = document.createElement('option');
     option.value = asset;
@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     assetSelect.appendChild(option);
   }
 
+  // Load Makes
   assetSelect.addEventListener('change', () => {
     makeSelect.innerHTML = '<option value="">-- Select Make --</option>';
     repairSelect.innerHTML = '<option value="">-- Select Repair --</option>';
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Load Repairs
   makeSelect.addEventListener('change', () => {
     repairSelect.innerHTML = '<option value="">-- Select Repair --</option>';
     const selectedAsset = assetSelect.value;
@@ -60,12 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Update estimate on repair or checkbox change
+  // Update estimate on change
   repairSelect.addEventListener('change', showEstimate);
   document.getElementById('supplyOnly').addEventListener('change', showEstimate);
 });
 
-// Estimate logic
+// Generate Estimate
 function showEstimate() {
   const asset = document.getElementById('assetSelect').value;
   const make = document.getElementById('makeSelect').value;
@@ -81,6 +83,7 @@ function showEstimate() {
   const info = data[asset][make][repair];
   const labourRate = 45;
   const labourCost = supplyOnly ? 0 : info.labour_hours * labourRate;
+  const labourDisplay = supplyOnly ? "N/A (Supply Only)" : `£${labourCost.toFixed(2)}`;
   const total = labourCost + info.material_cost;
 
   estimateDiv.innerHTML = `
@@ -90,9 +93,10 @@ function showEstimate() {
     <p><strong>Asset:</strong> ${asset}</p>
     <p><strong>Make:</strong> ${make}</p>
     <p><strong>Repair:</strong> ${repair} (Part #${info.part_number})</p>
-    <p>Labour: £${labourCost.toFixed(2)} ${supplyOnly ? "(Supply Only)" : ""}</p>
+    <p>Labour: ${labourDisplay}</p>
     <p>Materials: £${info.material_cost.toFixed(2)}</p>
     <p><strong>Total: £${total.toFixed(2)}</strong></p>
   `;
 }
+
 
