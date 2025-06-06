@@ -96,4 +96,3 @@ function showEstimate() {
     <p><strong>Total: £${total.toFixed(2)}</strong></p>
   `;
 }
-
