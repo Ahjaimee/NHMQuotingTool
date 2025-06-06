@@ -1,3 +1,70 @@
+// ✅ Quote Data (hardcoded here so we don’t rely on data.json)
+const data = {
+  "Mobile Hoist": {
+    "Oxford Midi 180": {
+      "Replacement Battery": {
+        "part_number": "BATT-M180",
+        "labour_hours": 1,
+        "material_cost": 60
+      }
+    }
+  }
+};
+
+// ✅ Run when the page loads
+window.onload = loadAssets;
+
+function loadAssets() {
+  const assetSelect = document.getElementById('assetSelect');
+  assetSelect.innerHTML = '<option value="">-- Select Asset --</option>';
+  Object.keys(data).forEach(asset => {
+    const option = document.createElement('option');
+    option.value = asset;
+    option.textContent = asset;
+    assetSelect.appendChild(option);
+  });
+
+  assetSelect.onchange = loadMakes;
+}
+
+function loadMakes() {
+  const asset = document.getElementById('assetSelect').value;
+  const makeSelect = document.getElementById('makeSelect');
+  makeSelect.innerHTML = '<option value="">-- Select Make/Model --</option>';
+  document.getElementById('repairSelect').innerHTML = '';
+  document.getElementById('estimate').innerHTML = '';
+
+  if (!asset) return;
+
+  Object.keys(data[asset]).forEach(make => {
+    const option = document.createElement('option');
+    option.value = make;
+    option.textContent = make;
+    makeSelect.appendChild(option);
+  });
+
+  makeSelect.onchange = loadRepairs;
+}
+
+function loadRepairs() {
+  const asset = document.getElementById('assetSelect').value;
+  const make = document.getElementById('makeSelect').value;
+  const repairSelect = document.getElementById('repairSelect');
+  repairSelect.innerHTML = '<option value="">-- Select Repair --</option>';
+  document.getElementById('estimate').innerHTML = '';
+
+  if (!make) return;
+
+  Object.entries(data[asset][make]).forEach(([repair, info]) => {
+    const option = document.createElement('option');
+    option.value = repair;
+    option.textContent = `${repair} (Part #${info.part_number})`;
+    repairSelect.appendChild(option);
+  });
+
+  repairSelect.onchange = showEstimate;
+}
+
 function showEstimate() {
   const asset = document.getElementById('assetSelect').value;
   const make = document.getElementById('makeSelect').value;
