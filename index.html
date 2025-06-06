@@ -1,13 +1,20 @@
-<h2>Customer Details</h2>
+<body>
+  <h1>Quote Estimator</h1>
 
-<label>
-  Customer Name:
-  <input type="text" id="customerName" />
-</label>
+  <!-- ✅ Paste customer section here -->
+  <h2>Customer Details</h2>
+  <label for="customerName">
+    Customer Name:
+    <input type="text" id="customerName" />
+  </label>
+  <label for="quoteNumber">
+    Job/Quote Number:
+    <input type="text" id="quoteNumber" />
+  </label>
+  <hr>
 
-<label>
-  Job/Quote Number:
-  <input type="text" id="quoteNumber" />
-</label>
-
-<hr>
+  <!-- Then your dropdowns follow -->
+  <label>Asset Type:
+    <select id="assetSelect"></select>
+  </label>
+  ...
