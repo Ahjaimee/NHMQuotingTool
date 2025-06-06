@@ -1,4 +1,3 @@
-// ✅ Quote Data (hardcoded here so we don’t rely on data.json)
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
@@ -6,12 +5,16 @@ const data = {
         "part_number": "BATT-M180",
         "labour_hours": 1,
         "material_cost": 60
+      },
+      "Replace Castor": {
+        "part_number": "CASTOR-M180",
+        "labour_hours": 0.5,
+        "material_cost": 20
       }
     }
   }
 };
 
-// ✅ Run when the page loads
 window.onload = loadAssets;
 
 function loadAssets() {
@@ -77,7 +80,7 @@ function showEstimate() {
   if (!repair) return;
 
   const info = data[asset][make][repair];
-  const labourRate = 45; // £ per hour
+  const labourRate = 45;
   const labourCost = info.labour_hours * labourRate;
   const total = labourCost + info.material_cost;
 
@@ -93,3 +96,4 @@ function showEstimate() {
     <p><strong>Total: £${total.toFixed(2)}</strong></p>
   `;
 }
+
