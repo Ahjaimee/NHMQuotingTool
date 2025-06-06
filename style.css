@@ -14,7 +14,7 @@ body {
 }
 
 .logo {
-  height: 40px;
+  height: 60px;
   max-width: 100%;
 }
 
@@ -52,7 +52,7 @@ label {
   font-weight: bold;
 }
 
-input, select {
+input[type="text"], select {
   width: 100%;
   padding: 10px;
   margin-bottom: 18px;
@@ -60,6 +60,10 @@ input, select {
   border: 1px solid #ccc;
   font-size: 1rem;
   box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
 }
 
 /* Estimate Result Box */
