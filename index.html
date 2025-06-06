@@ -1,20 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quote Estimator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
+
   <h1>Quote Estimator</h1>
 
-  <!-- ✅ Paste customer section here -->
+  <!-- Customer Details Section -->
   <h2>Customer Details</h2>
   <label for="customerName">
     Customer Name:
     <input type="text" id="customerName" />
   </label>
+  <br>
   <label for="quoteNumber">
     Job/Quote Number:
     <input type="text" id="quoteNumber" />
   </label>
+
   <hr>
 
-  <!-- Then your dropdowns follow -->
-  <label>Asset Type:
+  <!-- Dropdown Menus -->
+  <label for="assetSelect">Asset Type:
     <select id="assetSelect"></select>
   </label>
-  ...
+  <br>
+  <label for="makeSelect">Make/Model:
+    <select id="makeSelect"></select>
+  </label>
+  <br>
+  <label for="repairSelect">Repair Type:
+    <select id="repairSelect"></select>
+  </label>
+
+  <!-- Quote Output -->
+  <div id="estimate"></div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
