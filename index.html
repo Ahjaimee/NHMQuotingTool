@@ -17,6 +17,7 @@
 
   <form id="quoteForm">
     <h2>Customer Details</h2>
+
     <label for="customerName">
       Customer Name:
       <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
@@ -28,6 +29,7 @@
     </label>
 
     <h2>Repair Details</h2>
+
     <label for="assetSelect">Asset Type:</label>
     <select id="assetSelect"></select>
 
@@ -62,9 +64,12 @@
     <button id="downloadPDF" style="display: none;">Download PDF</button>
   </section>
 
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
