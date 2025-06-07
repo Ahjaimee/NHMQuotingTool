@@ -34,22 +34,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
-
     if (!asset || !make || !repair) return;
 
     quoteItems.push({ asset, make, repair });
 
+    renderQuote();
     document.getElementById("quoteSection").style.display = "block";
     document.getElementById("downloadPDF").style.display = "block";
 
-    renderQuote();
     resetRepairFields();
   });
 
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
 
-  document.getElementById("downloadPDF").addEventListener("click", generatePDF);
+  document.getElementById("downloadPDF").addEventListener("click", downloadCustomPDF);
 });
 
 function populateAssets() {
@@ -111,9 +110,7 @@ function renderQuote() {
   let subtotal = 0;
 
   quoteItems.forEach((item, i) => {
-    const info = data?.[item.asset]?.[item.make]?.[item.repair];
-    if (!info) return;
-
+    const info = data[item.asset][item.make][item.repair];
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
     const lineTotal = labour + info.material_cost + carriage;
@@ -152,57 +149,63 @@ function removeItem(index) {
   }
 }
 
-function generatePDF() {
-  const { jsPDF } = window.jspdf;
+function downloadCustomPDF() {
   const doc = new jsPDF();
-
-  const customerName = document.getElementById("customerName").value || "Customer";
-  const quoteNumber = document.getElementById("quoteNumber").value || "Quote";
+  const customer = document.getElementById("customerName").value || "Customer";
+  const quoteNo = document.getElementById("quoteNumber").value || "Quote";
   const supplyOnly = document.getElementById("supplyOnly").checked;
   const vatExempt = document.getElementById("vatExempt").checked;
 
-  const dateStr = new Date().toLocaleDateString();
+  let y = 20;
 
-  // Header
   doc.setFontSize(18);
-  doc.text("NHM Repair Quote", 105, 20, null, null, "center");
-  doc.setFontSize(12);
-  doc.text(`Customer: ${customerName}`, 14, 30);
-  doc.text(`Quote #: ${quoteNumber}`, 14, 37);
-  doc.text(`Date: ${dateStr}`, 14, 44);
+  doc.text("NHM Repair Quote", 105, y, null, null, 'center');
 
-  // Table
-  const body = quoteItems.map(item => {
+  y += 10;
+  doc.setFontSize(12);
+  doc.text(`Customer: ${customer}`, 20, y);
+  doc.text(`Quote #: ${quoteNo}`, 150, y);
+  y += 8;
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, y);
+
+  y += 10;
+  doc.autoTable({
+    startY: y,
+    head: [["Description", "Part #", "Labour", "Materials", "Carriage", "Line Total"]],
+    body: quoteItems.map(item => {
+      const info = data[item.asset][item.make][item.repair];
+      const labour = supplyOnly ? 0 : info.labour_hours * 45;
+      const carriage = supplyOnly ? 15.95 : 0;
+      const lineTotal = labour + info.material_cost + carriage;
+      return [
+        `${item.asset} → ${item.make} → ${item.repair}`,
+        info.part_number,
+        supplyOnly ? "N/A" : `£${labour.toFixed(2)}`,
+        `£${info.material_cost.toFixed(2)}`,
+        supplyOnly ? `£${carriage.toFixed(2)}` : "-",
+        `£${lineTotal.toFixed(2)}`
+      ];
+    }),
+    styles: { fontSize: 10 },
+    theme: 'striped',
+  });
+
+  const subtotal = quoteItems.reduce((sum, item) => {
     const info = data[item.asset][item.make][item.repair];
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
-    const lineTotal = labour + info.material_cost + carriage;
-
-    return [
-      `${item.asset} → ${item.make} → ${item.repair}`,
-      info.part_number,
-      supplyOnly ? "-" : `£${labour.toFixed(2)}`,
-      `£${info.material_cost.toFixed(2)}`,
-      supplyOnly ? `£${carriage.toFixed(2)}` : "-",
-      `£${lineTotal.toFixed(2)}`
-    ];
-  });
-
-  const subtotal = body.reduce((acc, row) => acc + parseFloat(row[5].replace("£", "")), 0);
+    return sum + labour + info.material_cost + carriage;
+  }, 0);
   const vat = vatExempt ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
 
-  doc.autoTable({
-    startY: 55,
-    head: [["Description", "Part #", "Labour", "Materials", "Carriage", "Line Total"]],
-    body
-  });
-
-  // Summary
-  let finalY = doc.lastAutoTable.finalY + 10;
-  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 14, finalY);
-  doc.text(`VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}`, 14, finalY + 7);
-  doc.text(`Total: £${total.toFixed(2)}`, 14, finalY + 14);
+  y = doc.autoTable.previous.finalY + 10;
+  doc.setFontSize(12);
+  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 20, y);
+  y += 6;
+  doc.text(`VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}`, 20, y);
+  y += 6;
+  doc.text(`Total: £${total.toFixed(2)}`, 20, y);
 
   doc.save("NHM_Quote.pdf");
 }
