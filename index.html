@@ -5,17 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quote Estimator</title>
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- ✅ Choices.js styles for searchable dropdowns -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
 
-  <!-- Logo and Title -->
+  <!-- Logo -->
   <div class="logo-container">
     <img src="nhm-logo.png" alt="NHM Logo" class="logo" />
   </div>
 
   <h1>Quote Estimator</h1>
 
-  <!-- Quote Input Form -->
+  <!-- Form -->
   <form>
     <h2>Customer Details</h2>
 
@@ -54,28 +57,40 @@
     <button id="downloadPDF" type="button">Download Quote as PDF</button>
   </div>
 
-  <!-- Scripts -->
+  <!-- Main Script -->
   <script src="script.js"></script>
+
+  <!-- ✅ PDF Generator -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <!-- ✅ Choices.js for searchable dropdowns -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script>
-    document.getElementById("downloadPDF").addEventListener("click", () => {
-      const quote = document.getElementById("estimate");
-      if (quote.innerText.trim() === "") {
-        alert("Please select a repair and generate a quote before downloading.");
-        return;
-      }
+    document.addEventListener('DOMContentLoaded', () => {
+      new Choices('#assetSelect', { searchEnabled: true, itemSelectText: '' });
+      new Choices('#makeSelect', { searchEnabled: true, itemSelectText: '' });
+      new Choices('#repairSelect', { searchEnabled: true, itemSelectText: '' });
 
-      const opt = {
-        margin: 0.5,
-        filename: 'NHM_Quote.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
+      document.getElementById("downloadPDF").addEventListener("click", () => {
+        const quote = document.getElementById("estimate");
+        if (quote.innerText.trim() === "") {
+          alert("Please select a repair and generate a quote before downloading.");
+          return;
+        }
 
-      html2pdf().set(opt).from(quote).save();
+        const opt = {
+          margin: 0.5,
+          filename: 'NHM_Quote.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(quote).save();
+      });
     });
   </script>
 </body>
 </html>
+
 
