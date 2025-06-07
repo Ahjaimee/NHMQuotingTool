@@ -10,7 +10,7 @@ const data = {
 let quoteItems = [];
 let assetChoices, makeChoices, repairChoices;
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
   assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
   makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
   repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
@@ -19,30 +19,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
-    document.getElementById("makeSection").style.display = "block";
+    document.getElementById("makeSection").classList.remove("hidden");
   });
 
   document.getElementById("makeSelect").addEventListener("change", () => {
     populateRepairs();
-    document.getElementById("repairSection").style.display = "block";
+    document.getElementById("repairSection").classList.remove("hidden");
   });
 
   document.getElementById("addItem").addEventListener("click", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
+
     if (!asset || !make || !repair) return;
 
     quoteItems.push({ asset, make, repair });
     renderQuote();
-    document.getElementById("quoteSection").style.display = "block";
-
-    resetRepairFields();
+    document.getElementById("quoteSection").classList.remove("hidden");
   });
 
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
-
   document.getElementById("downloadPDF").addEventListener("click", generatePDF);
 });
 
@@ -71,12 +69,6 @@ function populateRepairs() {
   repairChoices.destroy();
   select.innerHTML = `<option disabled selected>Select Repair</option>` + repairs.map(r => `<option value="${r}">${r}</option>`).join("");
   repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
-}
-
-function resetRepairFields() {
-  populateAssets();
-  document.getElementById("makeSection").style.display = "none";
-  document.getElementById("repairSection").style.display = "none";
 }
 
 function renderQuote() {
@@ -118,6 +110,8 @@ function renderQuote() {
     <p><strong>VAT (${vatExempt ? "Exempt" : "20%"}):</strong> £${vat.toFixed(2)}</p>
     <p><strong>Total:</strong> £${total.toFixed(2)}</p>
   `;
+
+  document.getElementById("downloadPDF").style.display = quoteItems.length > 0 ? "block" : "none";
 }
 
 function removeItem(index) {
@@ -129,8 +123,8 @@ async function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  const logo = await fetch("nhm-logo.png").then(r => r.blob()).then(blob => {
-    return new Promise((resolve) => {
+  const logo = await fetch("nhm-logo.png").then(res => res.blob()).then(blob => {
+    return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
       reader.readAsDataURL(blob);
@@ -138,12 +132,15 @@ async function generatePDF() {
   });
 
   doc.addImage(logo, 'PNG', 15, 10, 40, 15);
-  doc.setFontSize(18);
-  doc.text("Quotation", 105, 20, { align: "center" });
+  doc.setFontSize(16);
+  doc.text("Quotation", 105, 20, { align: 'center' });
+  doc.setFontSize(10);
 
-  const date = new Date().toLocaleDateString();
-  doc.setFontSize(12);
-  doc.text(`Date: ${date}`, 15, 30);
+  const name = document.getElementById("customerName").value || "(No name)";
+  const number = document.getElementById("quoteNumber").value || "(No #)";
+  doc.text(`Quote #: ${number}`, 15, 30);
+  doc.text(`Customer: ${name}`, 15, 36);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, 42);
 
   const rows = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
@@ -155,19 +152,27 @@ async function generatePDF() {
       `${item.asset} - ${item.make}`,
       item.repair,
       info.part_number,
-      labour.toFixed(2),
-      info.material_cost.toFixed(2),
-      carriage.toFixed(2),
-      total.toFixed(2)
+      `£${labour.toFixed(2)}`,
+      `£${info.material_cost.toFixed(2)}`,
+      `£${carriage.toFixed(2)}`,
+      `£${total.toFixed(2)}`
     ];
   });
 
   doc.autoTable({
+    startY: 50,
     head: [["Asset", "Repair", "Part#", "Labour", "Materials", "Carriage", "Total"]],
-    body: rows,
-    startY: 40,
-    styles: { fontSize: 10 }
+    body: rows
   });
+
+  const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[6].replace("£", "")), 0);
+  const vat = document.getElementById("vatExempt").checked ? 0 : subtotal * 0.2;
+  const total = subtotal + vat;
+
+  const finalY = doc.lastAutoTable.finalY || 70;
+  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 15, finalY + 10);
+  doc.text(`VAT (${document.getElementById("vatExempt").checked ? "Exempt" : "20%"}): £${vat.toFixed(2)}`, 15, finalY + 16);
+  doc.text(`Total: £${total.toFixed(2)}`, 15, finalY + 22);
 
   doc.save("NHM_Quote.pdf");
 }
