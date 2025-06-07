@@ -15,49 +15,48 @@ const data = {
   }
 };
 
+let assetChoices, makeChoices, repairChoices;
+
 document.addEventListener("DOMContentLoaded", () => {
-  const assetSelect = document.getElementById('assetSelect');
-  const makeSelect = document.getElementById('makeSelect');
-  const repairSelect = document.getElementById('repairSelect');
+  // Setup searchable dropdowns
+  assetChoices = new Choices('#assetSelect', { searchEnabled: true, itemSelectText: '' });
+  makeChoices = new Choices('#makeSelect', { searchEnabled: true, itemSelectText: '' });
+  repairChoices = new Choices('#repairSelect', { searchEnabled: true, itemSelectText: '' });
 
-  for (let asset in data) {
-    const option = document.createElement('option');
-    option.value = asset;
-    option.textContent = asset;
-    assetSelect.appendChild(option);
-  }
+  // Populate asset dropdown
+  const assetOptions = Object.keys(data).map(asset => ({
+    value: asset,
+    label: asset
+  }));
+  assetChoices.setChoices(assetOptions, 'value', 'label', true);
 
-  assetSelect.addEventListener('change', () => {
-    makeSelect.innerHTML = '<option value="">-- Select Make --</option>';
-    repairSelect.innerHTML = '<option value="">-- Select Repair --</option>';
-    const selectedAsset = assetSelect.value;
-
+  document.getElementById('assetSelect').addEventListener('change', () => {
+    const selectedAsset = document.getElementById('assetSelect').value;
     if (data[selectedAsset]) {
-      for (let make in data[selectedAsset]) {
-        const option = document.createElement('option');
-        option.value = make;
-        option.textContent = make;
-        makeSelect.appendChild(option);
-      }
+      const makes = Object.keys(data[selectedAsset]).map(make => ({
+        value: make,
+        label: make
+      }));
+      makeChoices.clearChoices();
+      makeChoices.setChoices(makes, 'value', 'label', true);
+      repairChoices.clearChoices();
     }
   });
 
-  makeSelect.addEventListener('change', () => {
-    repairSelect.innerHTML = '<option value="">-- Select Repair --</option>';
-    const selectedAsset = assetSelect.value;
-    const selectedMake = makeSelect.value;
-
+  document.getElementById('makeSelect').addEventListener('change', () => {
+    const selectedAsset = document.getElementById('assetSelect').value;
+    const selectedMake = document.getElementById('makeSelect').value;
     if (data[selectedAsset] && data[selectedAsset][selectedMake]) {
-      for (let repair in data[selectedAsset][selectedMake]) {
-        const option = document.createElement('option');
-        option.value = repair;
-        option.textContent = repair;
-        repairSelect.appendChild(option);
-      }
+      const repairs = Object.keys(data[selectedAsset][selectedMake]).map(repair => ({
+        value: repair,
+        label: repair
+      }));
+      repairChoices.clearChoices();
+      repairChoices.setChoices(repairs, 'value', 'label', true);
     }
   });
 
-  repairSelect.addEventListener('change', showEstimate);
+  document.getElementById('repairSelect').addEventListener('change', showEstimate);
   document.getElementById('supplyOnly').addEventListener('change', showEstimate);
 });
 
