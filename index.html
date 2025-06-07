@@ -5,21 +5,23 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- Your styles -->
+  <!-- your CSS -->
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- Choices.js CSS -->
+  <!-- Choices.js for searchable selects -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
   />
 </head>
 <body>
+  <!-- Logo + Title -->
   <div class="logo-container">
     <img src="nhm-logo.png" alt="NHM Logo" class="logo"/>
   </div>
   <h1>Quote Estimator</h1>
 
+  <!-- Quoting Form -->
   <form id="quoteForm">
     <h2>Customer Details</h2>
     <div class="form-group">
@@ -36,28 +38,29 @@
       <label for="assetSelect">Asset Type</label>
       <select id="assetSelect"></select>
     </div>
-    <div id="makeSection" class="form-group nested" hidden>
+    <div class="form-group nested" id="makeSection" hidden>
       <label for="makeSelect">Make/Model</label>
       <select id="makeSelect"></select>
     </div>
-    <div id="repairSection" class="form-group nested" hidden>
+    <div class="form-group nested" id="repairSection" hidden>
       <label for="repairSelect">Repair Type</label>
       <select id="repairSelect"></select>
     </div>
-    <div id="optionsSection" class="nested" hidden>
-      <label class="checkbox-label">
+    <div class="form-group nested" id="optionsSection" hidden>
+      <div class="checkbox-group">
         <input type="checkbox" id="supplyOnly"/>
-        Supply Only (no labour)
-      </label>
-      <label class="checkbox-label">
+        <label for="supplyOnly">Supply Only (no labour)</label>
+      </div>
+      <div class="checkbox-group">
         <input type="checkbox" id="vatExempt"/>
-        VAT Exempt
-      </label>
+        <label for="vatExempt">VAT Exempt</label>
+      </div>
     </div>
 
     <button type="button" id="addItem" class="btn-primary">+ Add Item</button>
   </form>
 
+  <!-- Quote Preview + PDF -->
   <section id="quoteSection" class="quote-section" hidden>
     <div id="pdfContent">
       <header class="quote-header">
@@ -105,7 +108,6 @@
         </tfoot>
       </table>
     </div>
-
     <button id="downloadPDF" class="btn-primary">Download PDF</button>
   </section>
 
@@ -118,7 +120,7 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
     defer
   ></script>
-  <!-- Your script -->
+  <!-- your JS -->
   <script src="script.js" defer></script>
 </body>
 </html>
