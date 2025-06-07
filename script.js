@@ -32,38 +32,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const makeSelect = document.getElementById("makeSelect");
   const repairSelect = document.getElementById("repairSelect");
 
-  // Setup Asset dropdown with Choices
+  // Asset dropdown
   assetChoices = new Choices(assetSelect, {
     searchEnabled: true,
     shouldSort: false,
     placeholder: true,
-    placeholderValue: "Select an asset"
+    itemSelectText: "",
   });
 
-  assetChoices.setChoices(
-    Object.keys(data).map(asset => ({ value: asset, label: asset })),
-    'value',
-    'label',
-    true
-  );
+  const assets = Object.keys(data).map(asset => ({
+    value: asset,
+    label: asset
+  }));
+
+  assetChoices.setChoices(assets, 'value', 'label', true);
 
   assetSelect.addEventListener("change", () => {
     const selectedAsset = assetSelect.value;
-    const makes = Object.keys(data[selectedAsset] || []);
+    const makes = Object.keys(data[selectedAsset]);
 
     if (makeChoices) makeChoices.destroy();
     makeChoices = new Choices(makeSelect, {
       searchEnabled: true,
       shouldSort: false,
       placeholder: true,
-      placeholderValue: "Select make/model"
+      itemSelectText: "",
     });
 
     makeChoices.setChoices(
       makes.map(make => ({ value: make, label: make })),
-      'value',
-      'label',
-      true
+      'value', 'label', true
     );
 
     document.getElementById("makeSection").style.display = "block";
@@ -75,21 +73,19 @@ document.addEventListener("DOMContentLoaded", () => {
   makeSelect.addEventListener("change", () => {
     const selectedAsset = assetSelect.value;
     const selectedMake = makeSelect.value;
-    const repairs = Object.keys((data[selectedAsset] || {})[selectedMake] || []);
+    const repairs = Object.keys(data[selectedAsset][selectedMake]);
 
     if (repairChoices) repairChoices.destroy();
     repairChoices = new Choices(repairSelect, {
       searchEnabled: true,
       shouldSort: false,
       placeholder: true,
-      placeholderValue: "Select repair type"
+      itemSelectText: "",
     });
 
     repairChoices.setChoices(
       repairs.map(repair => ({ value: repair, label: repair })),
-      'value',
-      'label',
-      true
+      'value', 'label', true
     );
 
     document.getElementById("repairSection").style.display = "block";
@@ -140,3 +136,4 @@ function showEstimate() {
     <p><strong>Total (incl. VAT): £${total.toFixed(2)}</strong></p>
   `;
 }
+
