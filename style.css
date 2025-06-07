@@ -64,23 +64,27 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
-/* === Choices.js select overrides === */
+/* === Choices.js Dropdowns === */
 select {
   display: none;
 }
 
 .choices {
-  margin-bottom: 18px;
+  margin-bottom: 14px !important;
 }
 
 .choices__inner {
   border-radius: 6px !important;
   min-height: 34px !important;
-  padding: 4px 8px !important;
+  height: 34px !important;
+  padding: 3px 10px !important;
   font-size: 0.9rem !important;
   border: 1px solid #ccc !important;
-  background-color: #fafafa !important;
+  background-color: #fff !important;
   box-shadow: none !important;
+  line-height: 1.4 !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 /* === Checkbox Styling === */
