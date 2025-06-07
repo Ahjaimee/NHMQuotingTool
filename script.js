@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "Paul McMullan", "Steven Webb"
   ];
   const randomName = names[Math.floor(Math.random() * names.length)];
-
   document.getElementById("customerName").placeholder = `e.g. ${randomName}`;
   document.getElementById("quoteNumber").placeholder = "e.g. Q12345";
 });
+
 
 // Dropdown logic + estimator
 let assetChoices, makeChoices, repairChoices;
