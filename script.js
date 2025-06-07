@@ -54,13 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
 
-    if (!asset || asset === "" || !make || !repair) return;
+    if (!asset || !make || !repair) return;
 
     quoteItems.push({ asset, make, repair });
     showEstimate();
 
-    // ✅ Reset repair detail fields only
+    // ✅ Reset repair form
     assetChoices.setChoiceByValue('');
+    document.getElementById("assetSelect").dispatchEvent(new Event("change"));
+
     makeChoices.clearChoices();
     repairChoices.clearChoices();
 
@@ -90,11 +92,7 @@ function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
   makeChoices.clearChoices();
-  makeChoices.setChoices(
-    makes.map(m => ({ value: m, label: m })),
-    'value', 'label',
-    true
-  );
+  makeChoices.setChoices(makes.map(m => ({ value: m, label: m })), 'value', 'label', true);
 }
 
 function populateRepairs() {
@@ -102,11 +100,7 @@ function populateRepairs() {
   const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   repairChoices.clearChoices();
-  repairChoices.setChoices(
-    repairs.map(r => ({ value: r, label: r })),
-    'value', 'label',
-    true
-  );
+  repairChoices.setChoices(repairs.map(r => ({ value: r, label: r })), 'value', 'label', true);
 }
 
 function removeItem(index) {
@@ -153,4 +147,5 @@ function showEstimate() {
     <p><strong>Total (incl. VAT):</strong> £${total.toFixed(2)}</p>
   `;
 }
+
 
