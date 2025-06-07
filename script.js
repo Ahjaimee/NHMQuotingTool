@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   choices.repair = new Choices(refs.repairSelect,{ searchEnabled:true,shouldSort:false });
 
   populateAssets();
-  refs.quoteSection.hidden = false;
+  refs.quoteSection.hidden = true;
 
   refs.assetSelect.addEventListener("change", () => {
     populateMakes();
@@ -51,10 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!refs.assetSelect.value || !refs.makeSelect.value || !refs.repairSelect.value) return;
 
     quoteItems.push({
-      asset:  refs.assetSelect.value,
-      make:   refs.makeSelect.value,
+      asset: refs.assetSelect.value,
+      make: refs.makeSelect.value,
       repair: refs.repairSelect.value
     });
+
+    refs.quoteSection.hidden = false;
 
     resetForm();
     renderQuote();
@@ -107,7 +109,6 @@ function resetForm() {
   populateAssets();
   choices.make.setChoiceByValue("");
   choices.repair.setChoiceByValue("");
-
   document.getElementById("makeSection").hidden = true;
   document.getElementById("repairSection").hidden = true;
 }
@@ -118,14 +119,29 @@ function renderQuote() {
 
   quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.repair];
-    const labour   = refs.supplyOnly.checked ? 0 : info.labour_hours * 45;
+    const labour = refs.supplyOnly.checked ? 0 : info.labour_hours * 45;
     const carriage = refs.supplyOnly.checked ? 15.95 : 0;
-    const line     = labour + info.material_cost + carriage;
-    subtotal += line;
+    const lineTotal = labour + info.material_cost + carriage;
+    subtotal += lineTotal;
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+    const row = document.createElement("tr");
+    row.innerHTML = `
       <td>${item.asset} → ${item.make} → ${item.repair}</td>
       <td>${info.part_number}</td>
       <td>£${labour.toFixed(2)}</td>
       <td>£${info.material_cost.toFixed(2)}</td>
+      <td>£${carriage.toFixed(2)}</td>
+      <td>£${lineTotal.toFixed(2)}</td>
+    `;
+    refs.pdfTableBody.appendChild(row);
+  });
+
+  const vatAmt = refs.vatExempt.checked ? 0 : subtotal * 0.2;
+  const total = subtotal + vatAmt;
+
+  refs.pdfSubtotal.textContent = `£${subtotal.toFixed(2)}`;
+  refs.pdfVAT.textContent = `£${vatAmt.toFixed(2)}`;
+  refs.pdfTotal.textContent = `£${total.toFixed(2)}`;
+  refs.pdfQuoteNumber.textContent = refs.quoteNumber.value || "(No #)";
+  refs.pdfCustomerName.textContent = refs.customerName.value || "(No name)";
+}
