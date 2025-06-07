@@ -42,12 +42,10 @@
     <div class="checkbox-wrapper">
       <label>
         <input type="checkbox" id="supplyOnly" />
-        <span class="checkmark"></span>
         Supply Only (no labour charge)
       </label>
       <label>
         <input type="checkbox" id="vatExempt" />
-        <span class="checkmark"></span>
         VAT Exempt (no VAT added to this quote)
       </label>
     </div>
@@ -55,7 +53,7 @@
     <button type="button" id="addItem">+ Add Item to Quote</button>
   </form>
 
-  <section class="quote-section">
+  <section class="quote-section" id="quoteSection">
     <div id="quoteLines"></div>
     <div id="estimate"></div>
     <button id="downloadPDF" style="display: none;">Download PDF</button>
