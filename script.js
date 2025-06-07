@@ -8,22 +8,19 @@ const data = {
 };
 
 let quoteItems = [];
+let makeChoices;
+let repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const names = [
-    "Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin",
-    "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald",
-    "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl",
-    "Paul McMullan", "Steven Webb"
-  ];
+  const names = ["Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin", "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald", "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl", "Paul McMullan", "Steven Webb"];
   const randomName = names[Math.floor(Math.random() * names.length)];
   document.getElementById("customerName").placeholder = `e.g. ${randomName}`;
 
   populateAssets();
 
-  const assetChoice = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  const makeChoice = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
-  const repairChoice = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+  new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
+  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
 
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
@@ -43,9 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.querySelector("#assetSelect").value;
     const make = document.querySelector("#makeSelect").value;
     const repair = document.querySelector("#repairSelect").value;
-
     if (!asset || !make || !repair) return;
-
     quoteItems.push({ asset, make, repair });
     showEstimate();
   });
@@ -67,31 +62,17 @@ function populateAssets() {
 
 function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
-  const makeSelect = document.getElementById("makeSelect");
-  makeSelect.innerHTML = `<option value="">Select a make/model</option>`;
-  if (data[asset]) {
-    Object.keys(data[asset]).forEach(make => {
-      const opt = document.createElement("option");
-      opt.value = make;
-      opt.textContent = make;
-      makeSelect.appendChild(opt);
-    });
-  }
+  const makes = data[asset] ? Object.keys(data[asset]) : [];
+  makeChoices.clearChoices();
+  makeChoices.setChoices(makes.map(m => ({ value: m, label: m })), 'value', 'label', true);
 }
 
 function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
-  const repairSelect = document.getElementById("repairSelect");
-  repairSelect.innerHTML = `<option value="">Select a repair</option>`;
-  if (data[asset] && data[asset][make]) {
-    Object.keys(data[asset][make]).forEach(repair => {
-      const opt = document.createElement("option");
-      opt.value = repair;
-      opt.textContent = repair;
-      repairSelect.appendChild(opt);
-    });
-  }
+  const repairs = data[asset] && data[asset][make] ? Object.keys(data[asset][make]) : [];
+  repairChoices.clearChoices();
+  repairChoices.setChoices(repairs.map(r => ({ value: r, label: r })), 'value', 'label', true);
 }
 
 function removeItem(index) {
@@ -112,25 +93,25 @@ function showEstimate() {
 
   quoteItems.forEach((item, i) => {
     const info = data[item.asset][item.make][item.repair];
-    const labourCost = supplyOnly ? 0 : info.labour_hours * 45;
-    const carriageCost = supplyOnly ? 15.95 : 0;
-    const itemTotal = labourCost + info.material_cost + carriageCost;
-    subtotal += itemTotal;
+    const labour = supplyOnly ? 0 : info.labour_hours * 45;
+    const carriage = supplyOnly ? 15.95 : 0;
+    const total = labour + info.material_cost + carriage;
+    subtotal += total;
 
     quoteLines.innerHTML += `
       <div class="quote-line">
         <p><strong>${item.asset} → ${item.make} → ${item.repair}</strong></p>
         <p>Part #: ${info.part_number}</p>
-        <p>Labour: ${supplyOnly ? "N/A" : `£${labourCost.toFixed(2)}`}</p>
+        <p>Labour: ${supplyOnly ? "N/A" : `£${labour.toFixed(2)}`}</p>
         <p>Materials: £${info.material_cost.toFixed(2)}</p>
-        ${supplyOnly ? `<p>Carriage: £${carriageCost.toFixed(2)}</p>` : ""}
+        ${supplyOnly ? `<p>Carriage: £${carriage.toFixed(2)}</p>` : ""}
         <button onclick="removeItem(${i})">Remove</button>
       </div>
     `;
   });
 
   const vat = vatExempt ? 0 : subtotal * 0.2;
-  const total = subtotal + vat;
+  const grandTotal = subtotal + vat;
 
   estimateDiv.innerHTML = `
     <h3>Quote Summary</h3>
@@ -140,9 +121,6 @@ function showEstimate() {
     <hr>
     <p><strong>Subtotal (excl. VAT):</strong> £${subtotal.toFixed(2)}</p>
     <p><strong>VAT (${vatExempt ? "Exempt" : "20%"}):</strong> £${vat.toFixed(2)}</p>
-    <p><strong>Total (incl. VAT): £${total.toFixed(2)}</strong></p>
+    <p><strong>Total (incl. VAT): £${grandTotal.toFixed(2)}</strong></p>
   `;
 }
-
-
-
