@@ -15,6 +15,8 @@ const data = {
   }
 };
 
+let assetChoices, makeChoices, repairChoices;
+
 document.addEventListener("DOMContentLoaded", () => {
   const names = [
     "Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin",
@@ -26,20 +28,27 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("customerName").placeholder = `e.g. ${randomName}`;
   document.getElementById("quoteNumber").placeholder = "e.g. Q12345";
 
-  new Choices("#assetSelect", { searchEnabled: true });
-  new Choices("#makeSelect", { searchEnabled: true });
-  new Choices("#repairSelect", { searchEnabled: true });
+  // Initialize Choices after elements are available
+  assetChoices = new Choices("#assetSelect", { searchEnabled: true });
+  makeChoices = new Choices("#makeSelect", { searchEnabled: true });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true });
 
   populateAssets();
 
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").style.display = "block";
+    document.getElementById("repairSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "none";
+    repairChoices.clearChoices();
+    document.getElementById("estimate").innerHTML = "";
   });
 
   document.getElementById("makeSelect").addEventListener("change", () => {
     populateRepairs();
     document.getElementById("repairSection").style.display = "block";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("estimate").innerHTML = "";
   });
 
   document.getElementById("repairSelect").addEventListener("change", () => {
@@ -52,42 +61,37 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function populateAssets() {
-  const assetSelect = document.getElementById("assetSelect");
-  assetSelect.innerHTML = `<option value="">-- Select Asset --</option>`;
-  Object.keys(data).forEach(asset => {
-    const opt = document.createElement("option");
-    opt.value = asset;
-    opt.textContent = asset;
-    assetSelect.appendChild(opt);
-  });
+  const assetOptions = Object.keys(data).map(asset => ({
+    value: asset,
+    label: asset
+  }));
+  assetChoices.setChoices(assetOptions, 'value', 'label', true);
 }
 
 function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
-  const makeSelect = document.getElementById("makeSelect");
-  makeSelect.innerHTML = `<option value="">-- Select Make --</option>`;
+  makeChoices.clearChoices();
+
   if (data[asset]) {
-    Object.keys(data[asset]).forEach(make => {
-      const opt = document.createElement("option");
-      opt.value = make;
-      opt.textContent = make;
-      makeSelect.appendChild(opt);
-    });
+    const makes = Object.keys(data[asset]).map(make => ({
+      value: make,
+      label: make
+    }));
+    makeChoices.setChoices(makes, 'value', 'label', true);
   }
 }
 
 function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
-  const repairSelect = document.getElementById("repairSelect");
-  repairSelect.innerHTML = `<option value="">-- Select Repair --</option>`;
+  repairChoices.clearChoices();
+
   if (data[asset] && data[asset][make]) {
-    Object.keys(data[asset][make]).forEach(repair => {
-      const opt = document.createElement("option");
-      opt.value = repair;
-      opt.textContent = repair;
-      repairSelect.appendChild(opt);
-    });
+    const repairs = Object.keys(data[asset][make]).map(repair => ({
+      value: repair,
+      label: repair
+    }));
+    repairChoices.setChoices(repairs, 'value', 'label', true);
   }
 }
 
@@ -129,6 +133,7 @@ function showEstimate() {
     <p><strong>Total (incl. VAT): £${total.toFixed(2)}</strong></p>
   `;
 }
+
 
 
 
