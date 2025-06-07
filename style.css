@@ -1,3 +1,4 @@
+/* === General Page Setup === */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f4f4;
@@ -6,6 +7,7 @@ body {
   color: #27488f;
 }
 
+/* === Logo Styling === */
 .logo-container {
   text-align: center;
   margin-bottom: 10px;
@@ -16,6 +18,7 @@ body {
   max-width: 100%;
 }
 
+/* === Page Title === */
 h1 {
   text-align: center;
   margin-top: 0;
@@ -24,6 +27,7 @@ h1 {
   color: #27488f;
 }
 
+/* === Form and Quote Container === */
 form, .quote-section {
   background-color: #ffffff;
   max-width: 480px;
@@ -34,12 +38,14 @@ form, .quote-section {
   border-left: 5px solid #27488f;
 }
 
+/* === Headings === */
 h2 {
   font-size: 18px;
   margin-top: 0;
   color: #27488f;
 }
 
+/* === Labels and Inputs === */
 label {
   display: block;
   margin-bottom: 6px;
@@ -56,6 +62,7 @@ input[type="text"], select {
   box-sizing: border-box;
 }
 
+/* === Checkbox Styling === */
 label[for="supplyOnly"] {
   display: flex;
   align-items: center;
@@ -69,6 +76,7 @@ input[type="checkbox"] {
   margin: 0;
 }
 
+/* === Estimate Result Box === */
 #estimate {
   background-color: #eef7ec;
   padding: 15px;
@@ -78,6 +86,7 @@ input[type="checkbox"] {
   line-height: 1.5;
 }
 
+/* === PDF Download Button === */
 #downloadPDF {
   background-color: #27488f;
   color: white;
@@ -87,6 +96,7 @@ input[type="checkbox"] {
   border-radius: 6px;
   cursor: pointer;
   margin-top: 15px;
+  width: 100%;
 }
 
 #downloadPDF:hover {
