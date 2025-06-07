@@ -1,4 +1,4 @@
-/* Base */
+/* ------ base ------ */
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background: #f4f4f4;
@@ -7,16 +7,15 @@ body {
   color: #27488f;
 }
 
-/* Logo */
+/* logo up top */
 .logo-container { text-align: center; margin-bottom: 20px; }
 .logo { height: 60px; }
-.logo-sm { display: block; margin-bottom: 10px; height: 50px; }
 
-/* Headings */
+/* headings */
 h1 { text-align: center; margin-bottom: 30px; }
 h2 { font-size: 1.1rem; margin: 25px 0 12px; }
 
-/* Form */
+/* ------ form ------ */
 #quoteForm {
   max-width: 600px;
   margin: 0 auto 40px;
@@ -47,7 +46,7 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   cursor: pointer;
 }
 
-/* Quote Section */
+/* ------ quote section ------ */
 .quote-section {
   max-width: 800px;
   margin: 0 auto;
@@ -58,7 +57,7 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-/* PDF Header */
+/* PDF header */
 .quote-header {
   display: flex;
   align-items: center;
@@ -66,13 +65,14 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
+.logo-sm { height: 50px; }
 .company-info { margin-left: 20px; }
 
-/* Customer Info */
+/* customer block */
 .customer-info { margin-bottom: 20px; }
 .customer-info p { margin: 4px 0; }
 
-/* Table */
+/* table */
 .quote-table {
   width: 100%;
   border-collapse: collapse;
@@ -88,7 +88,7 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
 .quote-table tfoot td { font-weight: 600; }
 .right { text-align: right; }
 
-/* Download Button */
+/* download button */
 #downloadPDF {
   display: block;
   margin: 0 auto;
