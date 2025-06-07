@@ -1,10 +1,9 @@
-/* Base */
+/* Box sizing & base */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background: #f4f4f4;
@@ -62,7 +61,7 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   align-items: center !important;
 }
 
-/* Checkboxes */
+/* Checkboxes stay visible and styled */
 .checkbox-group {
   display: flex;
   align-items: center;
@@ -173,7 +172,6 @@ input[type="checkbox"]:checked::before {
 .quote-table td.right {
   text-align: right;
 }
-/* Remove double border on footer */
 .quote-table tfoot td {
   border-top: none;
 }
