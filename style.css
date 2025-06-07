@@ -30,10 +30,10 @@ h1 {
 /* === Form and Quote Container === */
 form, .quote-section {
   background-color: #ffffff;
-  width: 95%;
-  max-width: 420px;
+  width: 96%;
+  max-width: 500px;
   margin: 0 auto 25px;
-  padding: 25px 20px;
+  padding: 25px 24px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   border-left: 5px solid #27488f;
@@ -80,6 +80,7 @@ select {
   border-radius: 6px !important;
   min-height: 34px !important;
   height: 34px !important;
+  max-height: 34px !important;
   padding: 3px 10px !important;
   font-size: 0.9rem !important;
   border: 1px solid #ccc !important;
@@ -90,6 +91,12 @@ select {
   align-items: center !important;
   width: 100% !important;
   box-sizing: border-box !important;
+}
+
+.choices__list--single {
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
 }
 
 /* === Checkbox Styling === */
