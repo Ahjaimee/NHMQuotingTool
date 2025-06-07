@@ -74,9 +74,46 @@ input[type="text"], select {
   box-sizing: border-box !important;
 }
 
+.checkbox-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
 input[type="checkbox"] {
-  margin-right: 8px;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
   vertical-align: middle;
+  margin-right: 8px;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  border: solid #27488f;
+  border-width: 0 2px 2px 0;
+  top: 0px;
+  left: 4px;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+input[type="checkbox"]:checked {
+  background: #e0ebfa;
+  border-color: #27488f;
+}
+
+input[type="checkbox"]:checked::before {
+  opacity: 1;
 }
 
 #addItem, #downloadPDF {
@@ -96,12 +133,4 @@ input[type="checkbox"] {
 
 #downloadPDF {
   background-color: #27488f;
-}
-
-.quote-line {
-  background: #fafafa;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
 }
