@@ -1,6 +1,4 @@
-/* ----------------------------------------
-   Box sizing & Base
----------------------------------------- */
+/* ----------------- Base ----------------- */
 *,
 *::before,
 *::after {
@@ -9,15 +7,13 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f4f4f4;
+  background: #f4f4f4;
   margin: 0;
   padding: 30px;
   color: #27488f;
 }
 
-/* ----------------------------------------
-   Logo & Title
----------------------------------------- */
+/* -------------- Logo + Title ------------- */
 .logo-container {
   text-align: center;
   margin-bottom: 20px;
@@ -25,22 +21,19 @@ body {
 .logo {
   height: 60px;
 }
+
 h1 {
   text-align: center;
   margin-bottom: 30px;
 }
 
-/* ----------------------------------------
-   Section Headings
----------------------------------------- */
+/* ------------- Section Titles ----------- */
 h2 {
   font-size: 1.1rem;
   margin: 25px 0 12px;
 }
 
-/* ----------------------------------------
-   Form Styles
----------------------------------------- */
+/* --------------- Form ------------------ */
 #quoteForm {
   max-width: 600px;
   margin: 0 auto 40px;
@@ -49,25 +42,84 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-#quoteForm label {
-  display: block;
-  margin-bottom: 8px;
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px;
+  height: 34px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* Choices.js overrides */
+.choices {
+  width: 100% !important;
+  margin-bottom: 16px !important;
+}
+.choices__inner {
+  border-radius: 6px !important;
+  height: 34px !important;
+  padding: 0 8px !important;
+  font-size: 0.9rem !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Checkbox labels */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
   font-weight: 500;
 }
-#quoteForm input,
-#quoteForm select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
-.nested {
-  margin-left: 15px;
-  margin-top: 12px;
+input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  border: solid #27488f;
+  border-width: 0 2px 2px 0;
+  top: 1px;
+  left: 4px;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
-#addItem {
-  margin-top: 20px;
+input[type="checkbox"]:checked {
+  background: #e0ebfa;
+  border-color: #27488f;
+}
+input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
+
+/* Add Item & Download buttons */
+.btn-primary {
+  display: block;
   width: 100%;
   padding: 10px;
   background: #f58020;
@@ -76,11 +128,22 @@ h2 {
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  text-align: center;
+  margin-top: 16px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+#downloadPDF.btn-primary {
+  background: #27488f;
+}
+#downloadPDF.btn-primary:hover {
+  background: #1e336b;
 }
 
-/* ----------------------------------------
-   Quote Preview Container
----------------------------------------- */
+/* ------------- Quote Preview ------------ */
 .quote-section {
   max-width: 800px;
   margin: 0 auto;
@@ -91,9 +154,6 @@ h2 {
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-/* ----------------------------------------
-   PDF Header
----------------------------------------- */
 .quote-header {
   display: flex;
   align-items: center;
@@ -109,9 +169,6 @@ h2 {
   line-height: 1.4;
 }
 
-/* ----------------------------------------
-   Customer Info
----------------------------------------- */
 .customer-info {
   display: flex;
   gap: 40px;
@@ -121,9 +178,7 @@ h2 {
   margin: 4px 0;
 }
 
-/* ----------------------------------------
-   Items Table
----------------------------------------- */
+/* Items table */
 .quote-table {
   width: 100%;
   border-collapse: collapse;
@@ -144,21 +199,7 @@ h2 {
 .quote-table td.right {
   text-align: right;
 }
-/* Remove double border on footer top */
+/* remove double border atop footer */
 .quote-table tfoot td {
   border-top: none;
-}
-
-/* ----------------------------------------
-   Download PDF Button
----------------------------------------- */
-#downloadPDF {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
-  background: #27488f;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
 }
