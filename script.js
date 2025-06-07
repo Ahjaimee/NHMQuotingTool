@@ -9,74 +9,69 @@ const data = {
 
 let quoteItems = [];
 let assetChoices, makeChoices, repairChoices;
-let assetSelect, makeSelect, repairSelect;
-let supplyOnly, vatExempt, quoteNumber, customerName;
-let pdfTableBody, pdfSubtotal, pdfVAT, pdfTotal, pdfQuoteNumber, pdfCustomerName;
+let refs = {};
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Refs
-  assetSelect     = document.getElementById("assetSelect");
-  makeSelect      = document.getElementById("makeSelect");
-  repairSelect    = document.getElementById("repairSelect");
-  supplyOnly      = document.getElementById("supplyOnly");
-  vatExempt       = document.getElementById("vatExempt");
-  quoteNumber     = document.getElementById("quoteNumber");
-  customerName    = document.getElementById("customerName");
-  pdfTableBody    = document.getElementById("pdfTableBody");
-  pdfSubtotal     = document.getElementById("pdfSubtotal");
-  pdfVAT          = document.getElementById("pdfVAT");
-  pdfTotal        = document.getElementById("pdfTotal");
-  pdfQuoteNumber  = document.getElementById("pdfQuoteNumber");
-  pdfCustomerName = document.getElementById("pdfCustomerName");
+  // cache DOM refs
+  refs = {
+    asset:    document.getElementById("assetSelect"),
+    make:     document.getElementById("makeSelect"),
+    repair:   document.getElementById("repairSelect"),
+    supply:   document.getElementById("supplyOnly"),
+    vat:      document.getElementById("vatExempt"),
+    cust:     document.getElementById("customerName"),
+    quoteNo:  document.getElementById("quoteNumber"),
+    quoteSec: document.getElementById("quoteSection"),
+    pdfNum:   document.getElementById("pdfQuoteNumber"),
+    pdfCust:  document.getElementById("pdfCustomerName"),
+    tbody:    document.getElementById("pdfTableBody"),
+    sub:      document.getElementById("pdfSubtotal"),
+    vatOut:   document.getElementById("pdfVAT"),
+    tot:      document.getElementById("pdfTotal"),
+  };
 
-  // Placeholder for customer
+  // placeholder
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
-  customerName.placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
+  refs.cust.placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
-  // Init Choices.js
-  assetChoices  = new Choices(assetSelect,  { searchEnabled: true, shouldSort: false });
-  makeChoices   = new Choices(makeSelect,   { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices(repairSelect, { searchEnabled: true, shouldSort: false });
+  // init Choices.js
+  assetChoices  = new Choices(refs.asset,  { searchEnabled: true, shouldSort: false });
+  makeChoices   = new Choices(refs.make,   { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices(refs.repair,{ searchEnabled: true, shouldSort: false });
 
+  // first load
   populateAssets();
 
-  // Cascading selects
-  assetSelect.addEventListener("change", () => {
-    populateMakes();
-    document.getElementById("makeSection").hidden = false;
-  });
-  makeSelect.addEventListener("change", () => {
-    populateRepairs();
-    document.getElementById("repairSection").hidden = false;
-  });
-  repairSelect.addEventListener("change", () => {
-    document.getElementById("optionsSection").hidden = false;
-  });
+  // hide quote section until we add an item
+  refs.quoteSec.hidden = true;
 
-  // Live recalc
-  supplyOnly.addEventListener("change", renderQuote);
-  vatExempt.addEventListener("change", renderQuote);
+  // cascade
+  refs.asset.addEventListener("change", () => { populateMakes();   refs.make.parentNode.hidden   = false; });
+  refs.make .addEventListener("change", () => { populateRepairs(); refs.repair.parentNode.hidden = false; });
+  refs.repair.addEventListener("change", () => { refs.supply.parentNode.parentNode.hidden = false; });
 
-  // Add item
+  // live update toggles
+  refs.supply.addEventListener("change", renderQuote);
+  refs.vat   .addEventListener("change", renderQuote);
+
+  // add item
   document.getElementById("addItem").addEventListener("click", () => {
-    if (!assetSelect.value || !makeSelect.value || !repairSelect.value) return;
+    if (!refs.asset.value || !refs.make.value || !refs.repair.value) return;
     quoteItems.push({
-      asset:  assetSelect.value,
-      make:   makeSelect.value,
-      repair: repairSelect.value
+      asset:  refs.asset.value,
+      make:   refs.make.value,
+      repair: refs.repair.value
     });
+    refs.quoteSec.hidden = false;
     resetForm();
     renderQuote();
   });
 
-  // Download PDF
+  // download
   document.getElementById("downloadPDF").addEventListener("click", () => {
     html2pdf()
       .from(document.getElementById("pdfContent"))
-      .set({
-        margin: 10,
-        filename: `Quote_${quoteNumber.value || 'NoNumber'}.pdf`
-      })
+      .set({ margin:10, filename:`Quote_${refs.quoteNo.value||'No#'}.pdf` })
       .save();
   });
 });
@@ -84,45 +79,45 @@ document.addEventListener("DOMContentLoaded", () => {
 function populateAssets() {
   const opts = Object.keys(data);
   assetChoices.destroy();
-  assetSelect.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
-    opts.map(a => `<option value="${a}">${a}</option>`).join("");
-  assetChoices = new Choices(assetSelect, { searchEnabled: true, shouldSort: false });
+  refs.asset.innerHTML = `<option value="" disabled selected>Select Asset</option>`
+    + opts.map(a => `<option value="${a}">${a}</option>`).join("");
+  assetChoices = new Choices(refs.asset, { searchEnabled: true, shouldSort: false });
 }
 
 function populateMakes() {
-  const makes = data[assetSelect.value] ? Object.keys(data[assetSelect.value]) : [];
+  const arr = data[refs.asset.value] ? Object.keys(data[refs.asset.value]) : [];
   makeChoices.destroy();
-  makeSelect.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
-    makes.map(m => `<option value="${m}">${m}</option>`).join("");
-  makeChoices = new Choices(makeSelect, { searchEnabled: true, shouldSort: false });
+  refs.make.innerHTML = `<option value="" disabled selected>Select Make/Model</option>`
+    + arr.map(m => `<option value="${m}">${m}</option>`).join("");
+  makeChoices = new Choices(refs.make, { searchEnabled: true, shouldSort: false });
 }
 
 function populateRepairs() {
-  const repairs = data[assetSelect.value]?.[makeSelect.value]
-    ? Object.keys(data[assetSelect.value][makeSelect.value])
+  const arr = data[refs.asset.value]?.[refs.make.value]
+    ? Object.keys(data[refs.asset.value][refs.make.value])
     : [];
   repairChoices.destroy();
-  repairSelect.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
-    repairs.map(r => `<option value="${r}">${r}</option>`).join("");
-  repairChoices = new Choices(repairSelect, { searchEnabled: true, shouldSort: false });
+  refs.repair.innerHTML = `<option value="" disabled selected>Select Repair</option>`
+    + arr.map(r => `<option value="${r}">${r}</option>`).join("");
+  repairChoices = new Choices(refs.repair, { searchEnabled: true, shouldSort: false });
 }
 
 function resetForm() {
   populateAssets();
-  document.getElementById("makeSection").hidden    = true;
-  document.getElementById("repairSection").hidden  = true;
-  document.getElementById("optionsSection").hidden = true;
-  supplyOnly.checked = vatExempt.checked = false;
+  document.getElementById("makeSection").hidden   = true;
+  document.getElementById("repairSection").hidden = true;
+  document.getElementById("optionsSection").hidden= true;
+  refs.supply.checked = refs.vat.checked = false;
 }
 
 function renderQuote() {
-  pdfTableBody.innerHTML = "";
+  refs.tbody.innerHTML = "";
   let subtotal = 0;
 
   quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.repair];
-    const labour  = supplyOnly.checked ? 0 : info.labour_hours * 45;
-    const carriage= supplyOnly.checked ? 15.95 : 0;
+    const labour  = refs.supply.checked ? 0 : info.labour_hours * 45;
+    const carriage= refs.supply.checked ? 15.95 : 0;
     const lineTotal = labour + info.material_cost + carriage;
     subtotal += lineTotal;
 
@@ -135,15 +130,15 @@ function renderQuote() {
       <td>£${carriage.toFixed(2)}</td>
       <td>£${lineTotal.toFixed(2)}</td>
     `;
-    pdfTableBody.appendChild(tr);
+    refs.tbody.appendChild(tr);
   });
 
-  const vat   = vatExempt.checked ? 0 : subtotal * 0.2;
-  const total = subtotal + vat;
+  const vatAmt = refs.vat.checked ? 0 : subtotal * 0.2;
+  const total  = subtotal + vatAmt;
 
-  pdfSubtotal.textContent      = `£${subtotal.toFixed(2)}`;
-  pdfVAT.textContent           = `£${vat.toFixed(2)}`;
-  pdfTotal.textContent         = `£${total.toFixed(2)}`;
-  pdfQuoteNumber.textContent   = quoteNumber.value || "(No #)";
-  pdfCustomerName.textContent  = customerName.value || "(No name)";
+  refs.sub.textContent   = `£${subtotal.toFixed(2)}`;
+  refs.vatOut.textContent= `£${vatAmt.toFixed(2)}`;
+  refs.tot.textContent   = `£${total.toFixed(2)}`;
+  refs.pdfNum.textContent= refs.quoteNo.value || "(No #)";
+  refs.pdfCust.textContent= refs.cust.value    || "(No name)";
 }
