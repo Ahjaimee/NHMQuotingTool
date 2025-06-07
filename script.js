@@ -11,8 +11,8 @@ let quoteItems = [];
 const refs = {};
 const choices = {};
 
-window.addEventListener("DOMContentLoaded", () => {
-  // Cache refs
+document.addEventListener("DOMContentLoaded", () => {
+  // Cache DOM refs
   [
     "assetSelect","makeSelect","repairSelect",
     "supplyOnly","vatExempt","customerName",
@@ -21,20 +21,19 @@ window.addEventListener("DOMContentLoaded", () => {
     "pdfVAT","pdfTotal","addItem","downloadPDF"
   ].forEach(id => refs[id] = document.getElementById(id));
 
-  // Placeholder
+  // Placeholder for name
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
   refs.customerName.placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
   // Init Choices.js
-  choices.asset  = new Choices(refs.assetSelect,  { searchEnabled:true, shouldSort:false });
-  choices.make   = new Choices(refs.makeSelect,   { searchEnabled:true, shouldSort:false });
-  choices.repair = new Choices(refs.repairSelect,{ searchEnabled:true, shouldSort:false });
+  choices.asset  = new Choices(refs.assetSelect,  { searchEnabled:true,shouldSort:false });
+  choices.make   = new Choices(refs.makeSelect,   { searchEnabled:true,shouldSort:false });
+  choices.repair = new Choices(refs.repairSelect,{ searchEnabled:true,shouldSort:false });
 
-  // Populate assets
   populateAssets();
   refs.quoteSection.hidden = true;
 
-  // Cascading
+  // Cascading selects
   refs.assetSelect.addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").hidden = false;
@@ -47,23 +46,28 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("optionsSection").hidden = false;
   });
 
-  // Recalc on checkboxes
+  // Live recalc on checkboxes
   refs.supplyOnly.addEventListener("change", renderQuote);
-  refs.vatExempt.addEventListener("change", renderQuote);
+  refs.vatExempt .addEventListener("change", renderQuote);
 
   // Add item
   refs.addItem.addEventListener("click", () => {
-    const a = refs.assetSelect.value, m = refs.makeSelect.value, r = refs.repairSelect.value;
-    if (!a||!m||!r) return;
-    quoteItems.push({ asset:a, make:m, repair:r });
+    if (!refs.assetSelect.value || !refs.makeSelect.value || !refs.repairSelect.value) return;
+    quoteItems.push({
+      asset:  refs.assetSelect.value,
+      make:   refs.makeSelect.value,
+      repair: refs.repairSelect.value
+    });
     refs.quoteSection.hidden = false;
-    resetForm();
+    // do NOT reset checkboxes!
+    resetForm();   // this only resets the selects
     renderQuote();
   });
 
-  // Download
+  // Download PDF
   refs.downloadPDF.addEventListener("click", () => {
-    html2pdf().from(refs.pdfContent)
+    html2pdf()
+      .from(document.getElementById("pdfContent"))
       .set({ margin:10, filename:`Quote_${refs.quoteNumber.value||'No#'}.pdf` })
       .save();
   });
@@ -73,39 +77,38 @@ function populateAssets() {
   const arr = Object.keys(data);
   choices.asset.destroy();
   refs.assetSelect.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
-    arr.map(o=>`<option value="${o}">${o}</option>`).join("");
-  choices.asset = new Choices(refs.assetSelect, { searchEnabled:true, shouldSort:false });
+    arr.map(o => `<option value="${o}">${o}</option>`).join("");
+  choices.asset = new Choices(refs.assetSelect, { searchEnabled:true,shouldSort:false });
 }
 
 function populateMakes() {
   const arr = data[refs.assetSelect.value] ? Object.keys(data[refs.assetSelect.value]) : [];
   choices.make.destroy();
   refs.makeSelect.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
-    arr.map(o=>`<option value="${o}">${o}</option>`).join("");
-  choices.make = new Choices(refs.makeSelect, { searchEnabled:true, shouldSort:false });
+    arr.map(o => `<option value="${o}">${o}</option>`).join("");
+  choices.make = new Choices(refs.makeSelect, { searchEnabled:true,shouldSort:false });
 }
 
 function populateRepairs() {
   const arr = data[refs.assetSelect.value]?.[refs.makeSelect.value]
-    ? Object.keys(data[refs.assetSelect.value][refs.makeSelect.value])
-    : [];
+    ? Object.keys(data[refs.assetSelect.value][refs.makeSelect.value]) : [];
   choices.repair.destroy();
   refs.repairSelect.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
-    arr.map(o=>`<option value="${o}">${o}</option>`).join("");
-  choices.repair = new Choices(refs.repairSelect, { searchEnabled:true, shouldSort:false });
+    arr.map(o => `<option value="${o}">${o}</option>`).join("");
+  choices.repair = new Choices(refs.repairSelect, { searchEnabled:true,shouldSort:false });
 }
 
 function resetForm() {
   populateAssets();
   document.getElementById("makeSection").hidden    = true;
   document.getElementById("repairSection").hidden  = true;
-  document.getElementById("optionsSection").hidden = true;
-  refs.supplyOnly.checked = refs.vatExempt.checked = false;
+  // leave optionsSection visible once shown
 }
 
 function renderQuote() {
   refs.pdfTableBody.innerHTML = "";
   let subtotal = 0;
+
   quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.repair];
     const labour   = refs.supplyOnly.checked ? 0 : info.labour_hours * 45;
@@ -127,6 +130,7 @@ function renderQuote() {
 
   const vatAmt = refs.vatExempt.checked ? 0 : subtotal * 0.2;
   const total  = subtotal + vatAmt;
+
   refs.pdfSubtotal.textContent     = `£${subtotal.toFixed(2)}`;
   refs.pdfVAT.textContent          = `£${vatAmt.toFixed(2)}`;
   refs.pdfTotal.textContent        = `£${total.toFixed(2)}`;
