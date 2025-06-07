@@ -3,66 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NHM Quoting Tool</title>
+  <title>NHM Quote Debug Test</title>
 
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
-  <div class="logo-container">
-    <img src="nhm-logo.png" alt="Company Logo" class="logo" />
-  </div>
+  <h1>Asset Type Test</h1>
 
-  <h1>Quote Estimator</h1>
-
-  <form>
-    <h2>Customer Details</h2>
-
-    <label for="customerName">Customer Name:
-      <input type="text" id="customerName" />
-    </label>
-
-    <label for="quoteNumber">Quote Number:
-      <input type="text" id="quoteNumber" />
-    </label>
-
-    <h2>Repair Details</h2>
-
-    <label for="assetSelect">Asset Type:
-      <select id="assetSelect"></select>
-    </label>
-
-    <div id="makeSection" style="display: none;">
-      <label for="makeSelect">Make/Model:</label>
-      <select id="makeSelect"></select>
-    </div>
-
-    <div id="repairSection" style="display: none;">
-      <label for="repairSelect">Repair Type:</label>
-      <select id="repairSelect"></select>
-    </div>
-
-    <div id="optionsSection" style="display: none;">
-      <label for="supplyOnly">
-        <input type="checkbox" id="supplyOnly" />
-        Supply Only
-      </label>
-      <label for="vatExempt">
-        <input type="checkbox" id="vatExempt" />
-        VAT Exempt
-      </label>
-    </div>
-  </form>
-
-  <div class="quote-section">
-    <div id="estimate"></div>
-    <button id="downloadPDF">Download PDF</button>
-  </div>
+  <label for="assetSelect">Select Asset Type:</label>
+  <select id="assetSelect"></select>
 
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
