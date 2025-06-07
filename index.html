@@ -17,14 +17,19 @@
 
   <form id="quoteForm">
     <h2>Customer Details</h2>
-    <label for="customerName">Customer Name:
+
+    <label for="customerName">
+      Customer Name:
       <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
     </label>
-    <label for="quoteNumber">Job/Quote Number:
+
+    <label for="quoteNumber">
+      Job/Quote Number:
       <input type="text" id="quoteNumber" placeholder="e.g. Q12345" />
     </label>
 
     <h2>Repair Details</h2>
+
     <label for="assetSelect">Asset Type:</label>
     <select id="assetSelect"></select>
 
@@ -38,6 +43,8 @@
       <select id="repairSelect"></select>
     </div>
 
+    <button type="button" id="addItem">+ Add Item to Quote</button>
+
     <h2>Quote Options</h2>
     <div class="checkbox-wrapper">
       <label for="supplyOnly">
@@ -49,11 +56,9 @@
         VAT Exempt (no VAT added to this quote)
       </label>
     </div>
-
-    <button type="button" id="addItem">+ Add Item to Quote</button>
   </form>
 
-  <section class="quote-section" id="quoteSection">
+  <section class="quote-section" id="quoteSection" style="display: none;">
     <div id="quoteLines"></div>
     <div id="estimate"></div>
     <button id="downloadPDF" style="display: none;">Download PDF</button>
