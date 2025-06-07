@@ -6,14 +6,14 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 700px;
   margin: auto;
   padding: 20px;
 }
 
 .logo-container {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .logo {
@@ -22,70 +22,43 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 26px;
   margin-bottom: 25px;
+  font-size: 26px;
 }
 
-.section {
-  background: #fff;
-  border-left: 5px solid #27488f;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+.form-group {
+  margin-bottom: 18px;
 }
 
 label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
 input[type="text"], select {
   width: 100%;
-  padding: 8px 10px;
-  margin-top: 5px;
-  margin-bottom: 18px;
+  padding: 8px;
+  font-size: 0.95rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 0.95rem;
+  box-sizing: border-box;
 }
 
 .choices__inner {
-  min-height: 36px !important;
+  min-height: 38px !important;
   padding: 6px 10px !important;
-  font-size: 0.95rem !important;
-}
-
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.checkbox-group label {
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
 }
 
 button {
-  display: block;
   width: 100%;
   padding: 12px;
+  margin-top: 10px;
   font-size: 1rem;
   font-weight: bold;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 15px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
 #addItem {
@@ -100,25 +73,33 @@ button {
 #downloadPDF {
   background-color: #27488f;
   color: white;
+  margin-top: 20px;
 }
 
 #downloadPDF:hover {
   background-color: #1e336b;
 }
 
+.checkboxes {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
 .quote-section {
-  background: #fff;
+  margin-top: 25px;
+  background: white;
   padding: 20px;
-  border-radius: 10px;
   border-left: 5px solid #f58020;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .quote-line {
   margin-bottom: 15px;
-  padding: 10px;
   background: #f9f9f9;
+  padding: 10px;
   border-left: 4px solid #ccc;
   border-radius: 6px;
 }
@@ -140,13 +121,12 @@ button {
 
 #estimate {
   background: #eef7ec;
+  padding: 12px;
+  margin-top: 15px;
   border-left: 5px solid #4caf50;
-  padding: 15px;
   border-radius: 6px;
-  font-size: 0.95rem;
-  margin-top: 10px;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
