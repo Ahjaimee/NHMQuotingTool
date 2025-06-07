@@ -1,9 +1,10 @@
-/* Box sizing & base */
+/* Base */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
+
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background: #f4f4f4;
@@ -12,7 +13,7 @@ body {
   color: #27488f;
 }
 
-/* Logo & heading */
+/* Logo & Title */
 .logo-container { text-align: center; margin-bottom: 20px; }
 .logo { height: 60px; }
 h1 { text-align: center; margin-bottom: 30px; }
@@ -47,7 +48,7 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   font-size: 0.9rem;
 }
 
-/* Choices.js overrides */
+/* Choices.js selects */
 .choices {
   width: 100% !important;
   margin-bottom: 16px !important;
@@ -61,7 +62,7 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   align-items: center !important;
 }
 
-/* Checkbox group */
+/* Checkboxes */
 .checkbox-group {
   display: flex;
   align-items: center;
@@ -110,7 +111,6 @@ input[type="checkbox"]:checked::before {
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
-  text-align: center;
   margin-top: 16px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   transition: background-color 0.3s, transform 0.1s;
@@ -125,7 +125,7 @@ input[type="checkbox"]:checked::before {
   background: #1e336b;
 }
 
-/* Quote preview */
+/* Preview */
 .quote-section {
   max-width: 800px;
   margin: 0 auto;
@@ -163,3 +163,17 @@ input[type="checkbox"]:checked::before {
   border: 1px solid #ccc;
   padding: 10px 8px;
   font-size: 0.95rem;
+  vertical-align: middle;
+}
+.quote-table th {
+  background: #eef7ec;
+  text-align: left;
+  font-weight: 600;
+}
+.quote-table td.right {
+  text-align: right;
+}
+/* Remove double border on footer */
+.quote-table tfoot td {
+  border-top: none;
+}
