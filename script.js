@@ -53,12 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
-    if (!asset || !make || !repair) return;
+
+    if (!asset || asset === "" || !make || !repair) return;
 
     quoteItems.push({ asset, make, repair });
     showEstimate();
 
-    // 🔄 Reset repair form (not customer fields)
+    // ✅ Reset repair detail fields only
     assetChoices.setChoiceByValue('');
     makeChoices.clearChoices();
     repairChoices.clearChoices();
@@ -79,22 +80,19 @@ function populateAssets() {
   const assets = Object.keys(data);
   assetChoices.clearChoices();
   assetChoices.setChoices(
-    assets.map(a => ({ value: a, label: a })),
-    'value',
-    'label',
-    true
+    [{ value: '', label: 'Select Asset', disabled: true, selected: true }]
+      .concat(assets.map(a => ({ value: a, label: a }))),
+    'value', 'label', true
   );
 }
 
 function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
-
   makeChoices.clearChoices();
   makeChoices.setChoices(
     makes.map(m => ({ value: m, label: m })),
-    'value',
-    'label',
+    'value', 'label',
     true
   );
 }
@@ -103,12 +101,10 @@ function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
-
   repairChoices.clearChoices();
   repairChoices.setChoices(
     repairs.map(r => ({ value: r, label: r })),
-    'value',
-    'label',
+    'value', 'label',
     true
   );
 }
@@ -157,3 +153,4 @@ function showEstimate() {
     <p><strong>Total (incl. VAT):</strong> £${total.toFixed(2)}</p>
   `;
 }
+
