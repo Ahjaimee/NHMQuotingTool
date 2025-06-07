@@ -47,7 +47,7 @@ h2 {
   color: #27488f;
 }
 
-/* === Labels and Inputs === */
+/* === Labels and Text Inputs === */
 label {
   display: block;
   margin-bottom: 6px;
@@ -65,7 +65,7 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
-/* === Dropdown Styling with Choices.js === */
+/* === Dropdown Styling (Choices.js) === */
 select {
   display: none;
 }
@@ -79,8 +79,8 @@ select {
 
 .choices__inner {
   border-radius: 6px !important;
-  height: 34px !important;
-  padding: 3px 10px !important;
+  height: 38px !important;
+  padding: 6px 10px !important;
   font-size: 0.9rem !important;
   border: 1px solid #ccc !important;
   background-color: #fff !important;
@@ -96,14 +96,14 @@ select {
   line-height: 1 !important;
 }
 
-/* === Checkbox Labels === */
+/* === Checkboxes === */
 label[for="supplyOnly"],
 label[for="vatExempt"] {
   display: flex;
   align-items: center;
   gap: 10px;
   font-weight: normal;
-  margin: 12px 0;
+  margin: 14px 0;
 }
 
 input[type="checkbox"] {
@@ -111,7 +111,7 @@ input[type="checkbox"] {
   margin: 0;
 }
 
-/* === Estimate Output Box === */
+/* === Estimate Output === */
 #estimate {
   background-color: #eef7ec;
   padding: 15px;
@@ -141,5 +141,6 @@ input[type="checkbox"] {
   background-color: #1e336b;
   transform: translateY(-1px);
 }
+
 
 
