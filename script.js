@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("customerName").placeholder =
     `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
 
-  assetChoices = new Choices("#assetSelect", { searchEnabled: true });
-  makeChoices = new Choices("#makeSelect", { searchEnabled: true });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true });
+  assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
+  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
 
   populateAssets();
 
@@ -59,7 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
     quoteItems.push({ asset, make, repair });
     showEstimate();
 
-    populateAssets(); // fixes asset reset bug
+    // Reset form
+    populateAssets();
     makeChoices.clearChoices();
     repairChoices.clearChoices();
 
@@ -77,19 +78,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function populateAssets() {
   const assets = Object.keys(data);
+
   assetChoices.clearChoices();
   assetChoices.setChoices(
-    [{ value: '', label: 'Select Asset', disabled: true, selected: true }]
-      .concat(assets.map(a => ({ value: a, label: a }))),
-    'value', 'label',
-    false // Prevent duplication
+    [
+      { value: '', label: 'Select Asset', selected: true, disabled: true },
+      ...assets.map(a => ({ value: a, label: a }))
+    ],
+    'value',
+    'label',
+    false
   );
+
   assetChoices.setChoiceByValue('');
 }
 
 function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
+
   makeChoices.clearChoices();
   makeChoices.setChoices(makes.map(m => ({ value: m, label: m })), 'value', 'label', true);
 }
@@ -98,6 +105,7 @@ function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
+
   repairChoices.clearChoices();
   repairChoices.setChoices(repairs.map(r => ({ value: r, label: r })), 'value', 'label', true);
 }
