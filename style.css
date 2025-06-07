@@ -68,25 +68,26 @@ input[type="text"] {
 
 input[type="checkbox"] {
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border: 2px solid #ccc;
   border-radius: 3px;
   background: #fff;
   position: relative;
   cursor: pointer;
   transition: all 0.2s ease;
+  vertical-align: middle;
 }
 
 input[type="checkbox"]::before {
   content: "";
   position: absolute;
-  width: 5px;
-  height: 10px;
+  width: 4px;
+  height: 8px;
   border: solid #27488f;
   border-width: 0 2px 2px 0;
-  top: 1px;
-  left: 5px;
+  top: 0px;
+  left: 4px;
   transform: rotate(45deg);
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -105,8 +106,8 @@ label[for="supplyOnly"],
 label[for="vatExempt"] {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 14px 0;
+  gap: 8px;
+  margin: 10px 0;
   font-weight: 500;
 }
 
@@ -172,4 +173,5 @@ label[for="vatExempt"] {
   line-height: 1.5;
   margin-top: 20px;
 }
+
 
