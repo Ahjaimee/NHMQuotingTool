@@ -40,7 +40,6 @@
       <select id="repairSelect"></select>
     </div>
 
-    <!-- Checkboxes moved to bottom of form -->
     <div class="form-group" id="optionsSection" hidden>
       <h2>Quote Options</h2>
       <div class="checkbox-group">
@@ -56,8 +55,8 @@
     <button type="button" id="addItem" class="btn-primary">+ Add Item</button>
   </form>
 
-  <section id="quoteSection" class="quote-section" hidden>
-    <div id="pdfContent">
+  <section id="quoteSection" class="quote-section">
+    <div id="pdfContent" style="visibility: hidden; position: absolute; left: -9999px;">
       <header class="quote-header">
         <img src="nhm-logo.png" class="logo-sm" alt="NHM Logo"/>
         <div class="company-info">
