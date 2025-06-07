@@ -1,3 +1,4 @@
+// Data source
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
@@ -9,10 +10,10 @@ const data = {
 
 let quoteItems = [];
 const refs = {};
-let choices = {};
+const choices = {};
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Cache elements
+  // Cache DOM refs
   [
     "assetSelect","makeSelect","repairSelect",
     "supplyOnly","vatExempt","customerName",
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "pdfVAT","pdfTotal","addItem","downloadPDF"
   ].forEach(id => refs[id] = document.getElementById(id));
 
-  // Random placeholder
+  // Random name placeholder
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
   refs.customerName.placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
@@ -30,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   choices.make   = new Choices(refs.makeSelect,   { searchEnabled:true,shouldSort:false });
   choices.repair = new Choices(refs.repairSelect,{ searchEnabled:true,shouldSort:false });
 
+  // Populate initial
   populateAssets();
   refs.quoteSection.hidden = true;
 
@@ -73,25 +75,26 @@ function populateAssets() {
   const opts = Object.keys(data);
   choices.asset.destroy();
   refs.assetSelect.innerHTML = `<option value="" disabled selected>Select Asset</option>`
-    + opts.map(a=>`<option value="${a}">${a}</option>`).join("");
-  choices.asset = new Choices(refs.assetSelect, { searchEnabled:true,shouldSort:false });
+    + opts.map(o=>`<option value="${o}">${o}</option>`).join("");
+  choices.asset = new Choices(refs.assetSelect,{ searchEnabled:true,shouldSort:false });
 }
 
 function populateMakes() {
-  const arr = data[refs.assetSelect.value] ? Object.keys(data[refs.assetSelect.value]) : [];
+  const list = data[refs.assetSelect.value] ? Object.keys(data[refs.assetSelect.value]) : [];
   choices.make.destroy();
   refs.makeSelect.innerHTML = `<option value="" disabled selected>Select Make/Model</option>`
-    + arr.map(m=>`<option value="${m}">${m}</option>`).join("");
-  choices.make = new Choices(refs.makeSelect, { searchEnabled:true,shouldSort:false });
+    + list.map(m=>`<option value="${m}">${m}</option>`).join("");
+  choices.make = new Choices(refs.makeSelect,{ searchEnabled:true,shouldSort:false });
 }
 
 function populateRepairs() {
   const arr = data[refs.assetSelect.value]?.[refs.makeSelect.value]
-    ? Object.keys(data[refs.assetSelect.value][refs.makeSelect.value]) : [];
+    ? Object.keys(data[refs.assetSelect.value][refs.makeSelect.value])
+    : [];
   choices.repair.destroy();
   refs.repairSelect.innerHTML = `<option value="" disabled selected>Select Repair</option>`
     + arr.map(r=>`<option value="${r}">${r}</option>`).join("");
-  choices.repair = new Choices(refs.repairSelect, { searchEnabled:true,shouldSort:false });
+  choices.repair = new Choices(refs.repairSelect,{ searchEnabled:true,shouldSort:false });
 }
 
 function resetForm() {
@@ -108,9 +111,9 @@ function renderQuote() {
 
   quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.repair];
-    const labour  = refs.supplyOnly.checked ? 0 : info.labour_hours * 45;
-    const carriage= refs.supplyOnly.checked ? 15.95 : 0;
-    const line    = labour + info.material_cost + carriage;
+    const labour   = refs.supplyOnly.checked ? 0 : info.labour_hours * 45;
+    const carriage = refs.supplyOnly.checked ? 15.95 : 0;
+    const line     = labour + info.material_cost + carriage;
     subtotal += line;
 
     const tr = document.createElement("tr");
@@ -131,6 +134,6 @@ function renderQuote() {
   refs.pdfSubtotal.textContent     = `£${subtotal.toFixed(2)}`;
   refs.pdfVAT.textContent          = `£${vatAmt.toFixed(2)}`;
   refs.pdfTotal.textContent        = `£${total.toFixed(2)}`;
-  refs.pdfQuoteNumber.textContent  = refs.quoteNumber.value || "(No #)";
+  refs.pdfQuoteNumber.textContent  = refs.quoteNumber.value   || "(No #)";
   refs.pdfCustomerName.textContent = refs.customerName.value  || "(No name)";
 }
