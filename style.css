@@ -50,6 +50,10 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
+select {
+  display: none;
+}
+
 .choices {
   margin-bottom: 14px !important;
   width: 100% !important;
@@ -172,9 +176,3 @@ label[for="vatExempt"] {
   line-height: 1.5;
   margin-top: 20px;
 }
-
-
-
-
-
-
