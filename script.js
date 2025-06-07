@@ -1,5 +1,5 @@
 // script.js
-
+// Your data source
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
@@ -11,157 +11,147 @@ const data = {
 
 let quoteItems = [];
 let assetChoices, makeChoices, repairChoices;
+let assetSelect, makeSelect, repairSelect;
+let supplyOnly, vatExempt, quoteNumber, customerName;
+let pdfTableBody, pdfSubtotal, pdfVAT, pdfTotal, pdfQuoteNumber, pdfCustomerName;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Random placeholder names
+  // Element refs
+  assetSelect      = document.getElementById("assetSelect");
+  makeSelect       = document.getElementById("makeSelect");
+  repairSelect     = document.getElementById("repairSelect");
+  supplyOnly       = document.getElementById("supplyOnly");
+  vatExempt        = document.getElementById("vatExempt");
+  quoteNumber      = document.getElementById("quoteNumber");
+  customerName     = document.getElementById("customerName");
+  pdfTableBody     = document.getElementById("pdfTableBody");
+  pdfSubtotal      = document.getElementById("pdfSubtotal");
+  pdfVAT           = document.getElementById("pdfVAT");
+  pdfTotal         = document.getElementById("pdfTotal");
+  pdfQuoteNumber   = document.getElementById("pdfQuoteNumber");
+  pdfCustomerName  = document.getElementById("pdfCustomerName");
+
+  // Random name placeholder
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
-  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
+  customerName.placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
-  // Initialize Choices.js
-  assetChoices  = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices   = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices("#repairSelect",{ searchEnabled: true, shouldSort: false });
+  // Init Choices.js on selects
+  assetChoices  = new Choices(assetSelect,  { searchEnabled: true, shouldSort: false });
+  makeChoices   = new Choices(makeSelect,   { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices(repairSelect, { searchEnabled: true, shouldSort: false });
 
+  // First‐load assets
   populateAssets();
 
-  // Form event listeners
-  document.getElementById("assetSelect").addEventListener("change", () => {
+  // Cascade selects
+  assetSelect.addEventListener("change", () => {
     populateMakes();
-    document.getElementById("makeSection").style.display = "block";
+    document.getElementById("makeSection").hidden = false;
   });
-
-  document.getElementById("makeSelect").addEventListener("change", () => {
+  makeSelect.addEventListener("change", () => {
     populateRepairs();
-    document.getElementById("repairSection").style.display = "block";
+    document.getElementById("repairSection").hidden = false;
+  });
+  repairSelect.addEventListener("change", () => {
+    document.getElementById("optionsSection").hidden = false;
   });
 
-  document.getElementById("repairSelect").addEventListener("change", () => {
-    document.getElementById("optionsSection").style.display = "block";
-  });
+  // Live recalculation
+  supplyOnly.addEventListener("change", renderQuote);
+  vatExempt.addEventListener("change", renderQuote);
 
-  document.getElementById("supplyOnly").addEventListener("change", showEstimate);
-  document.getElementById("vatExempt").addEventListener("change", showEstimate);
-
+  // Add item button
   document.getElementById("addItem").addEventListener("click", () => {
-    const asset  = document.getElementById("assetSelect").value;
-    const make   = document.getElementById("makeSelect").value;
-    const repair = document.getElementById("repairSelect").value;
-    if (!asset || !make || !repair) return;
-
-    quoteItems.push({ asset, make, repair });
-    showEstimate();
+    if (!assetSelect.value || !makeSelect.value || !repairSelect.value) return;
+    quoteItems.push({
+      asset:  assetSelect.value,
+      make:   makeSelect.value,
+      repair: repairSelect.value
+    });
     resetForm();
+    renderQuote();
   });
 
+  // Download PDF
   document.getElementById("downloadPDF").addEventListener("click", () => {
-    // Insert customer details into a header for PDF
-    const header = document.createElement("div");
-    header.innerHTML = `
-      <h2>Quote: ${document.getElementById("quoteNumber").value || "(No #)"}</h2>
-      <p>Customer: ${document.getElementById("customerName").value || "(No name)"}</p>
-      <hr/>
-    `;
-    const quoteSection = document.querySelector(".quote-section");
-    quoteSection.prepend(header);
-
     html2pdf()
-      .from(quoteSection)
-      .set({ margin: 10, filename: `Quote_${Date.now()}.pdf` })
-      .save()
-      .finally(() => header.remove());
+      .from(document.getElementById("pdfContent"))
+      .set({
+        margin: 10,
+        filename: `Quote_${quoteNumber.value || 'NoNumber'}.pdf`
+      })
+      .save();
   });
 });
 
+// Populate asset dropdown
 function populateAssets() {
-  const assets = Object.keys(data);
-  const select = document.getElementById("assetSelect");
+  const opts = Object.keys(data);
   assetChoices.destroy();
-  select.innerHTML = `
-    <option value="" disabled selected>Select Asset</option>
-    ${assets.map(a => `<option value="${a}">${a}</option>`).join("")}
-  `;
-  assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  assetSelect.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
+    opts.map(a => `<option value="${a}">${a}</option>`).join("");
+  assetChoices = new Choices(assetSelect, { searchEnabled: true, shouldSort: false });
 }
 
+// Populate make/model dropdown
 function populateMakes() {
-  const asset = document.getElementById("assetSelect").value;
-  const makes = data[asset] ? Object.keys(data[asset]) : [];
-  const select = document.getElementById("makeSelect");
+  const makes = data[assetSelect.value] ? Object.keys(data[assetSelect.value]) : [];
   makeChoices.destroy();
-  select.innerHTML = `
-    <option value="" disabled selected>Select Make/Model</option>
-    ${makes.map(m => `<option value="${m}">${m}</option>`).join("")}
-  `;
-  makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  makeSelect.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
+    makes.map(m => `<option value="${m}">${m}</option>`).join("");
+  makeChoices = new Choices(makeSelect, { searchEnabled: true, shouldSort: false });
 }
 
+// Populate repair dropdown
 function populateRepairs() {
-  const asset = document.getElementById("assetSelect").value;
-  const make  = document.getElementById("makeSelect").value;
-  const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
-  const select = document.getElementById("repairSelect");
+  const repairs = data[assetSelect.value]?.[makeSelect.value]
+    ? Object.keys(data[assetSelect.value][makeSelect.value])
+    : [];
   repairChoices.destroy();
-  select.innerHTML = `
-    <option value="" disabled selected>Select Repair</option>
-    ${repairs.map(r => `<option value="${r}">${r}</option>`).join("")}
-  `;
-  repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  repairSelect.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
+    repairs.map(r => `<option value="${r}">${r}</option>`).join("");
+  repairChoices = new Choices(repairSelect, { searchEnabled: true, shouldSort: false });
 }
 
+// Reset form down‐stream selections & checkboxes
 function resetForm() {
-  // Reset selects
   populateAssets();
-  document.getElementById("makeSection").style.display = "none";
-  document.getElementById("repairSection").style.display = "none";
-  document.getElementById("optionsSection").style.display = "none";
-
-  // Clear checkboxes
-  document.getElementById("supplyOnly").checked = false;
-  document.getElementById("vatExempt").checked  = false;
+  document.getElementById("makeSection").hidden   = true;
+  document.getElementById("repairSection").hidden = true;
+  document.getElementById("optionsSection").hidden= true;
+  supplyOnly.checked = vatExempt.checked = false;
 }
 
-function removeItem(idx) {
-  quoteItems.splice(idx, 1);
-  showEstimate();
-}
-
-function showEstimate() {
-  const quoteLines = document.getElementById("quoteLines");
-  const estimate   = document.getElementById("estimate");
-  const supplyOnly = document.getElementById("supplyOnly").checked;
-  const vatExempt  = document.getElementById("vatExempt").checked;
-
-  quoteLines.innerHTML = "";
+// Render the PDF table & summary
+function renderQuote() {
+  pdfTableBody.innerHTML = "";
   let subtotal = 0;
 
-  quoteItems.forEach((item, i) => {
+  quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.repair];
-    const labour  = supplyOnly ? 0 : info.labour_hours * 45;
-    const carriage = supplyOnly ? 15.95 : 0;
+    const labour  = supplyOnly.checked ? 0 : info.labour_hours * 45;
+    const carriage= supplyOnly.checked ? 15.95 : 0;
     const lineTotal = labour + info.material_cost + carriage;
     subtotal += lineTotal;
 
-    quoteLines.innerHTML += `
-      <div class="quote-line">
-        <p><strong>${item.asset} → ${item.make} → ${item.repair}</strong></p>
-        <p>Part #: ${info.part_number}</p>
-        <p>Labour: ${supplyOnly ? "N/A" : `£${labour.toFixed(2)}`}</p>
-        <p>Materials: £${info.material_cost.toFixed(2)}</p>
-        ${supplyOnly ? `<p>Carriage: £${carriage.toFixed(2)}</p>` : ""}
-        <button onclick="removeItem(${i})">Remove</button>
-      </div>
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${item.asset} → ${item.make} → ${item.repair}</td>
+      <td>${info.part_number}</td>
+      <td>£${labour.toFixed(2)}</td>
+      <td>£${info.material_cost.toFixed(2)}</td>
+      <td>£${carriage.toFixed(2)}</td>
+      <td>£${lineTotal.toFixed(2)}</td>
     `;
+    pdfTableBody.appendChild(tr);
   });
 
-  const vat   = vatExempt ? 0 : subtotal * 0.2;
+  const vat   = vatExempt.checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
 
-  estimate.innerHTML = `
-    <h3>Quote Summary</h3>
-    <p><strong>Items:</strong> ${quoteItems.length}</p>
-    <p><strong>Subtotal:</strong> £${subtotal.toFixed(2)}</p>
-    <p><strong>VAT (${vatExempt ? "Exempt" : "20%"}):</strong> £${vat.toFixed(2)}</p>
-    <p><strong>Total:</strong> £${total.toFixed(2)}</p>
-  `;
+  pdfSubtotal.textContent       = `£${subtotal.toFixed(2)}`;
+  pdfVAT.textContent            = `£${vat.toFixed(2)}`;
+  pdfTotal.textContent          = `£${total.toFixed(2)}`;
+  pdfQuoteNumber.textContent    = quoteNumber.value || "(No #)";
+  pdfCustomerName.textContent   = customerName.value || "(No name)";
 }
-
