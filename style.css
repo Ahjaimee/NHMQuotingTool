@@ -18,29 +18,25 @@ body {
 
 h1 {
   text-align: center;
-  margin-top: 0;
-  margin-bottom: 25px;
+  margin: 0 0 25px;
   font-size: 28px;
-  color: #27488f;
 }
 
 form,
 .quote-section {
-  background-color: #ffffff;
-  width: 100%;
+  background-color: #fff;
   max-width: 600px;
   margin: 0 auto 25px;
-  padding: 25px 24px;
+  padding: 25px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   border-left: 5px solid #27488f;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
 }
 
 h2 {
   font-size: 18px;
   margin-top: 0;
-  color: #27488f;
 }
 
 label {
@@ -55,12 +51,11 @@ input[type="text"] {
   margin-bottom: 18px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 0.9rem;
   height: 34px;
+  font-size: 0.9rem;
   box-sizing: border-box;
 }
 
-/* Choices.js Dropdown Styling */
 select {
   display: none;
 }
@@ -68,8 +63,6 @@ select {
 .choices {
   margin-bottom: 14px !important;
   width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
 }
 
 .choices__inner {
@@ -81,35 +74,14 @@ select {
   background-color: #fff !important;
   display: flex !important;
   align-items: center !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
 }
 
-.choices__list--single {
-  padding: 0 !important;
-  margin: 0 !important;
-  line-height: 1 !important;
-}
-
-/* Output Summary Box */
-#estimate {
-  background-color: #eef7ec;
-  padding: 15px;
-  border-left: 5px solid #f58020;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-top: 20px;
-}
-
-/* Button Styling */
-#downloadPDF,
-#addItem {
-  display: inline-block;
+#addItem,
+#downloadPDF {
   width: 100%;
   padding: 12px;
   margin-top: 20px;
-  background-color: #27488f;
+  background-color: #f58020;
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
@@ -120,14 +92,13 @@ select {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-#addItem {
-  background-color: #f58020;
-  margin-top: 15px;
-}
-
 #addItem:hover {
   background-color: #d96d13;
   transform: translateY(-1px);
+}
+
+#downloadPDF {
+  background-color: #27488f;
 }
 
 #downloadPDF:hover {
@@ -135,19 +106,16 @@ select {
   transform: translateY(-1px);
 }
 
-/* Checkbox Styling */
 input[type="checkbox"] {
-  appearance: none !important;
-  -webkit-appearance: none !important;
+  appearance: none;
   width: 20px;
   height: 20px;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
+  position: relative;
   cursor: pointer;
   transition: all 0.2s ease;
-  position: relative;
-  display: inline-block;
 }
 
 input[type="checkbox"]::before {
@@ -182,23 +150,26 @@ label[for="vatExempt"] {
   font-weight: 500;
   font-size: 0.95rem;
   color: #27488f;
-  cursor: pointer;
 }
 
-/* Quote Line Display */
+#estimate {
+  background-color: #eef7ec;
+  padding: 15px;
+  border-left: 5px solid #f58020;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 20px;
+}
+
 .quote-line {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 12px;
   background: #fafafa;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
 }
 
-.quote-line p {
-  margin: 4px 0;
-}
-
-/* Remove Item Button */
 .quote-line button {
   margin-top: 8px;
   padding: 6px 12px;
@@ -214,7 +185,6 @@ label[for="vatExempt"] {
 .quote-line button:hover {
   background-color: #a41e1e;
 }
-
 
 
 
