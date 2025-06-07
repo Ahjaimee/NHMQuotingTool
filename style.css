@@ -1,10 +1,9 @@
-/* ----------------- Base ----------------- */
+/* Box sizing & base */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background: #f4f4f4;
@@ -13,27 +12,15 @@ body {
   color: #27488f;
 }
 
-/* -------------- Logo + Title ------------- */
-.logo-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.logo {
-  height: 60px;
-}
+/* Logo & heading */
+.logo-container { text-align: center; margin-bottom: 20px; }
+.logo { height: 60px; }
+h1 { text-align: center; margin-bottom: 30px; }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-}
+/* Section titles */
+h2 { font-size: 1.1rem; margin: 25px 0 12px; }
 
-/* ------------- Section Titles ----------- */
-h2 {
-  font-size: 1.1rem;
-  margin: 25px 0 12px;
-}
-
-/* --------------- Form ------------------ */
+/* Form */
 #quoteForm {
   max-width: 600px;
   margin: 0 auto 40px;
@@ -42,18 +29,15 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-
 .form-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
 }
-
 .form-group label {
-  font-weight: 500;
   margin-bottom: 4px;
+  font-weight: 500;
 }
-
 .form-group input,
 .form-group select {
   padding: 8px;
@@ -77,15 +61,14 @@ h2 {
   align-items: center !important;
 }
 
-/* Checkbox labels */
-.checkbox-label {
+/* Checkbox group */
+.checkbox-group {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
   font-weight: 500;
 }
-
 input[type="checkbox"] {
   appearance: none;
   width: 14px;
@@ -94,10 +77,10 @@ input[type="checkbox"] {
   border-radius: 3px;
   position: relative;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 input[type="checkbox"]::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 4px;
   height: 8px;
@@ -107,7 +90,7 @@ input[type="checkbox"]::before {
   left: 4px;
   transform: rotate(45deg);
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s;
 }
 input[type="checkbox"]:checked {
   background: #e0ebfa;
@@ -117,9 +100,8 @@ input[type="checkbox"]:checked::before {
   opacity: 1;
 }
 
-/* Add Item & Download buttons */
+/* Buttons */
 .btn-primary {
-  display: block;
   width: 100%;
   padding: 10px;
   background: #f58020;
@@ -131,7 +113,7 @@ input[type="checkbox"]:checked::before {
   text-align: center;
   margin-top: 16px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition: background-color 0.3s, transform 0.1s;
 }
 .btn-primary:hover {
   transform: translateY(-1px);
@@ -143,7 +125,7 @@ input[type="checkbox"]:checked::before {
   background: #1e336b;
 }
 
-/* ------------- Quote Preview ------------ */
+/* Quote preview */
 .quote-section {
   max-width: 800px;
   margin: 0 auto;
@@ -153,7 +135,6 @@ input[type="checkbox"]:checked::before {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-
 .quote-header {
   display: flex;
   align-items: center;
@@ -161,24 +142,17 @@ input[type="checkbox"]:checked::before {
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
-.logo-sm {
-  height: 50px;
-}
-.company-info {
-  margin-left: 20px;
-  line-height: 1.4;
-}
+.logo-sm { height: 50px; }
+.company-info { margin-left: 20px; line-height: 1.4; }
 
 .customer-info {
   display: flex;
   gap: 40px;
   margin-bottom: 20px;
 }
-.customer-info p {
-  margin: 4px 0;
-}
+.customer-info p { margin: 4px 0; }
 
-/* Items table */
+/* Table */
 .quote-table {
   width: 100%;
   border-collapse: collapse;
@@ -189,17 +163,3 @@ input[type="checkbox"]:checked::before {
   border: 1px solid #ccc;
   padding: 10px 8px;
   font-size: 0.95rem;
-  vertical-align: middle;
-}
-.quote-table th {
-  background: #eef7ec;
-  text-align: left;
-  font-weight: 600;
-}
-.quote-table td.right {
-  text-align: right;
-}
-/* remove double border atop footer */
-.quote-table tfoot td {
-  border-top: none;
-}
