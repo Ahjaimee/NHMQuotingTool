@@ -5,23 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- 1) Custom styles in same folder -->
+  <!-- your CSS -->
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- 2) Choices.js CSS -->
+  <!-- Choices.js CSS -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
   />
 </head>
 <body>
-  <!-- Logo + Title -->
   <div class="logo-container">
     <img src="nhm-logo.png" alt="NHM Logo" class="logo"/>
   </div>
   <h1>Quote Estimator</h1>
 
-  <!-- Form -->
   <form id="quoteForm">
     <h2>Customer Details</h2>
     <div class="form-group">
@@ -46,6 +44,7 @@
       <label for="repairSelect">Repair Type</label>
       <select id="repairSelect"></select>
     </div>
+    <!-- Options always remain visible once shown -->
     <div class="form-group nested" id="optionsSection" hidden>
       <div class="checkbox-group">
         <input type="checkbox" id="supplyOnly"/>
@@ -60,7 +59,6 @@
     <button type="button" id="addItem" class="btn-primary">+ Add Item</button>
   </form>
 
-  <!-- Quote Preview + PDF -->
   <section id="quoteSection" class="quote-section" hidden>
     <div id="pdfContent">
       <header class="quote-header">
@@ -112,11 +110,16 @@
     <button id="downloadPDF" class="btn-primary">Download PDF</button>
   </section>
 
-  <!-- 3) Dependencies (no defer!) -->
-  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <!-- 4) Your logic -->
-  <script src="script.js"></script>
+  <!-- Dependencies -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"
+    defer
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    defer
+  ></script>
+  <!-- your JS -->
+  <script src="script.js" defer></script>
 </body>
 </html>
-
