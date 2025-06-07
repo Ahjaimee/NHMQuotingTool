@@ -119,18 +119,19 @@ select {
   transform: translateY(-1px);
 }
 
-/* ✅ Enhanced checkbox styling */
+/* ✅ Enhanced Custom Checkbox Style */
 input[type="checkbox"] {
-  appearance: none;
+  appearance: none !important;
+  -webkit-appearance: none !important;
   width: 20px;
   height: 20px;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
+  cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
-  cursor: pointer;
-  outline: none;
+  display: inline-block;
 }
 
 input[type="checkbox"]::before {
@@ -167,6 +168,7 @@ label[for="vatExempt"] {
   color: #27488f;
   cursor: pointer;
 }
+
 
 
 
