@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- your CSS -->
-  <link rel="stylesheet" href="style.css"/>
-
-  <!-- Choices.js CSS -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
-  />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
   <div class="logo-container">
-    <img src="nhm-logo.png" alt="NHM Logo" class="logo"/>
+    <img src="nhm-logo.png" alt="Company Logo" class="logo" />
   </div>
+
   <h1>Quote Estimator</h1>
 
   <form id="quoteForm">
@@ -44,8 +39,10 @@
       <label for="repairSelect">Repair Type</label>
       <select id="repairSelect"></select>
     </div>
-    <!-- Options always remain visible once shown -->
-    <div class="form-group nested" id="optionsSection" hidden>
+
+    <!-- Checkboxes moved to bottom of form -->
+    <div class="form-group" id="optionsSection" hidden>
+      <h2>Quote Options</h2>
       <div class="checkbox-group">
         <input type="checkbox" id="supplyOnly"/>
         <label for="supplyOnly">Supply Only (no labour)</label>
@@ -110,16 +107,8 @@
     <button id="downloadPDF" class="btn-primary">Download PDF</button>
   </section>
 
-  <!-- Dependencies -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"
-    defer
-  ></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-    defer
-  ></script>
-  <!-- your JS -->
-  <script src="script.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
