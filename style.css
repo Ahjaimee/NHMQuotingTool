@@ -22,6 +22,12 @@ h1 {
   font-size: 28px;
 }
 
+h2 {
+  font-size: 18px;
+  margin: 20px 0 12px;   /* extra top & bottom space */
+  color: #27488f;
+}
+
 form, .quote-section {
   background-color: #fff;
   max-width: 600px;
@@ -29,25 +35,25 @@ form, .quote-section {
   padding: 25px;
   border-radius: 12px;
   border-left: 5px solid #27488f;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   box-sizing: border-box;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;    /* more space under each label */
   font-weight: bold;
-  font-size: 0.85rem;
+  font-size: 0.9rem;     /* slightly larger for readability */
 }
 
 input[type="text"] {
   width: 100%;
-  padding: 5px 8px;
-  margin-bottom: 14px;
-  border-radius: 5px;
+  padding: 6px 10px;     /* larger padding */
+  margin-bottom: 18px;   /* restored original space */
+  border-radius: 6px;
   border: 1px solid #ccc;
-  height: 30px;
-  font-size: 0.85rem;
+  height: 34px;          /* taller */
+  font-size: 0.9rem;
   box-sizing: border-box;
 }
 
@@ -68,6 +74,7 @@ input[type="text"] {
   box-sizing: border-box !important;
 }
 
+/* Checkboxes */
 input[type="checkbox"] {
   appearance: none;
   width: 14px;
@@ -109,10 +116,11 @@ label[for="vatExempt"] {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 8px 0;
+  margin: 10px 0;
   font-weight: 500;
 }
 
+/* Buttons */
 #addItem,
 #downloadPDF {
   width: 100%;
@@ -126,7 +134,7 @@ label[for="vatExempt"] {
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
 #addItem:hover {
@@ -143,6 +151,7 @@ label[for="vatExempt"] {
   transform: translateY(-1px);
 }
 
+/* Quote lines */
 .quote-line {
   background: #fafafa;
   border: 1px solid #ddd;
@@ -166,6 +175,7 @@ label[for="vatExempt"] {
   background-color: #a41e1e;
 }
 
+/* Estimate box */
 #estimate {
   background-color: #eef7ec;
   padding: 15px;
@@ -175,3 +185,4 @@ label[for="vatExempt"] {
   line-height: 1.5;
   margin-top: 20px;
 }
+
