@@ -18,57 +18,47 @@ const data = {
 let assetChoices, makeChoices, repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Setup searchable dropdowns
-  assetChoices = new Choices('#assetSelect', { searchEnabled: true, itemSelectText: '' });
-  makeChoices = new Choices('#makeSelect', { searchEnabled: true, itemSelectText: '' });
-  repairChoices = new Choices('#repairSelect', { searchEnabled: true, itemSelectText: '' });
+  assetChoices = new Choices("#assetSelect", { searchEnabled: true });
+  makeChoices = new Choices("#makeSelect", { searchEnabled: true });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true });
 
-  // Populate asset dropdown
-  const assetOptions = Object.keys(data).map(asset => ({
-    value: asset,
-    label: asset
-  }));
+  const assetOptions = Object.keys(data).map(asset => ({ value: asset, label: asset }));
   assetChoices.setChoices(assetOptions, 'value', 'label', true);
 
-  document.getElementById('assetSelect').addEventListener('change', () => {
-    const selectedAsset = document.getElementById('assetSelect').value;
+  document.getElementById("assetSelect").addEventListener("change", () => {
+    const selectedAsset = document.getElementById("assetSelect").value;
+    makeChoices.clearChoices();
+    repairChoices.clearChoices();
+
     if (data[selectedAsset]) {
-      const makes = Object.keys(data[selectedAsset]).map(make => ({
-        value: make,
-        label: make
-      }));
-      makeChoices.clearChoices();
-      makeChoices.setChoices(makes, 'value', 'label', true);
-      repairChoices.clearChoices();
+      const makeOptions = Object.keys(data[selectedAsset]).map(make => ({ value: make, label: make }));
+      makeChoices.setChoices(makeOptions, 'value', 'label', true);
     }
   });
 
-  document.getElementById('makeSelect').addEventListener('change', () => {
-    const selectedAsset = document.getElementById('assetSelect').value;
-    const selectedMake = document.getElementById('makeSelect').value;
+  document.getElementById("makeSelect").addEventListener("change", () => {
+    const selectedAsset = document.getElementById("assetSelect").value;
+    const selectedMake = document.getElementById("makeSelect").value;
+    repairChoices.clearChoices();
+
     if (data[selectedAsset] && data[selectedAsset][selectedMake]) {
-      const repairs = Object.keys(data[selectedAsset][selectedMake]).map(repair => ({
-        value: repair,
-        label: repair
-      }));
-      repairChoices.clearChoices();
-      repairChoices.setChoices(repairs, 'value', 'label', true);
+      const repairOptions = Object.keys(data[selectedAsset][selectedMake]).map(repair => ({ value: repair, label: repair }));
+      repairChoices.setChoices(repairOptions, 'value', 'label', true);
     }
   });
 
-  document.getElementById('repairSelect').addEventListener('change', showEstimate);
-  document.getElementById('supplyOnly').addEventListener('change', showEstimate);
+  document.getElementById("repairSelect").addEventListener("change", showEstimate);
+  document.getElementById("supplyOnly").addEventListener("change", showEstimate);
 });
 
 function showEstimate() {
-  const asset = document.getElementById('assetSelect').value;
-  const make = document.getElementById('makeSelect').value;
-  const repair = document.getElementById('repairSelect').value;
-  const estimateDiv = document.getElementById('estimate');
-
-  const customerName = document.getElementById('customerName').value;
-  const quoteNumber = document.getElementById('quoteNumber').value;
-  const supplyOnly = document.getElementById('supplyOnly').checked;
+  const asset = document.getElementById("assetSelect").value;
+  const make = document.getElementById("makeSelect").value;
+  const repair = document.getElementById("repairSelect").value;
+  const customerName = document.getElementById("customerName").value;
+  const quoteNumber = document.getElementById("quoteNumber").value;
+  const supplyOnly = document.getElementById("supplyOnly").checked;
+  const estimateDiv = document.getElementById("estimate");
 
   if (!repair) {
     estimateDiv.innerHTML = "";
@@ -76,11 +66,9 @@ function showEstimate() {
   }
 
   const info = data[asset][make][repair];
-  const labourRate = 45;
-  const labourCost = supplyOnly ? 0 : info.labour_hours * labourRate;
+  const labourCost = supplyOnly ? 0 : info.labour_hours * 45;
   const carriageCost = supplyOnly ? 15.95 : 0;
-  const materialCost = info.material_cost;
-  const total = labourCost + materialCost + carriageCost;
+  const total = labourCost + info.material_cost + carriageCost;
 
   estimateDiv.innerHTML = `
     <h3>Quote Summary</h3>
@@ -90,10 +78,9 @@ function showEstimate() {
     <p><strong>Make:</strong> ${make}</p>
     <p><strong>Repair:</strong> ${repair} (Part #${info.part_number})</p>
     <p>Labour: ${supplyOnly ? "N/A (Supply Only)" : `£${labourCost.toFixed(2)}`}</p>
-    <p>Materials: £${materialCost.toFixed(2)}</p>
+    <p>Materials: £${info.material_cost.toFixed(2)}</p>
     ${supplyOnly ? `<p>Carriage: £${carriageCost.toFixed(2)}</p>` : ""}
     <p><strong>Total: £${total.toFixed(2)}</strong></p>
   `;
 }
-
 
