@@ -24,7 +24,8 @@ h1 {
   color: #27488f;
 }
 
-form, .quote-section {
+form,
+.quote-section {
   background-color: #ffffff;
   width: 100%;
   max-width: 600px;
@@ -89,6 +90,35 @@ select {
   line-height: 1 !important;
 }
 
+#estimate {
+  background-color: #eef7ec;
+  padding: 15px;
+  border-left: 5px solid #f58020;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+#downloadPDF {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #27488f;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+#downloadPDF:hover {
+  background-color: #1e336b;
+  transform: translateY(-1px);
+}
+
 /* ✅ Enhanced checkbox styling */
 input[type="checkbox"] {
   appearance: none;
@@ -138,34 +168,6 @@ label[for="vatExempt"] {
   cursor: pointer;
 }
 
-#estimate {
-  background-color: #eef7ec;
-  padding: 15px;
-  border-left: 5px solid #f58020;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-#downloadPDF {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
-  background-color: #27488f;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-#downloadPDF:hover {
-  background-color: #1e336b;
-  transform: translateY(-1px);
-}
 
 
 
