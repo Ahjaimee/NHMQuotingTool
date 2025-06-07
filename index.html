@@ -5,20 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- External Styles -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
-  <!-- Logo -->
   <div class="logo-container">
     <img src="nhm-logo.png" alt="Company Logo" class="logo" />
   </div>
 
-  <!-- Title -->
   <h1>Quote Estimator</h1>
 
-  <!-- Form -->
   <form id="quoteForm">
     <h2>Customer Details</h2>
     <label for="customerName">Customer Name:
@@ -54,18 +50,15 @@
       </label>
     </div>
 
-    <!-- Add Item Button -->
     <button type="button" id="addItem">+ Add Item to Quote</button>
   </form>
 
-  <!-- Quote Display -->
   <div class="quote-section">
     <div id="quoteLines"></div>
     <div id="estimate"></div>
     <button id="downloadPDF">Download PDF</button>
   </div>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
