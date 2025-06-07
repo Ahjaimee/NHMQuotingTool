@@ -9,12 +9,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
+  <!-- Logo -->
   <div class="logo-container">
     <img src="nhm-logo.png" alt="Company Logo" class="logo" />
   </div>
 
+  <!-- Title -->
   <h1>Quote Estimator</h1>
 
+  <!-- Quote Form -->
   <form id="quoteForm">
     <h2>Customer Details</h2>
 
@@ -55,13 +58,16 @@
     <button type="button" id="addItem">+ Add Item to Quote</button>
   </form>
 
+  <!-- Output & PDF -->
   <div class="quote-section">
     <div id="quoteLines"></div>
     <div id="estimate"></div>
     <button id="downloadPDF">Download PDF</button>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
+
