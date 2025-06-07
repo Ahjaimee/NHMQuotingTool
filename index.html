@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- 1. YOUR CSS: note the exact filename -->
+  <!-- 1) your custom CSS in the repo root -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- 2. Choices.js for the searchable <select>s -->
+  <!-- 2) Choices.js CSS for the searchable selects -->
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
@@ -21,7 +21,6 @@
 
   <form id="quoteForm">
     <h2>Customer Details</h2>
-
     <label for="customerName">Customer Name</label>
     <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
 
@@ -29,7 +28,6 @@
     <input type="text" id="quoteNumber" placeholder="e.g. Q12345" />
 
     <h2>Repair Details</h2>
-
     <label for="assetSelect">Asset Type</label>
     <select id="assetSelect"></select>
 
@@ -51,9 +49,9 @@
     <button type="button" id="addItem">+ Add Item</button>
   </form>
 
-  <section class="quote-section">
+  <!-- 3) Hide the quote section until you’ve added at least one item -->
+  <section id="quoteSection" class="quote-section" hidden>
     <div id="pdfContent">
-      <!-- PDF HEADER -->
       <header class="quote-header">
         <img src="nhm-logo.png" class="logo-sm" alt="NHM Logo" />
         <div class="company-info">
@@ -66,46 +64,30 @@
         </div>
       </header>
 
-      <!-- CUSTOMER INFO -->
       <div class="customer-info">
         <p><strong>Quote #:</strong> <span id="pdfQuoteNumber"></span></p>
         <p><strong>Customer:</strong> <span id="pdfCustomerName"></span></p>
       </div>
 
-      <!-- ITEMS TABLE -->
       <table class="quote-table">
         <thead>
           <tr>
-            <th>Description</th>
-            <th>Part #</th>
-            <th>Labour</th>
-            <th>Materials</th>
-            <th>Carriage</th>
-            <th>Total</th>
+            <th>Description</th><th>Part #</th><th>Labour</th>
+            <th>Materials</th><th>Carriage</th><th>Total</th>
           </tr>
         </thead>
         <tbody id="pdfTableBody"></tbody>
         <tfoot>
-          <tr>
-            <td colspan="5" class="right">Subtotal</td>
-            <td id="pdfSubtotal"></td>
-          </tr>
-          <tr>
-            <td colspan="5" class="right">VAT</td>
-            <td id="pdfVAT"></td>
-          </tr>
-          <tr>
-            <td colspan="5" class="right"><strong>Total</strong></td>
-            <td id="pdfTotal"></td>
-          </tr>
+          <tr><td colspan="5" class="right">Subtotal</td><td id="pdfSubtotal"></td></tr>
+          <tr><td colspan="5" class="right">VAT</td><td id="pdfVAT"></td></tr>
+          <tr><td colspan="5" class="right"><strong>Total</strong></td><td id="pdfTotal"></td></tr>
         </tfoot>
       </table>
     </div>
-
     <button id="downloadPDF">Download PDF</button>
   </section>
 
-  <!-- 3. Scripts (deferred so DOM is ready) -->
+  <!-- 4) Scripts (all in root) -->
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
   <script src="script.js" defer></script>
