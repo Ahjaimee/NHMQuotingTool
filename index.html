@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="logo-container">
-    <img src="nhm-logo.png" alt="Company Logo" class="logo" />
+    <img src="nhm-logo.png" alt="NHM Logo" class="logo"/>
   </div>
 
   <h1>Quote Estimator</h1>
@@ -31,11 +31,11 @@
       <label for="assetSelect">Asset Type</label>
       <select id="assetSelect"></select>
     </div>
-    <div class="form-group nested" id="makeSection" hidden>
+    <div class="form-group" id="makeSection" hidden>
       <label for="makeSelect">Make/Model</label>
       <select id="makeSelect"></select>
     </div>
-    <div class="form-group nested" id="repairSection" hidden>
+    <div class="form-group" id="repairSection" hidden>
       <label for="repairSelect">Repair Type</label>
       <select id="repairSelect"></select>
     </div>
@@ -55,17 +55,14 @@
     <button type="button" id="addItem" class="btn-primary">+ Add Item</button>
   </form>
 
-  <section id="quoteSection" class="quote-section">
-    <div id="pdfContent" style="visibility: hidden; position: absolute; left: -9999px;">
+  <section class="quote-section">
+    <!-- Hidden container to render PDF -->
+    <div id="pdfContent" style="position:absolute; left:-9999px; visibility:hidden;">
       <header class="quote-header">
         <img src="nhm-logo.png" class="logo-sm" alt="NHM Logo"/>
         <div class="company-info">
           <h2>NHM Engineering Ltd</h2>
-          <p>
-            123 Industrial Park Road<br/>
-            Shepperton TW17 9NN<br/>
-            Tel: 01932 227 600
-          </p>
+          <p>123 Industrial Park Road<br/>Shepperton TW17 9NN<br/>Tel: 01932 227 600</p>
         </div>
       </header>
 
