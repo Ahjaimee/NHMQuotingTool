@@ -9,45 +9,57 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
-  <div class="logo-container">
-    <img src="nhm-logo.png" alt="NHM Logo" class="logo" />
+  <div class="container">
+    <div class="logo-container">
+      <img src="nhm-logo.png" alt="NHM Logo" class="logo" />
+    </div>
+
+    <h1>Quotation Builder</h1>
+
+    <form id="quoteForm">
+      <section class="section">
+        <h2>Customer Info</h2>
+        <label>Customer Name:
+          <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
+        </label>
+        <label>Quote Number:
+          <input type="text" id="quoteNumber" placeholder="e.g. Q12345" />
+        </label>
+      </section>
+
+      <section class="section">
+        <h2>Repair Details</h2>
+        <label for="assetSelect">Asset Type:</label>
+        <select id="assetSelect"></select>
+
+        <div id="makeSection" class="hidden">
+          <label for="makeSelect">Make/Model:</label>
+          <select id="makeSelect"></select>
+        </div>
+
+        <div id="repairSection" class="hidden">
+          <label for="repairSelect">Repair Type:</label>
+          <select id="repairSelect"></select>
+        </div>
+
+        <button type="button" id="addItem">+ Add Item to Quote</button>
+      </section>
+
+      <section class="section">
+        <h2>Options</h2>
+        <div class="checkbox-group">
+          <label><input type="checkbox" id="supplyOnly" /> Supply Only</label>
+          <label><input type="checkbox" id="vatExempt" /> VAT Exempt</label>
+        </div>
+      </section>
+    </form>
+
+    <section id="quoteSection" class="quote-section hidden">
+      <div id="quoteLines"></div>
+      <div id="estimate"></div>
+      <button id="downloadPDF">Download PDF</button>
+    </section>
   </div>
-
-  <h1>Quote Estimator</h1>
-
-  <form id="quoteForm">
-    <h2>Customer Details</h2>
-    <label>Customer Name: <input type="text" id="customerName" /></label>
-    <label>Quote Number: <input type="text" id="quoteNumber" /></label>
-
-    <h2>Repair Details</h2>
-    <label for="assetSelect">Asset Type:</label>
-    <select id="assetSelect"></select>
-
-    <div id="makeSection" style="display: none;">
-      <label for="makeSelect">Make/Model:</label>
-      <select id="makeSelect"></select>
-    </div>
-
-    <div id="repairSection" style="display: none;">
-      <label for="repairSelect">Repair Type:</label>
-      <select id="repairSelect"></select>
-    </div>
-
-    <button type="button" id="addItem">+ Add Item to Quote</button>
-
-    <h2>Quote Options</h2>
-    <div class="checkbox-wrapper">
-      <label><input type="checkbox" id="supplyOnly" /> Supply Only</label>
-      <label><input type="checkbox" id="vatExempt" /> VAT Exempt</label>
-    </div>
-  </form>
-
-  <section class="quote-section" id="quoteSection" style="display: none;">
-    <div id="quoteLines"></div>
-    <div id="estimate"></div>
-    <button id="downloadPDF">Download PDF</button>
-  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
