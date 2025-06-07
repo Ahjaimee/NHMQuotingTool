@@ -17,60 +17,45 @@
 
   <form id="quoteForm">
     <h2>Customer Details</h2>
-    <div class="form-group">
-      <label for="customerName">Customer Name</label>
-      <input type="text" id="customerName" placeholder="e.g. Jamie Baker"/>
-    </div>
-    <div class="form-group">
-      <label for="quoteNumber">Quote Number</label>
-      <input type="text" id="quoteNumber" placeholder="e.g. Q12345"/>
-    </div>
+    <label for="customerName">Customer Name</label>
+    <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
+
+    <label for="quoteNumber">Quote Number</label>
+    <input type="text" id="quoteNumber" placeholder="e.g. Q12345" />
 
     <h2>Repair Details</h2>
-    <div class="form-group">
-      <label for="assetSelect">Asset Type</label>
-      <select id="assetSelect"></select>
-    </div>
-    <div class="form-group" id="makeSection" hidden>
-      <label for="makeSelect">Make/Model</label>
+    <label for="assetSelect">Asset Type:</label>
+    <select id="assetSelect"></select>
+
+    <div id="makeSection" hidden>
+      <label for="makeSelect">Make/Model:</label>
       <select id="makeSelect"></select>
     </div>
-    <div class="form-group" id="repairSection" hidden>
-      <label for="repairSelect">Repair Type</label>
+
+    <div id="repairSection" hidden>
+      <label for="repairSelect">Repair Type:</label>
       <select id="repairSelect"></select>
     </div>
 
-    <div class="form-group" id="optionsSection" hidden>
-      <h2>Quote Options</h2>
-      <div class="checkbox-group">
-        <input type="checkbox" id="supplyOnly"/>
-        <label for="supplyOnly">Supply Only (no labour)</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="vatExempt"/>
-        <label for="vatExempt">VAT Exempt</label>
-      </div>
-    </div>
+    <h2>Quote Options</h2>
+    <label for="supplyOnly">
+      <input type="checkbox" id="supplyOnly" />
+      Supply Only (no labour charge)
+    </label>
+    <label for="vatExempt">
+      <input type="checkbox" id="vatExempt" />
+      VAT Exempt (no VAT added to this quote)
+    </label>
 
-    <button type="button" id="addItem" class="btn-primary">+ Add Item</button>
+    <button type="button" id="addItem">+ Add Item to Quote</button>
   </form>
 
   <section id="quoteSection" class="quote-section" hidden>
+    <div id="quoteLines"></div>
+    <div id="estimate"></div>
     <div id="pdfContent" style="position: absolute; left: -9999px; visibility: hidden;">
-      <header class="quote-header">
-        <img src="nhm-logo.png" class="logo-sm" alt="NHM Logo"/>
-        <div class="company-info">
-          <h2>NHM Engineering Ltd</h2>
-          <p>123 Industrial Park Road<br/>Shepperton TW17 9NN<br/>Tel: 01932 227 600</p>
-        </div>
-      </header>
-
-      <div class="customer-info">
-        <p><strong>Quote #:</strong> <span id="pdfQuoteNumber"></span></p>
-        <p><strong>Customer:</strong> <span id="pdfCustomerName"></span></p>
-      </div>
-
-      <table class="quote-table">
+      <h2>Quote Summary (PDF)</h2>
+      <table>
         <thead>
           <tr>
             <th>Description</th>
@@ -82,24 +67,12 @@
           </tr>
         </thead>
         <tbody id="pdfTableBody"></tbody>
-        <tfoot>
-          <tr>
-            <td colspan="5" class="right">Subtotal</td>
-            <td id="pdfSubtotal">£0.00</td>
-          </tr>
-          <tr>
-            <td colspan="5" class="right">VAT</td>
-            <td id="pdfVAT">£0.00</td>
-          </tr>
-          <tr>
-            <td colspan="5" class="right"><strong>Total</strong></td>
-            <td id="pdfTotal">£0.00</td>
-          </tr>
-        </tfoot>
       </table>
+      <p><strong>Subtotal:</strong> <span id="pdfSubtotal"></span></p>
+      <p><strong>VAT:</strong> <span id="pdfVAT"></span></p>
+      <p><strong>Total:</strong> <span id="pdfTotal"></span></p>
     </div>
-
-    <button id="downloadPDF" class="btn-primary">Download PDF</button>
+    <button id="downloadPDF">Download PDF</button>
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
