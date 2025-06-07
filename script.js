@@ -64,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showEstimate();
 
     // Reset dropdowns
-    assetChoices.setChoiceByValue('');
-    document.getElementById("assetSelect").dispatchEvent(new Event("change"));
-
+    populateAssets(); // 👈 Fully resets and re-selects placeholder
     makeChoices.clearChoices();
     repairChoices.clearChoices();
 
@@ -85,17 +83,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function populateAssets() {
   const assets = Object.keys(data);
+
   assetChoices.clearChoices();
   assetChoices.setChoices(
     [{ value: '', label: 'Select Asset', disabled: true, selected: true }]
       .concat(assets.map(a => ({ value: a, label: a }))),
     'value', 'label', true
   );
+
+  // ✅ Force selection of placeholder after reload
+  assetChoices.setChoiceByValue('');
 }
 
 function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
+
   makeChoices.clearChoices();
   makeChoices.setChoices(makes.map(m => ({ value: m, label: m })), 'value', 'label', true);
 }
@@ -104,6 +107,7 @@ function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
+
   repairChoices.clearChoices();
   repairChoices.setChoices(repairs.map(r => ({ value: r, label: r })), 'value', 'label', true);
 }
@@ -152,3 +156,4 @@ function showEstimate() {
     <p><strong>Total (incl. VAT):</strong> £${total.toFixed(2)}</p>
   `;
 }
+
