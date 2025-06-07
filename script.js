@@ -1,16 +1,8 @@
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
-      "Replacement Battery": {
-        labour_hours: 0.5,
-        material_cost: 85.0,
-        part_number: "OXBATT180"
-      },
-      "Handset Replacement": {
-        labour_hours: 0.75,
-        material_cost: 65.0,
-        part_number: "OXHAND180"
-      }
+      "Replacement Battery": { labour_hours: 0.5, material_cost: 85.0, part_number: "OXBATT180" },
+      "Handset Replacement": { labour_hours: 0.75, material_cost: 65.0, part_number: "OXHAND180" }
     }
   }
 };
@@ -20,17 +12,16 @@ let makeChoices;
 let repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const randomNames = [
+  const names = [
     "Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin",
     "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald",
     "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl",
     "Paul McMullan", "Steven Webb"
   ];
   document.getElementById("customerName").placeholder =
-    `e.g. ${randomNames[Math.floor(Math.random() * randomNames.length)]}`;
+    `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
 
   populateAssets();
-
   new Choices("#assetSelect", { searchEnabled: true });
   makeChoices = new Choices("#makeSelect", { searchEnabled: true });
   repairChoices = new Choices("#repairSelect", { searchEnabled: true });
@@ -54,8 +45,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
     if (!asset || !make || !repair) return;
+
     quoteItems.push({ asset, make, repair });
     showEstimate();
+
+    // Reset form (but keep customer info)
+    document.getElementById("assetSelect").selectedIndex = 0;
+    makeChoices.clearChoices();
+    repairChoices.clearChoices();
+    document.getElementById("makeSection").style.display = "none";
+    document.getElementById("repairSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("supplyOnly").checked = false;
+    document.getElementById("vatExempt").checked = false;
   });
 
   document.getElementById("supplyOnly").addEventListener("change", showEstimate);
@@ -125,8 +127,7 @@ function showEstimate() {
     <h3>Quote Summary</h3>
     <p><strong>Items:</strong> ${quoteItems.length}</p>
     <p><strong>Subtotal (excl. VAT):</strong> £${subtotal.toFixed(2)}</p>
-    <p><strong>VAT (${vatExempt ? "Exempt" : "20%"})</strong>: £${vat.toFixed(2)}</p>
-    <p><strong>Total:</strong> £${total.toFixed(2)}</p>
+    <p><strong>VAT (${vatExempt ? "Exempt" : "20%"}):</strong> £${vat.toFixed(2)}</p>
+    <p><strong>Total (incl. VAT):</strong> £${total.toFixed(2)}</p>
   `;
 }
-
