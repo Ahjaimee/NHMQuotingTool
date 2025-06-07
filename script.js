@@ -15,6 +15,21 @@ const data = {
   }
 };
 
+// Set random customer name placeholder
+document.addEventListener("DOMContentLoaded", () => {
+  const names = [
+    "Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin",
+    "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald",
+    "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl",
+    "Paul McMullan", "Steven Webb"
+  ];
+  const randomName = names[Math.floor(Math.random() * names.length)];
+
+  document.getElementById("customerName").placeholder = `e.g. ${randomName}`;
+  document.getElementById("quoteNumber").placeholder = "e.g. Q12345";
+});
+
+// Dropdown logic + estimator
 let assetChoices, makeChoices, repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -51,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("supplyOnly").addEventListener("change", showEstimate);
 });
 
+// Estimate preview logic
 function showEstimate() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
@@ -83,4 +99,24 @@ function showEstimate() {
     <p><strong>Total: £${total.toFixed(2)}</strong></p>
   `;
 }
+
+// PDF download logic
+document.addEventListener("DOMContentLoaded", () => {
+  const pdfButton = document.getElementById("downloadPDF");
+  pdfButton.addEventListener("click", () => {
+    const estimate = document.getElementById("estimate");
+    if (estimate.innerHTML.trim() === "") return;
+
+    const opt = {
+      margin:       0.5,
+      filename:     'quote-estimate.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().from(estimate).set(opt).save();
+  });
+});
+
 
