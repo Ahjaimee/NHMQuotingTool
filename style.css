@@ -1,21 +1,46 @@
-/* ------ base ------ */
+/* ----------------------------------------
+   Box sizing & Base
+---------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: #f4f4f4;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 30px;
   color: #27488f;
 }
 
-/* logo up top */
-.logo-container { text-align: center; margin-bottom: 20px; }
-.logo { height: 60px; }
+/* ----------------------------------------
+   Logo & Title
+---------------------------------------- */
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.logo {
+  height: 60px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-/* headings */
-h1 { text-align: center; margin-bottom: 30px; }
-h2 { font-size: 1.1rem; margin: 25px 0 12px; }
+/* ----------------------------------------
+   Section Headings
+---------------------------------------- */
+h2 {
+  font-size: 1.1rem;
+  margin: 25px 0 12px;
+}
 
-/* ------ form ------ */
+/* ----------------------------------------
+   Form Styles
+---------------------------------------- */
 #quoteForm {
   max-width: 600px;
   margin: 0 auto 40px;
@@ -24,7 +49,11 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-#quoteForm label { display: block; margin-bottom: 8px; font-weight: 500; }
+#quoteForm label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
 #quoteForm input,
 #quoteForm select {
   width: 100%;
@@ -33,7 +62,10 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.nested { margin-left: 15px; margin-top: 12px; }
+.nested {
+  margin-left: 15px;
+  margin-top: 12px;
+}
 #addItem {
   margin-top: 20px;
   width: 100%;
@@ -46,7 +78,9 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   cursor: pointer;
 }
 
-/* ------ quote section ------ */
+/* ----------------------------------------
+   Quote Preview Container
+---------------------------------------- */
 .quote-section {
   max-width: 800px;
   margin: 0 auto;
@@ -57,7 +91,9 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-/* PDF header */
+/* ----------------------------------------
+   PDF Header
+---------------------------------------- */
 .quote-header {
   display: flex;
   align-items: center;
@@ -65,14 +101,29 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
-.logo-sm { height: 50px; }
-.company-info { margin-left: 20px; }
+.logo-sm {
+  height: 50px;
+}
+.company-info {
+  margin-left: 20px;
+  line-height: 1.4;
+}
 
-/* customer block */
-.customer-info { margin-bottom: 20px; }
-.customer-info p { margin: 4px 0; }
+/* ----------------------------------------
+   Customer Info
+---------------------------------------- */
+.customer-info {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+.customer-info p {
+  margin: 4px 0;
+}
 
-/* table */
+/* ----------------------------------------
+   Items Table
+---------------------------------------- */
 .quote-table {
   width: 100%;
   border-collapse: collapse;
@@ -81,14 +132,26 @@ h2 { font-size: 1.1rem; margin: 25px 0 12px; }
 .quote-table th,
 .quote-table td {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 10px 8px;
   font-size: 0.95rem;
+  vertical-align: middle;
 }
-.quote-table th { background: #eef7ec; }
-.quote-table tfoot td { font-weight: 600; }
-.right { text-align: right; }
+.quote-table th {
+  background: #eef7ec;
+  text-align: left;
+  font-weight: 600;
+}
+.quote-table td.right {
+  text-align: right;
+}
+/* Remove double border on footer top */
+.quote-table tfoot td {
+  border-top: none;
+}
 
-/* download button */
+/* ----------------------------------------
+   Download PDF Button
+---------------------------------------- */
 #downloadPDF {
   display: block;
   margin: 0 auto;
