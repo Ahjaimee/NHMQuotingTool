@@ -64,13 +64,16 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
-/* === Choices.js Dropdowns === */
+/* === Choices.js Styling === */
 select {
   display: none;
 }
 
 .choices {
   margin-bottom: 14px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .choices__inner {
@@ -85,6 +88,8 @@ select {
   line-height: 1.4 !important;
   display: flex !important;
   align-items: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* === Checkbox Styling === */
