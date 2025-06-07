@@ -79,19 +79,22 @@ document.addEventListener("DOMContentLoaded", () => {
 function populateAssets() {
   const assets = Object.keys(data);
 
-  assetChoices.clearChoices();
-  assetChoices.setChoices(
-    [
-      { value: '', label: 'Select Asset', selected: true, disabled: true },
-      ...assets.map(a => ({ value: a, label: a }))
-    ],
-    'value',
-    'label',
-    false
-  );
+  // Destroy existing instance completely
+  if (assetChoices) {
+    assetChoices.destroy();
+  }
 
-  assetChoices.setChoiceByValue('');
+  // Reset original <select> element
+  const select = document.getElementById("assetSelect");
+  select.innerHTML = `
+    <option value="" disabled selected>Select Asset</option>
+    ${assets.map(a => `<option value="${a}">${a}</option>`).join('')}
+  `;
+
+  // Reinitialize
+  assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
+
 
 function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
