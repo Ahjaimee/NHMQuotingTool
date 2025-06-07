@@ -88,18 +88,22 @@ input[type="checkbox"] {
 
 /* === PDF Download Button === */
 #downloadPDF {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
   background-color: #27488f;
-  color: white;
-  border: none;
-  padding: 10px 15px;
+  color: #fff;
   font-size: 1rem;
+  font-weight: bold;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 15px;
-  width: 100%;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 #downloadPDF:hover {
   background-color: #1e336b;
+  transform: translateY(-1px);
 }
 
