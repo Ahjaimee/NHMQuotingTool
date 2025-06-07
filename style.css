@@ -65,6 +65,7 @@ input[type="text"] {
   background-color: #fff !important;
   display: flex !important;
   align-items: center !important;
+  box-sizing: border-box !important;
 }
 
 input[type="checkbox"] {
@@ -122,57 +123,7 @@ label[for="vatExempt"] {
   font-size: 1rem;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
+  borde
 
-#addItem:hover {
-  background-color: #d96d13;
-  transform: translateY(-1px);
-}
-
-#downloadPDF {
-  background-color: #27488f;
-}
-
-#downloadPDF:hover {
-  background-color: #1e336b;
-  transform: translateY(-1px);
-}
-
-.quote-line {
-  background: #fafafa;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-}
-
-.quote-line button {
-  margin-top: 6px;
-  padding: 5px 10px;
-  background-color: #c62828;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-.quote-line button:hover {
-  background-color: #a41e1e;
-}
-
-#estimate {
-  background-color: #eef7ec;
-  padding: 15px;
-  border-left: 5px solid #f58020;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-top: 20px;
-}
 
 
