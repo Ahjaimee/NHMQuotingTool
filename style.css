@@ -1,188 +1,133 @@
+/* Reset & body */
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  padding: 30px 15px;
+  padding: 30px;
   color: #27488f;
 }
 
+/* Logo */
 .logo-container {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
-
 .logo {
   height: 60px;
-  max-width: 100%;
+}
+.logo-sm {
+  height: 50px;
 }
 
+/* Headings */
 h1 {
   text-align: center;
-  margin: 0 0 25px;
-  font-size: 28px;
+  margin-bottom: 30px;
 }
-
 h2 {
-  font-size: 18px;
-  margin: 20px 0 12px;   /* extra top & bottom space */
-  color: #27488f;
+  font-size: 1.1rem;
+  margin: 25px 0 12px;
 }
 
-form, .quote-section {
-  background-color: #fff;
+/* Form */
+#quoteForm {
   max-width: 600px;
-  margin: 0 auto 25px;
-  padding: 25px;
-  border-radius: 12px;
-  border-left: 5px solid #27488f;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  box-sizing: border-box;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;    /* more space under each label */
-  font-weight: bold;
-  font-size: 0.9rem;     /* slightly larger for readability */
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 6px 10px;     /* larger padding */
-  margin-bottom: 18px;   /* restored original space */
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  height: 34px;          /* taller */
-  font-size: 0.9rem;
-  box-sizing: border-box;
-}
-
-.choices {
-  margin-bottom: 12px !important;
-  width: 100% !important;
-}
-
-.choices__inner {
-  border-radius: 5px !important;
-  height: 34px !important;
-  padding: 4px 8px !important;
-  font-size: 0.85rem !important;
-  border: 1px solid #ccc !important;
-  background-color: #fff !important;
-  display: flex !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
-}
-
-/* Checkboxes */
-input[type="checkbox"] {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  border: 2px solid #ccc;
-  border-radius: 3px;
+  margin: 0 auto 40px;
   background: #fff;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  vertical-align: middle;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-
-input[type="checkbox"]::before {
-  content: "";
-  position: absolute;
-  width: 4px;
-  height: 8px;
-  border: solid #27488f;
-  border-width: 0 2px 2px 0;
-  top: 0px;
-  left: 4px;
-  transform: rotate(45deg);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-input[type="checkbox"]:checked {
-  background: #e0ebfa;
-  border-color: #27488f;
-}
-
-input[type="checkbox"]:checked::before {
-  opacity: 1;
-}
-
-label[for="supplyOnly"],
-label[for="vatExempt"] {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 10px 0;
+#quoteForm label {
+  display: block;
+  margin-bottom: 8px;
   font-weight: 500;
 }
-
-/* Buttons */
-#addItem,
-#downloadPDF {
+#quoteForm input,
+#quoteForm select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.nested {
+  margin-left: 15px;
+  margin-top: 12px;
+}
+#addItem {
+  margin-top: 20px;
   width: 100%;
   padding: 10px;
-  margin-top: 16px;
   background: #f58020;
   color: #fff;
-  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
   font-weight: bold;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-#addItem:hover {
-  background-color: #d96d13;
-  transform: translateY(-1px);
-}
-
-#downloadPDF {
-  background-color: #27488f;
-}
-
-#downloadPDF:hover {
-  background-color: #1e336b;
-  transform: translateY(-1px);
-}
-
-/* Quote lines */
-.quote-line {
-  background: #fafafa;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-}
-
-.quote-line button {
-  margin-top: 6px;
-  padding: 5px 10px;
-  background-color: #c62828;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-.quote-line button:hover {
-  background-color: #a41e1e;
-}
-
-/* Estimate box */
-#estimate {
-  background-color: #eef7ec;
-  padding: 15px;
-  border-left: 5px solid #f58020;
+/* Quote section wrapper */
+.quote-section {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-left: 5px solid #27488f;
   border-radius: 8px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
+/* PDF Header */
+.quote-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #27488f;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.company-info {
+  margin-left: 20px;
+}
+
+/* Customer info */
+.customer-info {
+  margin-bottom: 20px;
+}
+.customer-info p {
+  margin: 4px 0;
+}
+
+/* Items table */
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.quote-table th,
+.quote-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 0.95rem;
+}
+.quote-table th {
+  background: #eef7ec;
+}
+.quote-table tfoot td {
+  font-weight: 600;
+}
+.right {
+  text-align: right;
+}
+
+/* Download button */
+#downloadPDF {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background: #27488f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
