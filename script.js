@@ -26,15 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
     "Paul McMullan", "Steven Webb"
   ];
 
+  // Random placeholder name
   document.getElementById("customerName").placeholder =
     `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
 
+  // Init Choices
   assetChoices = new Choices("#assetSelect", { searchEnabled: true });
   makeChoices = new Choices("#makeSelect", { searchEnabled: true });
   repairChoices = new Choices("#repairSelect", { searchEnabled: true });
 
   populateAssets();
 
+  // Dropdown logic
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").style.display = "block";
@@ -49,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("optionsSection").style.display = "block";
   });
 
+  // Add item to quote
   document.getElementById("addItem").addEventListener("click", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
@@ -59,10 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
     quoteItems.push({ asset, make, repair });
     showEstimate();
 
-    // ✅ Reset repair form
+    // Reset dropdowns and checkboxes (keep customer details)
     assetChoices.setChoiceByValue('');
     document.getElementById("assetSelect").dispatchEvent(new Event("change"));
-
     makeChoices.clearChoices();
     repairChoices.clearChoices();
 
@@ -147,5 +150,6 @@ function showEstimate() {
     <p><strong>Total (incl. VAT):</strong> £${total.toFixed(2)}</p>
   `;
 }
+
 
 
