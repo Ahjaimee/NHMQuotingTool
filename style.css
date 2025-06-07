@@ -30,7 +30,8 @@ h1 {
 /* === Form and Quote Container === */
 form, .quote-section {
   background-color: #ffffff;
-  max-width: 480px;
+  width: 95%;
+  max-width: 420px;
   margin: 0 auto 25px;
   padding: 25px 20px;
   border-radius: 12px;
@@ -58,14 +59,14 @@ input[type="text"] {
   margin-bottom: 18px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 0.95rem;
-  height: 36px;
+  font-size: 0.9rem;
+  height: 34px;
   box-sizing: border-box;
 }
 
-/* === Choices.js Styling for Searchable Dropdowns === */
+/* === Choices.js select overrides === */
 select {
-  display: none; /* hide native select if using Choices.js */
+  display: none;
 }
 
 .choices {
@@ -74,10 +75,12 @@ select {
 
 .choices__inner {
   border-radius: 6px !important;
-  min-height: 36px !important;
-  padding: 6px 10px !important;
-  font-size: 0.95rem !important;
+  min-height: 34px !important;
+  padding: 4px 8px !important;
+  font-size: 0.9rem !important;
   border: 1px solid #ccc !important;
+  background-color: #fafafa !important;
+  box-shadow: none !important;
 }
 
 /* === Checkbox Styling === */
@@ -124,5 +127,6 @@ input[type="checkbox"] {
   background-color: #1e336b;
   transform: translateY(-1px);
 }
+
 
 
