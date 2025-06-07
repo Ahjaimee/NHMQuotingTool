@@ -1,5 +1,3 @@
-// script.js
-// Your data source
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
@@ -16,34 +14,33 @@ let supplyOnly, vatExempt, quoteNumber, customerName;
 let pdfTableBody, pdfSubtotal, pdfVAT, pdfTotal, pdfQuoteNumber, pdfCustomerName;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Element refs
-  assetSelect      = document.getElementById("assetSelect");
-  makeSelect       = document.getElementById("makeSelect");
-  repairSelect     = document.getElementById("repairSelect");
-  supplyOnly       = document.getElementById("supplyOnly");
-  vatExempt        = document.getElementById("vatExempt");
-  quoteNumber      = document.getElementById("quoteNumber");
-  customerName     = document.getElementById("customerName");
-  pdfTableBody     = document.getElementById("pdfTableBody");
-  pdfSubtotal      = document.getElementById("pdfSubtotal");
-  pdfVAT           = document.getElementById("pdfVAT");
-  pdfTotal         = document.getElementById("pdfTotal");
-  pdfQuoteNumber   = document.getElementById("pdfQuoteNumber");
-  pdfCustomerName  = document.getElementById("pdfCustomerName");
+  // Refs
+  assetSelect     = document.getElementById("assetSelect");
+  makeSelect      = document.getElementById("makeSelect");
+  repairSelect    = document.getElementById("repairSelect");
+  supplyOnly      = document.getElementById("supplyOnly");
+  vatExempt       = document.getElementById("vatExempt");
+  quoteNumber     = document.getElementById("quoteNumber");
+  customerName    = document.getElementById("customerName");
+  pdfTableBody    = document.getElementById("pdfTableBody");
+  pdfSubtotal     = document.getElementById("pdfSubtotal");
+  pdfVAT          = document.getElementById("pdfVAT");
+  pdfTotal        = document.getElementById("pdfTotal");
+  pdfQuoteNumber  = document.getElementById("pdfQuoteNumber");
+  pdfCustomerName = document.getElementById("pdfCustomerName");
 
-  // Random name placeholder
+  // Placeholder for customer
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
   customerName.placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
-  // Init Choices.js on selects
+  // Init Choices.js
   assetChoices  = new Choices(assetSelect,  { searchEnabled: true, shouldSort: false });
   makeChoices   = new Choices(makeSelect,   { searchEnabled: true, shouldSort: false });
   repairChoices = new Choices(repairSelect, { searchEnabled: true, shouldSort: false });
 
-  // First‐load assets
   populateAssets();
 
-  // Cascade selects
+  // Cascading selects
   assetSelect.addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").hidden = false;
@@ -56,11 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("optionsSection").hidden = false;
   });
 
-  // Live recalculation
+  // Live recalc
   supplyOnly.addEventListener("change", renderQuote);
   vatExempt.addEventListener("change", renderQuote);
 
-  // Add item button
+  // Add item
   document.getElementById("addItem").addEventListener("click", () => {
     if (!assetSelect.value || !makeSelect.value || !repairSelect.value) return;
     quoteItems.push({
@@ -84,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Populate asset dropdown
 function populateAssets() {
   const opts = Object.keys(data);
   assetChoices.destroy();
@@ -93,7 +89,6 @@ function populateAssets() {
   assetChoices = new Choices(assetSelect, { searchEnabled: true, shouldSort: false });
 }
 
-// Populate make/model dropdown
 function populateMakes() {
   const makes = data[assetSelect.value] ? Object.keys(data[assetSelect.value]) : [];
   makeChoices.destroy();
@@ -102,7 +97,6 @@ function populateMakes() {
   makeChoices = new Choices(makeSelect, { searchEnabled: true, shouldSort: false });
 }
 
-// Populate repair dropdown
 function populateRepairs() {
   const repairs = data[assetSelect.value]?.[makeSelect.value]
     ? Object.keys(data[assetSelect.value][makeSelect.value])
@@ -113,16 +107,14 @@ function populateRepairs() {
   repairChoices = new Choices(repairSelect, { searchEnabled: true, shouldSort: false });
 }
 
-// Reset form down‐stream selections & checkboxes
 function resetForm() {
   populateAssets();
-  document.getElementById("makeSection").hidden   = true;
-  document.getElementById("repairSection").hidden = true;
-  document.getElementById("optionsSection").hidden= true;
+  document.getElementById("makeSection").hidden    = true;
+  document.getElementById("repairSection").hidden  = true;
+  document.getElementById("optionsSection").hidden = true;
   supplyOnly.checked = vatExempt.checked = false;
 }
 
-// Render the PDF table & summary
 function renderQuote() {
   pdfTableBody.innerHTML = "";
   let subtotal = 0;
@@ -149,9 +141,9 @@ function renderQuote() {
   const vat   = vatExempt.checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
 
-  pdfSubtotal.textContent       = `£${subtotal.toFixed(2)}`;
-  pdfVAT.textContent            = `£${vat.toFixed(2)}`;
-  pdfTotal.textContent          = `£${total.toFixed(2)}`;
-  pdfQuoteNumber.textContent    = quoteNumber.value || "(No #)";
-  pdfCustomerName.textContent   = customerName.value || "(No name)";
+  pdfSubtotal.textContent      = `£${subtotal.toFixed(2)}`;
+  pdfVAT.textContent           = `£${vat.toFixed(2)}`;
+  pdfTotal.textContent         = `£${total.toFixed(2)}`;
+  pdfQuoteNumber.textContent   = quoteNumber.value || "(No #)";
+  pdfCustomerName.textContent  = customerName.value || "(No name)";
 }
