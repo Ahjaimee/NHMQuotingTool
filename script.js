@@ -1,8 +1,16 @@
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
-      "Replacement Battery": { labour_hours: 0.5, material_cost: 85.0, part_number: "OXBATT180" },
-      "Handset Replacement": { labour_hours: 0.75, material_cost: 65.0, part_number: "OXHAND180" }
+      "Replacement Battery": {
+        labour_hours: 0.5,
+        material_cost: 85.0,
+        part_number: "OXBATT180"
+      },
+      "Handset Replacement": {
+        labour_hours: 0.75,
+        material_cost: 65.0,
+        part_number: "OXHAND180"
+      }
     }
   }
 };
@@ -12,15 +20,20 @@ let makeChoices;
 let repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const names = ["Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin", "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald", "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl", "Paul McMullan", "Steven Webb"];
-  const randomName = names[Math.floor(Math.random() * names.length)];
-  document.getElementById("customerName").placeholder = `e.g. ${randomName}`;
+  const randomNames = [
+    "Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin",
+    "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald",
+    "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl",
+    "Paul McMullan", "Steven Webb"
+  ];
+  document.getElementById("customerName").placeholder =
+    `e.g. ${randomNames[Math.floor(Math.random() * randomNames.length)]}`;
 
   populateAssets();
 
-  new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+  new Choices("#assetSelect", { searchEnabled: true });
+  makeChoices = new Choices("#makeSelect", { searchEnabled: true });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true });
 
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
@@ -37,9 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("addItem").addEventListener("click", () => {
-    const asset = document.querySelector("#assetSelect").value;
-    const make = document.querySelector("#makeSelect").value;
-    const repair = document.querySelector("#repairSelect").value;
+    const asset = document.getElementById("assetSelect").value;
+    const make = document.getElementById("makeSelect").value;
+    const repair = document.getElementById("repairSelect").value;
     if (!asset || !make || !repair) return;
     quoteItems.push({ asset, make, repair });
     showEstimate();
@@ -51,12 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function populateAssets() {
   const assetSelect = document.getElementById("assetSelect");
-  assetSelect.innerHTML = `<option value="">Select an asset</option>`;
+  assetSelect.innerHTML = `<option value="">Select Asset</option>`;
   Object.keys(data).forEach(asset => {
-    const opt = document.createElement("option");
-    opt.value = asset;
-    opt.textContent = asset;
-    assetSelect.appendChild(opt);
+    assetSelect.innerHTML += `<option value="${asset}">${asset}</option>`;
   });
 }
 
@@ -70,7 +80,7 @@ function populateMakes() {
 function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
-  const repairs = data[asset] && data[asset][make] ? Object.keys(data[asset][make]) : [];
+  const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   repairChoices.clearChoices();
   repairChoices.setChoices(repairs.map(r => ({ value: r, label: r })), 'value', 'label', true);
 }
@@ -83,8 +93,6 @@ function removeItem(index) {
 function showEstimate() {
   const quoteLines = document.getElementById("quoteLines");
   const estimateDiv = document.getElementById("estimate");
-  const customerName = document.getElementById("customerName").value || "N/A";
-  const quoteNumber = document.getElementById("quoteNumber").value || "N/A";
   const supplyOnly = document.getElementById("supplyOnly").checked;
   const vatExempt = document.getElementById("vatExempt").checked;
 
@@ -95,8 +103,8 @@ function showEstimate() {
     const info = data[item.asset][item.make][item.repair];
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
-    const total = labour + info.material_cost + carriage;
-    subtotal += total;
+    const itemTotal = labour + info.material_cost + carriage;
+    subtotal += itemTotal;
 
     quoteLines.innerHTML += `
       <div class="quote-line">
@@ -111,16 +119,14 @@ function showEstimate() {
   });
 
   const vat = vatExempt ? 0 : subtotal * 0.2;
-  const grandTotal = subtotal + vat;
+  const total = subtotal + vat;
 
   estimateDiv.innerHTML = `
     <h3>Quote Summary</h3>
-    <p><strong>Customer:</strong> ${customerName}</p>
-    <p><strong>Quote #:</strong> ${quoteNumber}</p>
     <p><strong>Items:</strong> ${quoteItems.length}</p>
-    <hr>
     <p><strong>Subtotal (excl. VAT):</strong> £${subtotal.toFixed(2)}</p>
-    <p><strong>VAT (${vatExempt ? "Exempt" : "20%"}):</strong> £${vat.toFixed(2)}</p>
-    <p><strong>Total (incl. VAT): £${grandTotal.toFixed(2)}</strong></p>
+    <p><strong>VAT (${vatExempt ? "Exempt" : "20%"})</strong>: £${vat.toFixed(2)}</p>
+    <p><strong>Total:</strong> £${total.toFixed(2)}</p>
   `;
 }
+
