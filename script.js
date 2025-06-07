@@ -14,14 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
   document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
 
-  // Initialize Choices
-  assetChoices  = new Choices("#assetSelect",  { searchEnabled: true, shouldSort: false });
-  makeChoices   = new Choices("#makeSelect",   { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+  assetChoices  = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
+  makeChoices   = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices("#repairSelect",{ searchEnabled: true, shouldSort: false });
 
   populateAssets();
 
-  // Dropdown changes
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").style.display = "block";
@@ -32,31 +30,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("repairSection").style.display = "block";
   });
 
-  // Add item
   document.getElementById("addItem").addEventListener("click", () => {
     const asset  = document.getElementById("assetSelect").value;
     const make   = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
 
+    console.log("Add Item Clicked:", { asset, make, repair });
+
     if (!asset || !make || !repair) {
-      alert("Please select all repair fields");
+      alert("Please select all repair fields.");
       return;
     }
 
     quoteItems.push({ asset, make, repair });
-    renderQuote();
+    console.log("Quote Items Now:", quoteItems);
 
     document.getElementById("quoteSection").style.display = "block";
     document.getElementById("downloadPDF").style.display = "block";
 
+    renderQuote();
     resetRepairFields();
   });
 
-  // Update estimate when options change
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
 
-  // PDF Download
   document.getElementById("downloadPDF").addEventListener("click", () => {
     html2pdf().set({
       margin: 0.5,
@@ -130,7 +128,16 @@ function renderQuote() {
   let subtotal = 0;
 
   quoteItems.forEach((item, i) => {
-    const info = data[item.asset][item.make][item.repair];
+    const info = data?.[item.asset]?.[item.make]?.[item.repair];
+    if (!info) {
+      console.error("Missing data for item:", item);
+      quoteLines.innerHTML += `
+        <div class="quote-line">
+          <p>Error: Data not found for ${item.asset} → ${item.make} → ${item.repair}</p>
+        </div>`;
+      return;
+    }
+
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
     const lineTotal = labour + info.material_cost + carriage;
