@@ -1,183 +1,105 @@
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background-color: #f4f4f4;
-  margin: 0;
   padding: 30px 15px;
   color: #27488f;
+  margin: 0;
 }
 
 .logo-container {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .logo {
   height: 60px;
-  max-width: 100%;
 }
 
 h1 {
   text-align: center;
-  margin: 0 0 25px;
-  font-size: 28px;
-}
-
-h2 {
-  font-size: 18px;
-  margin: 20px 0 12px;
-  color: #27488f;
+  margin-bottom: 25px;
 }
 
 form, .quote-section {
-  background-color: #fff;
-  max-width: 600px;
+  background: white;
+  max-width: 650px;
   margin: 0 auto 25px;
   padding: 25px;
   border-radius: 12px;
-  border-left: 5px solid #27488f;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  box-sizing: border-box;
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   font-weight: bold;
-  font-size: 0.9rem;
 }
 
 input[type="text"], select {
   width: 100%;
   padding: 6px 10px;
+  font-size: 0.95rem;
+  margin-top: 4px;
   margin-bottom: 18px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  height: 34px;
-  font-size: 0.9rem;
-  box-sizing: border-box;
-}
-
-.choices {
-  margin-bottom: 12px !important;
-  width: 100% !important;
-}
-
-.choices__inner {
-  border-radius: 5px !important;
-  height: 34px !important;
-  padding: 4px 8px !important;
-  font-size: 0.85rem !important;
-  border: 1px solid #ccc !important;
-  background-color: #fff !important;
-  display: flex !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
 }
 
 .checkbox-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .checkbox-wrapper label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-weight: 500;
-  cursor: pointer;
 }
 
 input[type="checkbox"] {
-  appearance: none;
   width: 16px;
   height: 16px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-input[type="checkbox"]::before {
-  content: "";
-  position: absolute;
-  width: 5px;
-  height: 10px;
-  border: solid #27488f;
-  border-width: 0 2px 2px 0;
-  top: 1px;
-  left: 5px;
-  transform: rotate(45deg);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-input[type="checkbox"]:checked {
-  background: #e0ebfa;
-  border-color: #27488f;
-}
-
-input[type="checkbox"]:checked::before {
-  opacity: 1;
-}
-
-#addItem, #downloadPDF {
+button {
   width: 100%;
   padding: 10px;
   margin-top: 16px;
-  background: #f58020;
-  color: #fff;
   font-size: 1rem;
   font-weight: bold;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-#addItem:hover {
-  background-color: #d96d13;
-  transform: translateY(-1px);
+#addItem {
+  background: #f58020;
+  color: white;
 }
 
 #downloadPDF {
-  background-color: #27488f;
-}
-
-#downloadPDF:hover {
-  background-color: #1e336b;
-  transform: translateY(-1px);
+  background: #27488f;
+  color: white;
 }
 
 .quote-line {
-  background: #fafafa;
-  border: 1px solid #ddd;
-  padding: 10px;
+  background: #f9f9f9;
+  padding: 12px;
   margin-bottom: 10px;
-  border-radius: 6px;
+  border-left: 5px solid #f58020;
 }
 
 .quote-line button {
-  margin-top: 6px;
-  padding: 5px 10px;
-  background-color: #c62828;
+  margin-top: 10px;
+  background: #c62828;
   color: white;
-  border: none;
+  font-size: 0.85rem;
+  padding: 6px 10px;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-.quote-line button:hover {
-  background-color: #a41e1e;
 }
 
 #estimate {
-  background-color: #eef7ec;
+  background: #eef7ec;
   padding: 15px;
   border-left: 5px solid #f58020;
   border-radius: 8px;
