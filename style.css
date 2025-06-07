@@ -36,6 +36,14 @@ form, .quote-section {
   border-radius: 12px;
   border-left: 5px solid #27488f;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 input[type="text"], select {
@@ -46,6 +54,7 @@ input[type="text"], select {
   border: 1px solid #ccc;
   height: 34px;
   font-size: 0.9rem;
+  box-sizing: border-box;
 }
 
 .choices {
@@ -62,6 +71,7 @@ input[type="text"], select {
   background-color: #fff !important;
   display: flex !important;
   align-items: center !important;
+  box-sizing: border-box !important;
 }
 
 .checkbox-wrapper {
