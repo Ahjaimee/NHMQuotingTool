@@ -52,7 +52,7 @@ label {
   font-weight: bold;
 }
 
-input[type="text"], select {
+input[type="text"] {
   width: 100%;
   padding: 6px 10px;
   margin-bottom: 18px;
@@ -63,12 +63,21 @@ input[type="text"], select {
   box-sizing: border-box;
 }
 
-/* === Choices.js select overrides */
+/* === Choices.js Styling for Searchable Dropdowns === */
+select {
+  display: none; /* hide native select if using Choices.js */
+}
+
+.choices {
+  margin-bottom: 18px;
+}
+
 .choices__inner {
   border-radius: 6px !important;
   min-height: 36px !important;
   padding: 6px 10px !important;
-  font-size: 0.95rem;
+  font-size: 0.95rem !important;
+  border: 1px solid #ccc !important;
 }
 
 /* === Checkbox Styling === */
