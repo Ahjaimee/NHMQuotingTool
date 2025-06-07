@@ -10,56 +10,11 @@ const data = {
 let quoteItems = [];
 let assetChoices, makeChoices, repairChoices;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const names = ["Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin", "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald", "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl", "Paul McMullan", "Steven Webb"];
-  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
-
-  assetChoices  = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices   = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
-
-  populateAssets();
-
-  document.getElementById("assetSelect").addEventListener("change", () => {
-    populateMakes();
-    document.getElementById("makeSection").style.display = "block";
-  });
-
-  document.getElementById("makeSelect").addEventListener("change", () => {
-    populateRepairs();
-    document.getElementById("repairSection").style.display = "block";
-  });
-
-  document.getElementById("addItem").addEventListener("click", () => {
-    const asset  = document.getElementById("assetSelect").value;
-    const make   = document.getElementById("makeSelect").value;
-    const repair = document.getElementById("repairSelect").value;
-
-    if (!asset || !make || !repair) {
-      alert("Please select all fields before adding the item.");
-      return;
-    }
-
-    quoteItems.push({ asset, make, repair });
-    document.getElementById("quoteSection").style.display = "block";
-    document.getElementById("downloadPDF").style.display = "block";
-    renderQuote();
-    resetRepairFields();
-  });
-
-  document.getElementById("supplyOnly").addEventListener("change", renderQuote);
-  document.getElementById("vatExempt").addEventListener("change", renderQuote);
-
-  document.getElementById("downloadPDF").addEventListener("click", generatePDF);
-});
-
 function populateAssets() {
   const assets = Object.keys(data);
   const select = document.getElementById("assetSelect");
-
-  assetChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
-    assets.map(a => `<option value="${a}">${a}</option>`).join("");
+  assetChoices?.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Asset</option>${assets.map(a => `<option value="${a}">${a}</option>`).join("")}`;
   assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
@@ -67,10 +22,8 @@ function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
   const select = document.getElementById("makeSelect");
-
-  makeChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
-    makes.map(m => `<option value="${m}">${m}</option>`).join("");
+  makeChoices?.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>${makes.map(m => `<option value="${m}">${m}</option>`).join("")}`;
   makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
@@ -79,29 +32,15 @@ function populateRepairs() {
   const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   const select = document.getElementById("repairSelect");
-
-  repairChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
-    repairs.map(r => `<option value="${r}">${r}</option>`).join("");
+  repairChoices?.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Repair</option>${repairs.map(r => `<option value="${r}">${r}</option>`).join("")}`;
   repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
 function resetRepairFields() {
-  assetChoices.destroy();
-  makeChoices.destroy();
-  repairChoices.destroy();
-
-  document.getElementById("assetSelect").innerHTML = "";
-  document.getElementById("makeSelect").innerHTML = "";
-  document.getElementById("repairSelect").innerHTML = "";
-
-  assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices  = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
-  repairChoices= new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
-
-  populateAssets();
   document.getElementById("makeSection").style.display = "none";
   document.getElementById("repairSection").style.display = "none";
+  populateAssets();
 }
 
 function renderQuote() {
@@ -159,50 +98,85 @@ function generatePDF() {
 
   const logo = new Image();
   logo.src = "nhm-logo.png";
-  logo.onload = function () {
-    doc.addImage(logo, "PNG", 10, 10, 40, 15);
-    doc.setFontSize(16);
-    doc.text("Quotation", 60, 20);
 
-    const headers = [["Asset", "Make", "Repair", "Part #", "Materials", "Labour", "Carriage", "Total"]];
-    const rows = [];
-    let subtotal = 0;
+  logo.onload = () => {
+    doc.addImage(logo, "PNG", 10, 10, 40, 20);
+    doc.setFontSize(18);
+    doc.text("Quotation Estimate", 60, 20);
+    doc.setFontSize(11);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 60, 28);
 
-    const supplyOnly = document.getElementById("supplyOnly").checked;
-    const vatExempt = document.getElementById("vatExempt").checked;
-
-    quoteItems.forEach(item => {
+    let y = 40;
+    quoteItems.forEach((item, i) => {
       const info = data[item.asset][item.make][item.repair];
-      const labour = supplyOnly ? 0 : info.labour_hours * 45;
-      const carriage = supplyOnly ? 15.95 : 0;
+      const labour = document.getElementById("supplyOnly").checked ? 0 : info.labour_hours * 45;
+      const carriage = document.getElementById("supplyOnly").checked ? 15.95 : 0;
       const lineTotal = labour + info.material_cost + carriage;
-      subtotal += lineTotal;
-      rows.push([
-        item.asset,
-        item.make,
-        item.repair,
-        info.part_number,
-        `£${info.material_cost.toFixed(2)}`,
-        supplyOnly ? "N/A" : `£${labour.toFixed(2)}`,
-        supplyOnly ? `£${carriage.toFixed(2)}` : "-",
-        `£${lineTotal.toFixed(2)}`
-      ]);
+
+      doc.text(`Item ${i + 1}: ${item.asset} → ${item.make} → ${item.repair}`, 10, y);
+      doc.text(`Part #: ${info.part_number}`, 12, y + 6);
+      doc.text(`Materials: £${info.material_cost.toFixed(2)}`, 12, y + 12);
+      if (!document.getElementById("supplyOnly").checked)
+        doc.text(`Labour: £${labour.toFixed(2)}`, 12, y + 18);
+      if (document.getElementById("supplyOnly").checked)
+        doc.text(`Carriage: £${carriage.toFixed(2)}`, 12, y + 18);
+      doc.text(`Line Total: £${lineTotal.toFixed(2)}`, 12, y + 24);
+      y += 36;
     });
 
-    doc.autoTable({
-      startY: 30,
-      head: headers,
-      body: rows,
-      styles: { fontSize: 10 }
+    const estimateBox = document.getElementById("estimate").innerText.split("\n");
+    estimateBox.forEach((line, idx) => {
+      doc.text(line, 10, y + (idx * 8));
     });
-
-    const vat = vatExempt ? 0 : subtotal * 0.2;
-    const total = subtotal + vat;
-
-    doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 10);
-    doc.text(`VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 18);
-    doc.text(`Total: £${total.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 26);
 
     doc.save("NHM_Quote.pdf");
-  }
+  };
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
+  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
+
+  assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
+  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+
+  populateAssets();
+
+  document.getElementById("assetSelect").addEventListener("change", () => {
+    populateMakes();
+    document.getElementById("makeSection").style.display = "block";
+  });
+
+  document.getElementById("makeSelect").addEventListener("change", () => {
+    populateRepairs();
+    document.getElementById("repairSection").style.display = "block";
+  });
+
+  document.getElementById("repairSelect").addEventListener("change", () => {
+    document.getElementById("optionsSection").style.display = "block";
+  });
+
+  document.getElementById("addItem").addEventListener("click", () => {
+    const asset = document.getElementById("assetSelect").value;
+    const make = document.getElementById("makeSelect").value;
+    const repair = document.getElementById("repairSelect").value;
+
+    if (!asset || !make || !repair) {
+      alert("Please select all fields.");
+      return;
+    }
+
+    quoteItems.push({ asset, make, repair });
+    renderQuote();
+
+    document.getElementById("quoteSection").style.display = "block";
+    document.getElementById("downloadPDF").style.display = "block";
+
+    resetRepairFields();
+  });
+
+  document.getElementById("supplyOnly").addEventListener("change", renderQuote);
+  document.getElementById("vatExempt").addEventListener("change", renderQuote);
+  document.getElementById("downloadPDF").addEventListener("click", generatePDF);
+});
