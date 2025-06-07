@@ -53,13 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
 
   document.getElementById("downloadPDF").addEventListener("click", () => {
-    const element = document.getElementById("quoteSection");
     html2pdf().set({
       margin: 0.5,
       filename: 'NHM_Quote.pdf',
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    }).from(element).save();
+    }).from(document.getElementById("quoteSection")).save();
   });
 });
 
@@ -147,7 +146,6 @@ function renderQuote() {
 function removeItem(index) {
   quoteItems.splice(index, 1);
   renderQuote();
-
   if (quoteItems.length === 0) {
     document.getElementById("downloadPDF").style.display = "none";
   }
