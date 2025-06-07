@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
-
   <div class="logo-container">
     <img src="nhm-logo.png" alt="Company Logo" class="logo" />
   </div>
@@ -18,6 +17,7 @@
 
   <form id="quoteForm">
     <h2>Customer Details</h2>
+
     <label for="customerName">
       Customer Name:
       <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
@@ -29,6 +29,7 @@
     </label>
 
     <h2>Repair Details</h2>
+
     <label for="assetSelect">Asset Type:</label>
     <select id="assetSelect"></select>
 
@@ -63,12 +64,14 @@
     <button id="downloadPDF" style="display: none;">Download PDF</button>
   </section>
 
-  <!-- Libraries -->
+  <!-- Choices.js for dropdowns -->
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-  <script src="script.js"></script>
 
+  <!-- jsPDF + AutoTable for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- Your main script -->
+  <script src="script.js"></script>
 </body>
 </html>
-
