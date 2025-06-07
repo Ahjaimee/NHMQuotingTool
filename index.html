@@ -7,6 +7,54 @@
 
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <style>
+    input[type="checkbox"] {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #27488f;
+      border-radius: 4px;
+      background-color: #fff;
+      transition: all 0.2s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"]::before {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 12px;
+      border: solid #27488f;
+      border-width: 0 2px 2px 0;
+      top: 2px;
+      left: 7px;
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    input[type="checkbox"]:checked {
+      background-color: #f58020;
+      border-color: #f58020;
+    }
+
+    input[type="checkbox"]:checked::before {
+      opacity: 1;
+    }
+
+    label[for="supplyOnly"],
+    label[for="vatExempt"] {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 16px 0;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #27488f;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <div class="logo-container">
