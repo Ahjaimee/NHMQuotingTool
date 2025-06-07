@@ -11,12 +11,12 @@ let quoteItems = [];
 let assetChoices, makeChoices, repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const names = ["Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin", "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald", "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl", "Paul McMullan", "Steven Webb"];
-  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
+  const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
+  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
   assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+  makeChoices  = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
+  repairChoices= new Choices("#repairSelect",{ searchEnabled: true, shouldSort: false });
 
   populateAssets();
 
@@ -31,28 +31,31 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("addItem").addEventListener("click", () => {
-    const asset = document.getElementById("assetSelect").value;
-    const make = document.getElementById("makeSelect").value;
+    const asset  = document.getElementById("assetSelect").value;
+    const make   = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
+
     if (!asset || !make || !repair) return;
 
     quoteItems.push({ asset, make, repair });
-    renderQuote();
 
     document.getElementById("quoteSection").style.display = "block";
     document.getElementById("downloadPDF").style.display = "block";
 
+    renderQuote();
     resetRepairFields();
   });
 
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
+
   document.getElementById("downloadPDF").addEventListener("click", generatePDF);
 });
 
 function populateAssets() {
   const assets = Object.keys(data);
   const select = document.getElementById("assetSelect");
+
   assetChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Asset</option>${assets.map(a => `<option value="${a}">${a}</option>`).join("")}`;
   assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
@@ -62,6 +65,7 @@ function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
   const select = document.getElementById("makeSelect");
+
   makeChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>${makes.map(m => `<option value="${m}">${m}</option>`).join("")}`;
   makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
@@ -72,6 +76,7 @@ function populateRepairs() {
   const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   const select = document.getElementById("repairSelect");
+
   repairChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Repair</option>${repairs.map(r => `<option value="${r}">${r}</option>`).join("")}`;
   repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
@@ -86,8 +91,8 @@ function resetRepairFields() {
   document.getElementById("makeSelect").innerHTML = "";
   document.getElementById("repairSelect").innerHTML = "";
 
-  assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
+  assetChoices  = new Choices("#assetSelect",  { searchEnabled: true, shouldSort: false });
+  makeChoices   = new Choices("#makeSelect",   { searchEnabled: true, shouldSort: false });
   repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
 
   populateAssets();
@@ -98,15 +103,17 @@ function resetRepairFields() {
 
 function renderQuote() {
   const quoteLines = document.getElementById("quoteLines");
-  const estimate = document.getElementById("estimate");
+  const estimate   = document.getElementById("estimate");
   const supplyOnly = document.getElementById("supplyOnly").checked;
-  const vatExempt = document.getElementById("vatExempt").checked;
+  const vatExempt  = document.getElementById("vatExempt").checked;
 
   quoteLines.innerHTML = "";
   let subtotal = 0;
 
   quoteItems.forEach((item, i) => {
-    const info = data[item.asset][item.make][item.repair];
+    const info = data?.[item.asset]?.[item.make]?.[item.repair];
+    if (!info) return;
+
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
     const lineTotal = labour + info.material_cost + carriage;
@@ -125,7 +132,7 @@ function renderQuote() {
     `;
   });
 
-  const vat = vatExempt ? 0 : subtotal * 0.2;
+  const vat   = vatExempt ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
 
   estimate.innerHTML = `
@@ -141,41 +148,37 @@ function removeItem(index) {
   quoteItems.splice(index, 1);
   renderQuote();
   if (quoteItems.length === 0) {
-    document.getElementById("quoteSection").style.display = "none";
     document.getElementById("downloadPDF").style.display = "none";
   }
 }
 
 function generatePDF() {
-  const doc = new jspdf.jsPDF();
-  const date = new Date().toLocaleDateString("en-GB");
-  const customer = document.getElementById("customerName").value || "[Customer]";
-  const quoteNo = document.getElementById("quoteNumber").value || "[Quote #]";
-  const supplyOnly = document.getElementById("supplyOnly").checked;
-  const vatExempt = document.getElementById("vatExempt").checked;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-  const logoBase64 = "iVBORw0KGgoAAAANSUhEUgAAA0IAAANDCAYAAACAAq/RAABc/ElEQVR4nO39z3Eb15s+bj+fqdlLGYjvEitxIhBnjyrzF4HpCNwO..."; // insert full base64 here
+  const logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...'; // Use full base64 from earlier
+  const dateStr = new Date().toLocaleDateString();
 
-  doc.addImage(logoBase64, "PNG", 14, 10, 30, 30);
-  doc.setFontSize(14);
-  doc.text("Estimated Quote", 50, 18);
+  // Logo & Header
+  doc.addImage(logo, 'PNG', 15, 10, 40, 20);
+  doc.setFontSize(16);
+  doc.text("Quotation", 105, 20, null, null, 'center');
   doc.setFontSize(10);
-  doc.text(`Client: ${customer}`, 50, 26);
-  doc.text(`Job No: ${quoteNo}`, 50, 31);
-  doc.text(`Date: ${date}`, 50, 36);
+  doc.text(`Date Raised: ${dateStr}`, 200, 10, null, null, 'right');
 
+  // Table
+  const supplyOnly = document.getElementById("supplyOnly").checked;
+  const vatExempt  = document.getElementById("vatExempt").checked;
   let subtotal = 0;
-  const tableRows = quoteItems.map(item => {
+
+  const rows = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
     const total = labour + info.material_cost + carriage;
     subtotal += total;
-
     return [
-      item.asset,
-      item.make,
-      item.repair,
+      `${item.asset} → ${item.make} → ${item.repair}`,
       info.part_number,
       supplyOnly ? "N/A" : `£${labour.toFixed(2)}`,
       `£${info.material_cost.toFixed(2)}`,
@@ -184,20 +187,21 @@ function generatePDF() {
     ];
   });
 
-  const vat = vatExempt ? 0 : subtotal * 0.2;
-  const grandTotal = subtotal + vat;
-
   doc.autoTable({
-    startY: 45,
-    head: [["Asset", "Make", "Repair", "Part #", "Labour", "Materials", "Carriage", "Line Total"]],
-    body: tableRows,
-    styles: { fontSize: 9 },
+    startY: 35,
+    head: [["Item", "Part #", "Labour", "Materials", "Carriage", "Line Total"]],
+    body: rows,
+    styles: { fontSize: 9, cellPadding: 2 },
     headStyles: { fillColor: [39, 72, 143] }
   });
 
-  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 10);
-  doc.text(`VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 15);
-  doc.text(`Total: £${grandTotal.toFixed(2)}`, 14, doc.lastAutoTable.finalY + 20);
+  const vat = vatExempt ? 0 : subtotal * 0.2;
+  const total = subtotal + vat;
+
+  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 150, doc.lastAutoTable.finalY + 10);
+  doc.text(`VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}`, 150, doc.lastAutoTable.finalY + 16);
+  doc.setFontSize(12);
+  doc.text(`Total: £${total.toFixed(2)}`, 150, doc.lastAutoTable.finalY + 24);
 
   doc.save("NHM_Quote.pdf");
 }
