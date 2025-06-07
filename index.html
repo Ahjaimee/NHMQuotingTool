@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- your custom styles -->
+  <!-- 1. YOUR CSS: note the exact filename -->
   <link rel="stylesheet" href="style.css" />
-  <!-- Choices.js CSS -->
+
+  <!-- 2. Choices.js for the searchable <select>s -->
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body>
   <div class="logo-container">
-    <img src="nhm-logo.png" alt="Company Logo" class="logo" />
+    <img src="nhm-logo.png" alt="NHM Logo" class="logo" />
   </div>
 
   <h1>Quote Estimator</h1>
@@ -104,10 +105,9 @@
     <button id="downloadPDF">Download PDF</button>
   </section>
 
-  <!-- Dependencies -->
+  <!-- 3. Scripts (deferred so DOM is ready) -->
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
-  <!-- Your script -->
   <script src="script.js" defer></script>
 </body>
 </html>
