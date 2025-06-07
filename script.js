@@ -1,3 +1,5 @@
+// script.js
+
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
@@ -15,31 +17,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
   document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
-  // Initialize Choices instances on empty selects
-  assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices  = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
-  repairChoices= new Choices("#repairSelect",{ searchEnabled: true, shouldSort: false });
+  // Initialize Choices.js
+  assetChoices  = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
+  makeChoices   = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices("#repairSelect",{ searchEnabled: true, shouldSort: false });
 
   populateAssets();
 
-  // When asset changes, rebuild / show make
+  // Form event listeners
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").style.display = "block";
   });
 
-  // When make changes, rebuild / show repair
   document.getElementById("makeSelect").addEventListener("change", () => {
     populateRepairs();
     document.getElementById("repairSection").style.display = "block";
   });
 
-  // When repair chosen, show options
   document.getElementById("repairSelect").addEventListener("change", () => {
     document.getElementById("optionsSection").style.display = "block";
   });
 
-  // Add item & reset form
+  document.getElementById("supplyOnly").addEventListener("change", showEstimate);
+  document.getElementById("vatExempt").addEventListener("change", showEstimate);
+
   document.getElementById("addItem").addEventListener("click", () => {
     const asset  = document.getElementById("assetSelect").value;
     const make   = document.getElementById("makeSelect").value;
@@ -48,32 +50,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     quoteItems.push({ asset, make, repair });
     showEstimate();
-
-    // FULL reset of each select to avoid duplication
-    populateAssets();
-    populateMakes(false);
-    populateRepairs(false);
-
-    // Hide downstream sections
-    document.getElementById("makeSection").style.display = "none";
-    document.getElementById("repairSection").style.display = "none";
-    document.getElementById("optionsSection").style.display = "none";
-
-    // Clear checkboxes
-    document.getElementById("supplyOnly").checked = false;
-    document.getElementById("vatExempt").checked  = false;
+    resetForm();
   });
 
-  // Live recalc on checkbox change
-  document.getElementById("supplyOnly").addEventListener("change", showEstimate);
-  document.getElementById("vatExempt").addEventListener("change", showEstimate);
+  document.getElementById("downloadPDF").addEventListener("click", () => {
+    // Insert customer details into a header for PDF
+    const header = document.createElement("div");
+    header.innerHTML = `
+      <h2>Quote: ${document.getElementById("quoteNumber").value || "(No #)"}</h2>
+      <p>Customer: ${document.getElementById("customerName").value || "(No name)"}</p>
+      <hr/>
+    `;
+    const quoteSection = document.querySelector(".quote-section");
+    quoteSection.prepend(header);
+
+    html2pdf()
+      .from(quoteSection)
+      .set({ margin: 10, filename: `Quote_${Date.now()}.pdf` })
+      .save()
+      .finally(() => header.remove());
+  });
 });
 
 function populateAssets() {
   const assets = Object.keys(data);
   const select = document.getElementById("assetSelect");
-
-  // Destroy & rebuild native <select> HTML
   assetChoices.destroy();
   select.innerHTML = `
     <option value="" disabled selected>Select Asset</option>
@@ -82,33 +83,41 @@ function populateAssets() {
   assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
-function populateMakes(showSection = true) {
+function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
   const select = document.getElementById("makeSelect");
-
   makeChoices.destroy();
   select.innerHTML = `
     <option value="" disabled selected>Select Make/Model</option>
     ${makes.map(m => `<option value="${m}">${m}</option>`).join("")}
   `;
   makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
-  if (!showSection) document.getElementById("makeSection").style.display = "none";
 }
 
-function populateRepairs(showSection = true) {
+function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make  = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   const select = document.getElementById("repairSelect");
-
   repairChoices.destroy();
   select.innerHTML = `
     <option value="" disabled selected>Select Repair</option>
     ${repairs.map(r => `<option value="${r}">${r}</option>`).join("")}
   `;
   repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
-  if (!showSection) document.getElementById("repairSection").style.display = "none";
+}
+
+function resetForm() {
+  // Reset selects
+  populateAssets();
+  document.getElementById("makeSection").style.display = "none";
+  document.getElementById("repairSection").style.display = "none";
+  document.getElementById("optionsSection").style.display = "none";
+
+  // Clear checkboxes
+  document.getElementById("supplyOnly").checked = false;
+  document.getElementById("vatExempt").checked  = false;
 }
 
 function removeItem(idx) {
@@ -127,7 +136,7 @@ function showEstimate() {
 
   quoteItems.forEach((item, i) => {
     const info = data[item.asset][item.make][item.repair];
-    const labour = supplyOnly ? 0 : info.labour_hours * 45;
+    const labour  = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
     const lineTotal = labour + info.material_cost + carriage;
     subtotal += lineTotal;
@@ -155,3 +164,4 @@ function showEstimate() {
     <p><strong>Total:</strong> £${total.toFixed(2)}</p>
   `;
 }
+
