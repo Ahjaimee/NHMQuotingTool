@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- your CSS -->
+  <!-- 1) Custom styles in same folder -->
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- Choices.js for searchable selects -->
+  <!-- 2) Choices.js CSS -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
@@ -21,7 +21,7 @@
   </div>
   <h1>Quote Estimator</h1>
 
-  <!-- Quoting Form -->
+  <!-- Form -->
   <form id="quoteForm">
     <h2>Customer Details</h2>
     <div class="form-group">
@@ -108,19 +108,15 @@
         </tfoot>
       </table>
     </div>
+
     <button id="downloadPDF" class="btn-primary">Download PDF</button>
   </section>
 
-  <!-- Dependencies -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"
-    defer
-  ></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-    defer
-  ></script>
-  <!-- your JS -->
-  <script src="script.js" defer></script>
+  <!-- 3) Dependencies (no defer!) -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- 4) Your logic -->
+  <script src="script.js"></script>
 </body>
 </html>
+
