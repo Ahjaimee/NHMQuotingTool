@@ -1,33 +1,21 @@
-/* Reset & body */
+/* Base */
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f4f4f4;
+  background: #f4f4f4;
   margin: 0;
   padding: 30px;
   color: #27488f;
 }
 
 /* Logo */
-.logo-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.logo {
-  height: 60px;
-}
-.logo-sm {
-  height: 50px;
-}
+.logo-container { text-align: center; margin-bottom: 20px; }
+.logo, .logo-sm { display: block; margin: 0 auto; }
+.logo { height: 60px; }
+.logo-sm { height: 50px; }
 
 /* Headings */
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-}
-h2 {
-  font-size: 1.1rem;
-  margin: 25px 0 12px;
-}
+h1 { text-align: center; margin-bottom: 30px; }
+h2 { font-size: 1.1rem; margin: 25px 0 12px; }
 
 /* Form */
 #quoteForm {
@@ -38,11 +26,7 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-#quoteForm label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
+#quoteForm label { display: block; margin-bottom: 8px; font-weight: 500; }
 #quoteForm input,
 #quoteForm select {
   width: 100%;
@@ -51,10 +35,7 @@ h2 {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.nested {
-  margin-left: 15px;
-  margin-top: 12px;
-}
+.nested { margin-left: 15px; margin-top: 12px; }
 #addItem {
   margin-top: 20px;
   width: 100%;
@@ -67,7 +48,7 @@ h2 {
   cursor: pointer;
 }
 
-/* Quote section wrapper */
+/* Quote Section */
 .quote-section {
   max-width: 800px;
   margin: 0 auto;
@@ -86,19 +67,13 @@ h2 {
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
-.company-info {
-  margin-left: 20px;
-}
+.company-info { margin-left: 20px; }
 
-/* Customer info */
-.customer-info {
-  margin-bottom: 20px;
-}
-.customer-info p {
-  margin: 4px 0;
-}
+/* Customer Info */
+.customer-info { margin-bottom: 20px; }
+.customer-info p { margin: 4px 0; }
 
-/* Items table */
+/* Table */
 .quote-table {
   width: 100%;
   border-collapse: collapse;
@@ -110,17 +85,11 @@ h2 {
   padding: 8px;
   font-size: 0.95rem;
 }
-.quote-table th {
-  background: #eef7ec;
-}
-.quote-table tfoot td {
-  font-weight: 600;
-}
-.right {
-  text-align: right;
-}
+.quote-table th { background: #eef7ec; }
+.quote-table tfoot td { font-weight: 600; }
+.right { text-align: right; }
 
-/* Download button */
+/* Download Button */
 #downloadPDF {
   display: block;
   margin: 0 auto;
@@ -131,3 +100,4 @@ h2 {
   border-radius: 6px;
   cursor: pointer;
 }
+
