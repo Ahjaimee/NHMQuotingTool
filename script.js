@@ -1,16 +1,8 @@
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
-      "Replacement Battery": {
-        labour_hours: 0.5,
-        material_cost: 85.0,
-        part_number: "OXBATT180"
-      },
-      "Handset Replacement": {
-        labour_hours: 0.75,
-        material_cost: 65.0,
-        part_number: "OXHAND180"
-      }
+      "Replacement Battery": { labour_hours: 0.5, material_cost: 85.0, part_number: "OXBATT180" },
+      "Handset Replacement":  { labour_hours: 0.75, material_cost: 65.0, part_number: "OXHAND180" }
     }
   }
 };
@@ -19,110 +11,116 @@ let quoteItems = [];
 let assetChoices, makeChoices, repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const names = [
-    "Terry Clarke", "Jayden Davis", "Ken McIntyre", "Phill Darkin",
-    "Matthew Pons", "Ashley Henry", "Kelly Hart", "Andrea Oswald",
-    "Jamie Baker", "Elliot Bowler-Lee", "Steve Cottee", "Elena McColl",
-    "Paul McMullan", "Steven Webb"
-  ];
+  // Random placeholder names
+  const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
+  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
-  document.getElementById("customerName").placeholder =
-    `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
-
+  // Initialize Choices instances on empty selects
   assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+  makeChoices  = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
+  repairChoices= new Choices("#repairSelect",{ searchEnabled: true, shouldSort: false });
 
   populateAssets();
 
+  // When asset changes, rebuild / show make
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").style.display = "block";
   });
 
+  // When make changes, rebuild / show repair
   document.getElementById("makeSelect").addEventListener("change", () => {
     populateRepairs();
     document.getElementById("repairSection").style.display = "block";
   });
 
+  // When repair chosen, show options
   document.getElementById("repairSelect").addEventListener("change", () => {
     document.getElementById("optionsSection").style.display = "block";
   });
 
+  // Add item & reset form
   document.getElementById("addItem").addEventListener("click", () => {
-    const asset = document.getElementById("assetSelect").value;
-    const make = document.getElementById("makeSelect").value;
+    const asset  = document.getElementById("assetSelect").value;
+    const make   = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
-
     if (!asset || !make || !repair) return;
 
     quoteItems.push({ asset, make, repair });
     showEstimate();
 
-    // Reset form
+    // FULL reset of each select to avoid duplication
     populateAssets();
-    makeChoices.clearChoices();
-    repairChoices.clearChoices();
+    populateMakes(false);
+    populateRepairs(false);
 
+    // Hide downstream sections
     document.getElementById("makeSection").style.display = "none";
     document.getElementById("repairSection").style.display = "none";
     document.getElementById("optionsSection").style.display = "none";
 
+    // Clear checkboxes
     document.getElementById("supplyOnly").checked = false;
-    document.getElementById("vatExempt").checked = false;
+    document.getElementById("vatExempt").checked  = false;
   });
 
+  // Live recalc on checkbox change
   document.getElementById("supplyOnly").addEventListener("change", showEstimate);
   document.getElementById("vatExempt").addEventListener("change", showEstimate);
 });
 
 function populateAssets() {
   const assets = Object.keys(data);
-
-  // Destroy existing instance completely
-  if (assetChoices) {
-    assetChoices.destroy();
-  }
-
-  // Reset original <select> element
   const select = document.getElementById("assetSelect");
+
+  // Destroy & rebuild native <select> HTML
+  assetChoices.destroy();
   select.innerHTML = `
     <option value="" disabled selected>Select Asset</option>
-    ${assets.map(a => `<option value="${a}">${a}</option>`).join('')}
+    ${assets.map(a => `<option value="${a}">${a}</option>`).join("")}
   `;
-
-  // Reinitialize
   assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
-
-function populateMakes() {
+function populateMakes(showSection = true) {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
+  const select = document.getElementById("makeSelect");
 
-  makeChoices.clearChoices();
-  makeChoices.setChoices(makes.map(m => ({ value: m, label: m })), 'value', 'label', true);
+  makeChoices.destroy();
+  select.innerHTML = `
+    <option value="" disabled selected>Select Make/Model</option>
+    ${makes.map(m => `<option value="${m}">${m}</option>`).join("")}
+  `;
+  makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  if (!showSection) document.getElementById("makeSection").style.display = "none";
 }
 
-function populateRepairs() {
+function populateRepairs(showSection = true) {
   const asset = document.getElementById("assetSelect").value;
-  const make = document.getElementById("makeSelect").value;
+  const make  = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
+  const select = document.getElementById("repairSelect");
 
-  repairChoices.clearChoices();
-  repairChoices.setChoices(repairs.map(r => ({ value: r, label: r })), 'value', 'label', true);
+  repairChoices.destroy();
+  select.innerHTML = `
+    <option value="" disabled selected>Select Repair</option>
+    ${repairs.map(r => `<option value="${r}">${r}</option>`).join("")}
+  `;
+  repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  if (!showSection) document.getElementById("repairSection").style.display = "none";
 }
 
-function removeItem(index) {
-  quoteItems.splice(index, 1);
+function removeItem(idx) {
+  quoteItems.splice(idx, 1);
   showEstimate();
 }
 
 function showEstimate() {
   const quoteLines = document.getElementById("quoteLines");
-  const estimateDiv = document.getElementById("estimate");
+  const estimate   = document.getElementById("estimate");
   const supplyOnly = document.getElementById("supplyOnly").checked;
-  const vatExempt = document.getElementById("vatExempt").checked;
+  const vatExempt  = document.getElementById("vatExempt").checked;
 
   quoteLines.innerHTML = "";
   let subtotal = 0;
@@ -131,8 +129,8 @@ function showEstimate() {
     const info = data[item.asset][item.make][item.repair];
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
     const carriage = supplyOnly ? 15.95 : 0;
-    const itemTotal = labour + info.material_cost + carriage;
-    subtotal += itemTotal;
+    const lineTotal = labour + info.material_cost + carriage;
+    subtotal += lineTotal;
 
     quoteLines.innerHTML += `
       <div class="quote-line">
@@ -146,14 +144,14 @@ function showEstimate() {
     `;
   });
 
-  const vat = vatExempt ? 0 : subtotal * 0.2;
+  const vat   = vatExempt ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
 
-  estimateDiv.innerHTML = `
+  estimate.innerHTML = `
     <h3>Quote Summary</h3>
     <p><strong>Items:</strong> ${quoteItems.length}</p>
-    <p><strong>Subtotal (excl. VAT):</strong> £${subtotal.toFixed(2)}</p>
+    <p><strong>Subtotal:</strong> £${subtotal.toFixed(2)}</p>
     <p><strong>VAT (${vatExempt ? "Exempt" : "20%"}):</strong> £${vat.toFixed(2)}</p>
-    <p><strong>Total (incl. VAT):</strong> £${total.toFixed(2)}</p>
+    <p><strong>Total:</strong> £${total.toFixed(2)}</p>
   `;
 }
