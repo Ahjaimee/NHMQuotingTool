@@ -10,19 +10,15 @@
 </head>
 <body>
   <div class="logo-container">
-    <img src="nhm-logo.png" alt="Company Logo" class="logo" />
+    <img src="nhm-logo.png" alt="NHM Logo" class="logo" />
   </div>
 
   <h1>Quote Estimator</h1>
 
   <form id="quoteForm">
     <h2>Customer Details</h2>
-    <label for="customerName">Customer Name:
-      <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
-    </label>
-    <label for="quoteNumber">Job/Quote Number:
-      <input type="text" id="quoteNumber" placeholder="e.g. Q12345" />
-    </label>
+    <label>Customer Name: <input type="text" id="customerName" /></label>
+    <label>Quote Number: <input type="text" id="quoteNumber" /></label>
 
     <h2>Repair Details</h2>
     <label for="assetSelect">Asset Type:</label>
@@ -42,19 +38,15 @@
 
     <h2>Quote Options</h2>
     <div class="checkbox-wrapper">
-      <label for="supplyOnly">
-        <input type="checkbox" id="supplyOnly" /> Supply Only (no labour charge)
-      </label>
-      <label for="vatExempt">
-        <input type="checkbox" id="vatExempt" /> VAT Exempt (no VAT added to this quote)
-      </label>
+      <label><input type="checkbox" id="supplyOnly" /> Supply Only</label>
+      <label><input type="checkbox" id="vatExempt" /> VAT Exempt</label>
     </div>
   </form>
 
   <section class="quote-section" id="quoteSection" style="display: none;">
     <div id="quoteLines"></div>
     <div id="estimate"></div>
-    <button id="downloadPDF" style="display: none;">Download PDF</button>
+    <button id="downloadPDF">Download PDF</button>
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
