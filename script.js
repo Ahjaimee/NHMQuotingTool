@@ -43,7 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.querySelector("#assetSelect").value;
     const make = document.querySelector("#makeSelect").value;
     const repair = document.querySelector("#repairSelect").value;
+
     if (!asset || !make || !repair) return;
+
     quoteItems.push({ asset, make, repair });
     showEstimate();
   });
