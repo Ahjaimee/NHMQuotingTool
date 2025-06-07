@@ -40,12 +40,14 @@
 
     <h2>Quote Options</h2>
     <div class="checkbox-wrapper">
-      <label for="supplyOnly">
+      <label>
         <input type="checkbox" id="supplyOnly" />
+        <span class="checkmark"></span>
         Supply Only (no labour charge)
       </label>
-      <label for="vatExempt">
+      <label>
         <input type="checkbox" id="vatExempt" />
+        <span class="checkmark"></span>
         VAT Exempt (no VAT added to this quote)
       </label>
     </div>
@@ -53,29 +55,10 @@
     <button type="button" id="addItem">+ Add Item to Quote</button>
   </form>
 
-  <section id="quoteSection" class="quote-section" hidden>
+  <section class="quote-section">
     <div id="quoteLines"></div>
     <div id="estimate"></div>
-    <div id="pdfContent" style="position: absolute; left: -9999px; visibility: hidden;">
-      <h2>Quote Summary</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Part #</th>
-            <th>Labour</th>
-            <th>Materials</th>
-            <th>Carriage</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody id="pdfTableBody"></tbody>
-      </table>
-      <p><strong>Subtotal:</strong> <span id="pdfSubtotal">£0.00</span></p>
-      <p><strong>VAT:</strong> <span id="pdfVAT">£0.00</span></p>
-      <p><strong>Total:</strong> <span id="pdfTotal">£0.00</span></p>
-    </div>
-    <button id="downloadPDF">Download PDF</button>
+    <button id="downloadPDF" style="display: none;">Download PDF</button>
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
