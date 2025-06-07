@@ -26,11 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Paul McMullan", "Steven Webb"
   ];
 
-  // Random placeholder name
+  // Random placeholder
   document.getElementById("customerName").placeholder =
     `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
 
-  // Init Choices
+  // Initialize Choices.js
   assetChoices = new Choices("#assetSelect", { searchEnabled: true });
   makeChoices = new Choices("#makeSelect", { searchEnabled: true });
   repairChoices = new Choices("#repairSelect", { searchEnabled: true });
@@ -58,14 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
 
-    if (!asset || !make || !repair) return;
+    if (!asset || asset === "" || !make || !repair) return;
 
     quoteItems.push({ asset, make, repair });
     showEstimate();
 
-    // Reset dropdowns and checkboxes (keep customer details)
+    // Reset dropdowns
     assetChoices.setChoiceByValue('');
     document.getElementById("assetSelect").dispatchEvent(new Event("change"));
+
     makeChoices.clearChoices();
     repairChoices.clearChoices();
 
@@ -73,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("repairSection").style.display = "none";
     document.getElementById("optionsSection").style.display = "none";
 
+    // Reset checkboxes
     document.getElementById("supplyOnly").checked = false;
     document.getElementById("vatExempt").checked = false;
   });
@@ -150,6 +152,3 @@ function showEstimate() {
     <p><strong>Total (incl. VAT):</strong> £${total.toFixed(2)}</p>
   `;
 }
-
-
-
