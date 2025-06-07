@@ -39,13 +39,26 @@
       <label for="repairSelect">Repair Type:</label>
       <select id="repairSelect"></select>
     </div>
+
+    <div id="optionsSection" style="display: none;">
+      <label for="supplyOnly">
+        <input type="checkbox" id="supplyOnly" />
+        Supply Only (no labour charge)
+      </label>
+      <label for="vatExempt">
+        <input type="checkbox" id="vatExempt" />
+        VAT Exempt (no VAT added to this quote)
+      </label>
+    </div>
   </form>
 
   <div class="quote-section">
     <div id="estimate"></div>
+    <button id="downloadPDF">Download PDF</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
