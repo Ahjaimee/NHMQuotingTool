@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Quote Estimator</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -41,19 +41,39 @@
       <option value="">-- Select Repair --</option>
     </select>
 
-    <!-- Supply Only Checkbox -->
-    <label for="supplyOnly" style="margin-top: 10px;">
+    <label for="supplyOnly">
       <input type="checkbox" id="supplyOnly" />
       Supply Only (no labour)
     </label>
   </form>
 
-  <!-- Quote Output -->
+  <!-- Quote Output Section -->
   <div class="quote-section">
     <div id="estimate"></div>
+    <button id="downloadPDF" type="button">Download Quote as PDF</button>
   </div>
 
+  <!-- Scripts -->
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    document.getElementById("downloadPDF").addEventListener("click", () => {
+      const quote = document.getElementById("estimate");
+      if (quote.innerText.trim() === "") {
+        alert("Please select a repair and generate a quote before downloading.");
+        return;
+      }
+
+      const opt = {
+        margin: 0.5,
+        filename: 'NHM_Quote.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(quote).save();
+    });
+  </script>
 </body>
 </html>
-
