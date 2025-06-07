@@ -12,97 +12,104 @@ const refs = {};
 const choices = {};
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Cache DOM refs
   [
     "assetSelect","makeSelect","repairSelect",
     "supplyOnly","vatExempt","customerName",
     "quoteNumber","quoteSection","pdfQuoteNumber",
     "pdfCustomerName","pdfTableBody","pdfSubtotal",
-    "pdfVAT","pdfTotal","addItem","downloadPDF"
+    "pdfVAT","pdfTotal","addItem","downloadPDF","pdfContent"
   ].forEach(id => refs[id] = document.getElementById(id));
 
-  // Placeholder for name
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
   refs.customerName.placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
 
-  // Init Choices.js
   choices.asset  = new Choices(refs.assetSelect,  { searchEnabled:true,shouldSort:false });
   choices.make   = new Choices(refs.makeSelect,   { searchEnabled:true,shouldSort:false });
   choices.repair = new Choices(refs.repairSelect,{ searchEnabled:true,shouldSort:false });
 
   populateAssets();
-  refs.quoteSection.hidden = true;
+  refs.quoteSection.hidden = false;
 
-  // Cascading selects
   refs.assetSelect.addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").hidden = false;
   });
+
   refs.makeSelect.addEventListener("change", () => {
     populateRepairs();
     document.getElementById("repairSection").hidden = false;
   });
+
   refs.repairSelect.addEventListener("change", () => {
     document.getElementById("optionsSection").hidden = false;
   });
 
-  // Live recalc on checkboxes
   refs.supplyOnly.addEventListener("change", renderQuote);
-  refs.vatExempt .addEventListener("change", renderQuote);
+  refs.vatExempt.addEventListener("change", renderQuote);
 
-  // Add item
   refs.addItem.addEventListener("click", () => {
     if (!refs.assetSelect.value || !refs.makeSelect.value || !refs.repairSelect.value) return;
+
     quoteItems.push({
       asset:  refs.assetSelect.value,
       make:   refs.makeSelect.value,
       repair: refs.repairSelect.value
     });
-    refs.quoteSection.hidden = false;
-    // do NOT reset checkboxes!
-    resetForm();   // this only resets the selects
+
+    resetForm();
     renderQuote();
   });
 
-  // Download PDF
   refs.downloadPDF.addEventListener("click", () => {
+    refs.pdfContent.style.visibility = "visible";
+    refs.pdfContent.style.position = "static";
+
     html2pdf()
-      .from(document.getElementById("pdfContent"))
+      .from(refs.pdfContent)
       .set({ margin:10, filename:`Quote_${refs.quoteNumber.value||'No#'}.pdf` })
-      .save();
+      .save()
+      .then(() => {
+        refs.pdfContent.style.visibility = "hidden";
+        refs.pdfContent.style.position = "absolute";
+        refs.pdfContent.style.left = "-9999px";
+      });
   });
 });
 
 function populateAssets() {
-  const arr = Object.keys(data);
+  const assets = Object.keys(data);
   choices.asset.destroy();
   refs.assetSelect.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
-    arr.map(o => `<option value="${o}">${o}</option>`).join("");
-  choices.asset = new Choices(refs.assetSelect, { searchEnabled:true,shouldSort:false });
+    assets.map(a => `<option value="${a}">${a}</option>`).join("");
+  choices.asset = new Choices(refs.assetSelect, { searchEnabled: true, shouldSort: false });
 }
 
 function populateMakes() {
-  const arr = data[refs.assetSelect.value] ? Object.keys(data[refs.assetSelect.value]) : [];
+  const asset = refs.assetSelect.value;
+  const makes = data[asset] ? Object.keys(data[asset]) : [];
   choices.make.destroy();
   refs.makeSelect.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
-    arr.map(o => `<option value="${o}">${o}</option>`).join("");
-  choices.make = new Choices(refs.makeSelect, { searchEnabled:true,shouldSort:false });
+    makes.map(m => `<option value="${m}">${m}</option>`).join("");
+  choices.make = new Choices(refs.makeSelect, { searchEnabled: true, shouldSort: false });
 }
 
 function populateRepairs() {
-  const arr = data[refs.assetSelect.value]?.[refs.makeSelect.value]
-    ? Object.keys(data[refs.assetSelect.value][refs.makeSelect.value]) : [];
+  const asset = refs.assetSelect.value;
+  const make = refs.makeSelect.value;
+  const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   choices.repair.destroy();
   refs.repairSelect.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
-    arr.map(o => `<option value="${o}">${o}</option>`).join("");
-  choices.repair = new Choices(refs.repairSelect, { searchEnabled:true,shouldSort:false });
+    repairs.map(r => `<option value="${r}">${r}</option>`).join("");
+  choices.repair = new Choices(refs.repairSelect, { searchEnabled: true, shouldSort: false });
 }
 
 function resetForm() {
   populateAssets();
-  document.getElementById("makeSection").hidden    = true;
-  document.getElementById("repairSection").hidden  = true;
-  // leave optionsSection visible once shown
+  choices.make.setChoiceByValue("");
+  choices.repair.setChoiceByValue("");
+
+  document.getElementById("makeSection").hidden = true;
+  document.getElementById("repairSection").hidden = true;
 }
 
 function renderQuote() {
@@ -122,18 +129,3 @@ function renderQuote() {
       <td>${info.part_number}</td>
       <td>£${labour.toFixed(2)}</td>
       <td>£${info.material_cost.toFixed(2)}</td>
-      <td>£${carriage.toFixed(2)}</td>
-      <td>£${line.toFixed(2)}</td>
-    `;
-    refs.pdfTableBody.appendChild(tr);
-  });
-
-  const vatAmt = refs.vatExempt.checked ? 0 : subtotal * 0.2;
-  const total  = subtotal + vatAmt;
-
-  refs.pdfSubtotal.textContent     = `£${subtotal.toFixed(2)}`;
-  refs.pdfVAT.textContent          = `£${vatAmt.toFixed(2)}`;
-  refs.pdfTotal.textContent        = `£${total.toFixed(2)}`;
-  refs.pdfQuoteNumber.textContent  = refs.quoteNumber.value   || "(No #)";
-  refs.pdfCustomerName.textContent = refs.customerName.value  || "(No name)";
-}
