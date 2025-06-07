@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>NHM Quoting Tool</title>
 
-  <!-- 1) your custom CSS in the repo root -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="style.css"/>
 
-  <!-- 2) Choices.js CSS for the searchable selects -->
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <!-- Choices.js CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+  />
 </head>
 <body>
+  <!-- Logo + Title -->
   <div class="logo-container">
-    <img src="nhm-logo.png" alt="NHM Logo" class="logo" />
+    <img src="nhm-logo.png" alt="NHM Logo" class="logo"/>
   </div>
-
   <h1>Quote Estimator</h1>
 
+  <!-- Quote Form -->
   <form id="quoteForm">
     <h2>Customer Details</h2>
     <label for="customerName">Customer Name</label>
-    <input type="text" id="customerName" placeholder="e.g. Jamie Baker" />
+    <input type="text" id="customerName" placeholder="e.g. Jamie Baker"/>
 
     <label for="quoteNumber">Quote Number</label>
-    <input type="text" id="quoteNumber" placeholder="e.g. Q12345" />
+    <input type="text" id="quoteNumber" placeholder="e.g. Q12345"/>
 
     <h2>Repair Details</h2>
     <label for="assetSelect">Asset Type</label>
@@ -42,54 +45,79 @@
     </div>
 
     <div id="optionsSection" class="nested" hidden>
-      <label><input type="checkbox" id="supplyOnly" /> Supply Only (no labour)</label>
-      <label><input type="checkbox" id="vatExempt"  /> VAT Exempt</label>
+      <label><input type="checkbox" id="supplyOnly"/> Supply Only (no labour)</label>
+      <label><input type="checkbox" id="vatExempt"/> VAT Exempt</label>
     </div>
 
     <button type="button" id="addItem">+ Add Item</button>
   </form>
 
-  <!-- 3) Hide the quote section until you’ve added at least one item -->
+  <!-- Quote Preview + PDF Export -->
   <section id="quoteSection" class="quote-section" hidden>
     <div id="pdfContent">
+      <!-- PDF Header -->
       <header class="quote-header">
-        <img src="nhm-logo.png" class="logo-sm" alt="NHM Logo" />
+        <img src="nhm-logo.png" class="logo-sm" alt="NHM Logo"/>
         <div class="company-info">
           <h2>NHM Engineering Ltd</h2>
           <p>
-            123 Industrial Park Road<br />
-            Shepperton TW17 9NN<br />
+            123 Industrial Park Road<br/>
+            Shepperton TW17 9NN<br/>
             Tel: 01932 227 600
           </p>
         </div>
       </header>
 
+      <!-- Customer Info -->
       <div class="customer-info">
         <p><strong>Quote #:</strong> <span id="pdfQuoteNumber"></span></p>
         <p><strong>Customer:</strong> <span id="pdfCustomerName"></span></p>
       </div>
 
+      <!-- Items Table -->
       <table class="quote-table">
         <thead>
           <tr>
-            <th>Description</th><th>Part #</th><th>Labour</th>
-            <th>Materials</th><th>Carriage</th><th>Total</th>
+            <th>Description</th>
+            <th>Part #</th>
+            <th>Labour</th>
+            <th>Materials</th>
+            <th>Carriage</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody id="pdfTableBody"></tbody>
         <tfoot>
-          <tr><td colspan="5" class="right">Subtotal</td><td id="pdfSubtotal"></td></tr>
-          <tr><td colspan="5" class="right">VAT</td><td id="pdfVAT"></td></tr>
-          <tr><td colspan="5" class="right"><strong>Total</strong></td><td id="pdfTotal"></td></tr>
+          <tr>
+            <td colspan="5" class="right">Subtotal</td>
+            <td id="pdfSubtotal">£0.00</td>
+          </tr>
+          <tr>
+            <td colspan="5" class="right">VAT</td>
+            <td id="pdfVAT">£0.00</td>
+          </tr>
+          <tr>
+            <td colspan="5" class="right"><strong>Total</strong></td>
+            <td id="pdfTotal">£0.00</td>
+          </tr>
         </tfoot>
       </table>
     </div>
+
     <button id="downloadPDF">Download PDF</button>
   </section>
 
-  <!-- 4) Scripts (all in root) -->
-  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+  <!-- Dependencies -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"
+    defer
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    defer
+  ></script>
+
+  <!-- Your Script -->
   <script src="script.js" defer></script>
 </body>
 </html>
