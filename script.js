@@ -47,14 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
-
   document.getElementById("downloadPDF").addEventListener("click", generatePDF);
 });
 
 function populateAssets() {
   const assets = Object.keys(data);
   const select = document.getElementById("assetSelect");
-
   assetChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Asset</option>${assets.map(a => `<option value="${a}">${a}</option>`).join("")}`;
   assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
@@ -64,7 +62,6 @@ function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
   const makes = data[asset] ? Object.keys(data[asset]) : [];
   const select = document.getElementById("makeSelect");
-
   makeChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>${makes.map(m => `<option value="${m}">${m}</option>`).join("")}`;
   makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
@@ -75,7 +72,6 @@ function populateRepairs() {
   const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   const select = document.getElementById("repairSelect");
-
   repairChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Repair</option>${repairs.map(r => `<option value="${r}">${r}</option>`).join("")}`;
   repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
@@ -158,6 +154,16 @@ function generatePDF() {
   const supplyOnly = document.getElementById("supplyOnly").checked;
   const vatExempt = document.getElementById("vatExempt").checked;
 
+  const logoBase64 = "iVBORw0KGgoAAAANSUhEUgAAA0IAAANDCAYAAACAAq/RAABc/ElEQVR4nO39z3Eb15s+bj+fqdlLGYjvEitxIhBnjyrzF4HpCNwO..."; // insert full base64 here
+
+  doc.addImage(logoBase64, "PNG", 14, 10, 30, 30);
+  doc.setFontSize(14);
+  doc.text("Estimated Quote", 50, 18);
+  doc.setFontSize(10);
+  doc.text(`Client: ${customer}`, 50, 26);
+  doc.text(`Job No: ${quoteNo}`, 50, 31);
+  doc.text(`Date: ${date}`, 50, 36);
+
   let subtotal = 0;
   const tableRows = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
@@ -181,15 +187,8 @@ function generatePDF() {
   const vat = vatExempt ? 0 : subtotal * 0.2;
   const grandTotal = subtotal + vat;
 
-  doc.setFontSize(14);
-  doc.text("Estimated Quote", 14, 18);
-  doc.setFontSize(10);
-  doc.text(`Client: ${customer}`, 14, 26);
-  doc.text(`Job No: ${quoteNo}`, 14, 31);
-  doc.text(`Date: ${date}`, 14, 36);
-
   doc.autoTable({
-    startY: 42,
+    startY: 45,
     head: [["Asset", "Make", "Repair", "Part #", "Labour", "Materials", "Carriage", "Line Total"]],
     body: tableRows,
     styles: { fontSize: 9 },
