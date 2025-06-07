@@ -1,4 +1,3 @@
-// === Sample repair data ===
 const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
@@ -16,13 +15,11 @@ const data = {
   }
 };
 
-// === Populate dropdowns ===
 document.addEventListener("DOMContentLoaded", () => {
   const assetSelect = document.getElementById('assetSelect');
   const makeSelect = document.getElementById('makeSelect');
   const repairSelect = document.getElementById('repairSelect');
 
-  // Load asset options
   for (let asset in data) {
     const option = document.createElement('option');
     option.value = asset;
@@ -30,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     assetSelect.appendChild(option);
   }
 
-  // Load makes based on asset
   assetSelect.addEventListener('change', () => {
     makeSelect.innerHTML = '<option value="">-- Select Make --</option>';
     repairSelect.innerHTML = '<option value="">-- Select Repair --</option>';
@@ -46,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Load repairs based on make
   makeSelect.addEventListener('change', () => {
     repairSelect.innerHTML = '<option value="">-- Select Repair --</option>';
     const selectedAsset = assetSelect.value;
@@ -62,12 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Trigger quote update
   repairSelect.addEventListener('change', showEstimate);
   document.getElementById('supplyOnly').addEventListener('change', showEstimate);
 });
 
-// === Estimate Generator ===
 function showEstimate() {
   const asset = document.getElementById('assetSelect').value;
   const make = document.getElementById('makeSelect').value;
@@ -78,12 +71,14 @@ function showEstimate() {
   const quoteNumber = document.getElementById('quoteNumber').value;
   const supplyOnly = document.getElementById('supplyOnly').checked;
 
-  if (!repair) return;
+  if (!repair) {
+    estimateDiv.innerHTML = "";
+    return;
+  }
 
   const info = data[asset][make][repair];
   const labourRate = 45;
   const labourCost = supplyOnly ? 0 : info.labour_hours * labourRate;
-  const labourDisplay = supplyOnly ? "N/A (Supply Only)" : `£${labourCost.toFixed(2)}`;
   const carriageCost = supplyOnly ? 15.95 : 0;
   const materialCost = info.material_cost;
   const total = labourCost + materialCost + carriageCost;
@@ -95,7 +90,7 @@ function showEstimate() {
     <p><strong>Asset:</strong> ${asset}</p>
     <p><strong>Make:</strong> ${make}</p>
     <p><strong>Repair:</strong> ${repair} (Part #${info.part_number})</p>
-    <p>Labour: ${labourDisplay}</p>
+    <p>Labour: ${supplyOnly ? "N/A (Supply Only)" : `£${labourCost.toFixed(2)}`}</p>
     <p>Materials: £${materialCost.toFixed(2)}</p>
     ${supplyOnly ? `<p>Carriage: £${carriageCost.toFixed(2)}</p>` : ""}
     <p><strong>Total: £${total.toFixed(2)}</strong></p>
