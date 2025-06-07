@@ -2,7 +2,7 @@ const data = {
   "Mobile Hoist": {
     "Oxford Midi 180": {
       "Replacement Battery": { labour_hours: 0.5, material_cost: 85.0, part_number: "OXBATT180" },
-      "Handset Replacement":  { labour_hours: 0.75, material_cost: 65.0, part_number: "OXHAND180" }
+      "Handset Replacement": { labour_hours: 0.75, material_cost: 65.0, part_number: "OXHAND180" }
     }
   }
 };
@@ -12,14 +12,16 @@ let assetChoices, makeChoices, repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
   const names = ["Terry Clarke","Jayden Davis","Ken McIntyre","Phill Darkin","Matthew Pons","Ashley Henry","Kelly Hart","Andrea Oswald","Jamie Baker","Elliot Bowler-Lee","Steve Cottee","Elena McColl","Paul McMullan","Steven Webb"];
-  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random()*names.length)]}`;
+  document.getElementById("customerName").placeholder = `e.g. ${names[Math.floor(Math.random() * names.length)]}`;
 
-  assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices  = new Choices("#makeSelect",  { searchEnabled: true, shouldSort: false });
-  repairChoices= new Choices("#repairSelect",{ searchEnabled: true, shouldSort: false });
+  // Initialize Choices
+  assetChoices  = new Choices("#assetSelect",  { searchEnabled: true, shouldSort: false });
+  makeChoices   = new Choices("#makeSelect",   { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
 
   populateAssets();
 
+  // Dropdown changes
   document.getElementById("assetSelect").addEventListener("change", () => {
     populateMakes();
     document.getElementById("makeSection").style.display = "block";
@@ -30,28 +32,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("repairSection").style.display = "block";
   });
 
-  document.getElementById("repairSelect").addEventListener("change", () => {
-    document.getElementById("optionsSection").style.display = "block";
-  });
-
+  // Add item
   document.getElementById("addItem").addEventListener("click", () => {
     const asset  = document.getElementById("assetSelect").value;
     const make   = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
-    if (!asset || !make || !repair) return;
+
+    if (!asset || !make || !repair) {
+      alert("Please select all repair fields");
+      return;
+    }
 
     quoteItems.push({ asset, make, repair });
-
     renderQuote();
-    document.getElementById("quoteSection").hidden = false;
+
+    document.getElementById("quoteSection").style.display = "block";
     document.getElementById("downloadPDF").style.display = "block";
 
     resetRepairFields();
   });
 
+  // Update estimate when options change
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
 
+  // PDF Download
   document.getElementById("downloadPDF").addEventListener("click", () => {
     html2pdf().set({
       margin: 0.5,
@@ -67,7 +72,8 @@ function populateAssets() {
   const select = document.getElementById("assetSelect");
 
   assetChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Asset</option>${assets.map(a => `<option value="${a}">${a}</option>`).join("")}`;
+  select.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
+    assets.map(a => `<option value="${a}">${a}</option>`).join("");
   assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
@@ -77,25 +83,37 @@ function populateMakes() {
   const select = document.getElementById("makeSelect");
 
   makeChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>${makes.map(m => `<option value="${m}">${m}</option>`).join("")}`;
+  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
+    makes.map(m => `<option value="${m}">${m}</option>`).join("");
   makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
 function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
-  const make  = document.getElementById("makeSelect").value;
+  const make = document.getElementById("makeSelect").value;
   const repairs = data[asset]?.[make] ? Object.keys(data[asset][make]) : [];
   const select = document.getElementById("repairSelect");
 
   repairChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Repair</option>${repairs.map(r => `<option value="${r}">${r}</option>`).join("")}`;
+  select.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
+    repairs.map(r => `<option value="${r}">${r}</option>`).join("");
   repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
 }
 
 function resetRepairFields() {
+  assetChoices.destroy();
+  makeChoices.destroy();
+  repairChoices.destroy();
+
+  document.getElementById("assetSelect").innerHTML = "";
+  document.getElementById("makeSelect").innerHTML = "";
+  document.getElementById("repairSelect").innerHTML = "";
+
+  assetChoices  = new Choices("#assetSelect",  { searchEnabled: true, shouldSort: false });
+  makeChoices   = new Choices("#makeSelect",   { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+
   populateAssets();
-  populateMakes(false);
-  populateRepairs(false);
 
   document.getElementById("makeSection").style.display = "none";
   document.getElementById("repairSection").style.display = "none";
