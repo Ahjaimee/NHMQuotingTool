@@ -60,7 +60,7 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
-/* Choices.js dropdown styles */
+/* Choices.js Dropdown Styling */
 select {
   display: none;
 }
@@ -91,7 +91,7 @@ select {
   line-height: 1 !important;
 }
 
-/* Output box */
+/* Output Summary Box */
 #estimate {
   background-color: #eef7ec;
   padding: 15px;
@@ -99,10 +99,13 @@ select {
   border-radius: 8px;
   font-size: 0.95rem;
   line-height: 1.5;
+  margin-top: 20px;
 }
 
-/* Download PDF button */
-#downloadPDF {
+/* Button Styling */
+#downloadPDF,
+#addItem {
+  display: inline-block;
   width: 100%;
   padding: 12px;
   margin-top: 20px;
@@ -117,12 +120,22 @@ select {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
+#addItem {
+  background-color: #f58020;
+  margin-top: 15px;
+}
+
+#addItem:hover {
+  background-color: #d96d13;
+  transform: translateY(-1px);
+}
+
 #downloadPDF:hover {
   background-color: #1e336b;
   transform: translateY(-1px);
 }
 
-/* ✅ Enhanced checkbox styling */
+/* Checkbox Styling */
 input[type="checkbox"] {
   appearance: none !important;
   -webkit-appearance: none !important;
@@ -172,28 +185,7 @@ label[for="vatExempt"] {
   cursor: pointer;
 }
 
-/* ➕ Add Item Button */
-#addItem {
-  display: inline-block;
-  padding: 10px 16px;
-  margin-top: 15px;
-  background-color: #f58020;
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
-}
-
-#addItem:hover {
-  background-color: #d96d13;
-  transform: translateY(-1px);
-}
-
-/* 🧾 Quote Line Display */
+/* Quote Line Display */
 .quote-line {
   padding: 10px;
   border: 1px solid #ddd;
@@ -202,7 +194,11 @@ label[for="vatExempt"] {
   background: #fafafa;
 }
 
-/* 🗑 Remove Item Button */
+.quote-line p {
+  margin: 4px 0;
+}
+
+/* Remove Item Button */
 .quote-line button {
   margin-top: 8px;
   padding: 6px 12px;
@@ -218,6 +214,7 @@ label[for="vatExempt"] {
 .quote-line button:hover {
   background-color: #a41e1e;
 }
+
 
 
 
