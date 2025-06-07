@@ -28,11 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("customerName").placeholder = `e.g. ${randomName}`;
   document.getElementById("quoteNumber").placeholder = "e.g. Q12345";
 
-  // Initialize Choices after elements are available
-  assetChoices = new Choices("#assetSelect", { searchEnabled: true });
-  makeChoices = new Choices("#makeSelect", { searchEnabled: true });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true });
-
+  // Populate and initialize the first dropdown
   populateAssets();
 
   document.getElementById("assetSelect").addEventListener("change", () => {
@@ -40,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("makeSection").style.display = "block";
     document.getElementById("repairSection").style.display = "none";
     document.getElementById("optionsSection").style.display = "none";
-    repairChoices.clearChoices();
     document.getElementById("estimate").innerHTML = "";
   });
 
@@ -61,38 +56,55 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function populateAssets() {
-  const assetOptions = Object.keys(data).map(asset => ({
-    value: asset,
-    label: asset
-  }));
-  assetChoices.setChoices(assetOptions, 'value', 'label', true);
+  const el = document.getElementById("assetSelect");
+  el.innerHTML = "";
+  Object.keys(data).forEach(asset => {
+    const opt = document.createElement("option");
+    opt.value = asset;
+    opt.textContent = asset;
+    el.appendChild(opt);
+  });
+
+  // Destroy existing Choices instance if any
+  if (assetChoices) assetChoices.destroy();
+  assetChoices = new Choices(el, { searchEnabled: true });
 }
 
 function populateMakes() {
   const asset = document.getElementById("assetSelect").value;
-  makeChoices.clearChoices();
+  const el = document.getElementById("makeSelect");
+  el.innerHTML = "";
 
   if (data[asset]) {
-    const makes = Object.keys(data[asset]).map(make => ({
-      value: make,
-      label: make
-    }));
-    makeChoices.setChoices(makes, 'value', 'label', true);
+    Object.keys(data[asset]).forEach(make => {
+      const opt = document.createElement("option");
+      opt.value = make;
+      opt.textContent = make;
+      el.appendChild(opt);
+    });
   }
+
+  if (makeChoices) makeChoices.destroy();
+  makeChoices = new Choices(el, { searchEnabled: true });
 }
 
 function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
-  repairChoices.clearChoices();
+  const el = document.getElementById("repairSelect");
+  el.innerHTML = "";
 
   if (data[asset] && data[asset][make]) {
-    const repairs = Object.keys(data[asset][make]).map(repair => ({
-      value: repair,
-      label: repair
-    }));
-    repairChoices.setChoices(repairs, 'value', 'label', true);
+    Object.keys(data[asset][make]).forEach(repair => {
+      const opt = document.createElement("option");
+      opt.value = repair;
+      opt.textContent = repair;
+      el.appendChild(opt);
+    });
   }
+
+  if (repairChoices) repairChoices.destroy();
+  repairChoices = new Choices(el, { searchEnabled: true });
 }
 
 function showEstimate() {
@@ -133,6 +145,7 @@ function showEstimate() {
     <p><strong>Total (incl. VAT): £${total.toFixed(2)}</strong></p>
   `;
 }
+
 
 
 
