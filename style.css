@@ -19,6 +19,7 @@ body {
 .logo {
   width: 150px;
   height: auto;
+  max-width: 100%;
 }
 
 h1 {
@@ -49,7 +50,7 @@ input[type="text"], select {
 /* Compact Choices.js dropdown styling */
 .choices {
   font-size: 0.95rem;
-  width: 100%;
+  width: 100% !important;
   box-sizing: border-box;
 }
 
@@ -64,7 +65,7 @@ input[type="text"], select {
 
 .choices__list--dropdown {
   font-size: 0.95rem;
-  width: 100%;
+  width: 100% !important;
   box-sizing: border-box;
 }
 
@@ -124,6 +125,20 @@ button {
   padding: 10px;
   border-left: 4px solid #ccc;
   border-radius: 6px;
+}
+
+.quote-line p {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0;
+}
+
+.quote-line .value {
+  margin-left: 10px;
+}
+
+.total-line {
+  font-weight: bold;
 }
 
 .quote-line button {
