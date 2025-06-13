@@ -209,7 +209,8 @@ async function generatePDF() {
   doc.addImage(logo, "PNG", 10, 5, 20, 15);
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(16);
-  doc.text("Quoted Repair Estimate", pageWidth / 2, 15, { align: "center" });
+  // Title displayed prominently at the top of the page
+  doc.text("Quoted Repair Estimate", pageWidth / 2, 12, { align: "center" });
   doc.setTextColor(0, 0, 0);
 
   const infoStartY = 30;
@@ -224,14 +225,11 @@ async function generatePDF() {
   infoY += 6;
   doc.text(`Customer: ${name}`, 15, infoY);
   infoY += 6;
-  if (phone) {
-    doc.text(`Phone: ${phone}`, 15, infoY);
-    infoY += 6;
-  }
-  if (email) {
-    doc.text(`Email: ${email}`, 15, infoY);
-    infoY += 6;
-  }
+  // Always include contact fields so they appear on the PDF even when blank
+  doc.text(`Phone: ${phone || "(N/A)"}`, 15, infoY);
+  infoY += 6;
+  doc.text(`Email: ${email || "(N/A)"}`, 15, infoY);
+  infoY += 6;
   doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
   const tableStartY = infoY + 8;
 
