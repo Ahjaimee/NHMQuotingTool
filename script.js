@@ -206,13 +206,21 @@ async function generatePDF() {
   const phone = document.getElementById("customerPhone").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
   doc.setFontSize(10);
-  doc.text(`Quote #: ${number}`, 15, 32);
-  doc.text(`Customer: ${name}`, 15, 38);
-  if (email) doc.text(`Email: ${email}`, 15, 44);
-  if (phone) doc.text(`Phone: ${phone}`, 15, email ? 50 : 44);
-  const dateY = email && phone ? 56 : (email || phone ? 50 : 44);
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, dateY);
-  const tableStartY = dateY + 6;
+  let infoY = titleY + 6;
+  doc.text(`Quote #: ${number}`, 15, infoY);
+  infoY += 6;
+  doc.text(`Customer: ${name}`, 15, infoY);
+  infoY += 6;
+  if (phone) {
+    doc.text(`Phone: ${phone}`, 15, infoY);
+    infoY += 6;
+  }
+  if (email) {
+    doc.text(`Email: ${email}`, 15, infoY);
+    infoY += 6;
+  }
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
+  const tableStartY = infoY + 8;
 
   const rows = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
@@ -237,7 +245,10 @@ async function generatePDF() {
   doc.autoTable({
     startY: tableStartY,
     head: [["Asset", "Repair", "Part#", "Labour", "Materials", "Total"]],
-    body: rows
+    body: rows,
+    theme: "grid",
+    headStyles: { fillColor: [39, 72, 143], halign: "center" },
+    styles: { halign: "center" }
   });
 
   const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[5].replace("£", "")), 0);
