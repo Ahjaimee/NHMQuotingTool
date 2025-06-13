@@ -29,17 +29,23 @@
 
       <div class="form-group">
         <label for="assetSelect">Asset Type:</label>
-        <select id="assetSelect"></select>
+        <select id="assetSelect">
+          <option value="" disabled selected>Select Asset</option>
+        </select>
       </div>
 
       <div id="makeSection" class="form-group hidden">
         <label for="makeSelect">Make/Model:</label>
-        <select id="makeSelect"></select>
+        <select id="makeSelect">
+          <option value="" disabled selected>Select Make/Model</option>
+        </select>
       </div>
 
       <div id="repairSection" class="form-group hidden">
         <label for="repairSelect">Repair Type:</label>
-        <select id="repairSelect"></select>
+        <select id="repairSelect">
+          <option value="" disabled selected>Select Repair</option>
+        </select>
       </div>
 
       <button type="button" id="addItem">+ Add Item to Quote</button>
@@ -63,3 +69,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
