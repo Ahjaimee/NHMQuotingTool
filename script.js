@@ -129,12 +129,12 @@ function renderQuote() {
 
   quoteLines.innerHTML = "";
   let subtotal = 0;
+  const carriageCharge = supplyOnly && quoteItems.length > 0 ? 15.95 : 0;
 
   quoteItems.forEach((item, index) => {
     const info = data[item.asset][item.make][item.repair];
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
-    const carriage = supplyOnly ? 15.95 : 0;
-    const total = labour + info.material_cost + carriage;
+    const total = labour + info.material_cost;
     subtotal += total;
 
     quoteLines.innerHTML += `
@@ -143,12 +143,21 @@ function renderQuote() {
         <p>Part #: ${info.part_number}</p>
         <p>Labour: ${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</p>
         <p>Materials: £${info.material_cost.toFixed(2)}</p>
-        ${supplyOnly ? `<p>Carriage: £${carriage.toFixed(2)}</p>` : ""}
         <p><strong>Total: £${total.toFixed(2)}</strong></p>
         <button onclick="removeItem(${index})">Remove</button>
       </div>
     `;
   });
+
+  if (carriageCharge > 0) {
+    subtotal += carriageCharge;
+    quoteLines.innerHTML += `
+      <div class="quote-line">
+        <p><strong>Carriage</strong></p>
+        <p><strong>Total: £${carriageCharge.toFixed(2)}</strong></p>
+      </div>
+    `;
+  }
 
   const vat = vatExempt ? 0 : subtotal * 0.2;
   const grandTotal = subtotal + vat;
@@ -196,18 +205,22 @@ async function generatePDF() {
     const info = data[item.asset][item.make][item.repair];
     const supplyOnly = document.getElementById("supplyOnly").checked;
     const labour = supplyOnly ? 0 : info.labour_hours * 45;
-    const carriage = supplyOnly ? 15.95 : 0;
-    const total = labour + info.material_cost + carriage;
+    const total = labour + info.material_cost;
     return [
       `${item.asset} - ${item.make}`,
       item.repair,
       info.part_number,
       `£${labour.toFixed(2)}`,
       `£${info.material_cost.toFixed(2)}`,
-      `£${carriage.toFixed(2)}`,
+      "£0.00",
       `£${total.toFixed(2)}`
     ];
   });
+
+  const carriageCharge = document.getElementById("supplyOnly").checked && rows.length > 0 ? 15.95 : 0;
+  if (carriageCharge > 0) {
+    rows.push(["Carriage", "", "", "", "", `£${carriageCharge.toFixed(2)}`, `£${carriageCharge.toFixed(2)}`]);
+  }
 
   doc.autoTable({
     startY: 50,
