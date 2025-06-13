@@ -11,19 +11,39 @@ let quoteItems = [];
 let assetChoices, makeChoices, repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
-  assetChoices = new Choices("#assetSelect", { searchEnabled: true, shouldSort: false });
-  makeChoices = new Choices("#makeSelect", { searchEnabled: true, shouldSort: false });
-  repairChoices = new Choices("#repairSelect", { searchEnabled: true, shouldSort: false });
+  assetChoices = new Choices("#assetSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Asset',
+    allowHTML: false
+  });
+
+  makeChoices = new Choices("#makeSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Make/Model',
+    allowHTML: false
+  });
+
+  repairChoices = new Choices("#repairSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Repair',
+    allowHTML: false
+  });
 
   populateAssets();
 
   document.getElementById("assetSelect").addEventListener("change", () => {
+    makeChoices.clearStore();
+    repairChoices.clearStore();
     populateMakes();
     document.getElementById("makeSection").classList.remove("hidden");
     document.getElementById("repairSection").classList.add("hidden");
   });
 
   document.getElementById("makeSelect").addEventListener("change", () => {
+    repairChoices.clearStore();
     populateRepairs();
     document.getElementById("repairSection").classList.remove("hidden");
   });
@@ -32,13 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
-    if (!asset || !make || !repair) return;
+
+    if (!asset || asset === "Select Asset" || !make || make === "Select Make/Model" || !repair || repair === "Select Repair") return;
 
     quoteItems.push({ asset, make, repair });
     renderQuote();
     document.getElementById("quoteSection").classList.remove("hidden");
     document.getElementById("downloadPDF").classList.remove("hidden");
-
     resetRepairFields();
   });
 
@@ -50,9 +70,14 @@ document.addEventListener("DOMContentLoaded", () => {
 function populateAssets() {
   const select = document.getElementById("assetSelect");
   assetChoices.destroy();
-  select.innerHTML = `<option disabled selected>Select Asset</option>` +
+  select.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
     Object.keys(data).map(a => `<option value="${a}">${a}</option>`).join("");
-  assetChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  assetChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Asset',
+    allowHTML: false
+  });
 }
 
 function populateMakes() {
@@ -60,9 +85,14 @@ function populateMakes() {
   const makes = Object.keys(data[asset] || {});
   const select = document.getElementById("makeSelect");
   makeChoices.destroy();
-  select.innerHTML = `<option disabled selected>Select Make/Model</option>` +
+  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
     makes.map(m => `<option value="${m}">${m}</option>`).join("");
-  makeChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  makeChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Make/Model',
+    allowHTML: false
+  });
 }
 
 function populateRepairs() {
@@ -71,9 +101,14 @@ function populateRepairs() {
   const repairs = Object.keys(data[asset]?.[make] || {});
   const select = document.getElementById("repairSelect");
   repairChoices.destroy();
-  select.innerHTML = `<option disabled selected>Select Repair</option>` +
+  select.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
     repairs.map(r => `<option value="${r}">${r}</option>`).join("");
-  repairChoices = new Choices(select, { searchEnabled: true, shouldSort: false });
+  repairChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Repair',
+    allowHTML: false
+  });
 }
 
 function resetRepairFields() {
@@ -82,6 +117,8 @@ function resetRepairFields() {
   populateAssets();
   document.getElementById("makeSelect").innerHTML = "";
   document.getElementById("repairSelect").innerHTML = "";
+  makeChoices.clearStore();
+  repairChoices.clearStore();
 }
 
 function renderQuote() {
@@ -186,6 +223,9 @@ async function generatePDF() {
   doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 15, finalY + 10);
   doc.text(`VAT: £${vat.toFixed(2)}`, 15, finalY + 16);
   doc.text(`Total: £${total.toFixed(2)}`, 15, finalY + 22);
+
+  doc.text(`Supply Only: ${document.getElementById("supplyOnly").checked ? "Yes" : "No"}`, 105, finalY + 10);
+  doc.text(`VAT Exempt: ${document.getElementById("vatExempt").checked ? "Yes" : "No"}`, 105, finalY + 16);
 
   doc.save("NHM_Quote.pdf");
 }
