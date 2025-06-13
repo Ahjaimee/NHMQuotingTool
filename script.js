@@ -8,6 +8,9 @@ const data = {
 };
 
 let quoteItems = [];
+
+// Base carriage charge applied once per quote when "Supply Only" is selected
+const CARRIAGE_CHARGE = 15.95;
 let assetChoices, makeChoices, repairChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -129,7 +132,8 @@ function renderQuote() {
 
   quoteLines.innerHTML = "";
   let subtotal = 0;
-  const carriageCharge = supplyOnly && quoteItems.length > 0 ? 15.95 : 0;
+  // Apply carriage only once per quote when "Supply Only" is selected
+  const carriageCharge = supplyOnly && quoteItems.length > 0 ? CARRIAGE_CHARGE : 0;
 
   quoteItems.forEach((item, index) => {
     const info = data[item.asset][item.make][item.repair];
@@ -212,23 +216,22 @@ async function generatePDF() {
       info.part_number,
       `£${labour.toFixed(2)}`,
       `£${info.material_cost.toFixed(2)}`,
-      "£0.00",
       `£${total.toFixed(2)}`
     ];
   });
 
-  const carriageCharge = document.getElementById("supplyOnly").checked && rows.length > 0 ? 15.95 : 0;
+  const carriageCharge = document.getElementById("supplyOnly").checked && rows.length > 0 ? CARRIAGE_CHARGE : 0;
   if (carriageCharge > 0) {
-    rows.push(["Carriage", "", "", "", "", `£${carriageCharge.toFixed(2)}`, `£${carriageCharge.toFixed(2)}`]);
+    rows.push(["Carriage", "", "", "", "", `£${carriageCharge.toFixed(2)}`]);
   }
 
   doc.autoTable({
     startY: 50,
-    head: [["Asset", "Repair", "Part#", "Labour", "Materials", "Carriage", "Total"]],
+    head: [["Asset", "Repair", "Part#", "Labour", "Materials", "Total"]],
     body: rows
   });
 
-  const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[6].replace("£", "")), 0);
+  const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[5].replace("£", "")), 0);
   const vat = document.getElementById("vatExempt").checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
   const finalY = doc.lastAutoTable.finalY || 60;
