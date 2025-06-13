@@ -197,8 +197,9 @@ async function generatePDF() {
   const logoWidth = 40;
   const logoHeight = (imgProps.height * logoWidth) / imgProps.width;
   doc.addImage(logo, "PNG", 15, 10, logoWidth, logoHeight);
+  const titleY = 10 + logoHeight + 5;
   doc.setFontSize(16);
-  doc.text("Quoted Repair Estimator", 105, 20, { align: "center" });
+  doc.text("Quoted Repair Estimate", 105, titleY, { align: "center" });
 
   const name = document.getElementById("customerName").value || "(No name)";
   const number = document.getElementById("quoteNumber").value || "(No #)";
