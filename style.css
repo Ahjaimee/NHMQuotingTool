@@ -17,7 +17,8 @@ body {
 }
 
 .logo {
-  height: 60px;
+  width: 150px;
+  height: auto;
 }
 
 h1 {
@@ -146,6 +147,7 @@ button {
   margin-top: 15px;
   border-left: 5px solid #4caf50;
   border-radius: 6px;
+  text-align: right;
 }
 
 .hidden {

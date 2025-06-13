@@ -194,7 +194,10 @@ async function generatePDF() {
     reader.readAsDataURL(blob);
   }));
 
-  doc.addImage(logo, "PNG", 15, 10, 40, 15);
+  const imgProps = doc.getImageProperties(logo);
+  const logoWidth = 40;
+  const logoHeight = (imgProps.height * logoWidth) / imgProps.width;
+  doc.addImage(logo, "PNG", 15, 10, logoWidth, logoHeight);
   doc.setFontSize(16);
   doc.text("Quoted Repair Estimator", 105, 20, { align: "center" });
 
@@ -236,9 +239,11 @@ async function generatePDF() {
   const total = subtotal + vat;
   const finalY = doc.lastAutoTable.finalY || 60;
 
-  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 15, finalY + 10);
-  doc.text(`VAT: £${vat.toFixed(2)}`, 15, finalY + 16);
-  doc.text(`Total: £${total.toFixed(2)}`, 15, finalY + 22);
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const rightMargin = pageWidth - 15;
+  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, finalY + 10, { align: "right" });
+  doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, finalY + 16, { align: "right" });
+  doc.text(`Total: £${total.toFixed(2)}`, rightMargin, finalY + 22, { align: "right" });
 
   doc.text(`Supply Only: ${document.getElementById("supplyOnly").checked ? "Yes" : "No"}`, 105, finalY + 10);
   doc.text(`VAT Exempt: ${document.getElementById("vatExempt").checked ? "Yes" : "No"}`, 105, finalY + 16);
