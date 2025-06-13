@@ -87,6 +87,10 @@ button {
   font-weight: 500;
 }
 
+.checkboxes input[type="checkbox"] {
+  transform: scale(0.9);
+}
+
 .quote-section {
   margin-top: 25px;
   background: white;
