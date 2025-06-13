@@ -201,11 +201,17 @@ async function generatePDF() {
   doc.text("Quoted Repair Estimator", 105, 20, { align: "center" });
 
   const name = document.getElementById("customerName").value || "(No name)";
+  const email = document.getElementById("customerEmail").value || "";
+  const phone = document.getElementById("customerPhone").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
   doc.setFontSize(10);
   doc.text(`Quote #: ${number}`, 15, 32);
   doc.text(`Customer: ${name}`, 15, 38);
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, 44);
+  if (email) doc.text(`Email: ${email}`, 15, 44);
+  if (phone) doc.text(`Phone: ${phone}`, 15, email ? 50 : 44);
+  const dateY = email && phone ? 56 : (email || phone ? 50 : 44);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, dateY);
+  const tableStartY = dateY + 6;
 
   const rows = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
@@ -228,7 +234,7 @@ async function generatePDF() {
   }
 
   doc.autoTable({
-    startY: 50,
+    startY: tableStartY,
     head: [["Asset", "Repair", "Part#", "Labour", "Materials", "Total"]],
     body: rows
   });
