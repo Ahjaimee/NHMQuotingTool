@@ -143,11 +143,11 @@ function renderQuote() {
 
     quoteLines.innerHTML += `
       <div class="quote-line">
-        <p><strong>${item.asset} → ${item.make} → ${item.repair}</strong></p>
-        <p>Part #: ${info.part_number}</p>
-        <p>Labour: ${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</p>
-        <p>Materials: £${info.material_cost.toFixed(2)}</p>
-        <p><strong>Total: £${total.toFixed(2)}</strong></p>
+        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.repair}</strong></p>
+        <p><span class="label">Part #:</span><span class="value">${info.part_number}</span></p>
+        <p><span class="label">Labour:</span><span class="value">${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</span></p>
+        <p><span class="label">Materials:</span><span class="value">£${info.material_cost.toFixed(2)}</span></p>
+        <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
         <button onclick="removeItem(${index})">Remove</button>
       </div>
     `;
@@ -157,8 +157,7 @@ function renderQuote() {
     subtotal += carriageCharge;
     quoteLines.innerHTML += `
       <div class="quote-line">
-        <p><strong>Carriage</strong></p>
-        <p><strong>Total: £${carriageCharge.toFixed(2)}</strong></p>
+        <p><strong class="label">Carriage</strong><strong class="value">£${carriageCharge.toFixed(2)}</strong></p>
       </div>
     `;
   }
