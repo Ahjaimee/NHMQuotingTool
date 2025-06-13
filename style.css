@@ -48,6 +48,8 @@ input[type="text"], select {
 /* Compact Choices.js dropdown styling */
 .choices {
   font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .choices__inner {
@@ -61,6 +63,8 @@ input[type="text"], select {
 
 .choices__list--dropdown {
   font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 button {
