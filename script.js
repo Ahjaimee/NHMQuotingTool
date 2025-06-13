@@ -187,26 +187,39 @@ async function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  const logo = await fetch("nhm-logo.png").then(r => r.blob()).then(blob => new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(blob);
-  }));
+  const pageWidth = doc.internal.pageSize.getWidth();
 
-  const imgProps = doc.getImageProperties(logo);
-  const logoWidth = 40;
-  const logoHeight = (imgProps.height * logoWidth) / imgProps.width;
-  doc.addImage(logo, "PNG", 15, 10, logoWidth, logoHeight);
-  const titleY = 10 + logoHeight + 5;
+  // Logo as data URL
+  const logo = await fetch("nhm-logo.png")
+    .then(r => r.blob())
+    .then(
+      blob =>
+        new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        })
+    );
+
+  // Header band
+  doc.setFillColor(39, 72, 143);
+  doc.rect(0, 0, pageWidth, 25, "F");
+
+  // Logo and title
+  doc.addImage(logo, "PNG", 10, 5, 20, 15);
+  doc.setTextColor(255, 255, 255);
   doc.setFontSize(16);
-  doc.text("Quoted Repair Estimate", 105, titleY, { align: "center" });
+  doc.text("Quoted Repair Estimate", pageWidth / 2, 15, { align: "center" });
+  doc.setTextColor(0, 0, 0);
+
+  const infoStartY = 30;
 
   const name = document.getElementById("customerName").value || "(No name)";
   const email = document.getElementById("customerEmail").value || "";
   const phone = document.getElementById("customerPhone").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
   doc.setFontSize(10);
-  let infoY = titleY + 6;
+  let infoY = infoStartY;
   doc.text(`Quote #: ${number}`, 15, infoY);
   infoY += 6;
   doc.text(`Customer: ${name}`, 15, infoY);
@@ -246,9 +259,20 @@ async function generatePDF() {
     startY: tableStartY,
     head: [["Asset", "Repair", "Part#", "Labour", "Materials", "Total"]],
     body: rows,
+    margin: { left: 15, right: 15 },
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], halign: "center" },
-    styles: { halign: "center" }
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
+    styles: {
+      halign: "center",
+      fontSize: 10,
+      cellPadding: 3
+    },
+    alternateRowStyles: { fillColor: [245, 245, 245] },
+    columnStyles: {
+      0: { halign: "left" },
+      1: { halign: "left" },
+      2: { halign: "center" }
+    }
   });
 
   const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[5].replace("£", "")), 0);
@@ -256,14 +280,18 @@ async function generatePDF() {
   const total = subtotal + vat;
   const finalY = doc.lastAutoTable.finalY || 60;
 
-  const pageWidth = doc.internal.pageSize.getWidth();
   const rightMargin = pageWidth - 15;
-  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, finalY + 10, { align: "right" });
-  doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, finalY + 16, { align: "right" });
-  doc.text(`Total: £${total.toFixed(2)}`, rightMargin, finalY + 22, { align: "right" });
+  let sumY = finalY + 10;
+  doc.setFontSize(10);
+  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, sumY, { align: "right" });
+  sumY += 6;
+  doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, sumY, { align: "right" });
+  sumY += 6;
+  doc.text(`Total: £${total.toFixed(2)}`, rightMargin, sumY, { align: "right" });
 
-  doc.text(`Supply Only: ${document.getElementById("supplyOnly").checked ? "Yes" : "No"}`, 105, finalY + 10);
-  doc.text(`VAT Exempt: ${document.getElementById("vatExempt").checked ? "Yes" : "No"}`, 105, finalY + 16);
+  const centreX = pageWidth / 2;
+  doc.text(`Supply Only: ${document.getElementById("supplyOnly").checked ? "Yes" : "No"}`, centreX, finalY + 10, { align: "center" });
+  doc.text(`VAT Exempt: ${document.getElementById("vatExempt").checked ? "Yes" : "No"}`, centreX, finalY + 16, { align: "center" });
 
   doc.save("NHM_Quote.pdf");
 }
