@@ -45,9 +45,22 @@ input[type="text"], select {
   box-sizing: border-box;
 }
 
+/* Compact Choices.js dropdown styling */
+.choices {
+  font-size: 0.95rem;
+}
+
 .choices__inner {
-  min-height: 38px !important;
-  padding: 6px 10px !important;
+  min-height: 36px !important;
+  padding: 6px 8px !important;
+  line-height: 1.2 !important;
+  border-radius: 6px !important;
+  border: 1px solid #ccc !important;
+  box-shadow: none !important;
+}
+
+.choices__list--dropdown {
+  font-size: 0.95rem;
 }
 
 button {
@@ -134,3 +147,4 @@ button {
 .hidden {
   display: none !important;
 }
+
