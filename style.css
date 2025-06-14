@@ -40,6 +40,8 @@ body {
 .tab-buttons button.active {
   background: #27488f;
   color: #fff;
+  border-bottom: 4px solid #f58020;
+  font-weight: bold;
 }
 
 h1 {
