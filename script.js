@@ -244,7 +244,8 @@ async function generatePDF() {
   doc.rect(0, 0, pageWidth, 25, "F");
 
   // Logo and title
-  doc.addImage(logo, "PNG", 10, 5, 20, 15);
+  // Maintain logo aspect ratio by letting jsPDF calculate width
+  doc.addImage(logo, "PNG", 10, 5, 0, 15);
   doc.setTextColor(39, 72, 143);
   doc.setFontSize(16);
   // Title displayed prominently at the top of the page
@@ -392,7 +393,8 @@ async function generateSalesPDF() {
   doc.setFillColor(39, 72, 143);
   doc.rect(0, 0, pageWidth, 25, "F");
 
-  doc.addImage(logo, "PNG", 10, 5, 20, 15);
+  // Maintain logo aspect ratio by letting jsPDF calculate width
+  doc.addImage(logo, "PNG", 10, 5, 0, 15);
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(16);
   doc.text("Sales Quote", pageWidth / 2, 12, { align: "center" });
