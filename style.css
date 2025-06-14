@@ -22,6 +22,26 @@ body {
   max-width: 100%;
 }
 
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #eee;
+  cursor: pointer;
+}
+
+.tab-buttons button.active {
+  background: #27488f;
+  color: #fff;
+}
+
 h1 {
   text-align: center;
   margin: 20px 0 25px;

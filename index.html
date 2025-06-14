@@ -14,7 +14,12 @@
       <img src="nhm-logo.png" alt="NHM Logo" class="logo" />
     </div>
 
-    <h1>Repair Quote Estimator</h1>
+    <div class="tab-buttons">
+      <button id="repairTab" class="active">Repair Estimate</button>
+      <button id="salesTab">Sales Quote</button>
+    </div>
+
+    <h1 id="toolTitle">Repair Quote Estimator</h1>
 
     <form id="quoteForm">
       <div class="form-group">
@@ -70,6 +75,55 @@
       <div id="quoteLines"></div>
       <div id="estimate"></div>
       <button id="downloadPDF" class="hidden">Download PDF</button>
+    </div>
+
+    <form id="salesForm" class="hidden">
+      <div class="form-group">
+        <label for="salesQuoteNumber">Quote Number:</label>
+        <input type="text" id="salesQuoteNumber" placeholder="e.g. Q12345" />
+      </div>
+
+      <div class="form-group">
+        <label for="salesCustomerName">Customer Name:</label>
+        <input type="text" id="salesCustomerName" placeholder="e.g. Jamie Baker" />
+      </div>
+
+      <div class="form-group">
+        <label for="salesCustomerPhone">Customer Phone:</label>
+        <input type="text" id="salesCustomerPhone" placeholder="e.g. 01234 567890" />
+      </div>
+
+      <div class="form-group">
+        <label for="salesCustomerEmail">Customer Email:</label>
+        <input type="text" id="salesCustomerEmail" placeholder="e.g. example@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="salesDesc">Item Description:</label>
+        <input type="text" id="salesDesc" placeholder="Product" />
+      </div>
+
+      <div class="form-group">
+        <label for="salesPrice">Price:</label>
+        <input type="number" step="0.01" id="salesPrice" placeholder="e.g. 99.99" />
+      </div>
+
+      <div class="form-group">
+        <label for="salesQty">Quantity:</label>
+        <input type="number" id="salesQty" value="1" />
+      </div>
+
+      <button type="button" id="addSalesItem">+ Add Item to Quote</button>
+
+      <div class="checkboxes">
+        <label><input type="checkbox" id="vatExemptSales" /> VAT Exempt</label>
+      </div>
+    </form>
+
+    <div id="salesQuoteSection" class="quote-section hidden">
+      <div id="salesQuoteLines"></div>
+      <div id="salesEstimate"></div>
+      <button id="downloadSalesPDF" class="hidden">Download PDF</button>
     </div>
   </div>
 
