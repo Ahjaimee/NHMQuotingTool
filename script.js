@@ -202,12 +202,12 @@ async function generatePDF() {
     );
 
   // Header band
-  doc.setFillColor(39, 72, 143);
+  doc.setFillColor(245, 245, 245);
   doc.rect(0, 0, pageWidth, 25, "F");
 
   // Logo and title
   doc.addImage(logo, "PNG", 10, 5, 20, 15);
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(39, 72, 143);
   doc.setFontSize(16);
   // Title displayed prominently at the top of the page
   doc.text("Quoted Repair Estimate", pageWidth / 2, 12, { align: "center" });
