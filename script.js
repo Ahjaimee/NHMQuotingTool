@@ -8,6 +8,7 @@ const data = {
 };
 
 let quoteItems = [];
+let salesItems = [];
 
 // Base carriage charge applied once per quote when "Supply Only" is selected
 const CARRIAGE_CHARGE = 15.95;
@@ -36,6 +37,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   populateAssets();
+
+  document.getElementById("repairTab").addEventListener("click", () => {
+    document.getElementById("repairTab").classList.add("active");
+    document.getElementById("salesTab").classList.remove("active");
+    document.getElementById("toolTitle").textContent = "Repair Quote Estimator";
+    document.getElementById("quoteForm").classList.remove("hidden");
+    document.getElementById("quoteSection").classList.add("hidden");
+    document.getElementById("salesForm").classList.add("hidden");
+    document.getElementById("salesQuoteSection").classList.add("hidden");
+  });
+
+  document.getElementById("salesTab").addEventListener("click", () => {
+    document.getElementById("salesTab").classList.add("active");
+    document.getElementById("repairTab").classList.remove("active");
+    document.getElementById("toolTitle").textContent = "Sales Quote";
+    document.getElementById("quoteForm").classList.add("hidden");
+    document.getElementById("quoteSection").classList.add("hidden");
+    document.getElementById("salesForm").classList.remove("hidden");
+    document.getElementById("salesQuoteSection").classList.add("hidden");
+  });
 
   document.getElementById("assetSelect").addEventListener("change", () => {
     makeChoices.clearStore();
@@ -68,6 +89,23 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
   document.getElementById("downloadPDF").addEventListener("click", generatePDF);
+
+  document.getElementById("addSalesItem").addEventListener("click", () => {
+    const desc = document.getElementById("salesDesc").value.trim();
+    const price = parseFloat(document.getElementById("salesPrice").value);
+    const qty = parseInt(document.getElementById("salesQty").value, 10);
+    if (!desc || isNaN(price) || isNaN(qty)) return;
+    salesItems.push({ desc, price, qty });
+    renderSalesQuote();
+    document.getElementById("salesQuoteSection").classList.remove("hidden");
+    document.getElementById("downloadSalesPDF").classList.remove("hidden");
+    document.getElementById("salesDesc").value = "";
+    document.getElementById("salesPrice").value = "";
+    document.getElementById("salesQty").value = 1;
+  });
+
+  document.getElementById("vatExemptSales").addEventListener("change", renderSalesQuote);
+  document.getElementById("downloadSalesPDF").addEventListener("click", generateSalesPDF);
 });
 
 function populateAssets() {
@@ -292,4 +330,127 @@ async function generatePDF() {
   doc.text(`VAT Exempt: ${document.getElementById("vatExempt").checked ? "Yes" : "No"}`, centreX, finalY + 16, { align: "center" });
 
   doc.save("NHM_Quote.pdf");
+}
+
+function renderSalesQuote() {
+  const lines = document.getElementById("salesQuoteLines");
+  const estimate = document.getElementById("salesEstimate");
+  const vatExempt = document.getElementById("vatExemptSales").checked;
+
+  lines.innerHTML = "";
+  let subtotal = 0;
+
+  salesItems.forEach((item, index) => {
+    const total = item.price * item.qty;
+    subtotal += total;
+    lines.innerHTML += `
+      <div class="quote-line">
+        <p class="desc"><strong>${item.desc}</strong></p>
+        <p><span class="label">Price:</span><span class="value">£${item.price.toFixed(2)}</span></p>
+        <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
+        <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
+        <button onclick="removeSalesItem(${index})">Remove</button>
+      </div>
+    `;
+  });
+
+  const vat = vatExempt ? 0 : subtotal * 0.2;
+  const grandTotal = subtotal + vat;
+
+  estimate.innerHTML = `
+    <h3>Quote Summary</h3>
+    <p>Items: ${salesItems.length}</p>
+    <p>Subtotal: £${subtotal.toFixed(2)}</p>
+    <p>VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}</p>
+    <p><strong>Total: £${grandTotal.toFixed(2)}</strong></p>
+  `;
+}
+
+function removeSalesItem(index) {
+  salesItems.splice(index, 1);
+  renderSalesQuote();
+  if (salesItems.length === 0) {
+    document.getElementById("downloadSalesPDF").classList.add("hidden");
+    document.getElementById("salesQuoteSection").classList.add("hidden");
+  }
+}
+
+async function generateSalesPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const pageWidth = doc.internal.pageSize.getWidth();
+
+  const logo = await fetch("nhm-logo.png")
+    .then(r => r.blob())
+    .then(blob => new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    }));
+
+  doc.setFillColor(39, 72, 143);
+  doc.rect(0, 0, pageWidth, 25, "F");
+
+  doc.addImage(logo, "PNG", 10, 5, 20, 15);
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16);
+  doc.text("Sales Quote", pageWidth / 2, 12, { align: "center" });
+  doc.setTextColor(0, 0, 0);
+
+  const infoStartY = 30;
+  const name = document.getElementById("salesCustomerName").value || "(No name)";
+  const email = document.getElementById("salesCustomerEmail").value || "";
+  const phone = document.getElementById("salesCustomerPhone").value || "";
+  const number = document.getElementById("salesQuoteNumber").value || "(No #)";
+  doc.setFontSize(10);
+  let infoY = infoStartY;
+  doc.text(`Quote #: ${number}`, 15, infoY);
+  infoY += 6;
+  doc.text(`Customer: ${name}`, 15, infoY);
+  infoY += 6;
+  doc.text(`Phone: ${phone || "(N/A)"}`, 15, infoY);
+  infoY += 6;
+  doc.text(`Email: ${email || "(N/A)"}`, 15, infoY);
+  infoY += 6;
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
+  const tableStartY = infoY + 8;
+
+  const rows = salesItems.map(item => [
+    item.desc,
+    item.qty,
+    `£${item.price.toFixed(2)}`,
+    `£${(item.price * item.qty).toFixed(2)}`
+  ]);
+
+  doc.autoTable({
+    startY: tableStartY,
+    head: [["Item", "Qty", "Price", "Total"]],
+    body: rows,
+    margin: { left: 15, right: 15 },
+    theme: "grid",
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
+    styles: { halign: "center", fontSize: 10, cellPadding: 3 },
+    alternateRowStyles: { fillColor: [245, 245, 245] },
+    columnStyles: { 0: { halign: "left" } }
+  });
+
+  const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[3].replace("£", "")), 0);
+  const vat = document.getElementById("vatExemptSales").checked ? 0 : subtotal * 0.2;
+  const total = subtotal + vat;
+  const finalY = doc.lastAutoTable.finalY || 60;
+
+  const rightMargin = pageWidth - 15;
+  let sumY = finalY + 10;
+  doc.setFontSize(10);
+  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, sumY, { align: "right" });
+  sumY += 6;
+  doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, sumY, { align: "right" });
+  sumY += 6;
+  doc.text(`Total: £${total.toFixed(2)}`, rightMargin, sumY, { align: "right" });
+
+  const centreX = pageWidth / 2;
+  doc.text(`VAT Exempt: ${document.getElementById("vatExemptSales").checked ? "Yes" : "No"}`, centreX, finalY + 10, { align: "center" });
+
+  doc.save("NHM_Sales_Quote.pdf");
 }
