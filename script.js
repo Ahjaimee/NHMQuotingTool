@@ -7,12 +7,18 @@ const data = {
   }
 };
 
+const salesData = {
+  "Hoist": ["Oxford Major 190", "Liko M220"],
+  "Wheelchair": ["Meyra iChair", "Invacare TDX"]
+};
+
 let quoteItems = [];
 let salesItems = [];
 
 // Base carriage charge applied once per quote when "Supply Only" is selected
 const CARRIAGE_CHARGE = 15.95;
 let assetChoices, makeChoices, repairChoices;
+let salesAssetChoices, salesMakeChoices;
 
 document.addEventListener("DOMContentLoaded", () => {
   assetChoices = new Choices("#assetSelect", {
@@ -36,7 +42,22 @@ document.addEventListener("DOMContentLoaded", () => {
     allowHTML: false
   });
 
+  salesAssetChoices = new Choices("#salesAssetSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Asset',
+    allowHTML: false
+  });
+
+  salesMakeChoices = new Choices("#salesMakeSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Make/Model',
+    allowHTML: false
+  });
+
   populateAssets();
+  populateSalesAssets();
 
   document.getElementById("repairTab").addEventListener("click", () => {
     document.getElementById("repairTab").classList.add("active");
@@ -72,6 +93,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("repairSection").classList.remove("hidden");
   });
 
+  document.getElementById("salesAssetSelect").addEventListener("change", () => {
+    salesMakeChoices.clearStore();
+    populateSalesMakes();
+    document.getElementById("salesMakeSection").classList.remove("hidden");
+  });
+
+  document.getElementById("salesMakeSelect").addEventListener("change", () => {
+    const asset = document.getElementById("salesAssetSelect").value;
+    const make = document.getElementById("salesMakeSelect").value;
+    document.getElementById("salesDesc").value = `${asset} - ${make}`;
+  });
+
   document.getElementById("addItem").addEventListener("click", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
@@ -91,17 +124,22 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("downloadPDF").addEventListener("click", generatePDF);
 
   document.getElementById("addSalesItem").addEventListener("click", () => {
-    const desc = document.getElementById("salesDesc").value.trim();
+    const asset = document.getElementById("salesAssetSelect").value;
+    const make = document.getElementById("salesMakeSelect").value;
+    const descField = document.getElementById("salesDesc").value.trim();
     const price = parseFloat(document.getElementById("salesPrice").value);
     const qty = parseInt(document.getElementById("salesQty").value, 10);
-    if (!desc || isNaN(price) || isNaN(qty)) return;
-    salesItems.push({ desc, price, qty });
+    if (!asset || !make || isNaN(price) || isNaN(qty)) return;
+    const desc = descField || `${asset} - ${make}`;
+    salesItems.push({ asset, make, desc, price, qty });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
     document.getElementById("salesDesc").value = "";
     document.getElementById("salesPrice").value = "";
     document.getElementById("salesQty").value = 1;
+    populateSalesAssets();
+    document.getElementById("salesMakeSection").classList.add("hidden");
   });
 
   document.getElementById("vatExemptSales").addEventListener("change", renderSalesQuote);
@@ -148,6 +186,36 @@ function populateRepairs() {
     searchEnabled: true,
     shouldSort: false,
     placeholderValue: 'Select Repair',
+    allowHTML: false
+  });
+}
+
+function populateSalesAssets() {
+  const select = document.getElementById("salesAssetSelect");
+  salesAssetChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Asset</option>` +
+    Object.keys(salesData).map(a => `<option value="${a}">${a}</option>`).join("");
+  salesAssetChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Asset',
+    allowHTML: false
+  });
+  salesMakeChoices.clearStore();
+  document.getElementById("salesMakeSelect").innerHTML = "";
+}
+
+function populateSalesMakes() {
+  const asset = document.getElementById("salesAssetSelect").value;
+  const makes = salesData[asset] || [];
+  const select = document.getElementById("salesMakeSelect");
+  salesMakeChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
+    makes.map(m => `<option value="${m}">${m}</option>`).join("");
+  salesMakeChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Make/Model',
     allowHTML: false
   });
 }
@@ -346,7 +414,7 @@ function renderSalesQuote() {
     subtotal += total;
     lines.innerHTML += `
       <div class="quote-line">
-        <p class="desc"><strong>${item.desc}</strong></p>
+        <p class="desc"><strong>${item.asset} → ${item.make}</strong></p>
         <p><span class="label">Price:</span><span class="value">£${item.price.toFixed(2)}</span></p>
         <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
         <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
@@ -419,7 +487,7 @@ async function generateSalesPDF() {
   const tableStartY = infoY + 8;
 
   const rows = salesItems.map(item => [
-    item.desc,
+    `${item.asset} - ${item.make}`,
     item.qty,
     `£${item.price.toFixed(2)}`,
     `£${(item.price * item.qty).toFixed(2)}`
