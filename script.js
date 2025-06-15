@@ -9,14 +9,15 @@ const data = {
 
 // Fixed carriage charge applied to all sales quotes
 const SALES_CARRIAGE = 15.95;
+// Cost and default selling price for sales items
 const salesData = {
   "Hoist": {
-    "Oxford Major 190": 799.99,
-    "Liko M220": 699.99
+    "Oxford Major 190": { cost: 600.0, price: 799.99 },
+    "Liko M220": { cost: 500.0, price: 699.99 }
   },
   "Wheelchair": {
-    "Meyra iChair": 1500.0,
-    "Invacare TDX": 1200.0
+    "Meyra iChair": { cost: 1200.0, price: 1500.0 },
+    "Invacare TDX": { cost: 950.0, price: 1200.0 }
   }
 };
 
@@ -111,7 +112,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.getElementById("salesAssetSelect").value;
     const make = document.getElementById("salesMakeSelect").value;
     document.getElementById("salesDesc").value = `${asset} - ${make}`;
+    const info = salesData[asset]?.[make];
+    if (info) {
+      document.getElementById("salesCost").value = info.cost.toFixed(2);
+      const margin = ((info.price - info.cost) / info.cost) * 100;
+      document.getElementById("salesMargin").value = margin.toFixed(2);
+      document.getElementById("salesPrice").value = info.price.toFixed(2);
+    }
   });
+
+  function updatePriceFromMargin() {
+    const cost = parseFloat(document.getElementById("salesCost").value);
+    const margin = parseFloat(document.getElementById("salesMargin").value);
+    if (!isNaN(cost) && !isNaN(margin)) {
+      document.getElementById("salesPrice").value = (cost * (1 + margin / 100)).toFixed(2);
+    }
+  }
+
+  function updateMarginFromPrice() {
+    const cost = parseFloat(document.getElementById("salesCost").value);
+    const price = parseFloat(document.getElementById("salesPrice").value);
+    if (!isNaN(cost) && cost !== 0 && !isNaN(price)) {
+      document.getElementById("salesMargin").value = (((price - cost) / cost) * 100).toFixed(2);
+    }
+  }
+
+  document.getElementById("salesMargin").addEventListener("input", updatePriceFromMargin);
+  document.getElementById("salesCost").addEventListener("input", updatePriceFromMargin);
+  document.getElementById("salesPrice").addEventListener("input", updateMarginFromPrice);
 
   document.getElementById("addItem").addEventListener("click", () => {
     const asset = document.getElementById("assetSelect").value;
@@ -135,11 +163,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.getElementById("salesAssetSelect").value;
     const make = document.getElementById("salesMakeSelect").value;
     const descField = document.getElementById("salesDesc").value.trim();
-    const price = salesData[asset]?.[make];
+    const cost = parseFloat(document.getElementById("salesCost").value);
+    const margin = parseFloat(document.getElementById("salesMargin").value);
+    const price = parseFloat(document.getElementById("salesPrice").value);
     const qty = parseInt(document.getElementById("salesQty").value, 10);
-    if (!asset || !make || price === undefined || isNaN(qty)) return;
+    if (!asset || !make || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
     const desc = descField || `${asset} - ${make}`;
-    salesItems.push({ asset, make, desc, price, qty });
+    salesItems.push({ asset, make, desc, cost, margin, price, qty });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
@@ -425,6 +455,8 @@ function renderSalesQuote() {
     lines.innerHTML += `
       <div class="quote-line">
         <p class="desc"><strong>${item.asset} → ${item.make}</strong></p>
+        <p><span class="label">Cost:</span><span class="value">£${item.cost.toFixed(2)}</span></p>
+        <p><span class="label">Margin:</span><span class="value">${item.margin.toFixed(2)}%</span></p>
         <p><span class="label">Price:</span><span class="value">£${item.price.toFixed(2)}</span></p>
         <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
         <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
