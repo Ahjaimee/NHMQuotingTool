@@ -7,9 +7,17 @@ const data = {
   }
 };
 
+// Fixed carriage charge applied to all sales quotes
+const SALES_CARRIAGE = 15.95;
 const salesData = {
-  "Hoist": ["Oxford Major 190", "Liko M220"],
-  "Wheelchair": ["Meyra iChair", "Invacare TDX"]
+  "Hoist": {
+    "Oxford Major 190": 799.99,
+    "Liko M220": 699.99
+  },
+  "Wheelchair": {
+    "Meyra iChair": 1500.0,
+    "Invacare TDX": 1200.0
+  }
 };
 
 let quoteItems = [];
@@ -127,16 +135,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.getElementById("salesAssetSelect").value;
     const make = document.getElementById("salesMakeSelect").value;
     const descField = document.getElementById("salesDesc").value.trim();
-    const price = parseFloat(document.getElementById("salesPrice").value);
+    const price = salesData[asset]?.[make];
     const qty = parseInt(document.getElementById("salesQty").value, 10);
-    if (!asset || !make || isNaN(price) || isNaN(qty)) return;
+    if (!asset || !make || price === undefined || isNaN(qty)) return;
     const desc = descField || `${asset} - ${make}`;
     salesItems.push({ asset, make, desc, price, qty });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
     document.getElementById("salesDesc").value = "";
-    document.getElementById("salesPrice").value = "";
     document.getElementById("salesQty").value = 1;
     populateSalesAssets();
     document.getElementById("salesMakeSection").classList.add("hidden");
@@ -207,7 +214,7 @@ function populateSalesAssets() {
 
 function populateSalesMakes() {
   const asset = document.getElementById("salesAssetSelect").value;
-  const makes = salesData[asset] || [];
+  const makes = Object.keys(salesData[asset] || {});
   const select = document.getElementById("salesMakeSelect");
   salesMakeChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
@@ -423,6 +430,15 @@ function renderSalesQuote() {
     `;
   });
 
+  subtotal += SALES_CARRIAGE;
+  if (salesItems.length > 0) {
+    lines.innerHTML += `
+      <div class="quote-line">
+        <p><strong class="label">Carriage</strong><strong class="value">£${SALES_CARRIAGE.toFixed(2)}</strong></p>
+      </div>
+    `;
+  }
+
   const vat = vatExempt ? 0 : subtotal * 0.2;
   const grandTotal = subtotal + vat;
 
@@ -458,12 +474,12 @@ async function generateSalesPDF() {
       reader.readAsDataURL(blob);
     }));
 
-  doc.setFillColor(39, 72, 143);
+  doc.setFillColor(245, 245, 245);
   doc.rect(0, 0, pageWidth, 25, "F");
 
   // Maintain logo aspect ratio by letting jsPDF calculate width
   doc.addImage(logo, "PNG", 10, 5, 0, 15);
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(39, 72, 143);
   doc.setFontSize(16);
   doc.text("Sales Quote", pageWidth / 2, 12, { align: "center" });
   doc.setTextColor(0, 0, 0);
@@ -492,6 +508,10 @@ async function generateSalesPDF() {
     `£${item.price.toFixed(2)}`,
     `£${(item.price * item.qty).toFixed(2)}`
   ]);
+
+  if (rows.length > 0) {
+    rows.push(["Carriage", "", "", `£${SALES_CARRIAGE.toFixed(2)}`]);
+  }
 
   doc.autoTable({
     startY: tableStartY,
