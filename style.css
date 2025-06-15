@@ -123,6 +123,25 @@ button {
   background-color: #1e336b;
 }
 
+#addSalesItem {
+  background-color: #f58020;
+  color: white;
+}
+
+#addSalesItem:hover {
+  background-color: #d96d13;
+}
+
+#downloadSalesPDF {
+  background-color: #27488f;
+  color: white;
+  margin-top: 20px;
+}
+
+#downloadSalesPDF:hover {
+  background-color: #1e336b;
+}
+
 .checkboxes {
   display: flex;
   gap: 15px;
