@@ -9,3 +9,5 @@ Tool for estimating repair and sales quotes for mobility equipment.
 - When a sales item is chosen its configured cost and default selling price are loaded
   automatically. The tool calculates the profit margin between those values and shows
   it in an editable field so the margin or final price can be adjusted on the fly.
+- Cost on sales items is now read-only and the customer price fields and quote output
+  explicitly show values excluding VAT.

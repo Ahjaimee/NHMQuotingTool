@@ -138,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.getElementById("salesMargin").addEventListener("input", updatePriceFromMargin);
-  document.getElementById("salesCost").addEventListener("input", updatePriceFromMargin);
   document.getElementById("salesPrice").addEventListener("input", updateMarginFromPrice);
 
   document.getElementById("addItem").addEventListener("click", () => {
@@ -457,7 +456,7 @@ function renderSalesQuote() {
         <p class="desc"><strong>${item.asset} → ${item.make}</strong></p>
         <p><span class="label">Cost:</span><span class="value">£${item.cost.toFixed(2)}</span></p>
         <p><span class="label">Margin:</span><span class="value">${item.margin.toFixed(2)}%</span></p>
-        <p><span class="label">Price:</span><span class="value">£${item.price.toFixed(2)}</span></p>
+        <p><span class="label">Price (ex VAT):</span><span class="value">£${item.price.toFixed(2)}</span></p>
         <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
         <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
         <button onclick="removeSalesItem(${index})">Remove</button>
@@ -550,7 +549,7 @@ async function generateSalesPDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [["Item", "Qty", "Price", "Total"]],
+    head: [["Item", "Qty", "Price (ex VAT)", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
