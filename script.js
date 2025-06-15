@@ -333,7 +333,7 @@ async function generatePDF() {
   const email = document.getElementById("customerEmail").value || "";
   const phone = document.getElementById("customerPhone").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
-  doc.setFontSize(10);
+  doc.setFontSize(11);
   let infoY = infoStartY;
   doc.text(`Quote #: ${number}`, 15, infoY);
   infoY += 6;
@@ -394,7 +394,7 @@ async function generatePDF() {
 
   const rightMargin = pageWidth - 15;
   let sumY = finalY + 10;
-  doc.setFontSize(10);
+  doc.setFontSize(11);
   doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, sumY, { align: "right" });
   sumY += 6;
   doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, sumY, { align: "right" });
@@ -404,6 +404,9 @@ async function generatePDF() {
   const centreX = pageWidth / 2;
   doc.text(`Supply Only: ${document.getElementById("supplyOnly").checked ? "Yes" : "No"}`, centreX, finalY + 10, { align: "center" });
   doc.text(`VAT Exempt: ${document.getElementById("vatExempt").checked ? "Yes" : "No"}`, centreX, finalY + 16, { align: "center" });
+
+  const footerY = doc.internal.pageSize.getHeight() - 10;
+  doc.text("Thank you for choosing NHM. Please contact us with any questions.", centreX, footerY, { align: "center" });
 
   doc.save("NHM_Quote.pdf");
 }
@@ -489,7 +492,7 @@ async function generateSalesPDF() {
   const email = document.getElementById("salesCustomerEmail").value || "";
   const phone = document.getElementById("salesCustomerPhone").value || "";
   const number = document.getElementById("salesQuoteNumber").value || "(No #)";
-  doc.setFontSize(10);
+  doc.setFontSize(11);
   let infoY = infoStartY;
   doc.text(`Quote #: ${number}`, 15, infoY);
   infoY += 6;
@@ -532,7 +535,7 @@ async function generateSalesPDF() {
 
   const rightMargin = pageWidth - 15;
   let sumY = finalY + 10;
-  doc.setFontSize(10);
+  doc.setFontSize(11);
   doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, sumY, { align: "right" });
   sumY += 6;
   doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, sumY, { align: "right" });
@@ -541,6 +544,9 @@ async function generateSalesPDF() {
 
   const centreX = pageWidth / 2;
   doc.text(`VAT Exempt: ${document.getElementById("vatExemptSales").checked ? "Yes" : "No"}`, centreX, finalY + 10, { align: "center" });
+
+  const footerY = doc.internal.pageSize.getHeight() - 10;
+  doc.text("Thank you for choosing NHM. Please contact us with any questions.", centreX, footerY, { align: "center" });
 
   doc.save("NHM_Sales_Quote.pdf");
 }
