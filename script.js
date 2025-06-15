@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("salesTab").addEventListener("click", () => {
     document.getElementById("salesTab").classList.add("active");
     document.getElementById("repairTab").classList.remove("active");
-    document.getElementById("toolTitle").textContent = "Sales Quote";
+    document.getElementById("toolTitle").textContent = "Sales Order Quote";
     document.getElementById("quoteForm").classList.add("hidden");
     document.getElementById("quoteSection").classList.add("hidden");
     document.getElementById("salesForm").classList.remove("hidden");
@@ -484,7 +484,7 @@ async function generateSalesPDF() {
   doc.addImage(logo, "PNG", 10, 5, 0, 15);
   doc.setTextColor(39, 72, 143);
   doc.setFontSize(16);
-  doc.text("Sales Quote", pageWidth / 2, 12, { align: "center" });
+  doc.text("Sales Order Quote", pageWidth / 2, 12, { align: "center" });
   doc.setTextColor(0, 0, 0);
 
   const infoStartY = 30;
