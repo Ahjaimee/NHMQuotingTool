@@ -225,3 +225,10 @@ button {
   display: none !important;
 }
 
+.rights-reserved {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
