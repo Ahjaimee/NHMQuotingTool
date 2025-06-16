@@ -148,16 +148,18 @@ button {
   gap: 15px;
   margin-top: 15px;
   font-weight: 500;
+  align-items: center; /* keep text vertically centred */
 }
 
 /* Ensure the checkbox labels align nicely with the custom boxes */
 .checkboxes label,
 #salesExtras label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   margin-bottom: 0;
   font-weight: 500;
+  line-height: 18px; /* match custom checkbox size */
 }
 
 .checkboxes input[type="checkbox"],
@@ -174,6 +176,7 @@ input[type="checkbox"] {
   transition: background 0.2s, transform 0.1s;
   display: inline-block;
   vertical-align: middle;
+  margin: 0; /* remove default spacing */
 }
 
 .checkboxes input[type="checkbox"]:checked,
@@ -215,6 +218,7 @@ input[type="checkbox"]:active {
   gap: 15px;
   margin-top: 10px;
   font-weight: 500;
+  align-items: center; /* keep extras text aligned */
 }
 
 .quote-section {
