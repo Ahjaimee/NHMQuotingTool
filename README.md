@@ -15,3 +15,5 @@ Tool for estimating repair and sales quotes for mobility equipment.
   quote. The page now displays this requirement instead of listing it on quotes.
 - Added repair options for Parker Rise & Tilt baths and Casa Classic FS beds
   while removing the placeholder Oxford Midi hoist entries.
+- Repair quotes now include an optional work description and a disclaimer that
+  the estimate is subject to final approval before any work is carried out.
