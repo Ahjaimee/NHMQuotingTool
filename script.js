@@ -46,24 +46,25 @@ const SALES_CARRIAGE = 15.95;
 const LABOUR_RATE = 30.5; // £15.25 per 0.5 hour
 const MIN_LABOUR_COST = 74.75;
 // Cost and default selling price for sales items
-const salesData = {
-  "Hoist": {
-    "Oxford Major 190": { cost: 600.0, price: 799.99 },
-    "Liko M220": { cost: 500.0, price: 699.99 }
-  },
-  "Wheelchair": {
-    "Meyra iChair": { cost: 1200.0, price: 1500.0 },
-    "Invacare TDX": { cost: 950.0, price: 1200.0 }
-  }
-};
+  const salesData = {
+    "Hoist": {
+      "Oxford Major 190": { cost: 600.0, price: 799.99, setupCost: 50.0, commissionCost: 25.0 },
+      "Liko M220": { cost: 500.0, price: 699.99 }
+    },
+    "Wheelchair": {
+      "Meyra iChair": { cost: 1200.0, price: 1500.0, commissionCost: 60.0 },
+      "Invacare TDX": { cost: 950.0, price: 1200.0, setupCost: 80.0 }
+    }
+  };
 
 let quoteItems = [];
 let salesItems = [];
 
 // Base carriage charge applied once per quote when "Supply Only" is selected
 const CARRIAGE_CHARGE = 15.95;
-let assetChoices, makeChoices, repairChoices;
-let salesAssetChoices, salesMakeChoices;
+  let assetChoices, makeChoices, repairChoices;
+  let salesAssetChoices, salesMakeChoices;
+  let setupLabel, commissionLabel, includeSetup, includeCommission;
 
 document.addEventListener("DOMContentLoaded", () => {
   assetChoices = new Choices("#assetSelect", {
@@ -94,12 +95,17 @@ document.addEventListener("DOMContentLoaded", () => {
     allowHTML: false
   });
 
-  salesMakeChoices = new Choices("#salesMakeSelect", {
-    searchEnabled: true,
-    shouldSort: false,
-    placeholderValue: 'Select Make/Model',
-    allowHTML: false
-  });
+    salesMakeChoices = new Choices("#salesMakeSelect", {
+      searchEnabled: true,
+      shouldSort: false,
+      placeholderValue: 'Select Make/Model',
+      allowHTML: false
+    });
+
+    setupLabel = document.getElementById("setupLabel");
+    commissionLabel = document.getElementById("commissionLabel");
+    includeSetup = document.getElementById("includeSetup");
+    includeCommission = document.getElementById("includeCommission");
 
   populateAssets();
   populateSalesAssets();
@@ -158,6 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
     salesMakeChoices.clearStore();
     populateSalesMakes();
     document.getElementById("salesMakeSection").classList.remove("hidden");
+    includeSetup.checked = false;
+    includeCommission.checked = false;
+    document.getElementById("salesExtras").classList.add("hidden");
   });
 
   document.getElementById("salesMakeSelect").addEventListener("change", () => {
@@ -170,6 +179,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const margin = ((info.price - info.cost) / info.cost) * 100;
       document.getElementById("salesMargin").value = margin.toFixed(2);
       document.getElementById("salesPrice").value = info.price.toFixed(2);
+      if (info.setupCost || info.commissionCost) {
+        document.getElementById("salesExtras").classList.remove("hidden");
+        if (info.setupCost) {
+          setupLabel.classList.remove("hidden");
+          includeSetup.checked = false;
+          setupLabel.innerHTML = `<input type="checkbox" id="includeSetup" /> Include Setup (+£${info.setupCost.toFixed(2)})`;
+          includeSetup = document.getElementById("includeSetup");
+        } else {
+          setupLabel.classList.add("hidden");
+          includeSetup.checked = false;
+        }
+        if (info.commissionCost) {
+          commissionLabel.classList.remove("hidden");
+          includeCommission.checked = false;
+          commissionLabel.innerHTML = `<input type="checkbox" id="includeCommission" /> Include Commission (+£${info.commissionCost.toFixed(2)})`;
+          includeCommission = document.getElementById("includeCommission");
+        } else {
+          commissionLabel.classList.add("hidden");
+          includeCommission.checked = false;
+        }
+      } else {
+        includeSetup.checked = false;
+        includeCommission.checked = false;
+        document.getElementById("salesExtras").classList.add("hidden");
+      }
     }
   });
 
@@ -219,9 +253,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const margin = parseFloat(document.getElementById("salesMargin").value);
     const price = parseFloat(document.getElementById("salesPrice").value);
     const qty = parseInt(document.getElementById("salesQty").value, 10);
+    const info = salesData[asset]?.[make] || {};
+    const setupSelected = includeSetup.checked && info.setupCost;
+    const commissionSelected = includeCommission.checked && info.commissionCost;
     if (!asset || !make || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
     const desc = descField || `${asset} - ${make}`;
-    salesItems.push({ asset, make, desc, cost, margin, price, qty });
+    salesItems.push({ asset, make, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0 });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
@@ -535,14 +572,24 @@ function renderSalesQuote() {
   let subtotal = 0;
 
   salesItems.forEach((item, index) => {
-    const total = item.price * item.qty;
+    let itemPrice = item.price;
+    const extras = [];
+    if (item.setupSelected) {
+      itemPrice += item.setupCost;
+      extras.push(`Setup +£${item.setupCost.toFixed(2)}`);
+    }
+    if (item.commissionSelected) {
+      itemPrice += item.commissionCost;
+      extras.push(`Commission +£${item.commissionCost.toFixed(2)}`);
+    }
+    const total = itemPrice * item.qty;
     subtotal += total;
     lines.innerHTML += `
       <div class="quote-line">
-        <p class="desc"><strong>${item.asset} → ${item.make}</strong></p>
+        <p class="desc"><strong>${item.asset} → ${item.make}</strong>${extras.length ? ` (${extras.join(', ')})` : ''}</p>
         <p><span class="label">Cost:</span><span class="value">£${item.cost.toFixed(2)}</span></p>
         <p><span class="label">Margin:</span><span class="value">${item.margin.toFixed(2)}%</span></p>
-        <p><span class="label">Price (ex VAT):</span><span class="value">£${item.price.toFixed(2)}</span></p>
+        <p><span class="label">Price (ex VAT):</span><span class="value">£${itemPrice.toFixed(2)}</span></p>
         <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
         <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
         <button onclick="removeSalesItem(${index})">Remove</button>
@@ -622,12 +669,25 @@ async function generateSalesPDF() {
   doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
   const tableStartY = infoY + 8;
 
-  const rows = salesItems.map(item => [
-    `${item.asset} - ${item.make}`,
-    item.qty,
-    `£${item.price.toFixed(2)}`,
-    `£${(item.price * item.qty).toFixed(2)}`
-  ]);
+  const rows = salesItems.map(item => {
+    let price = item.price;
+    const extras = [];
+    if (item.setupSelected) {
+      price += item.setupCost;
+      extras.push('Setup');
+    }
+    if (item.commissionSelected) {
+      price += item.commissionCost;
+      extras.push('Commission');
+    }
+    const descExtras = extras.length ? ` (${extras.join(' + ')})` : '';
+    return [
+      `${item.asset} - ${item.make}${descExtras}`,
+      item.qty,
+      `£${price.toFixed(2)}`,
+      `£${(price * item.qty).toFixed(2)}`
+    ];
+  });
 
   if (rows.length > 0) {
     rows.push(["Carriage", "", "", `£${SALES_CARRIAGE.toFixed(2)}`]);
