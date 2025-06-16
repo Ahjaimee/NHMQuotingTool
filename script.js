@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       labourInput.value = "";
     }
+    document.getElementById("repairQty").value = 1;
     document.getElementById("labourSection").classList.remove("hidden");
   });
 
@@ -231,10 +232,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
     const labourHours = document.getElementById("labourHours").value;
+    const qty = parseInt(document.getElementById("repairQty").value, 10) || 1;
 
     if (!asset || asset === "Select Asset" || !make || make === "Select Make/Model" || !repair || repair === "Select Repair") return;
 
-    quoteItems.push({ asset, make, repair, labourHours });
+    quoteItems.push({ asset, make, repair, labourHours, qty });
     renderQuote();
     document.getElementById("quoteSection").classList.remove("hidden");
     document.getElementById("downloadPDF").classList.remove("hidden");
@@ -351,6 +353,7 @@ function resetRepairFields() {
   document.getElementById("repairSection").classList.add("hidden");
   document.getElementById("labourSection").classList.add("hidden");
   document.getElementById("labourHours").value = "";
+  document.getElementById("repairQty").value = 1;
   populateAssets();
   document.getElementById("makeSelect").innerHTML = "";
   document.getElementById("repairSelect").innerHTML = "";
@@ -372,9 +375,10 @@ function renderQuote() {
   const items = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
     const hours = parseFloat(item.labourHours);
-    const labour = supplyOnly ? 0 : isNaN(hours) ? 0 : hours * LABOUR_RATE;
+    const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
+    const labour = supplyOnly ? 0 : labourPerItem * item.qty;
     labourSubtotal += labour;
-    return { item, info, labour };
+    return { item, info, labour, labourPerItem };
   });
 
   if (!supplyOnly && items.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
@@ -384,14 +388,16 @@ function renderQuote() {
   }
 
   items.forEach(({ item, info, labour }, index) => {
-    const total = labour + info.material_cost;
+    const materials = info.material_cost * item.qty;
+    const total = labour + materials;
     subtotal += total;
     quoteLines.innerHTML += `
       <div class="quote-line">
         <p class="desc"><strong>${item.asset} → ${item.make} → ${item.repair}</strong></p>
         <p><span class="label">Part #:</span><span class="value">${info.part_number}</span></p>
+        <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
         <p><span class="label">Labour:</span><span class="value">${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</span></p>
-        <p><span class="label">Materials:</span><span class="value">£${info.material_cost.toFixed(2)}</span></p>
+        <p><span class="label">Materials:</span><span class="value">£${materials.toFixed(2)}</span></p>
         <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
         <button onclick="removeItem(${index})">Remove</button>
       </div>
@@ -485,7 +491,8 @@ async function generatePDF() {
   const items = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
     const hours = parseFloat(item.labourHours);
-    const labour = supplyOnlyFlag ? 0 : isNaN(hours) ? 0 : hours * LABOUR_RATE;
+    const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
+    const labour = supplyOnlyFlag ? 0 : labourPerItem * item.qty;
     labourSubtotal += labour;
     return { item, info, labour };
   });
@@ -497,25 +504,27 @@ async function generatePDF() {
   }
 
   items.forEach(({ item, info, labour }) => {
-    const total = labour + info.material_cost;
+    const materials = info.material_cost * item.qty;
+    const total = labour + materials;
     rows.push([
       `${item.asset} - ${item.make}`,
       item.repair,
       info.part_number,
+      item.qty,
       `£${labour.toFixed(2)}`,
-      `£${info.material_cost.toFixed(2)}`,
+      `£${materials.toFixed(2)}`,
       `£${total.toFixed(2)}`
     ]);
   });
 
   const carriageCharge = document.getElementById("supplyOnly").checked && rows.length > 0 ? CARRIAGE_CHARGE : 0;
   if (carriageCharge > 0) {
-    rows.push(["Carriage", "", "", "", "", `£${carriageCharge.toFixed(2)}`]);
+    rows.push(["Carriage", "", "", "", "", "", `£${carriageCharge.toFixed(2)}`]);
   }
 
   doc.autoTable({
     startY: tableStartY,
-    head: [["Asset", "Repair", "Part#", "Labour", "Materials", "Total"]],
+    head: [["Asset", "Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
@@ -529,11 +538,12 @@ async function generatePDF() {
     columnStyles: {
       0: { halign: "left" },
       1: { halign: "left" },
-      2: { halign: "center" }
+      2: { halign: "center" },
+      3: { halign: "center" }
     }
   });
 
-  const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[5].replace("£", "")), 0);
+  const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[6].replace("£", "")), 0);
   const vat = document.getElementById("vatExempt").checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
   const finalY = doc.lastAutoTable.finalY || 60;
