@@ -431,8 +431,14 @@ async function generatePDF() {
   doc.text(`Total: £${total.toFixed(2)}`, rightMargin, sumY, { align: "right" });
 
   const centreX = pageWidth / 2;
-  doc.text(`Supply Only: ${document.getElementById("supplyOnly").checked ? "Yes" : "No"}`, centreX, finalY + 10, { align: "center" });
-  doc.text(`VAT Exempt: ${document.getElementById("vatExempt").checked ? "Yes" : "No"}`, centreX, finalY + 16, { align: "center" });
+  let noteY = finalY + 10;
+  if (document.getElementById("supplyOnly").checked) {
+    doc.text("Supply Only: Yes", centreX, noteY, { align: "center" });
+    noteY += 6;
+  }
+  if (document.getElementById("vatExempt").checked) {
+    doc.text("VAT Exempt: Yes", centreX, noteY, { align: "center" });
+  }
 
   const footerY = doc.internal.pageSize.getHeight() - 10;
   doc.text("Thank you for choosing NHM. Please contact us with any questions.", centreX, footerY, { align: "center" });
@@ -574,7 +580,9 @@ async function generateSalesPDF() {
   doc.text(`Total: £${total.toFixed(2)}`, rightMargin, sumY, { align: "right" });
 
   const centreX = pageWidth / 2;
-  doc.text(`VAT Exempt: ${document.getElementById("vatExemptSales").checked ? "Yes" : "No"}`, centreX, finalY + 10, { align: "center" });
+  if (document.getElementById("vatExemptSales").checked) {
+    doc.text("VAT Exempt: Yes", centreX, finalY + 10, { align: "center" });
+  }
 
   const footerY = doc.internal.pageSize.getHeight() - 10;
   doc.text("Thank you for choosing NHM. Please contact us with any questions.", centreX, footerY, { align: "center" });
