@@ -614,8 +614,24 @@ async function generatePDF() {
   doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
   infoY += 6;
   if (desc) {
-    doc.text(`Work: ${desc}`, 15, infoY);
-    infoY += 6;
+    const boxX = 15;
+    const boxY = infoY;
+    const boxWidth = pageWidth - boxX * 2;
+    const textLines = doc.splitTextToSize(desc, boxWidth - 8);
+    const lineHeight = 6; // matches spacing used for other fields
+    const boxHeight = textLines.length * lineHeight + 4;
+
+    doc.setFillColor(249, 249, 249); // light background
+    doc.rect(boxX, boxY, boxWidth, boxHeight, "F");
+
+    // Draw left border to mimic on-page style
+    doc.setDrawColor(204, 204, 204);
+    doc.setLineWidth(2);
+    doc.line(boxX, boxY, boxX, boxY + boxHeight);
+    doc.setLineWidth(0.2);
+
+    doc.text(textLines, boxX + 4, boxY + lineHeight);
+    infoY += boxHeight + 2;
   }
   const tableStartY = infoY + 8;
 
