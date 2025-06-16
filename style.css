@@ -9,6 +9,7 @@ body {
   max-width: 700px;
   margin: auto;
   padding: 20px;
+  padding-bottom: 60px;
 }
 
 .logo-container {
@@ -283,5 +284,6 @@ input[type="checkbox"]:active {
   color: #666;
   font-size: 0.9rem;
   margin-top: 20px;
+  padding-bottom: 20px;
 }
 
