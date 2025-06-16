@@ -149,6 +149,16 @@ button {
   font-weight: 500;
 }
 
+/* Ensure the checkbox labels align nicely with the custom boxes */
+.checkboxes label,
+#salesExtras label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0;
+  font-weight: 500;
+}
+
 .checkboxes input[type="checkbox"],
 #salesExtras input[type="checkbox"],
 input[type="checkbox"] {
@@ -162,6 +172,7 @@ input[type="checkbox"] {
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
   display: inline-block;
+  vertical-align: middle;
 }
 
 .checkboxes input[type="checkbox"]:checked,
