@@ -323,6 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
+  document.getElementById("workDesc").addEventListener("input", renderQuote);
   document.getElementById("downloadPDF").addEventListener("click", generatePDF);
 
   document.getElementById("addSalesItem").addEventListener("click", () => {
@@ -483,6 +484,14 @@ function resetRepairFields() {
 function renderQuote() {
   const quoteLines = document.getElementById("quoteLines");
   const estimate = document.getElementById("estimate");
+  const descBox = document.getElementById("workDescription");
+  const descValue = document.getElementById("workDesc").value.trim();
+  if (descValue) {
+    descBox.textContent = descValue;
+    descBox.classList.remove("hidden");
+  } else {
+    descBox.classList.add("hidden");
+  }
   const supplyOnly = document.getElementById("supplyOnly").checked;
   const vatExempt = document.getElementById("vatExempt").checked;
 
