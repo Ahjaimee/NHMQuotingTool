@@ -1,40 +1,76 @@
 const data = {
   "Bath": {
-    "Parker / Rise & Tilt Bath": {
-      "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
-        labour_hours: 0.5,
-        material_cost: 47.59,
-        part_number: "SPX271-0001"
+    "Parker": {
+      "Rise & Tilt Bath": {
+        "Standard": {
+          "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
+            labour_hours: 0.5,
+            material_cost: 47.59,
+            part_number: "SPX271-0001",
+          }
+        }
       }
     }
   },
   "Profile Bed": {
-    "Sidhil / Bradshaw Low (1275/LOW/LOAKS/S)": {
-      "Replacement HiLo Foot end actuator": {
-        labour_hours: 1.66,
-        material_cost: 168.48,
-        part_number: "SPX212-0233"
+    "Sidhil": {
+      "Bradshaw Low (1275/LOW/LOAKS/S)": {
+        "Standard": {
+          "Replacement HiLo Foot end actuator": {
+            labour_hours: 1.66,
+            material_cost: 168.48,
+            part_number: "SPX212-0233",
+          }
+        }
       }
     },
-    "Casa / Classic FS": {
-      "CFS Headboard Wooden": {
-        labour_hours: 0.5,
-        material_cost: 150.33,
-        part_number: "SPX055-0110"
+    "Casa": {
+      "Classic FS": {
+        "Standard": {
+          "CFS Headboard Wooden": {
+            labour_hours: 0.5,
+            material_cost: 150.33,
+            part_number: "SPX055-0110",
+          }
+        }
       }
     }
   },
   "Portable Ceiling Hoist": {
-    "Savaria Monarch": {
-      "Li-Ion Charger W/O Cord": {
-        labour_hours: 0.5,
-        material_cost: 118.32,
-        part_number: "SPX323-0068"
-      },
-      "UK Power Cord for Charger": {
-        labour_hours: 0.25,
-        material_cost: 32.0,
-        part_number: "SPX323-0096"
+    "Savaria": {
+      "Monarch": {
+        "Standard": {
+          "Li-Ion Charger W/O Cord": {
+            labour_hours: 0.5,
+            material_cost: 118.32,
+            part_number: "SPX323-0068",
+          },
+          "UK Power Cord for Charger": {
+            labour_hours: 0.25,
+            material_cost: 32.0,
+            part_number: "SPX323-0096",
+          }
+        }
+      }
+    }
+  },
+  "Hoist": {
+    "Oxford": {
+      "Major 200": {
+        "Manual Spreader Bar": {
+          "Sling Bar Replacement": {
+            labour_hours: 1.0,
+            material_cost: 100.0,
+            part_number: "OM200-MSB",
+          }
+        },
+        "Electrical Spreader Bar": {
+          "Motor Replacement": {
+            labour_hours: 1.5,
+            material_cost: 200.0,
+            part_number: "OM200-ESB",
+          }
+        }
       }
     }
   }
@@ -62,7 +98,7 @@ let salesItems = [];
 
 // Base carriage charge applied once per quote when "Supply Only" is selected
 const CARRIAGE_CHARGE = 15.95;
-  let assetChoices, makeChoices, repairChoices;
+  let assetChoices, makeChoices, modelChoices, variantChoices, repairChoices;
   let salesAssetChoices, salesMakeChoices;
   let setupLabel, commissionLabel, includeSetup, includeCommission;
 
@@ -77,7 +113,21 @@ document.addEventListener("DOMContentLoaded", () => {
   makeChoices = new Choices("#makeSelect", {
     searchEnabled: true,
     shouldSort: false,
-    placeholderValue: 'Select Make/Model',
+    placeholderValue: 'Select Make',
+    allowHTML: false
+  });
+
+  modelChoices = new Choices("#modelSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Model',
+    allowHTML: false
+  });
+
+  variantChoices = new Choices("#variantSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Variant',
     allowHTML: false
   });
 
@@ -132,14 +182,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("assetSelect").addEventListener("change", () => {
     makeChoices.clearStore();
+    modelChoices.clearStore();
+    variantChoices.clearStore();
     repairChoices.clearStore();
     populateMakes();
     document.getElementById("makeSection").classList.remove("hidden");
+    document.getElementById("modelSection").classList.add("hidden");
+    document.getElementById("variantSection").classList.add("hidden");
     document.getElementById("repairSection").classList.add("hidden");
     document.getElementById("labourSection").classList.add("hidden");
   });
 
   document.getElementById("makeSelect").addEventListener("change", () => {
+    modelChoices.clearStore();
+    variantChoices.clearStore();
+    repairChoices.clearStore();
+    populateModels();
+    document.getElementById("modelSection").classList.remove("hidden");
+    document.getElementById("variantSection").classList.add("hidden");
+    document.getElementById("repairSection").classList.add("hidden");
+    document.getElementById("labourSection").classList.add("hidden");
+  });
+
+  document.getElementById("modelSelect").addEventListener("change", () => {
+    variantChoices.clearStore();
+    repairChoices.clearStore();
+    populateVariants();
+    document.getElementById("variantSection").classList.remove("hidden");
+    document.getElementById("repairSection").classList.add("hidden");
+    document.getElementById("labourSection").classList.add("hidden");
+  });
+
+  document.getElementById("variantSelect").addEventListener("change", () => {
     repairChoices.clearStore();
     populateRepairs();
     document.getElementById("repairSection").classList.remove("hidden");
@@ -149,8 +223,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("repairSelect").addEventListener("change", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
+    const model = document.getElementById("modelSelect").value;
+    const variant = document.getElementById("variantSelect").value;
     const repair = document.getElementById("repairSelect").value;
-    const info = data[asset]?.[make]?.[repair];
+    const info = data[asset]?.[make]?.[model]?.[variant]?.[repair];
     const labourInput = document.getElementById("labourHours");
     if (info && typeof info.labour_hours !== "undefined") {
       labourInput.value = info.labour_hours;
@@ -230,13 +306,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addItem").addEventListener("click", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
+    const model = document.getElementById("modelSelect").value;
+    const variant = document.getElementById("variantSelect").value;
     const repair = document.getElementById("repairSelect").value;
     const labourHours = document.getElementById("labourHours").value;
     const qty = parseInt(document.getElementById("repairQty").value, 10) || 1;
 
-    if (!asset || asset === "Select Asset" || !make || make === "Select Make/Model" || !repair || repair === "Select Repair") return;
+    if (!asset || !make || !model || !variant || !repair) return;
 
-    quoteItems.push({ asset, make, repair, labourHours, qty });
+    quoteItems.push({ asset, make, model, variant, repair, labourHours, qty });
     renderQuote();
     document.getElementById("quoteSection").classList.remove("hidden");
     document.getElementById("downloadPDF").classList.remove("hidden");
@@ -292,12 +370,45 @@ function populateMakes() {
   const makes = Object.keys(data[asset] || {});
   const select = document.getElementById("makeSelect");
   makeChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
+  select.innerHTML = `<option value="" disabled selected>Select Make</option>` +
     makes.map(m => `<option value="${m}">${m}</option>`).join("");
   makeChoices = new Choices(select, {
     searchEnabled: true,
     shouldSort: false,
-    placeholderValue: 'Select Make/Model',
+    placeholderValue: 'Select Make',
+    allowHTML: false
+  });
+}
+
+function populateModels() {
+  const asset = document.getElementById("assetSelect").value;
+  const make = document.getElementById("makeSelect").value;
+  const models = Object.keys(data[asset]?.[make] || {});
+  const select = document.getElementById("modelSelect");
+  modelChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Model</option>` +
+    models.map(m => `<option value="${m}">${m}</option>`).join("");
+  modelChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Model',
+    allowHTML: false
+  });
+}
+
+function populateVariants() {
+  const asset = document.getElementById("assetSelect").value;
+  const make = document.getElementById("makeSelect").value;
+  const model = document.getElementById("modelSelect").value;
+  const variants = Object.keys(data[asset]?.[make]?.[model] || {});
+  const select = document.getElementById("variantSelect");
+  variantChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Variant</option>` +
+    variants.map(v => `<option value="${v}">${v}</option>`).join("");
+  variantChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Variant',
     allowHTML: false
   });
 }
@@ -305,7 +416,9 @@ function populateMakes() {
 function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
-  const repairs = Object.keys(data[asset]?.[make] || {});
+  const model = document.getElementById("modelSelect").value;
+  const variant = document.getElementById("variantSelect").value;
+  const repairs = Object.keys(data[asset]?.[make]?.[model]?.[variant] || {});
   const select = document.getElementById("repairSelect");
   repairChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
@@ -350,14 +463,20 @@ function populateSalesMakes() {
 
 function resetRepairFields() {
   document.getElementById("makeSection").classList.add("hidden");
+  document.getElementById("modelSection").classList.add("hidden");
+  document.getElementById("variantSection").classList.add("hidden");
   document.getElementById("repairSection").classList.add("hidden");
   document.getElementById("labourSection").classList.add("hidden");
   document.getElementById("labourHours").value = "";
   document.getElementById("repairQty").value = 1;
   populateAssets();
   document.getElementById("makeSelect").innerHTML = "";
+  document.getElementById("modelSelect").innerHTML = "";
+  document.getElementById("variantSelect").innerHTML = "";
   document.getElementById("repairSelect").innerHTML = "";
   makeChoices.clearStore();
+  modelChoices.clearStore();
+  variantChoices.clearStore();
   repairChoices.clearStore();
 }
 
@@ -373,7 +492,7 @@ function renderQuote() {
   const carriageCharge = supplyOnly && quoteItems.length > 0 ? CARRIAGE_CHARGE : 0;
 
   const items = quoteItems.map(item => {
-    const info = data[item.asset][item.make][item.repair];
+    const info = data[item.asset][item.make][item.model][item.variant][item.repair];
     const hours = parseFloat(item.labourHours);
     const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
     const labour = supplyOnly ? 0 : labourPerItem * item.qty;
@@ -393,7 +512,7 @@ function renderQuote() {
     subtotal += total;
     quoteLines.innerHTML += `
       <div class="quote-line">
-        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.repair}</strong></p>
+        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.model} → ${item.variant} → ${item.repair}</strong></p>
         <p><span class="label">Part #:</span><span class="value">${info.part_number}</span></p>
         <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
         <p><span class="label">Labour:</span><span class="value">${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</span></p>
@@ -495,7 +614,7 @@ async function generatePDF() {
   let labourSubtotal = 0;
   const supplyOnlyFlag = document.getElementById("supplyOnly").checked;
   const items = quoteItems.map(item => {
-    const info = data[item.asset][item.make][item.repair];
+    const info = data[item.asset][item.make][item.model][item.variant][item.repair];
     const hours = parseFloat(item.labourHours);
     const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
     const labour = supplyOnlyFlag ? 0 : labourPerItem * item.qty;
@@ -513,7 +632,7 @@ async function generatePDF() {
     const materials = info.material_cost * item.qty;
     const total = labour + materials;
     rows.push([
-      `${item.asset} - ${item.make}`,
+      `${item.asset} - ${item.make} - ${item.model} - ${item.variant}`,
       item.repair,
       info.part_number,
       item.qty,
