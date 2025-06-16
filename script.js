@@ -32,6 +32,9 @@ const data = {
 
 // Fixed carriage charge applied to all sales quotes
 const SALES_CARRIAGE = 15.95;
+// Labour pricing constants
+const LABOUR_RATE = 30.5; // £15.25 per 0.5 hour
+const MIN_LABOUR_COST = 74.75;
 // Cost and default selling price for sales items
 const salesData = {
   "Hoist": {
@@ -316,6 +319,7 @@ function renderQuote() {
 
   quoteLines.innerHTML = "";
   let subtotal = 0;
+  let labourSubtotal = 0;
   // Apply carriage only once per quote when "Supply Only" is selected
   const carriageCharge = supplyOnly && quoteItems.length > 0 ? CARRIAGE_CHARGE : 0;
 
@@ -325,9 +329,10 @@ function renderQuote() {
     const labour = supplyOnly
       ? 0
       : isNaN(hours)
-      ? 74.75
-      : hours * 45;
+      ? 0
+      : hours * LABOUR_RATE;
     const total = labour + info.material_cost;
+    labourSubtotal += labour;
     subtotal += total;
 
     quoteLines.innerHTML += `
@@ -341,6 +346,16 @@ function renderQuote() {
       </div>
     `;
   });
+
+  if (!supplyOnly && quoteItems.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
+    const diff = MIN_LABOUR_COST - labourSubtotal;
+    subtotal += diff;
+    quoteLines.innerHTML += `
+      <div class="quote-line">
+        <p><strong class="label">Minimum Labour Charge</strong><strong class="value">£${diff.toFixed(2)}</strong></p>
+      </div>
+    `;
+  }
 
   if (carriageCharge > 0) {
     subtotal += carriageCharge;
@@ -423,21 +438,30 @@ async function generatePDF() {
   doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
   const tableStartY = infoY + 8;
 
-  const rows = quoteItems.map(item => {
+  const rows = [];
+  let labourSubtotal = 0;
+  const supplyOnlyFlag = document.getElementById("supplyOnly").checked;
+  quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.repair];
-    const supplyOnly = document.getElementById("supplyOnly").checked;
     const hours = parseFloat(item.labourHours);
-    const labour = supplyOnly ? 0 : isNaN(hours) ? 74.75 : hours * 45;
+    const labour = supplyOnlyFlag ? 0 : isNaN(hours) ? 0 : hours * LABOUR_RATE;
     const total = labour + info.material_cost;
-    return [
+    labourSubtotal += labour;
+    rows.push([
       `${item.asset} - ${item.make}`,
       item.repair,
       info.part_number,
       `£${labour.toFixed(2)}`,
       `£${info.material_cost.toFixed(2)}`,
       `£${total.toFixed(2)}`
-    ];
+    ]);
   });
+
+  if (!supplyOnlyFlag && rows.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
+    const diff = MIN_LABOUR_COST - labourSubtotal;
+    rows.push(["Minimum Labour Charge", "", "", `£${diff.toFixed(2)}`, "", `£${diff.toFixed(2)}`]);
+    labourSubtotal = MIN_LABOUR_COST;
+  }
 
   const carriageCharge = document.getElementById("supplyOnly").checked && rows.length > 0 ? CARRIAGE_CHARGE : 0;
   if (carriageCharge > 0) {
