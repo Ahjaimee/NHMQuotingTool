@@ -4,6 +4,29 @@ const data = {
       "Replacement Battery": { labour_hours: 0.5, material_cost: 85.0, part_number: "OXBATT180" },
       "Handset Replacement": { labour_hours: 0.75, material_cost: 65.0, part_number: "OXHAND180" }
     }
+  },
+  "Profile Bed": {
+    "Sidhil / Bradshaw Low (1275/LOW/LOAKS/S)": {
+      "Replacement HiLo Foot end actuator": {
+        labour_hours: 1.66,
+        material_cost: 168.48,
+        part_number: "SPX212-0233"
+      }
+    }
+  },
+  "Portable Ceiling Hoist": {
+    "Savaria Monarch": {
+      "Li-Ion Charger W/O Cord": {
+        labour_hours: 0.5,
+        material_cost: 118.32,
+        part_number: "SPX323-0068"
+      },
+      "UK Power Cord for Charger": {
+        labour_hours: 0.25,
+        material_cost: 32.0,
+        part_number: "SPX323-0096"
+      }
+    }
   }
 };
 
@@ -94,12 +117,28 @@ document.addEventListener("DOMContentLoaded", () => {
     populateMakes();
     document.getElementById("makeSection").classList.remove("hidden");
     document.getElementById("repairSection").classList.add("hidden");
+    document.getElementById("labourSection").classList.add("hidden");
   });
 
   document.getElementById("makeSelect").addEventListener("change", () => {
     repairChoices.clearStore();
     populateRepairs();
     document.getElementById("repairSection").classList.remove("hidden");
+    document.getElementById("labourSection").classList.add("hidden");
+  });
+
+  document.getElementById("repairSelect").addEventListener("change", () => {
+    const asset = document.getElementById("assetSelect").value;
+    const make = document.getElementById("makeSelect").value;
+    const repair = document.getElementById("repairSelect").value;
+    const info = data[asset]?.[make]?.[repair];
+    const labourInput = document.getElementById("labourHours");
+    if (info && typeof info.labour_hours !== "undefined") {
+      labourInput.value = info.labour_hours;
+    } else {
+      labourInput.value = "";
+    }
+    document.getElementById("labourSection").classList.remove("hidden");
   });
 
   document.getElementById("salesAssetSelect").addEventListener("change", () => {
@@ -144,10 +183,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const asset = document.getElementById("assetSelect").value;
     const make = document.getElementById("makeSelect").value;
     const repair = document.getElementById("repairSelect").value;
+    const labourHours = document.getElementById("labourHours").value;
 
     if (!asset || asset === "Select Asset" || !make || make === "Select Make/Model" || !repair || repair === "Select Repair") return;
 
-    quoteItems.push({ asset, make, repair });
+    quoteItems.push({ asset, make, repair, labourHours });
     renderQuote();
     document.getElementById("quoteSection").classList.remove("hidden");
     document.getElementById("downloadPDF").classList.remove("hidden");
@@ -259,6 +299,8 @@ function populateSalesMakes() {
 function resetRepairFields() {
   document.getElementById("makeSection").classList.add("hidden");
   document.getElementById("repairSection").classList.add("hidden");
+  document.getElementById("labourSection").classList.add("hidden");
+  document.getElementById("labourHours").value = "";
   populateAssets();
   document.getElementById("makeSelect").innerHTML = "";
   document.getElementById("repairSelect").innerHTML = "";
@@ -279,7 +321,12 @@ function renderQuote() {
 
   quoteItems.forEach((item, index) => {
     const info = data[item.asset][item.make][item.repair];
-    const labour = supplyOnly ? 0 : info.labour_hours * 45;
+    const hours = parseFloat(item.labourHours);
+    const labour = supplyOnly
+      ? 0
+      : isNaN(hours)
+      ? 74.75
+      : hours * 45;
     const total = labour + info.material_cost;
     subtotal += total;
 
@@ -379,7 +426,8 @@ async function generatePDF() {
   const rows = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
     const supplyOnly = document.getElementById("supplyOnly").checked;
-    const labour = supplyOnly ? 0 : info.labour_hours * 45;
+    const hours = parseFloat(item.labourHours);
+    const labour = supplyOnly ? 0 : isNaN(hours) ? 74.75 : hours * 45;
     const total = labour + info.material_cost;
     return [
       `${item.asset} - ${item.make}`,
