@@ -694,11 +694,11 @@ async function generatePDF() {
   }
 
   doc.setFontSize(10);
-  doc.text("This repair quote is an estimate only.", centreX, noteY, { align: "center" });
+  doc.text("This repair quote is an estimate only and typically 95% accurate.", centreX, noteY, { align: "center" });
   noteY += 5;
-  doc.text("A final quote will be sent for your approval and work will", centreX, noteY, { align: "center" });
+  doc.text("If you are happy with this estimate we can send a final", centreX, noteY, { align: "center" });
   noteY += 5;
-  doc.text("proceed only once that quote has been accepted.", centreX, noteY, { align: "center" });
+  doc.text("quote for your approval before any work proceeds.", centreX, noteY, { align: "center" });
   doc.setFontSize(11);
 
   const footerY = doc.internal.pageSize.getHeight() - 10;
