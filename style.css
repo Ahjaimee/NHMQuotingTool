@@ -215,6 +215,14 @@ button {
   text-align: right;
 }
 
+.desc-box {
+  background: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-left: 4px solid #ccc;
+  border-radius: 6px;
+}
+
 .note {
   font-size: 0.85rem;
   color: #555;

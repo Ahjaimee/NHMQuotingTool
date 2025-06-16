@@ -18,3 +18,5 @@ Tool for estimating repair and sales quotes for mobility equipment.
 - Repair quotes now include an optional work description and a disclaimer that
   the estimate is typically 95% accurate and subject to final approval before
   any work is carried out.
+- When a work description is provided, the on-page quote now displays it in a
+  dedicated "Description of work(s)" box above the line items.
