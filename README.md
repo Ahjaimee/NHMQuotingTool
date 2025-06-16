@@ -20,3 +20,4 @@ Tool for estimating repair and sales quotes for mobility equipment.
   any work is carried out.
 - When a work description is provided, the on-page quote now displays it in a
   dedicated "Description of work(s)" box above the line items.
+- PDFs now show this description in a matching box when text is entered.
