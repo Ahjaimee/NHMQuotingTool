@@ -1,8 +1,11 @@
 const data = {
-  "Mobile Hoist": {
-    "Oxford Midi 180": {
-      "Replacement Battery": { labour_hours: 0.5, material_cost: 85.0, part_number: "OXBATT180" },
-      "Handset Replacement": { labour_hours: 0.75, material_cost: 65.0, part_number: "OXHAND180" }
+  "Bath": {
+    "Parker / Rise & Tilt Bath": {
+      "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
+        labour_hours: 0.5,
+        material_cost: 47.59,
+        part_number: "SPX271-0001"
+      }
     }
   },
   "Profile Bed": {
@@ -11,6 +14,13 @@ const data = {
         labour_hours: 1.66,
         material_cost: 168.48,
         part_number: "SPX212-0233"
+      }
+    },
+    "Casa / Classic FS": {
+      "CFS Headboard Wooden": {
+        labour_hours: 0.5,
+        material_cost: 150.33,
+        part_number: "SPX055-0110"
       }
     }
   },
@@ -320,21 +330,25 @@ function renderQuote() {
   quoteLines.innerHTML = "";
   let subtotal = 0;
   let labourSubtotal = 0;
-  // Apply carriage only once per quote when "Supply Only" is selected
   const carriageCharge = supplyOnly && quoteItems.length > 0 ? CARRIAGE_CHARGE : 0;
 
-  quoteItems.forEach((item, index) => {
+  const items = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
     const hours = parseFloat(item.labourHours);
-    const labour = supplyOnly
-      ? 0
-      : isNaN(hours)
-      ? 0
-      : hours * LABOUR_RATE;
-    const total = labour + info.material_cost;
+    const labour = supplyOnly ? 0 : isNaN(hours) ? 0 : hours * LABOUR_RATE;
     labourSubtotal += labour;
-    subtotal += total;
+    return { item, info, labour };
+  });
 
+  if (!supplyOnly && items.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
+    const diff = MIN_LABOUR_COST - labourSubtotal;
+    items[0].labour += diff;
+    labourSubtotal = MIN_LABOUR_COST;
+  }
+
+  items.forEach(({ item, info, labour }, index) => {
+    const total = labour + info.material_cost;
+    subtotal += total;
     quoteLines.innerHTML += `
       <div class="quote-line">
         <p class="desc"><strong>${item.asset} → ${item.make} → ${item.repair}</strong></p>
@@ -346,16 +360,6 @@ function renderQuote() {
       </div>
     `;
   });
-
-  if (!supplyOnly && quoteItems.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
-    const diff = MIN_LABOUR_COST - labourSubtotal;
-    subtotal += diff;
-    quoteLines.innerHTML += `
-      <div class="quote-line">
-        <p><strong class="label">Minimum Labour Charge</strong><strong class="value">£${diff.toFixed(2)}</strong></p>
-      </div>
-    `;
-  }
 
   if (carriageCharge > 0) {
     subtotal += carriageCharge;
@@ -441,12 +445,22 @@ async function generatePDF() {
   const rows = [];
   let labourSubtotal = 0;
   const supplyOnlyFlag = document.getElementById("supplyOnly").checked;
-  quoteItems.forEach(item => {
+  const items = quoteItems.map(item => {
     const info = data[item.asset][item.make][item.repair];
     const hours = parseFloat(item.labourHours);
     const labour = supplyOnlyFlag ? 0 : isNaN(hours) ? 0 : hours * LABOUR_RATE;
-    const total = labour + info.material_cost;
     labourSubtotal += labour;
+    return { item, info, labour };
+  });
+
+  if (!supplyOnlyFlag && items.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
+    const diff = MIN_LABOUR_COST - labourSubtotal;
+    items[0].labour += diff;
+    labourSubtotal = MIN_LABOUR_COST;
+  }
+
+  items.forEach(({ item, info, labour }) => {
+    const total = labour + info.material_cost;
     rows.push([
       `${item.asset} - ${item.make}`,
       item.repair,
@@ -456,12 +470,6 @@ async function generatePDF() {
       `£${total.toFixed(2)}`
     ]);
   });
-
-  if (!supplyOnlyFlag && rows.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
-    const diff = MIN_LABOUR_COST - labourSubtotal;
-    rows.push(["Minimum Labour Charge", "", "", `£${diff.toFixed(2)}`, "", `£${diff.toFixed(2)}`]);
-    labourSubtotal = MIN_LABOUR_COST;
-  }
 
   const carriageCharge = document.getElementById("supplyOnly").checked && rows.length > 0 ? CARRIAGE_CHARGE : 0;
   if (carriageCharge > 0) {
