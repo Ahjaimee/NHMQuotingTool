@@ -149,8 +149,53 @@ button {
   font-weight: 500;
 }
 
-.checkboxes input[type="checkbox"] {
-  transform: scale(0.9);
+.checkboxes input[type="checkbox"],
+#salesExtras input[type="checkbox"],
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #27488f;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: inline-block;
+}
+
+.checkboxes input[type="checkbox"]:checked,
+#salesExtras input[type="checkbox"]:checked,
+input[type="checkbox"]:checked {
+  background: #27488f;
+}
+
+.checkboxes input[type="checkbox"]::after,
+#salesExtras input[type="checkbox"]::after,
+input[type="checkbox"]::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.checkboxes input[type="checkbox"]:checked::after,
+#salesExtras input[type="checkbox"]:checked::after,
+input[type="checkbox"]:checked::after {
+  opacity: 1;
+}
+
+.checkboxes input[type="checkbox"]:active,
+#salesExtras input[type="checkbox"]:active,
+input[type="checkbox"]:active {
+  transform: scale(0.85);
 }
 
 #salesExtras {
