@@ -470,6 +470,7 @@ async function generatePDF() {
   const name = document.getElementById("customerName").value || "(No name)";
   const email = document.getElementById("customerEmail").value || "";
   const phone = document.getElementById("customerPhone").value || "";
+  const desc = document.getElementById("workDesc").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
   doc.setFontSize(11);
   let infoY = infoStartY;
@@ -483,6 +484,11 @@ async function generatePDF() {
   doc.text(`Email: ${email || "(N/A)"}`, 15, infoY);
   infoY += 6;
   doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
+  infoY += 6;
+  if (desc) {
+    doc.text(`Work: ${desc}`, 15, infoY);
+    infoY += 6;
+  }
   const tableStartY = infoY + 8;
 
   const rows = [];
@@ -565,7 +571,16 @@ async function generatePDF() {
   }
   if (document.getElementById("vatExempt").checked) {
     doc.text("VAT Exempt: Yes", centreX, noteY, { align: "center" });
+    noteY += 6;
   }
+
+  doc.setFontSize(10);
+  doc.text("This repair quote is an estimate only.", centreX, noteY, { align: "center" });
+  noteY += 5;
+  doc.text("A final quote will be sent for your approval and work will", centreX, noteY, { align: "center" });
+  noteY += 5;
+  doc.text("proceed only once that quote has been accepted.", centreX, noteY, { align: "center" });
+  doc.setFontSize(11);
 
   const footerY = doc.internal.pageSize.getHeight() - 10;
   doc.text("Thank you for choosing NHM. Please contact us with any questions.", centreX, footerY, { align: "center" });
