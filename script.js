@@ -485,20 +485,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
   document.getElementById("overrideLabour").addEventListener("change", () => {
     const input = document.getElementById("customLabour");
-    if (document.getElementById("overrideLabour").checked) {
-      input.classList.remove("hidden");
-      const val = parseFloat(input.value);
-      minLabourCost = isNaN(val) ? DEFAULT_MIN_LABOUR_COST : val;
-    } else {
-      input.classList.add("hidden");
-      minLabourCost = DEFAULT_MIN_LABOUR_COST;
-    }
+    input.classList.toggle("hidden", !document.getElementById("overrideLabour").checked);
     renderQuote();
   });
   document.getElementById("customLabour").addEventListener("input", () => {
     if (document.getElementById("overrideLabour").checked) {
-      const val = parseFloat(document.getElementById("customLabour").value);
-      minLabourCost = isNaN(val) ? DEFAULT_MIN_LABOUR_COST : val;
       renderQuote();
     }
   });
@@ -691,10 +682,18 @@ function renderQuote() {
   });
   const carriageCharge = supplyOnly && items.length > 0 ? CARRIAGE_CHARGE : 0;
 
-  if (!supplyOnly && items.length > 0 && labourSubtotal < minLabourCost) {
-    const diff = minLabourCost - labourSubtotal;
-    items[0].labour += diff;
-    labourSubtotal = minLabourCost;
+  if (!supplyOnly && items.length > 0) {
+    const override = document.getElementById("overrideLabour").checked;
+    const customVal = parseFloat(document.getElementById("customLabour").value);
+    if (override && !isNaN(customVal)) {
+      const diff = customVal - labourSubtotal;
+      items[0].labour += diff;
+      labourSubtotal = customVal;
+    } else if (labourSubtotal < minLabourCost) {
+      const diff = minLabourCost - labourSubtotal;
+      items[0].labour += diff;
+      labourSubtotal = minLabourCost;
+    }
   }
 
   items.forEach(({ item, info, labour, index }) => {
@@ -830,10 +829,18 @@ async function generatePDF() {
     items.push({ item, info, labour });
   });
 
-  if (!supplyOnlyFlag && items.length > 0 && labourSubtotal < minLabourCost) {
-    const diff = minLabourCost - labourSubtotal;
-    items[0].labour += diff;
-    labourSubtotal = minLabourCost;
+  if (!supplyOnlyFlag && items.length > 0) {
+    const override = document.getElementById("overrideLabour").checked;
+    const customVal = parseFloat(document.getElementById("customLabour").value);
+    if (override && !isNaN(customVal)) {
+      const diff = customVal - labourSubtotal;
+      items[0].labour += diff;
+      labourSubtotal = customVal;
+    } else if (labourSubtotal < minLabourCost) {
+      const diff = minLabourCost - labourSubtotal;
+      items[0].labour += diff;
+      labourSubtotal = minLabourCost;
+    }
   }
 
   items.forEach(({ item, info, labour }) => {
