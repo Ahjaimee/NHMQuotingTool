@@ -478,6 +478,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!asset || !make || !model || !variant || !repair) return;
 
+    const info = data[asset]?.[make]?.[model]?.[variant]?.[repair];
+    if (info && info.part_number && info.part_number.startsWith("EQ")) {
+      alert("This item should be added using the Sales Order tab.");
+      return;
+    }
+
     quoteItems.push({ asset, make, model, variant, repair, labourHours, qty });
     renderQuote();
     document.getElementById("quoteSection").classList.remove("hidden");
@@ -662,16 +668,19 @@ function renderQuote() {
   quoteLines.innerHTML = "";
   let subtotal = 0;
   let labourSubtotal = 0;
-  const carriageCharge = supplyOnly && quoteItems.length > 0 ? CARRIAGE_CHARGE : 0;
-
-  const items = quoteItems.map(item => {
+  const items = [];
+  quoteItems.forEach((item, idx) => {
     const info = data[item.asset][item.make][item.model][item.variant][item.repair];
+    if (info.part_number && info.part_number.startsWith("EQ")) {
+      return;
+    }
     const hours = parseFloat(item.labourHours);
     const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
     const labour = supplyOnly ? 0 : labourPerItem * item.qty;
     labourSubtotal += labour;
-    return { item, info, labour, labourPerItem };
+    items.push({ item, info, labour, labourPerItem, index: idx });
   });
+  const carriageCharge = supplyOnly && items.length > 0 ? CARRIAGE_CHARGE : 0;
 
   if (!supplyOnly && items.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
     const diff = MIN_LABOUR_COST - labourSubtotal;
@@ -679,7 +688,7 @@ function renderQuote() {
     labourSubtotal = MIN_LABOUR_COST;
   }
 
-  items.forEach(({ item, info, labour }, index) => {
+  items.forEach(({ item, info, labour, index }) => {
     const materials = info.material_cost * item.qty;
     const total = labour + materials;
     subtotal += total;
@@ -710,7 +719,7 @@ function renderQuote() {
 
   estimate.innerHTML = `
     <h3>Quote Summary</h3>
-    <p>Items: ${quoteItems.length}</p>
+    <p>Items: ${items.length}</p>
     <p>Subtotal: £${subtotal.toFixed(2)}</p>
     <p>VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}</p>
     <p><strong>Total: £${grandTotal.toFixed(2)}</strong></p>
@@ -799,13 +808,17 @@ async function generatePDF() {
   const rows = [];
   let labourSubtotal = 0;
   const supplyOnlyFlag = document.getElementById("supplyOnly").checked;
-  const items = quoteItems.map(item => {
+  const items = [];
+  quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.model][item.variant][item.repair];
+    if (info.part_number && info.part_number.startsWith("EQ")) {
+      return;
+    }
     const hours = parseFloat(item.labourHours);
     const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
     const labour = supplyOnlyFlag ? 0 : labourPerItem * item.qty;
     labourSubtotal += labour;
-    return { item, info, labour };
+    items.push({ item, info, labour });
   });
 
   if (!supplyOnlyFlag && items.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
