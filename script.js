@@ -24,17 +24,6 @@ const data = {
         }
       }
     },
-    "Casa": {
-      "Classic FS": {
-        "Standard": {
-          "CFS Headboard Wooden": {
-            labour_hours: 0.5,
-            material_cost: 150.33,
-            part_number: "SPX055-0110",
-          }
-        }
-      }
-    },
     "Drive DeVilbiss": {
       "Sidhill / Bradshaw": {
         "Bradshaw Standard": {
