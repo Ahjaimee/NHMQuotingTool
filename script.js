@@ -567,6 +567,8 @@ async function generatePDF() {
   const doc = new jsPDF();
 
   const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 15;
 
   // Logo as data URL
   const logo = await fetch("nhm-logo.png")
@@ -600,40 +602,35 @@ async function generatePDF() {
   const phone = document.getElementById("customerPhone").value || "";
   const desc = document.getElementById("workDesc").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
+
+  const infoLines = [
+    `Quote #: ${number}`,
+    `Customer: ${name}`,
+    `Phone: ${phone || "(N/A)"}`,
+    `Email: ${email || "(N/A)"}`,
+    `Date: ${new Date().toLocaleDateString()}`
+  ];
+
   doc.setFontSize(11);
-  let infoY = infoStartY;
-  doc.text(`Quote #: ${number}`, 15, infoY);
-  infoY += 6;
-  doc.text(`Customer: ${name}`, 15, infoY);
-  infoY += 6;
-  // Always include contact fields so they appear on the PDF even when blank
-  doc.text(`Phone: ${phone || "(N/A)"}`, 15, infoY);
-  infoY += 6;
-  doc.text(`Email: ${email || "(N/A)"}`, 15, infoY);
-  infoY += 6;
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
-  infoY += 6;
+  const lineHeight = 6;
+  const infoBoxWidth = pageWidth - margin * 2;
+  const infoBoxHeight = infoLines.length * lineHeight + 4;
+  doc.rect(margin, infoStartY, infoBoxWidth, infoBoxHeight);
+  infoLines.forEach((t, i) => {
+    doc.text(t, margin + 2, infoStartY + lineHeight * (i + 1));
+  });
+
+  let infoY = infoStartY + infoBoxHeight + 6;
+
   if (desc) {
-    const boxX = 15;
-    const boxY = infoY;
-    const boxWidth = pageWidth - boxX * 2;
-    const textLines = doc.splitTextToSize(desc, boxWidth - 8);
-    const lineHeight = 6; // matches spacing used for other fields
-    const boxHeight = textLines.length * lineHeight + 4;
-
-    doc.setFillColor(249, 249, 249); // light background
-    doc.rect(boxX, boxY, boxWidth, boxHeight, "F");
-
-    // Draw left border to mimic on-page style
-    doc.setDrawColor(204, 204, 204);
-    doc.setLineWidth(2);
-    doc.line(boxX, boxY, boxX, boxY + boxHeight);
-    doc.setLineWidth(0.2);
-
-    doc.text(textLines, boxX + 4, boxY + lineHeight);
-    infoY += boxHeight + 2;
+    const descLines = doc.splitTextToSize(desc, infoBoxWidth - 4);
+    const descHeight = descLines.length * lineHeight + 4;
+    doc.rect(margin, infoY, infoBoxWidth, descHeight);
+    doc.text(descLines, margin + 2, infoY + lineHeight);
+    infoY += descHeight + 6;
   }
-  const tableStartY = infoY + 8;
+
+  const tableStartY = infoY;
 
   const rows = [];
   let labourSubtotal = 0;
@@ -698,17 +695,22 @@ async function generatePDF() {
   const total = subtotal + vat;
   const finalY = doc.lastAutoTable.finalY || 60;
 
-  const rightMargin = pageWidth - 15;
-  let sumY = finalY + 10;
-  doc.setFontSize(11);
-  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, sumY, { align: "right" });
-  sumY += 6;
-  doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, sumY, { align: "right" });
-  sumY += 6;
-  doc.text(`Total: £${total.toFixed(2)}`, rightMargin, sumY, { align: "right" });
+  const summaryBoxWidth = 60;
+  const summaryX = pageWidth - margin - summaryBoxWidth;
+  const summaryY = finalY + 6;
+  const summaryLines = [
+    `Subtotal: £${subtotal.toFixed(2)}`,
+    `VAT: £${vat.toFixed(2)}`,
+    `Total: £${total.toFixed(2)}`
+  ];
+  const summaryHeight = summaryLines.length * lineHeight + 4;
+  doc.rect(summaryX, summaryY, summaryBoxWidth, summaryHeight);
+  summaryLines.forEach((t, i) => {
+    doc.text(t, summaryX + summaryBoxWidth - 2, summaryY + lineHeight * (i + 1), { align: "right" });
+  });
 
+  let noteY = summaryY + summaryHeight + 8;
   const centreX = pageWidth / 2;
-  let noteY = finalY + 10;
   if (document.getElementById("supplyOnly").checked) {
     doc.text("Supply Only: Yes", centreX, noteY, { align: "center" });
     noteY += 6;
@@ -718,16 +720,19 @@ async function generatePDF() {
     noteY += 6;
   }
 
+  const disclaimerLines = [
+    "This repair quote is an estimate only and typically 95% accurate.",
+    "If you are happy with this estimate we can send a final",
+    "quote for your approval before any work proceeds.",
+    "Thank you for choosing NHM. Please contact us with any questions."
+  ];
+  const discHeight = disclaimerLines.length * lineHeight + 4;
+  const discY = pageHeight - discHeight - margin;
   doc.setFontSize(10);
-  doc.text("This repair quote is an estimate only and typically 95% accurate.", centreX, noteY, { align: "center" });
-  noteY += 5;
-  doc.text("If you are happy with this estimate we can send a final", centreX, noteY, { align: "center" });
-  noteY += 5;
-  doc.text("quote for your approval before any work proceeds.", centreX, noteY, { align: "center" });
-  doc.setFontSize(11);
-
-  const footerY = doc.internal.pageSize.getHeight() - 10;
-  doc.text("Thank you for choosing NHM. Please contact us with any questions.", centreX, footerY, { align: "center" });
+  doc.rect(margin, discY, pageWidth - margin * 2, discHeight);
+  disclaimerLines.forEach((t, i) => {
+    doc.text(t, pageWidth / 2, discY + lineHeight * (i + 1), { align: "center" });
+  });
 
   doc.save("NHM_Quote.pdf");
 }
@@ -825,18 +830,24 @@ async function generateSalesPDF() {
   const email = document.getElementById("salesCustomerEmail").value || "";
   const phone = document.getElementById("salesCustomerPhone").value || "";
   const number = document.getElementById("salesQuoteNumber").value || "(No #)";
+  const infoLines = [
+    `Quote #: ${number}`,
+    `Customer: ${name}`,
+    `Phone: ${phone || "(N/A)"}`,
+    `Email: ${email || "(N/A)"}`,
+    `Date: ${new Date().toLocaleDateString()}`
+  ];
   doc.setFontSize(11);
-  let infoY = infoStartY;
-  doc.text(`Quote #: ${number}`, 15, infoY);
-  infoY += 6;
-  doc.text(`Customer: ${name}`, 15, infoY);
-  infoY += 6;
-  doc.text(`Phone: ${phone || "(N/A)"}`, 15, infoY);
-  infoY += 6;
-  doc.text(`Email: ${email || "(N/A)"}`, 15, infoY);
-  infoY += 6;
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, infoY);
-  const tableStartY = infoY + 8;
+  const lineHeight = 6;
+  const infoBoxWidth = pageWidth - margin * 2;
+  const infoBoxHeight = infoLines.length * lineHeight + 4;
+  doc.rect(margin, infoStartY, infoBoxWidth, infoBoxHeight);
+  infoLines.forEach((t, i) => {
+    doc.text(t, margin + 2, infoStartY + lineHeight * (i + 1));
+  });
+  let infoY = infoStartY + infoBoxHeight + 6;
+
+  const tableStartY = infoY;
 
   const rows = salesItems.map(item => {
     let price = item.price;
@@ -879,22 +890,37 @@ async function generateSalesPDF() {
   const total = subtotal + vat;
   const finalY = doc.lastAutoTable.finalY || 60;
 
-  const rightMargin = pageWidth - 15;
-  let sumY = finalY + 10;
-  doc.setFontSize(11);
-  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, rightMargin, sumY, { align: "right" });
-  sumY += 6;
-  doc.text(`VAT: £${vat.toFixed(2)}`, rightMargin, sumY, { align: "right" });
-  sumY += 6;
-  doc.text(`Total: £${total.toFixed(2)}`, rightMargin, sumY, { align: "right" });
+  const summaryBoxWidth = 60;
+  const summaryX = pageWidth - margin - summaryBoxWidth;
+  const summaryY = finalY + 6;
+  const summaryLines = [
+    `Subtotal: £${subtotal.toFixed(2)}`,
+    `VAT: £${vat.toFixed(2)}`,
+    `Total: £${total.toFixed(2)}`
+  ];
+  const summaryHeight = summaryLines.length * lineHeight + 4;
+  doc.rect(summaryX, summaryY, summaryBoxWidth, summaryHeight);
+  summaryLines.forEach((t, i) => {
+    doc.text(t, summaryX + summaryBoxWidth - 2, summaryY + lineHeight * (i + 1), { align: "right" });
+  });
 
   const centreX = pageWidth / 2;
   if (document.getElementById("vatExemptSales").checked) {
-    doc.text("VAT Exempt: Yes", centreX, finalY + 10, { align: "center" });
+    doc.text("VAT Exempt: Yes", centreX, summaryY + summaryHeight + 6, { align: "center" });
   }
 
-  const footerY = doc.internal.pageSize.getHeight() - 10;
-  doc.text("Thank you for choosing NHM. Please contact us with any questions.", centreX, footerY, { align: "center" });
+  const disclaimerLines = [
+    "All prices exclude VAT unless marked exempt.",
+    "This quote is valid for 30 days.",
+    "Thank you for choosing NHM. Please contact us with any questions."
+  ];
+  const discHeight = disclaimerLines.length * lineHeight + 4;
+  const discY = pageHeight - discHeight - margin;
+  doc.setFontSize(10);
+  doc.rect(margin, discY, pageWidth - margin * 2, discHeight);
+  disclaimerLines.forEach((t, i) => {
+    doc.text(t, pageWidth / 2, discY + lineHeight * (i + 1), { align: "center" });
+  });
 
   doc.save("NHM_Sales_Quote.pdf");
 }
