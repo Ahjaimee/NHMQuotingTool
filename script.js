@@ -134,10 +134,55 @@ const data = {
             material_cost: 118.32,
             part_number: "SPX323-0068",
           },
-          "UK Power Cord for Charger": {
-            labour_hours: 0.25,
+          "Power Cord UK for Charger": {
+            labour_hours: 0.2,
             material_cost: 32.0,
             part_number: "SPX323-0096",
+          },
+          "Monarch Portable Hoist Pod 200kg": {
+            labour_hours: 2,
+            material_cost: 1595.88,
+            part_number: "EQ323-0001",
+          },
+          "Handset Monarch": {
+            labour_hours: 0.3,
+            material_cost: 207.11,
+            part_number: "SPX323-0117",
+          },
+          "Battery - Monarch": {
+            labour_hours: 0.5,
+            material_cost: 260.0,
+            part_number: "SPX323-0119",
+          },
+          "Monarch Keypad Membrane Left Hand": {
+            labour_hours: 0.6,
+            material_cost: 66.81,
+            part_number: "SPX323-0127",
+          },
+          "Monarch Keypad Membrane Right Hand": {
+            labour_hours: 0.6,
+            material_cost: 66.81,
+            part_number: "SPX323-0128",
+          },
+          "Cable Retainer Monarch Portable": {
+            labour_hours: 0.2,
+            material_cost: 5.44,
+            part_number: "SPX323-0130",
+          },
+          "Pcb Assy - Monarch": {
+            labour_hours: 1,
+            material_cost: 252.37,
+            part_number: "SPX323-0083",
+          },
+          "Cabin Kit Monarch Portable": {
+            labour_hours: 1.2,
+            material_cost: 215.83,
+            part_number: "SPX323-0095",
+          },
+          "Opemed Reacher Stick for Monarch Portable Hoist": {
+            labour_hours: 0.4,
+            material_cost: 162.45,
+            part_number: "EQ323-0002",
           }
         }
       }
@@ -196,6 +241,19 @@ const MIN_LABOUR_COST = 74.75;
       "New Sidhil Bradshaw Low Bed Light Oak": { cost: 734.3, price: 1200.06 },
       "New Sidhil Bradshaw Standard Bed Light Oak": { cost: 584.5, price: 955.24 },
       "Twin Braked Castor 75mm - Bradshaw Low": { cost: 10.64, price: 49.17 }
+    },
+    "Portable Ceiling Hoist": {
+      "Li-Ion Charger W/O Cord": { cost: 39.0, price: 118.32 },
+      "Power Cord UK for Charger": { cost: 10.0, price: 32.0 },
+      "Monarch Portable Hoist Pod 200kg": { cost: 760.0, price: 1595.88 },
+      "Handset Monarch": { cost: 69.0, price: 207.11 },
+      "Battery - Monarch": { cost: 195.0, price: 260.0 },
+      "Monarch Keypad Membrane Left Hand": { cost: 30.0, price: 66.81 },
+      "Monarch Keypad Membrane Right Hand": { cost: 30.0, price: 66.81 },
+      "Cable Retainer Monarch Portable": { cost: 2.0, price: 5.44 },
+      "Pcb Assy - Monarch": { cost: 135.0, price: 252.37 },
+      "Cabin Kit Monarch Portable": { cost: 120.0, price: 215.83 },
+      "Opemed Reacher Stick for Monarch Portable Hoist": { cost: 99.0, price: 162.45 }
     }
   };
 
