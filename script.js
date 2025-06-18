@@ -744,6 +744,7 @@ function populateSalesMakes() {
   document.getElementById("salesModelSelect").innerHTML = "";
   document.getElementById("salesVariantSelect").innerHTML = "";
   document.getElementById("salesItemSelect").innerHTML = "";
+}
 
 function populateSalesModels() {
   const asset = document.getElementById("salesAssetSelect").value;
