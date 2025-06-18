@@ -17,8 +17,8 @@ const data = {
       "Bradshaw Low (1275/LOW/LOAKS/S)": {
         "Standard": {
           "Replacement HiLo Foot end actuator": {
-            labour_hours: 1.66,
-            material_cost: 168.48,
+            labour_hours: 0.5,
+            material_cost: 104.65,
             part_number: "SPX212-0233",
           }
         }
@@ -90,6 +90,12 @@ const MIN_LABOUR_COST = 74.75;
     "Wheelchair": {
       "Meyra iChair": { cost: 1200.0, price: 1500.0, commissionCost: 60.0 },
       "Invacare TDX": { cost: 950.0, price: 1200.0, setupCost: 80.0 }
+    },
+    "Profile Bed": {
+      "Sidhil Bradshaw Low Foot End Actuator (SPX212-0233)": {
+        cost: 104.65,
+        price: 168.48
+      }
     }
   };
 
