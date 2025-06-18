@@ -1190,6 +1190,8 @@ async function generateSalesPDF() {
   const doc = new jsPDF();
 
   const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 15;
 
   const logo = await fetch("nhm-logo.png")
     .then(r => r.blob())
