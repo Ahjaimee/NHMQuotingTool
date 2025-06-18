@@ -13,17 +13,6 @@ const data = {
     }
   },
   "Profile Bed": {
-    "Sidhil": {
-      "Bradshaw Low (1275/LOW/LOAKS/S)": {
-        "Standard": {
-          "Replacement HiLo Foot end actuator": {
-            labour_hours: 1.66,
-            material_cost: 168.48,
-            part_number: "SPX212-0233",
-          }
-        }
-      }
-    },
     "Casa": {
       "Classic FS": {
         "Standard": {
