@@ -214,7 +214,8 @@ const data = {
 const SALES_CARRIAGE = 15.95;
 // Labour pricing constants
 const LABOUR_RATE = 30.5; // £15.25 per 0.5 hour
-const MIN_LABOUR_COST = 74.75;
+const DEFAULT_MIN_LABOUR_COST = 74.75;
+let minLabourCost = DEFAULT_MIN_LABOUR_COST;
 // Cost and default selling price for sales items
   const salesData = {
     "Hoist": {
@@ -487,6 +488,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("supplyOnly").addEventListener("change", renderQuote);
   document.getElementById("vatExempt").addEventListener("change", renderQuote);
+  document.getElementById("overrideLabour").addEventListener("change", () => {
+    const input = document.getElementById("customLabour");
+    if (document.getElementById("overrideLabour").checked) {
+      input.classList.remove("hidden");
+      const val = parseFloat(input.value);
+      minLabourCost = isNaN(val) ? DEFAULT_MIN_LABOUR_COST : val;
+    } else {
+      input.classList.add("hidden");
+      minLabourCost = DEFAULT_MIN_LABOUR_COST;
+    }
+    renderQuote();
+  });
+  document.getElementById("customLabour").addEventListener("input", () => {
+    if (document.getElementById("overrideLabour").checked) {
+      const val = parseFloat(document.getElementById("customLabour").value);
+      minLabourCost = isNaN(val) ? DEFAULT_MIN_LABOUR_COST : val;
+      renderQuote();
+    }
+  });
   document.getElementById("workDesc").addEventListener("input", renderQuote);
   document.getElementById("downloadPDF").addEventListener("click", generatePDF);
 
@@ -673,10 +693,10 @@ function renderQuote() {
     return { item, info, labour, labourPerItem };
   });
 
-  if (!supplyOnly && items.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
-    const diff = MIN_LABOUR_COST - labourSubtotal;
+  if (!supplyOnly && items.length > 0 && labourSubtotal < minLabourCost) {
+    const diff = minLabourCost - labourSubtotal;
     items[0].labour += diff;
-    labourSubtotal = MIN_LABOUR_COST;
+    labourSubtotal = minLabourCost;
   }
 
   items.forEach(({ item, info, labour }, index) => {
@@ -808,10 +828,10 @@ async function generatePDF() {
     return { item, info, labour };
   });
 
-  if (!supplyOnlyFlag && items.length > 0 && labourSubtotal < MIN_LABOUR_COST) {
-    const diff = MIN_LABOUR_COST - labourSubtotal;
+  if (!supplyOnlyFlag && items.length > 0 && labourSubtotal < minLabourCost) {
+    const diff = minLabourCost - labourSubtotal;
     items[0].labour += diff;
-    labourSubtotal = MIN_LABOUR_COST;
+    labourSubtotal = minLabourCost;
   }
 
   items.forEach(({ item, info, labour }) => {
