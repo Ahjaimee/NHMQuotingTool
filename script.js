@@ -34,6 +34,95 @@ const data = {
           }
         }
       }
+    },
+    "Drive DeVilbiss": {
+      "Sidhill / Bradshaw": {
+        "Bradshaw Standard": {
+          "Grab Handle for 1275 Bradshaw Standard Beds": {
+            labour_hours: 0.5,
+            material_cost: 134.0,
+            part_number: "EQ212-0026",
+          },
+          "New Sidhil Bradshaw Standard Bed Light Oak": {
+            labour_hours: 2,
+            material_cost: 955.24,
+            part_number: "EQ212-0007",
+          }
+        },
+        "Bradshaw Bariatric": {
+          "Grab Handle for Bradshaw Bariatric Bed": {
+            labour_hours: 0.5,
+            material_cost: 169.47,
+            part_number: "EQ212-0022",
+          },
+          "Bradshaw Bari Kneebreak Inner Calf Section": {
+            labour_hours: 0.8,
+            material_cost: 246.47,
+            part_number: "SPX212-0250",
+          },
+          "Bradshaw Bari Kneebreak Inner Thigh Section": {
+            labour_hours: 0.8,
+            material_cost: 154.43,
+            part_number: "SPX212-0251",
+          },
+          "Bradshaw Bari Kneebreak Outer Platform Frame": {
+            labour_hours: 0.8,
+            material_cost: 209.8,
+            part_number: "SPX212-0249",
+          },
+          "Bradshaw Bari Kneebreak Platform Assy Complete": {
+            labour_hours: 1.5,
+            material_cost: 761.62,
+            part_number: "SPX212-0248",
+          },
+          "Bradshaw BARI Platform Length Extension Frame Only": {
+            labour_hours: 1.2,
+            material_cost: 375.65,
+            part_number: "EQ212-0018",
+          },
+          "Bradshaw BARI Side Rail & Platform Length Extension Set": {
+            labour_hours: 0.5,
+            material_cost: 1124.55,
+            part_number: "EQ212-0015",
+          },
+          "Bradshaw BARI VE Matress Extension Cushion": {
+            labour_hours: 0,
+            material_cost: 280.25,
+            part_number: "EQ212-0020",
+          }
+        },
+        "Bradshaw Junior": {
+          "Acclaim Foam Mattress Junior bradshaw": {
+            labour_hours: 0.2,
+            material_cost: 398.0,
+            part_number: "EQ212-0029",
+          }
+        },
+        "Bradshaw Petite Low": {
+          "Bradshaw Petite Low Profiling Bed (noRails)": {
+            labour_hours: 2,
+            material_cost: 1812.5,
+            part_number: "EQ212-0027",
+          },
+          "Bradshaw Petite Side Rail (Single)": {
+            labour_hours: 0.5,
+            material_cost: 47.6,
+            part_number: "EQ212-0028",
+          }
+        },
+        "Bradshaw Low": {
+          "New Sidhil Bradshaw Low Bed Light Oak": {
+            labour_hours: 2,
+            material_cost: 1200.06,
+            part_number: "EQ212-0006",
+          },
+          "Twin Braked Castor 75mm - Bradshaw Low": {
+            labour_hours: 0.3,
+            material_cost: 49.17,
+            part_number: "SPX212-0174",
+          }
+        }
+      }
     }
   },
   "Portable Ceiling Hoist": {
@@ -90,6 +179,23 @@ const MIN_LABOUR_COST = 74.75;
     "Wheelchair": {
       "Meyra iChair": { cost: 1200.0, price: 1500.0, commissionCost: 60.0 },
       "Invacare TDX": { cost: 950.0, price: 1200.0, setupCost: 80.0 }
+    },
+    "Profile Bed": {
+      "Grab Handle for 1275 Bradshaw Standard Beds": { cost: 50.0, price: 134.0 },
+      "Grab Handle for Bradshaw Bariatric Bed": { cost: 89.62, price: 169.47 },
+      "Acclaim Foam Mattress Junior bradshaw": { cost: 246.0, price: 398.0 },
+      "Bradshaw Bari Kneebreak Inner Calf Section": { cost: 0, price: 246.47 },
+      "Bradshaw Bari Kneebreak Inner Thigh Section": { cost: 92.66, price: 154.43 },
+      "Bradshaw Bari Kneebreak Outer Platform Frame": { cost: 104.29, price: 209.8 },
+      "Bradshaw Bari Kneebreak Platform Assy Complete": { cost: 418.89, price: 761.62 },
+      "Bradshaw BARI Platform Length Extension Frame Only": { cost: 227.85, price: 375.65 },
+      "Bradshaw BARI Side Rail & Platform Length Extension Set": { cost: 543.2, price: 1124.55 },
+      "Bradshaw BARI VE Matress Extension Cushion": { cost: 146.98, price: 280.25 },
+      "Bradshaw Petite Low Profiling Bed (noRails)": { cost: 996.9, price: 1812.5 },
+      "Bradshaw Petite Side Rail (Single)": { cost: 21.85, price: 47.6 },
+      "New Sidhil Bradshaw Low Bed Light Oak": { cost: 734.3, price: 1200.06 },
+      "New Sidhil Bradshaw Standard Bed Light Oak": { cost: 584.5, price: 955.24 },
+      "Twin Braked Castor 75mm - Bradshaw Low": { cost: 10.64, price: 49.17 }
     }
   };
 
