@@ -206,55 +206,100 @@ const LABOUR_RATE = 30.5; // £15.25 per 0.5 hour
 const DEFAULT_MIN_LABOUR_COST = 74.75;
 let minLabourCost = DEFAULT_MIN_LABOUR_COST;
 // Cost and default selling price for sales items
-  const salesData = {
-    "Hoist": {
-      "Oxford Major 190": { cost: 600.0, price: 799.99, setupCost: 50.0, commissionCost: 25.0 },
-      "Liko M220": { cost: 500.0, price: 699.99 }
+const salesData = {
+  "Hoist": {
+    "Oxford": {
+      "Major 190": {
+        "Standard": {
+          "Oxford Major 190": { cost: 600.0, price: 799.99, setupCost: 50.0, commissionCost: 25.0 }
+        }
+      }
     },
-    "Wheelchair": {
-      "Meyra iChair": { cost: 1200.0, price: 1500.0, commissionCost: 60.0 },
-      "Invacare TDX": { cost: 950.0, price: 1200.0, setupCost: 80.0 }
-    },
-    "Profile Bed": {
-      "Grab Handle for 1275 Bradshaw Standard Beds": { cost: 50.0, price: 134.0 },
-      "Grab Handle for Bradshaw Bariatric Bed": { cost: 89.62, price: 169.47 },
-      "Acclaim Foam Mattress Junior bradshaw": { cost: 246.0, price: 398.0 },
-      "Bradshaw Bari Kneebreak Inner Calf Section": { cost: 0, price: 246.47 },
-      "Bradshaw Bari Kneebreak Inner Thigh Section": { cost: 92.66, price: 154.43 },
-      "Bradshaw Bari Kneebreak Outer Platform Frame": { cost: 104.29, price: 209.8 },
-      "Bradshaw Bari Kneebreak Platform Assy Complete": { cost: 418.89, price: 761.62 },
-      "Bradshaw BARI Platform Length Extension Frame Only": { cost: 227.85, price: 375.65 },
-      "Bradshaw BARI Side Rail & Platform Length Extension Set": { cost: 543.2, price: 1124.55 },
-      "Bradshaw BARI VE Matress Extension Cushion": { cost: 146.98, price: 280.25 },
-      "Bradshaw Petite Low Profiling Bed (noRails)": { cost: 996.9, price: 1812.5 },
-      "Bradshaw Petite Side Rail (Single)": { cost: 21.85, price: 47.6 },
-      "New Sidhil Bradshaw Low Bed Light Oak": { cost: 734.3, price: 1200.06 },
-      "New Sidhil Bradshaw Standard Bed Light Oak": { cost: 584.5, price: 955.24 },
-      "Twin Braked Castor 75mm - Bradshaw Low": { cost: 10.64, price: 49.17 }
-    },
-    "Portable Ceiling Hoist": {
-      "Li-Ion Charger W/O Cord": { cost: 39.0, price: 118.32 },
-      "Power Cord UK for Charger": { cost: 10.0, price: 32.0 },
-      "Monarch Portable Hoist Pod 200kg": { cost: 760.0, price: 1595.88 },
-      "Handset Monarch": { cost: 69.0, price: 207.11 },
-      "Battery - Monarch": { cost: 195.0, price: 260.0 },
-      "Monarch Keypad Membrane Left Hand": { cost: 30.0, price: 66.81 },
-      "Monarch Keypad Membrane Right Hand": { cost: 30.0, price: 66.81 },
-      "Cable Retainer Monarch Portable": { cost: 2.0, price: 5.44 },
-      "Pcb Assy - Monarch": { cost: 135.0, price: 252.37 },
-      "Cabin Kit Monarch Portable": { cost: 120.0, price: 215.83 },
-      "Opemed Reacher Stick for Monarch Portable Hoist": { cost: 99.0, price: 162.45 }
+    "Liko": {
+      "M220": {
+        "Standard": {
+          "Liko M220": { cost: 500.0, price: 699.99 }
+        }
+      }
     }
-  };
+  },
+  "Wheelchair": {
+    "Meyra": {
+      "iChair": {
+        "Standard": {
+          "Meyra iChair": { cost: 1200.0, price: 1500.0, commissionCost: 60.0 }
+        }
+      }
+    },
+    "Invacare": {
+      "TDX": {
+        "Standard": {
+          "Invacare TDX": { cost: 950.0, price: 1200.0, setupCost: 80.0 }
+        }
+      }
+    }
+  },
+  "Profile Bed": {
+    "Drive DeVilbiss": {
+      "Sidhill / Bradshaw": {
+        "Bradshaw Standard": {
+          "Grab Handle for 1275 Bradshaw Standard Beds": { cost: 50.0, price: 134.0 },
+          "New Sidhil Bradshaw Standard Bed Light Oak": { cost: 584.5, price: 955.24 }
+        },
+        "Bradshaw Bariatric": {
+          "Grab Handle for Bradshaw Bariatric Bed": { cost: 89.62, price: 169.47 },
+          "Bradshaw Bari Kneebreak Inner Calf Section": { cost: 0, price: 246.47 },
+          "Bradshaw Bari Kneebreak Inner Thigh Section": { cost: 92.66, price: 154.43 },
+          "Bradshaw Bari Kneebreak Outer Platform Frame": { cost: 104.29, price: 209.8 },
+          "Bradshaw Bari Kneebreak Platform Assy Complete": { cost: 418.89, price: 761.62 },
+          "Bradshaw BARI Platform Length Extension Frame Only": { cost: 227.85, price: 375.65 },
+          "Bradshaw BARI Side Rail & Platform Length Extension Set": { cost: 543.2, price: 1124.55 },
+          "Bradshaw BARI VE Matress Extension Cushion": { cost: 146.98, price: 280.25 }
+        },
+        "Bradshaw Junior": {
+          "Acclaim Foam Mattress Junior bradshaw": { cost: 246.0, price: 398.0 }
+        },
+        "Bradshaw Petite Low": {
+          "Bradshaw Petite Low Profiling Bed (noRails)": { cost: 996.9, price: 1812.5 },
+          "Bradshaw Petite Side Rail (Single)": { cost: 21.85, price: 47.6 }
+        },
+        "Bradshaw Low": {
+          "New Sidhil Bradshaw Low Bed Light Oak": { cost: 734.3, price: 1200.06 },
+          "Twin Braked Castor 75mm - Bradshaw Low": { cost: 10.64, price: 49.17 }
+        }
+      }
+    }
+  },
+  "Portable Ceiling Hoist": {
+    "Savaria": {
+      "Monarch": {
+        "Standard": {
+          "Li-Ion Charger W/O Cord": { cost: 39.0, price: 118.32 },
+          "Power Cord UK for Charger": { cost: 10.0, price: 32.0 },
+          "Monarch Portable Hoist Pod 200kg": { cost: 760.0, price: 1595.88 },
+          "Handset Monarch": { cost: 69.0, price: 207.11 },
+          "Battery - Monarch": { cost: 195.0, price: 260.0 },
+          "Monarch Keypad Membrane Left Hand": { cost: 30.0, price: 66.81 },
+          "Monarch Keypad Membrane Right Hand": { cost: 30.0, price: 66.81 },
+          "Cable Retainer Monarch Portable": { cost: 2.0, price: 5.44 },
+          "Pcb Assy - Monarch": { cost: 135.0, price: 252.37 },
+          "Cabin Kit Monarch Portable": { cost: 120.0, price: 215.83 },
+          "Opemed Reacher Stick for Monarch Portable Hoist": { cost: 99.0, price: 162.45 }
+        }
+      }
+    }
+  }
+};
 
 let quoteItems = [];
 let salesItems = [];
 
 // Base carriage charge applied once per quote when "Supply Only" is selected
 const CARRIAGE_CHARGE = 15.95;
-  let assetChoices, makeChoices, modelChoices, variantChoices, repairChoices;
-  let salesAssetChoices, salesMakeChoices;
-  let setupLabel, commissionLabel, includeSetup, includeCommission;
+let assetChoices, makeChoices, modelChoices, variantChoices, repairChoices;
+let salesAssetChoices, salesMakeChoices, salesModelChoices,
+    salesVariantChoices, salesItemChoices;
+let setupLabel, commissionLabel, includeSetup, includeCommission;
 
 document.addEventListener("DOMContentLoaded", () => {
   assetChoices = new Choices("#assetSelect", {
@@ -299,12 +344,33 @@ document.addEventListener("DOMContentLoaded", () => {
     allowHTML: false
   });
 
-    salesMakeChoices = new Choices("#salesMakeSelect", {
-      searchEnabled: true,
-      shouldSort: false,
-      placeholderValue: 'Select Make/Model',
-      allowHTML: false
-    });
+  salesMakeChoices = new Choices("#salesMakeSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Make',
+    allowHTML: false
+  });
+
+  salesModelChoices = new Choices("#salesModelSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Model',
+    allowHTML: false
+  });
+
+  salesVariantChoices = new Choices("#salesVariantSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Variant',
+    allowHTML: false
+  });
+
+  salesItemChoices = new Choices("#salesItemSelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Item',
+    allowHTML: false
+  });
 
     setupLabel = document.getElementById("setupLabel");
     commissionLabel = document.getElementById("commissionLabel");
@@ -393,18 +459,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("salesAssetSelect").addEventListener("change", () => {
     salesMakeChoices.clearStore();
+    salesModelChoices.clearStore();
+    salesVariantChoices.clearStore();
+    salesItemChoices.clearStore();
     populateSalesMakes();
     document.getElementById("salesMakeSection").classList.remove("hidden");
+    document.getElementById("salesModelSection").classList.add("hidden");
+    document.getElementById("salesVariantSection").classList.add("hidden");
+    document.getElementById("salesItemSection").classList.add("hidden");
     includeSetup.checked = false;
     includeCommission.checked = false;
     document.getElementById("salesExtras").classList.add("hidden");
   });
 
   document.getElementById("salesMakeSelect").addEventListener("change", () => {
+    salesModelChoices.clearStore();
+    salesVariantChoices.clearStore();
+    salesItemChoices.clearStore();
+    populateSalesModels();
+    document.getElementById("salesModelSection").classList.remove("hidden");
+    document.getElementById("salesVariantSection").classList.add("hidden");
+    document.getElementById("salesItemSection").classList.add("hidden");
+  });
+
+  document.getElementById("salesModelSelect").addEventListener("change", () => {
+    salesVariantChoices.clearStore();
+    salesItemChoices.clearStore();
+    populateSalesVariants();
+    document.getElementById("salesVariantSection").classList.remove("hidden");
+    document.getElementById("salesItemSection").classList.add("hidden");
+  });
+
+  document.getElementById("salesVariantSelect").addEventListener("change", () => {
+    salesItemChoices.clearStore();
+    populateSalesItems();
+    document.getElementById("salesItemSection").classList.remove("hidden");
+  });
+
+  document.getElementById("salesItemSelect").addEventListener("change", () => {
     const asset = document.getElementById("salesAssetSelect").value;
     const make = document.getElementById("salesMakeSelect").value;
-    document.getElementById("salesDesc").value = `${asset} - ${make}`;
-    const info = salesData[asset]?.[make];
+    const model = document.getElementById("salesModelSelect").value;
+    const variant = document.getElementById("salesVariantSelect").value;
+    const item = document.getElementById("salesItemSelect").value;
+    document.getElementById("salesDesc").value = `${asset} - ${make} - ${model} - ${variant} - ${item}`;
+    const info = salesData[asset]?.[make]?.[model]?.[variant]?.[item];
     if (info) {
       document.getElementById("salesCost").value = info.cost.toFixed(2);
       const margin = ((info.price - info.cost) / info.cost) * 100;
@@ -499,17 +598,20 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addSalesItem").addEventListener("click", () => {
     const asset = document.getElementById("salesAssetSelect").value;
     const make = document.getElementById("salesMakeSelect").value;
+    const model = document.getElementById("salesModelSelect").value;
+    const variant = document.getElementById("salesVariantSelect").value;
+    const item = document.getElementById("salesItemSelect").value;
     const descField = document.getElementById("salesDesc").value.trim();
     const cost = parseFloat(document.getElementById("salesCost").value);
     const margin = parseFloat(document.getElementById("salesMargin").value);
     const price = parseFloat(document.getElementById("salesPrice").value);
     const qty = parseInt(document.getElementById("salesQty").value, 10);
-    const info = salesData[asset]?.[make] || {};
+    const info = salesData[asset]?.[make]?.[model]?.[variant]?.[item] || {};
     const setupSelected = includeSetup.checked && info.setupCost;
     const commissionSelected = includeCommission.checked && info.commissionCost;
-    if (!asset || !make || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
-    const desc = descField || `${asset} - ${make}`;
-    salesItems.push({ asset, make, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0 });
+    if (!asset || !make || !model || !variant || !item || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
+    const desc = descField || `${asset} - ${make} - ${model} - ${variant} - ${item}`;
+    salesItems.push({ asset, make, model, variant, itemName: item, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0 });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
@@ -610,11 +712,17 @@ function populateSalesAssets() {
   salesAssetChoices = new Choices(select, {
     searchEnabled: true,
     shouldSort: false,
-    placeholderValue: 'Select Asset',
+    placeholderValue: "Select Asset",
     allowHTML: false
   });
   salesMakeChoices.clearStore();
+  salesModelChoices.clearStore();
+  salesVariantChoices.clearStore();
+  salesItemChoices.clearStore();
   document.getElementById("salesMakeSelect").innerHTML = "";
+  document.getElementById("salesModelSelect").innerHTML = "";
+  document.getElementById("salesVariantSelect").innerHTML = "";
+  document.getElementById("salesItemSelect").innerHTML = "";
 }
 
 function populateSalesMakes() {
@@ -622,12 +730,74 @@ function populateSalesMakes() {
   const makes = Object.keys(salesData[asset] || {});
   const select = document.getElementById("salesMakeSelect");
   salesMakeChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Make/Model</option>` +
+  select.innerHTML = `<option value="" disabled selected>Select Make</option>` +
     makes.map(m => `<option value="${m}">${m}</option>`).join("");
   salesMakeChoices = new Choices(select, {
     searchEnabled: true,
     shouldSort: false,
-    placeholderValue: 'Select Make/Model',
+    placeholderValue: "Select Make",
+    allowHTML: false
+  });
+  salesModelChoices.clearStore();
+  salesVariantChoices.clearStore();
+  salesItemChoices.clearStore();
+  document.getElementById("salesModelSelect").innerHTML = "";
+  document.getElementById("salesVariantSelect").innerHTML = "";
+  document.getElementById("salesItemSelect").innerHTML = "";
+
+function populateSalesModels() {
+  const asset = document.getElementById("salesAssetSelect").value;
+  const make = document.getElementById("salesMakeSelect").value;
+  const models = Object.keys(salesData[asset]?.[make] || {});
+  const select = document.getElementById("salesModelSelect");
+  salesModelChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Model</option>` +
+    models.map(m => `<option value="${m}">${m}</option>`).join("");
+  salesModelChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: "Select Model",
+    allowHTML: false
+  });
+  salesVariantChoices.clearStore();
+  salesItemChoices.clearStore();
+  document.getElementById("salesVariantSelect").innerHTML = "";
+  document.getElementById("salesItemSelect").innerHTML = "";
+}
+
+function populateSalesVariants() {
+  const asset = document.getElementById("salesAssetSelect").value;
+  const make = document.getElementById("salesMakeSelect").value;
+  const model = document.getElementById("salesModelSelect").value;
+  const variants = Object.keys(salesData[asset]?.[make]?.[model] || {});
+  const select = document.getElementById("salesVariantSelect");
+  salesVariantChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Variant</option>` +
+    variants.map(v => `<option value="${v}">${v}</option>`).join("");
+  salesVariantChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: "Select Variant",
+    allowHTML: false
+  });
+  salesItemChoices.clearStore();
+  document.getElementById("salesItemSelect").innerHTML = "";
+}
+
+function populateSalesItems() {
+  const asset = document.getElementById("salesAssetSelect").value;
+  const make = document.getElementById("salesMakeSelect").value;
+  const model = document.getElementById("salesModelSelect").value;
+  const variant = document.getElementById("salesVariantSelect").value;
+  const items = Object.keys(salesData[asset]?.[make]?.[model]?.[variant] || {});
+  const select = document.getElementById("salesItemSelect");
+  salesItemChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Item</option>` +
+    items.map(i => `<option value="${i}">${i}</option>`).join("");
+  salesItemChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: "Select Item",
     allowHTML: false
   });
 }
@@ -953,7 +1123,7 @@ function renderSalesQuote() {
     subtotal += total;
     lines.innerHTML += `
       <div class="quote-line">
-        <p class="desc"><strong>${item.asset} → ${item.make}</strong>${extras.length ? ` (${extras.join(', ')})` : ''}</p>
+        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.model} → ${item.variant} → ${item.itemName}</strong>${extras.length ? ` (${extras.join(', ')})` : ''}</p>
         <p><span class="label">Cost:</span><span class="value">£${item.cost.toFixed(2)}</span></p>
         <p><span class="label">Margin:</span><span class="value">${item.margin.toFixed(2)}%</span></p>
         <p><span class="label">Price (ex VAT):</span><span class="value">£${itemPrice.toFixed(2)}</span></p>
@@ -1055,7 +1225,7 @@ async function generateSalesPDF() {
     }
     const descExtras = extras.length ? ` (${extras.join(' + ')})` : '';
     return [
-      `${item.asset} - ${item.make}${descExtras}`,
+      `${item.asset} - ${item.make} - ${item.model} - ${item.variant} - ${item.itemName}${descExtras}`,
       item.qty,
       `£${price.toFixed(2)}`,
       `£${(price * item.qty).toFixed(2)}`
