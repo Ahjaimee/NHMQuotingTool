@@ -13,13 +13,13 @@ const data = {
     }
   },
   "Profile Bed": {
-    "Casa": {
-      "Classic FS": {
+    "Sidhil": {
+      "Bradshaw Low (1275/LOW/LOAKS/S)": {
         "Standard": {
-          "CFS Headboard Wooden": {
-            labour_hours: 0.5,
-            material_cost: 150.33,
-            part_number: "SPX055-0110",
+          "Replacement HiLo Foot end actuator": {
+            labour_hours: 1.66,
+            material_cost: 168.48,
+            part_number: "SPX212-0233",
           }
         }
       }
