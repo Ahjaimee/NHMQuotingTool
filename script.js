@@ -1,3 +1,23 @@
+// Provide a very small fallback implementation for the Choices library when
+// external CDN assets cannot be loaded. This allows the dropdowns and tab
+// navigation to work even without network access. The stub exposes the minimal
+// API used in this project (constructor, destroy and clearStore).
+if (typeof window !== 'undefined' && typeof window.Choices === 'undefined') {
+  window.Choices = class {
+    constructor(selector) {
+      this.el = typeof selector === 'string' ? document.querySelector(selector) : selector;
+    }
+    destroy() {}
+    clearStore() {
+      if (!this.el || !this.el.options) return;
+      for (let i = this.el.options.length - 1; i > 0; i--) {
+        this.el.remove(i);
+      }
+      this.el.selectedIndex = 0;
+    }
+  };
+}
+
 const data = {
   "Bath": {
     "Parker": {
