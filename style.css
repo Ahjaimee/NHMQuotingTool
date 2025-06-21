@@ -70,6 +70,10 @@ input[type="text"], select {
   box-sizing: border-box;
 }
 
+select option[disabled] {
+  color: #999;
+}
+
 /* Compact Choices.js dropdown styling */
 .choices {
   font-size: 0.95rem;
@@ -86,6 +90,10 @@ input[type="text"], select {
   box-shadow: none !important;
   width: 100% !important;
   box-sizing: border-box !important;
+}
+
+.choices__item--disabled {
+  opacity: 0.5;
 }
 
 .choices__list--dropdown {
