@@ -23,196 +23,17 @@ const data = {
     "Parker": {
       "Rise & Tilt Bath": {
         "Standard": {
-          "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
-            labour_hours: 0.5,
-            material_cost: 47.59,
-            part_number: "SPX271-0001",
-          }
-        }
-      }
-    }
-  },
-  "Profile Bed": {
-    "Sidhil": {
-      "Bradshaw Low (1275/LOW/LOAKS/S)": {
-        "Standard": {
-          "Replacement HiLo Foot end actuator": {
-            labour_hours: 1.66,
-            material_cost: 168.48,
-            part_number: "SPX212-0233",
-          }
-        }
-      }
-    },
-    "Drive DeVilbiss": {
-      "Sidhill / Bradshaw": {
-        "Bradshaw Standard": {
-          "Grab Handle for 1275 Bradshaw Standard Beds": {
-            labour_hours: 0.5,
-            material_cost: 134.0,
-            part_number: "EQ212-0026",
+          "Accessories & Fittings": {
+            "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
+              labour_hours: 0.5,
+              material_cost: 47.59,
+              part_number: "SPX271-0001",
+            }
           },
-          "New Sidhil Bradshaw Standard Bed Light Oak": {
-            labour_hours: 2,
-            material_cost: 955.24,
-            part_number: "EQ212-0007",
-          }
-        },
-        "Bradshaw Bariatric": {
-          "Grab Handle for Bradshaw Bariatric Bed": {
-            labour_hours: 0.5,
-            material_cost: 169.47,
-            part_number: "EQ212-0022",
-          },
-          "Bradshaw Bari Kneebreak Inner Calf Section": {
-            labour_hours: 0.8,
-            material_cost: 246.47,
-            part_number: "SPX212-0250",
-          },
-          "Bradshaw Bari Kneebreak Inner Thigh Section": {
-            labour_hours: 0.8,
-            material_cost: 154.43,
-            part_number: "SPX212-0251",
-          },
-          "Bradshaw Bari Kneebreak Outer Platform Frame": {
-            labour_hours: 0.8,
-            material_cost: 209.8,
-            part_number: "SPX212-0249",
-          },
-          "Bradshaw Bari Kneebreak Platform Assy Complete": {
-            labour_hours: 1.5,
-            material_cost: 761.62,
-            part_number: "SPX212-0248",
-          },
-          "Bradshaw BARI Platform Length Extension Frame Only": {
-            labour_hours: 1.2,
-            material_cost: 375.65,
-            part_number: "EQ212-0018",
-          },
-          "Bradshaw BARI Side Rail & Platform Length Extension Set": {
-            labour_hours: 0.5,
-            material_cost: 1124.55,
-            part_number: "EQ212-0015",
-          },
-          "Bradshaw BARI VE Matress Extension Cushion": {
-            labour_hours: 0,
-            material_cost: 280.25,
-            part_number: "EQ212-0020",
-          }
-        },
-        "Bradshaw Junior": {
-          "Acclaim Foam Mattress Junior bradshaw": {
-            labour_hours: 0.2,
-            material_cost: 398.0,
-            part_number: "EQ212-0029",
-          }
-        },
-        "Bradshaw Petite Low": {
-          "Bradshaw Petite Low Profiling Bed (noRails)": {
-            labour_hours: 2,
-            material_cost: 1812.5,
-            part_number: "EQ212-0027",
-          },
-          "Bradshaw Petite Side Rail (Single)": {
-            labour_hours: 0.5,
-            material_cost: 47.6,
-            part_number: "EQ212-0028",
-          }
-        },
-        "Bradshaw Low": {
-          "New Sidhil Bradshaw Low Bed Light Oak": {
-            labour_hours: 2,
-            material_cost: 1200.06,
-            part_number: "EQ212-0006",
-          },
-          "Twin Braked Castor 75mm - Bradshaw Low": {
-            labour_hours: 0.3,
-            material_cost: 49.17,
-            part_number: "SPX212-0174",
-          }
-        }
-      }
-    }
-  },
-  "Portable Ceiling Hoist": {
-    "Savaria": {
-      "Monarch": {
-        "Standard": {
-          "Li-Ion Charger W/O Cord": {
-            labour_hours: 0.5,
-            material_cost: 118.32,
-            part_number: "SPX323-0068",
-          },
-          "Power Cord UK for Charger": {
-            labour_hours: 0.2,
-            material_cost: 32.0,
-            part_number: "SPX323-0096",
-          },
-          "Monarch Portable Hoist Pod 200kg": {
-            labour_hours: 2,
-            material_cost: 1595.88,
-            part_number: "EQ323-0001",
-          },
-          "Handset Monarch": {
-            labour_hours: 0.3,
-            material_cost: 207.11,
-            part_number: "SPX323-0117",
-          },
-          "Battery - Monarch": {
-            labour_hours: 0.5,
-            material_cost: 260.0,
-            part_number: "SPX323-0119",
-          },
-          "Monarch Keypad Membrane Left Hand": {
-            labour_hours: 0.6,
-            material_cost: 66.81,
-            part_number: "SPX323-0127",
-          },
-          "Monarch Keypad Membrane Right Hand": {
-            labour_hours: 0.6,
-            material_cost: 66.81,
-            part_number: "SPX323-0128",
-          },
-          "Cable Retainer Monarch Portable": {
-            labour_hours: 0.2,
-            material_cost: 5.44,
-            part_number: "SPX323-0130",
-          },
-          "Pcb Assy - Monarch": {
-            labour_hours: 1,
-            material_cost: 252.37,
-            part_number: "SPX323-0083",
-          },
-          "Cabin Kit Monarch Portable": {
-            labour_hours: 1.2,
-            material_cost: 215.83,
-            part_number: "SPX323-0095",
-          },
-          "Opemed Reacher Stick for Monarch Portable Hoist": {
-            labour_hours: 0.4,
-            material_cost: 162.45,
-            part_number: "EQ323-0002",
-          }
-        }
-      }
-    }
-  },
-  "Hoist": {
-    "Oxford": {
-      "Major 200": {
-        "Manual Spreader Bar": {
-          "Sling Bar Replacement": {
-            labour_hours: 1.0,
-            material_cost: 100.0,
-            part_number: "OM200-MSB",
-          }
-        },
-        "Electrical Spreader Bar": {
-          "Motor Replacement": {
-            labour_hours: 1.5,
-            material_cost: 200.0,
-            part_number: "OM200-ESB",
-          }
+          "Core Components": {},
+          "Electrical & Control": {},
+          "Labelling & Identification": {},
+          "Plumbing & Valves": {}
         }
       }
     }
@@ -227,84 +48,17 @@ const DEFAULT_MIN_LABOUR_COST = 74.75;
 let minLabourCost = DEFAULT_MIN_LABOUR_COST;
 // Cost and default selling price for sales items
 const salesData = {
-  "Hoist": {
-    "Oxford": {
-      "Major 190": {
+  "Bath": {
+    "Parker": {
+      "Rise & Tilt Bath": {
         "Standard": {
-          "Oxford Major 190": { cost: 600.0, price: 799.99, setupCost: 50.0, commissionCost: 25.0 }
-        }
-      }
-    },
-    "Liko": {
-      "M220": {
-        "Standard": {
-          "Liko M220": { cost: 500.0, price: 699.99 }
-        }
-      }
-    }
-  },
-  "Wheelchair": {
-    "Meyra": {
-      "iChair": {
-        "Standard": {
-          "Meyra iChair": { cost: 1200.0, price: 1500.0, commissionCost: 60.0 }
-        }
-      }
-    },
-    "Invacare": {
-      "TDX": {
-        "Standard": {
-          "Invacare TDX": { cost: 950.0, price: 1200.0, setupCost: 80.0 }
-        }
-      }
-    }
-  },
-  "Profile Bed": {
-    "Drive DeVilbiss": {
-      "Sidhill / Bradshaw": {
-        "Bradshaw Standard": {
-          "Grab Handle for 1275 Bradshaw Standard Beds": { cost: 50.0, price: 134.0 },
-          "New Sidhil Bradshaw Standard Bed Light Oak": { cost: 584.5, price: 955.24 }
-        },
-        "Bradshaw Bariatric": {
-          "Grab Handle for Bradshaw Bariatric Bed": { cost: 89.62, price: 169.47 },
-          "Bradshaw Bari Kneebreak Inner Calf Section": { cost: 0, price: 246.47 },
-          "Bradshaw Bari Kneebreak Inner Thigh Section": { cost: 92.66, price: 154.43 },
-          "Bradshaw Bari Kneebreak Outer Platform Frame": { cost: 104.29, price: 209.8 },
-          "Bradshaw Bari Kneebreak Platform Assy Complete": { cost: 418.89, price: 761.62 },
-          "Bradshaw BARI Platform Length Extension Frame Only": { cost: 227.85, price: 375.65 },
-          "Bradshaw BARI Side Rail & Platform Length Extension Set": { cost: 543.2, price: 1124.55 },
-          "Bradshaw BARI VE Matress Extension Cushion": { cost: 146.98, price: 280.25 }
-        },
-        "Bradshaw Junior": {
-          "Acclaim Foam Mattress Junior bradshaw": { cost: 246.0, price: 398.0 }
-        },
-        "Bradshaw Petite Low": {
-          "Bradshaw Petite Low Profiling Bed (noRails)": { cost: 996.9, price: 1812.5 },
-          "Bradshaw Petite Side Rail (Single)": { cost: 21.85, price: 47.6 }
-        },
-        "Bradshaw Low": {
-          "New Sidhil Bradshaw Low Bed Light Oak": { cost: 734.3, price: 1200.06 },
-          "Twin Braked Castor 75mm - Bradshaw Low": { cost: 10.64, price: 49.17 }
-        }
-      }
-    }
-  },
-  "Portable Ceiling Hoist": {
-    "Savaria": {
-      "Monarch": {
-        "Standard": {
-          "Li-Ion Charger W/O Cord": { cost: 39.0, price: 118.32 },
-          "Power Cord UK for Charger": { cost: 10.0, price: 32.0 },
-          "Monarch Portable Hoist Pod 200kg": { cost: 760.0, price: 1595.88 },
-          "Handset Monarch": { cost: 69.0, price: 207.11 },
-          "Battery - Monarch": { cost: 195.0, price: 260.0 },
-          "Monarch Keypad Membrane Left Hand": { cost: 30.0, price: 66.81 },
-          "Monarch Keypad Membrane Right Hand": { cost: 30.0, price: 66.81 },
-          "Cable Retainer Monarch Portable": { cost: 2.0, price: 5.44 },
-          "Pcb Assy - Monarch": { cost: 135.0, price: 252.37 },
-          "Cabin Kit Monarch Portable": { cost: 120.0, price: 215.83 },
-          "Opemed Reacher Stick for Monarch Portable Hoist": { cost: 99.0, price: 162.45 }
+          "Accessories & Fittings": {
+            "Oregon Ducting Waste Pipe Kit 1.2Mtr": { cost: 47.59, price: 118.32 }
+          },
+          "Core Components": {},
+          "Electrical & Control": {},
+          "Labelling & Identification": {},
+          "Plumbing & Valves": {}
         }
       }
     }
@@ -316,9 +70,9 @@ let salesItems = [];
 
 // Base carriage charge applied once per quote when "Supply Only" is selected
 const CARRIAGE_CHARGE = 15.95;
-let assetChoices, makeChoices, modelChoices, variantChoices, repairChoices;
+let assetChoices, makeChoices, modelChoices, variantChoices, categoryChoices, repairChoices;
 let salesAssetChoices, salesMakeChoices, salesModelChoices,
-    salesVariantChoices, salesItemChoices;
+    salesVariantChoices, salesCategoryChoices, salesItemChoices;
 let setupLabel, commissionLabel, includeSetup, includeCommission;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -347,6 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
     searchEnabled: true,
     shouldSort: false,
     placeholderValue: 'Select Variant',
+    allowHTML: false
+  });
+
+  categoryChoices = new Choices("#categorySelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Category',
     allowHTML: false
   });
 
@@ -382,6 +143,13 @@ document.addEventListener("DOMContentLoaded", () => {
     searchEnabled: true,
     shouldSort: false,
     placeholderValue: 'Select Variant',
+    allowHTML: false
+  });
+
+  salesCategoryChoices = new Choices("#salesCategorySelect", {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Category',
     allowHTML: false
   });
 
@@ -424,11 +192,13 @@ document.addEventListener("DOMContentLoaded", () => {
     makeChoices.clearStore();
     modelChoices.clearStore();
     variantChoices.clearStore();
+    categoryChoices.clearStore();
     repairChoices.clearStore();
     populateMakes();
     document.getElementById("makeSection").classList.remove("hidden");
     document.getElementById("modelSection").classList.add("hidden");
     document.getElementById("variantSection").classList.add("hidden");
+    document.getElementById("categorySection").classList.add("hidden");
     document.getElementById("repairSection").classList.add("hidden");
     document.getElementById("labourSection").classList.add("hidden");
   });
@@ -436,24 +206,37 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("makeSelect").addEventListener("change", () => {
     modelChoices.clearStore();
     variantChoices.clearStore();
+    categoryChoices.clearStore();
     repairChoices.clearStore();
     populateModels();
     document.getElementById("modelSection").classList.remove("hidden");
     document.getElementById("variantSection").classList.add("hidden");
+    document.getElementById("categorySection").classList.add("hidden");
     document.getElementById("repairSection").classList.add("hidden");
     document.getElementById("labourSection").classList.add("hidden");
   });
 
   document.getElementById("modelSelect").addEventListener("change", () => {
     variantChoices.clearStore();
+    categoryChoices.clearStore();
     repairChoices.clearStore();
     populateVariants();
     document.getElementById("variantSection").classList.remove("hidden");
+    document.getElementById("categorySection").classList.add("hidden");
     document.getElementById("repairSection").classList.add("hidden");
     document.getElementById("labourSection").classList.add("hidden");
   });
 
   document.getElementById("variantSelect").addEventListener("change", () => {
+    categoryChoices.clearStore();
+    repairChoices.clearStore();
+    populateCategories();
+    document.getElementById("categorySection").classList.remove("hidden");
+    document.getElementById("repairSection").classList.add("hidden");
+    document.getElementById("labourSection").classList.add("hidden");
+  });
+
+  document.getElementById("categorySelect").addEventListener("change", () => {
     repairChoices.clearStore();
     populateRepairs();
     document.getElementById("repairSection").classList.remove("hidden");
@@ -481,11 +264,13 @@ document.addEventListener("DOMContentLoaded", () => {
     salesMakeChoices.clearStore();
     salesModelChoices.clearStore();
     salesVariantChoices.clearStore();
+    salesCategoryChoices.clearStore();
     salesItemChoices.clearStore();
     populateSalesMakes();
     document.getElementById("salesMakeSection").classList.remove("hidden");
     document.getElementById("salesModelSection").classList.add("hidden");
     document.getElementById("salesVariantSection").classList.add("hidden");
+    document.getElementById("salesCategorySection").classList.add("hidden");
     document.getElementById("salesItemSection").classList.add("hidden");
     includeSetup.checked = false;
     includeCommission.checked = false;
@@ -495,22 +280,34 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("salesMakeSelect").addEventListener("change", () => {
     salesModelChoices.clearStore();
     salesVariantChoices.clearStore();
+    salesCategoryChoices.clearStore();
     salesItemChoices.clearStore();
     populateSalesModels();
     document.getElementById("salesModelSection").classList.remove("hidden");
     document.getElementById("salesVariantSection").classList.add("hidden");
+    document.getElementById("salesCategorySection").classList.add("hidden");
     document.getElementById("salesItemSection").classList.add("hidden");
   });
 
   document.getElementById("salesModelSelect").addEventListener("change", () => {
     salesVariantChoices.clearStore();
+    salesCategoryChoices.clearStore();
     salesItemChoices.clearStore();
     populateSalesVariants();
     document.getElementById("salesVariantSection").classList.remove("hidden");
+    document.getElementById("salesCategorySection").classList.add("hidden");
     document.getElementById("salesItemSection").classList.add("hidden");
   });
 
   document.getElementById("salesVariantSelect").addEventListener("change", () => {
+    salesCategoryChoices.clearStore();
+    salesItemChoices.clearStore();
+    populateSalesCategories();
+    document.getElementById("salesCategorySection").classList.remove("hidden");
+    document.getElementById("salesItemSection").classList.add("hidden");
+  });
+
+  document.getElementById("salesCategorySelect").addEventListener("change", () => {
     salesItemChoices.clearStore();
     populateSalesItems();
     document.getElementById("salesItemSection").classList.remove("hidden");
@@ -521,9 +318,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("salesMakeSelect").value;
     const model = document.getElementById("salesModelSelect").value;
     const variant = document.getElementById("salesVariantSelect").value;
+    const category = document.getElementById("salesCategorySelect").value;
     const item = document.getElementById("salesItemSelect").value;
-    document.getElementById("salesDesc").value = `${asset} - ${make} - ${model} - ${variant} - ${item}`;
-    const info = salesData[asset]?.[make]?.[model]?.[variant]?.[item];
+    document.getElementById("salesDesc").value = `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
+    const info = salesData[asset]?.[make]?.[model]?.[variant]?.[category]?.[item];
     if (info) {
       document.getElementById("salesCost").value = info.cost.toFixed(2);
       const margin = ((info.price - info.cost) / info.cost) * 100;
@@ -581,19 +379,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("makeSelect").value;
     const model = document.getElementById("modelSelect").value;
     const variant = document.getElementById("variantSelect").value;
+    const category = document.getElementById("categorySelect").value;
     const repair = document.getElementById("repairSelect").value;
     const labourHours = document.getElementById("labourHours").value;
     const qty = parseInt(document.getElementById("repairQty").value, 10) || 1;
 
-    if (!asset || !make || !model || !variant || !repair) return;
+    if (!asset || !make || !model || !variant || !category || !repair) return;
 
-    const info = data[asset]?.[make]?.[model]?.[variant]?.[repair];
+    const info = data[asset]?.[make]?.[model]?.[variant]?.[category]?.[repair];
     if (info && info.part_number && info.part_number.startsWith("EQ")) {
       alert("This item should be added using the Sales Order tab.");
       return;
     }
 
-    quoteItems.push({ asset, make, model, variant, repair, labourHours, qty });
+    quoteItems.push({ asset, make, model, variant, category, repair, labourHours, qty });
     renderQuote();
     document.getElementById("quoteSection").classList.remove("hidden");
     document.getElementById("downloadPDF").classList.remove("hidden");
@@ -620,18 +419,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("salesMakeSelect").value;
     const model = document.getElementById("salesModelSelect").value;
     const variant = document.getElementById("salesVariantSelect").value;
+    const category = document.getElementById("salesCategorySelect").value;
     const item = document.getElementById("salesItemSelect").value;
     const descField = document.getElementById("salesDesc").value.trim();
     const cost = parseFloat(document.getElementById("salesCost").value);
     const margin = parseFloat(document.getElementById("salesMargin").value);
     const price = parseFloat(document.getElementById("salesPrice").value);
     const qty = parseInt(document.getElementById("salesQty").value, 10);
-    const info = salesData[asset]?.[make]?.[model]?.[variant]?.[item] || {};
+    const info = salesData[asset]?.[make]?.[model]?.[variant]?.[category]?.[item] || {};
     const setupSelected = includeSetup.checked && info.setupCost;
     const commissionSelected = includeCommission.checked && info.commissionCost;
-    if (!asset || !make || !model || !variant || !item || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
-    const desc = descField || `${asset} - ${make} - ${model} - ${variant} - ${item}`;
-    salesItems.push({ asset, make, model, variant, itemName: item, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0 });
+    if (!asset || !make || !model || !variant || !category || !item || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
+    const desc = descField || `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
+    salesItems.push({ asset, make, model, variant, category, itemName: item, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0 });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
@@ -706,12 +506,31 @@ function populateVariants() {
   });
 }
 
+function populateCategories() {
+  const asset = document.getElementById("assetSelect").value;
+  const make = document.getElementById("makeSelect").value;
+  const model = document.getElementById("modelSelect").value;
+  const variant = document.getElementById("variantSelect").value;
+  const categories = Object.keys(data[asset]?.[make]?.[model]?.[variant] || {});
+  const select = document.getElementById("categorySelect");
+  categoryChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Category</option>` +
+    categories.map(c => `<option value="${c}">${c}</option>`).join("");
+  categoryChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: 'Select Category',
+    allowHTML: false
+  });
+}
+
 function populateRepairs() {
   const asset = document.getElementById("assetSelect").value;
   const make = document.getElementById("makeSelect").value;
   const model = document.getElementById("modelSelect").value;
   const variant = document.getElementById("variantSelect").value;
-  const repairs = Object.keys(data[asset]?.[make]?.[model]?.[variant] || {});
+  const category = document.getElementById("categorySelect").value;
+  const repairs = Object.keys(data[asset]?.[make]?.[model]?.[variant]?.[category] || {});
   const select = document.getElementById("repairSelect");
   repairChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
@@ -801,6 +620,28 @@ function populateSalesVariants() {
     placeholderValue: "Select Variant",
     allowHTML: false
   });
+  salesCategoryChoices.clearStore();
+  salesItemChoices.clearStore();
+  document.getElementById("salesCategorySelect").innerHTML = "";
+  document.getElementById("salesItemSelect").innerHTML = "";
+}
+
+function populateSalesCategories() {
+  const asset = document.getElementById("salesAssetSelect").value;
+  const make = document.getElementById("salesMakeSelect").value;
+  const model = document.getElementById("salesModelSelect").value;
+  const variant = document.getElementById("salesVariantSelect").value;
+  const categories = Object.keys(salesData[asset]?.[make]?.[model]?.[variant] || {});
+  const select = document.getElementById("salesCategorySelect");
+  salesCategoryChoices.destroy();
+  select.innerHTML = `<option value="" disabled selected>Select Category</option>` +
+    categories.map(c => `<option value="${c}">${c}</option>`).join("");
+  salesCategoryChoices = new Choices(select, {
+    searchEnabled: true,
+    shouldSort: false,
+    placeholderValue: "Select Category",
+    allowHTML: false
+  });
   salesItemChoices.clearStore();
   document.getElementById("salesItemSelect").innerHTML = "";
 }
@@ -810,7 +651,8 @@ function populateSalesItems() {
   const make = document.getElementById("salesMakeSelect").value;
   const model = document.getElementById("salesModelSelect").value;
   const variant = document.getElementById("salesVariantSelect").value;
-  const items = Object.keys(salesData[asset]?.[make]?.[model]?.[variant] || {});
+  const category = document.getElementById("salesCategorySelect").value;
+  const items = Object.keys(salesData[asset]?.[make]?.[model]?.[variant]?.[category] || {});
   const select = document.getElementById("salesItemSelect");
   salesItemChoices.destroy();
   select.innerHTML = `<option value="" disabled selected>Select Item</option>` +
@@ -827,6 +669,7 @@ function resetRepairFields() {
   document.getElementById("makeSection").classList.add("hidden");
   document.getElementById("modelSection").classList.add("hidden");
   document.getElementById("variantSection").classList.add("hidden");
+  document.getElementById("categorySection").classList.add("hidden");
   document.getElementById("repairSection").classList.add("hidden");
   document.getElementById("labourSection").classList.add("hidden");
   document.getElementById("labourHours").value = "";
@@ -835,10 +678,12 @@ function resetRepairFields() {
   document.getElementById("makeSelect").innerHTML = "";
   document.getElementById("modelSelect").innerHTML = "";
   document.getElementById("variantSelect").innerHTML = "";
+  document.getElementById("categorySelect").innerHTML = "";
   document.getElementById("repairSelect").innerHTML = "";
   makeChoices.clearStore();
   modelChoices.clearStore();
   variantChoices.clearStore();
+  categoryChoices.clearStore();
   repairChoices.clearStore();
 }
 
@@ -861,7 +706,7 @@ function renderQuote() {
   let labourSubtotal = 0;
   const items = [];
   quoteItems.forEach((item, idx) => {
-    const info = data[item.asset][item.make][item.model][item.variant][item.repair];
+    const info = data[item.asset][item.make][item.model][item.variant][item.category][item.repair];
     if (info.part_number && info.part_number.startsWith("EQ")) {
       return;
     }
@@ -893,7 +738,7 @@ function renderQuote() {
     subtotal += total;
     quoteLines.innerHTML += `
       <div class="quote-line">
-        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.model} → ${item.variant} → ${item.repair}</strong></p>
+        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.model} → ${item.variant} → ${item.category} → ${item.repair}</strong></p>
         <p><span class="label">Part #:</span><span class="value">${info.part_number}</span></p>
         <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
         <p><span class="label">Labour:</span><span class="value">${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</span></p>
@@ -1009,7 +854,7 @@ async function generatePDF() {
   const supplyOnlyFlag = document.getElementById("supplyOnly").checked;
   const items = [];
   quoteItems.forEach(item => {
-    const info = data[item.asset][item.make][item.model][item.variant][item.repair];
+    const info = data[item.asset][item.make][item.model][item.variant][item.category][item.repair];
     if (info.part_number && info.part_number.startsWith("EQ")) {
       return;
     }
@@ -1039,7 +884,7 @@ async function generatePDF() {
     const total = labour + materials;
     rows.push([
       `${item.asset} - ${item.make} - ${item.model} - ${item.variant}`,
-      item.repair,
+      `${item.category} - ${item.repair}`,
       info.part_number,
       item.qty,
       `£${labour.toFixed(2)}`,
@@ -1055,7 +900,7 @@ async function generatePDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [["Asset", "Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
+    head: [["Asset", "Category/Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
@@ -1144,7 +989,7 @@ function renderSalesQuote() {
     subtotal += total;
     lines.innerHTML += `
       <div class="quote-line">
-        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.model} → ${item.variant} → ${item.itemName}</strong>${extras.length ? ` (${extras.join(', ')})` : ''}</p>
+        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.model} → ${item.variant} → ${item.category} → ${item.itemName}</strong>${extras.length ? ` (${extras.join(', ')})` : ''}</p>
         <p><span class="label">Cost:</span><span class="value">£${item.cost.toFixed(2)}</span></p>
         <p><span class="label">Margin:</span><span class="value">${item.margin.toFixed(2)}%</span></p>
         <p><span class="label">Price (ex VAT):</span><span class="value">£${itemPrice.toFixed(2)}</span></p>
@@ -1248,7 +1093,7 @@ async function generateSalesPDF() {
     }
     const descExtras = extras.length ? ` (${extras.join(' + ')})` : '';
     return [
-      `${item.asset} - ${item.make} - ${item.model} - ${item.variant} - ${item.itemName}${descExtras}`,
+      `${item.asset} - ${item.make} - ${item.model} - ${item.variant} - ${item.category} - ${item.itemName}${descExtras}`,
       item.qty,
       `£${price.toFixed(2)}`,
       `£${(price * item.qty).toFixed(2)}`

@@ -13,8 +13,9 @@ Tool for estimating repair and sales quotes for mobility equipment.
   explicitly show values excluding VAT.
 - Labour rate is £15.25 per 0.5 hours with a £74.75 minimum labour charge per
   quote. The page now displays this requirement instead of listing it on quotes.
-- Added repair options for Parker Rise & Tilt baths and Casa Classic FS beds
-  while removing the placeholder Oxford Midi hoist entries.
+- The repair and sales forms now include a "Category" dropdown between the
+  variant and item fields. Categories depend on the selected asset type. Existing
+  demo data was replaced with a single Bath example using these categories.
 - Repair quotes now include an optional work description and a disclaimer that
   the estimate is typically 95% accurate and subject to final approval before
   any work is carried out.
