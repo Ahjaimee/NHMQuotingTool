@@ -20,20 +20,174 @@ if (typeof window !== 'undefined' && typeof window.Choices === 'undefined') {
 
 const data = {
   "Bath": {
-    "Parker": {
-      "Rise & Tilt Bath": {
+    "Arjo": {
+      "Parker / Rise & Tilt Bath": {
         "Standard": {
           "Accessories & Fittings": {
-            "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
+            "Grey gelcoat panel finish": {
               labour_hours: 0.5,
-              material_cost: 47.59,
-              part_number: "SPX271-0001",
+              material_cost: 124.45,
+              part_number: "SPX017-8163",
+            },
+            "Polyurethane hand grip for user support": {
+              labour_hours: 0.5,
+              material_cost: 47.45,
+              part_number: "SPX017-20566",
+            },
+            "Knee pad kit for user comfort": {
+              labour_hours: 0.5,
+              material_cost: 85.66,
+              part_number: "SPX017-20568",
+            },
+            "Screen for chair access or splash guard": {
+              labour_hours: 0.5,
+              material_cost: 109.21,
+              part_number: "SPX017-6839",
             }
           },
-          "Core Components": {},
-          "Electrical & Control": {},
-          "Labelling & Identification": {},
-          "Plumbing & Valves": {}
+          "Core Components": {
+            "Arjo Parker Bath Reservoir or base unit": {
+              labour_hours: 1.0,
+              material_cost: 2.65,
+              part_number: "SPX017-20337",
+            },
+            "Low front panel for Parker bath": {
+              labour_hours: 1.0,
+              material_cost: 93.46,
+              part_number: "SPX017-20565",
+            },
+            "Rod link assembly for mechanism": {
+              labour_hours: 1.0,
+              material_cost: 110.99,
+              part_number: "SPX017-20573",
+            },
+            "Pop-up waste component for Parker 500": {
+              labour_hours: 1.0,
+              material_cost: 86.23,
+              part_number: "SPX017-5720",
+            },
+            "Parker 500 Tilt Bath including autofill feature": {
+              labour_hours: 1.0,
+              material_cost: 9400.0,
+              part_number: "EQ017-0218",
+            },
+            "Fitting for Parker bath door": {
+              labour_hours: 1.0,
+              material_cost: 387.58,
+              part_number: "SPX017-15282",
+            },
+            "Extension panel for Parker bath": {
+              labour_hours: 1.0,
+              material_cost: 0.0,
+              part_number: "SPX017-17612",
+            },
+            "Foot bar accessory for Parker bath": {
+              labour_hours: 1.0,
+              material_cost: 48.68,
+              part_number: "SPX017-15484",
+            },
+            "Handle to adjust leg settings": {
+              labour_hours: 1.0,
+              material_cost: 213.21,
+              part_number: "SPX017-20571",
+            },
+            "Pivot pin for adjustable leg mechanism": {
+              labour_hours: 1.0,
+              material_cost: 19.61,
+              part_number: "SPX017-20570",
+            }
+          },
+          "Electrical & Control": {
+            "Updated handset for Parker bath": {
+              labour_hours: 1.0,
+              material_cost: 117.5,
+              part_number: "SPX017-6426",
+            },
+            "Charger for Parker bath power unit": {
+              labour_hours: 1.0,
+              material_cost: 71.27,
+              part_number: "SPX017-20572",
+            },
+            "Emergency stop button or switch": {
+              labour_hours: 1.0,
+              material_cost: 100.57,
+              part_number: "SPX017-20569",
+            },
+            "Hand control for Parker bath": {
+              labour_hours: 1.0,
+              material_cost: 46.79,
+              part_number: "SPX017-20567",
+            },
+            "3-pin version of the Parker handset": {
+              labour_hours: 1.0,
+              material_cost: 318.88,
+              part_number: "SPX017-20563",
+            },
+            "PCB set, version 14.7A": {
+              labour_hours: 1.0,
+              material_cost: 363.64,
+              part_number: "SPX017-20564",
+            },
+            "Handset for Sovereign model (compatible)": {
+              labour_hours: 1.0,
+              material_cost: 139.87,
+              part_number: "SPX017-0278",
+            },
+            "Power transformer unit": {
+              labour_hours: 1.0,
+              material_cost: 0.0,
+              part_number: "SPX017-17615",
+            },
+            "New PCB for Parker bath": {
+              labour_hours: 1.0,
+              material_cost: 384.25,
+              part_number: "SPX017-4995",
+            },
+            "Assembled PCB unit for Parker bath": {
+              labour_hours: 1.0,
+              material_cost: 266.45,
+              part_number: "SPX017-18609",
+            }
+          },
+          "Labelling & Identification": {
+            "Product or component label": {
+              labour_hours: 0.1,
+              material_cost: 2.65,
+              part_number: "SPX017-17671",
+            }
+          },
+          "Plumbing & Valves": {
+            "Ball valve used in Parker bath system": {
+              labour_hours: 0.75,
+              material_cost: 45.07,
+              part_number: "SPX017-8153",
+            },
+            "Electrical cabling for Parker bath": {
+              labour_hours: 0.75,
+              material_cost: 93.33,
+              part_number: "SPX017-4977",
+            },
+            "Check valve component for water flow control": {
+              labour_hours: 0.75,
+              material_cost: 21.34,
+              part_number: "SPX017-20613",
+            },
+            "Drain upgrade kit": {
+              labour_hours: 0.75,
+              material_cost: 123.24,
+              part_number: "SPX017-18554",
+            },
+            "Universal pop-up plug for multiple bath models": {
+              labour_hours: 0.75,
+              material_cost: 23.49,
+              part_number: "SPX017-0044",
+            },
+            "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
+              labour_hours: 0.75,
+              material_cost: 2.27,
+              part_number: "SPX271-0001",
+            }
+          }
         }
       }
     }
@@ -49,16 +203,50 @@ let minLabourCost = DEFAULT_MIN_LABOUR_COST;
 // Cost and default selling price for sales items
 const salesData = {
   "Bath": {
-    "Parker": {
-      "Rise & Tilt Bath": {
+    "Arjo": {
+      "Parker / Rise & Tilt Bath": {
         "Standard": {
           "Accessories & Fittings": {
-            "Oregon Ducting Waste Pipe Kit 1.2Mtr": { cost: 47.59, price: 118.32 }
+            "Grey gelcoat panel finish": { cost: 124.45, price: 237.98 },
+            "Polyurethane hand grip for user support": { cost: 47.45, price: 123.03 },
+            "Knee pad kit for user comfort": { cost: 85.66, price: 222.11 },
+            "Screen for chair access or splash guard": { cost: 109.21, price: 208.23 }
           },
-          "Core Components": {},
-          "Electrical & Control": {},
-          "Labelling & Identification": {},
-          "Plumbing & Valves": {}
+          "Core Components": {
+            "Arjo Parker Bath Reservoir or base unit": { cost: 2.65, price: 9.46 },
+            "Low front panel for Parker bath": { cost: 93.46, price: 222.14 },
+            "Rod link assembly for mechanism": { cost: 110.99, price: 263.79 },
+            "Pop-up waste component for Parker 500": { cost: 86.23, price: 155.2 },
+            "Parker 500 Tilt Bath including autofill feature": { cost: 9400.0, price: 15080.0 },
+            "Fitting for Parker bath door": { cost: 387.58, price: 736.94 },
+            "Extension panel for Parker bath": { cost: 0.0, price: 0.0 },
+            "Foot bar accessory for Parker bath": { cost: 48.68, price: 106.8 },
+            "Handle to adjust leg settings": { cost: 213.21, price: 434.36 },
+            "Pivot pin for adjustable leg mechanism": { cost: 19.61, price: 55.93 }
+          },
+          "Electrical & Control": {
+            "Updated handset for Parker bath": { cost: 117.5, price: 279.28 },
+            "Charger for Parker bath power unit": { cost: 71.27, price: 184.79 },
+            "Emergency stop button or switch": { cost: 100.57, price: 239.03 },
+            "Hand control for Parker bath": { cost: 46.79, price: 121.32 },
+            "3-pin version of the Parker handset": { cost: 318.88, price: 649.62 },
+            "PCB set, version 14.7A": { cost: 363.64, price: 691.31 },
+            "Handset for Sovereign model (compatible)": { cost: 139.87, price: 280.65 },
+            "Power transformer unit": { cost: 0.0, price: 0.0 },
+            "New PCB for Parker bath": { cost: 384.25, price: 730.6 },
+            "Assembled PCB unit for Parker bath": { cost: 266.45, price: 542.81 }
+          },
+          "Labelling & Identification": {
+            "Product or component label": { cost: 2.65, price: 9.46 }
+          },
+          "Plumbing & Valves": {
+            "Ball valve used in Parker bath system": { cost: 45.07, price: 111.15 },
+            "Electrical cabling for Parker bath": { cost: 93.33, price: 178.47 },
+            "Check valve component for water flow control": { cost: 21.34, price: 60.86 },
+            "Drain upgrade kit": { cost: 123.24, price: 292.91 },
+            "Universal pop-up plug for multiple bath models": { cost: 23.49, price: 53.08 },
+            "Oregon Ducting Waste Pipe Kit 1.2Mtr": { cost: 2.27, price: 52.26 }
+          }
         }
       }
     }
