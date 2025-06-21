@@ -191,6 +191,108 @@ const data = {
         }
       }
     }
+  },
+  "Portable Overhead Hoist": {
+    "Savaria": {
+      "Monarch": {
+        "Standard": {
+          "Accessories & Fittings": {
+            "Cable Retainer Monarch Portable": {
+              labour_hours: 0.2,
+              material_cost: 2.00,
+              part_number: "SPX323-0130",
+            },
+            "Cabin Kit Monarch Portable": {
+              labour_hours: 1.2,
+              material_cost: 120.00,
+              part_number: "SPX323-0095",
+            },
+            "Opemed Reacher Stick for Monarch Portable Hoist": {
+              labour_hours: 0.4,
+              material_cost: 99.00,
+              part_number: "EQ323-0002",
+            }
+          },
+          "Controls": {
+            "Handset Monarch": {
+              labour_hours: 0.3,
+              material_cost: 69.00,
+              part_number: "SPX323-0117",
+            },
+            "Monarch Keypad Membrane Left Hand": {
+              labour_hours: 0.6,
+              material_cost: 30.00,
+              part_number: "SPX323-0127",
+            },
+            "Monarch Keypad Membrane Right Hand": {
+              labour_hours: 0.6,
+              material_cost: 30.00,
+              part_number: "SPX323-0128",
+            }
+          },
+          "Electronics": {
+            "Pcb Assy - Monarch": {
+              labour_hours: 1,
+              material_cost: 135.00,
+              part_number: "SPX323-0083",
+            }
+          },
+          "Main Unit": {
+            "Monarch Portable Hoist Pod 200kg": {
+              labour_hours: 2,
+              material_cost: 760.00,
+              part_number: "EQ323-0001",
+            }
+          },
+          "Power Supply": {
+            "Li-Ion Charger W/O Cord": {
+              labour_hours: 0.5,
+              material_cost: 39.00,
+              part_number: "SPX323-0068",
+            },
+            "Power Cord Uk for Charger (auto apply when the above is selected)": {
+              labour_hours: 0.2,
+              material_cost: 10.00,
+              part_number: "SPX323-0096",
+            },
+            "Battery - Monarch": {
+              labour_hours: 0.5,
+              material_cost: 195.00,
+              part_number: "SPX323-0119",
+            }
+          }
+        }
+      }
+    }
+  },
+  "Portable Overhead Hoist": {
+    "Savaria": {
+      "Monarch": {
+        "Standard": {
+          "Accessories & Fittings": {
+            "Cable Retainer Monarch Portable": { cost: 2.00, price: 5.44 },
+            "Cabin Kit Monarch Portable": { cost: 120.00, price: 215.83 },
+            "Opemed Reacher Stick for Monarch Portable Hoist": { cost: 99.00, price: 162.45 }
+          },
+          "Controls": {
+            "Handset Monarch": { cost: 69.00, price: 207.11 },
+            "Monarch Keypad Membrane Left Hand": { cost: 30.00, price: 66.81 },
+            "Monarch Keypad Membrane Right Hand": { cost: 30.00, price: 66.81 }
+          },
+          "Electronics": {
+            "Pcb Assy - Monarch": { cost: 135.00, price: 252.37 }
+          },
+          "Main Unit": {
+            "Monarch Portable Hoist Pod 200kg": { cost: 760.00, price: 1595.88 }
+          },
+          "Power Supply": {
+            "Li-Ion Charger W/O Cord": { cost: 39.00, price: 118.32 },
+            "Power Cord Uk for Charger (auto apply when the above is selected)": { cost: 10.00, price: 32.00 },
+            "Battery - Monarch": { cost: 195.00, price: 260.00 }
+          }
+        }
+      }
+    }
   }
 };
 
