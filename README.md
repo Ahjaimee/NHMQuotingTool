@@ -25,3 +25,5 @@ Tool for estimating repair and sales quotes for mobility equipment.
 - PDF exports redesigned with boxed sections and clearer disclaimers at the bottom.
 - Added an option to override the default £74.75 minimum labour charge when
   preparing a repair quote.
+- Repair dropdown now shows equipment sales parts in grey with an
+  "Equipment Sales" tag.
