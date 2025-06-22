@@ -299,7 +299,8 @@ const data = {
               material_cost: 1217.34,
               part_number: "EQ055-0014",
             }
-=======
+          }
+        },
       "Sidhill / Bradshaw": {
         "Bradshaw Standard": {
           "Accessories & Fittings": {
@@ -657,6 +658,14 @@ const SALES_CARRIAGE = 15.95;
 const LABOUR_RATE = 30.5; // £15.25 per 0.5 hour
 const DEFAULT_MIN_LABOUR_COST = 74.75;
 let minLabourCost = DEFAULT_MIN_LABOUR_COST;
+const SETUP_COMMISSION_PARTS = [
+  "EQ212-0027",
+  "EQ212-0006",
+  "EQ212-0007",
+  "EQ323-0001",
+  "EQ055-0009",
+  "EQ055-0014"
+];
 // Cost and default selling price for sales items
 const salesData = {
   "Bath": {
@@ -718,7 +727,8 @@ const CARRIAGE_CHARGE = 15.95;
 let assetChoices, makeChoices, modelChoices, variantChoices, categoryChoices, repairChoices;
 let salesAssetChoices, salesMakeChoices, salesModelChoices,
     salesVariantChoices, salesCategoryChoices, salesItemChoices;
-let setupLabel, commissionLabel, includeSetup, includeCommission;
+let setupLabel, commissionLabel, includeSetup, includeCommission,
+    setupCommissionLabel, includeSetupCommission;
 
 document.addEventListener("DOMContentLoaded", () => {
   assetChoices = new Choices("#assetSelect", {
@@ -807,8 +817,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setupLabel = document.getElementById("setupLabel");
     commissionLabel = document.getElementById("commissionLabel");
+    setupCommissionLabel = document.getElementById("setupCommissionLabel");
     includeSetup = document.getElementById("includeSetup");
     includeCommission = document.getElementById("includeCommission");
+    includeSetupCommission = document.getElementById("includeSetupCommission");
 
   populateAssets();
   populateSalesAssets();
@@ -919,6 +931,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("salesItemSection").classList.add("hidden");
     includeSetup.checked = false;
     includeCommission.checked = false;
+    includeSetupCommission.checked = false;
     document.getElementById("salesExtras").classList.add("hidden");
   });
 
@@ -967,35 +980,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = document.getElementById("salesItemSelect").value;
     document.getElementById("salesDesc").value = `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
     const info = salesData[asset]?.[make]?.[model]?.[variant]?.[category]?.[item];
+    const part = data[asset]?.[make]?.[model]?.[variant]?.[category]?.[item]?.part_number;
     if (info) {
       document.getElementById("salesCost").value = info.cost.toFixed(2);
       const margin = ((info.price - info.cost) / info.cost) * 100;
       document.getElementById("salesMargin").value = margin.toFixed(2);
       document.getElementById("salesPrice").value = info.price.toFixed(2);
-      if (info.setupCost || info.commissionCost) {
+
+      const showExtras = info.setupCost || info.commissionCost || SETUP_COMMISSION_PARTS.includes(part);
+      if (showExtras) {
         document.getElementById("salesExtras").classList.remove("hidden");
-        if (info.setupCost) {
-          setupLabel.classList.remove("hidden");
-          includeSetup.checked = false;
-          setupLabel.innerHTML = `<input type="checkbox" id="includeSetup" /> Include Setup (+£${info.setupCost.toFixed(2)})`;
-          includeSetup = document.getElementById("includeSetup");
-        } else {
-          setupLabel.classList.add("hidden");
-          includeSetup.checked = false;
-        }
-        if (info.commissionCost) {
-          commissionLabel.classList.remove("hidden");
-          includeCommission.checked = false;
-          commissionLabel.innerHTML = `<input type="checkbox" id="includeCommission" /> Include Commission (+£${info.commissionCost.toFixed(2)})`;
-          includeCommission = document.getElementById("includeCommission");
-        } else {
-          commissionLabel.classList.add("hidden");
-          includeCommission.checked = false;
-        }
       } else {
-        includeSetup.checked = false;
-        includeCommission.checked = false;
         document.getElementById("salesExtras").classList.add("hidden");
+      }
+
+      if (info.setupCost) {
+        setupLabel.classList.remove("hidden");
+        includeSetup.checked = false;
+        setupLabel.innerHTML = `<input type="checkbox" id="includeSetup" /> Include Setup (+£${info.setupCost.toFixed(2)})`;
+        includeSetup = document.getElementById("includeSetup");
+      } else {
+        setupLabel.classList.add("hidden");
+        includeSetup.checked = false;
+      }
+
+      if (info.commissionCost) {
+        commissionLabel.classList.remove("hidden");
+        includeCommission.checked = false;
+        commissionLabel.innerHTML = `<input type="checkbox" id="includeCommission" /> Include Commission (+£${info.commissionCost.toFixed(2)})`;
+        includeCommission = document.getElementById("includeCommission");
+      } else {
+        commissionLabel.classList.add("hidden");
+        includeCommission.checked = false;
+      }
+
+      if (SETUP_COMMISSION_PARTS.includes(part)) {
+        setupCommissionLabel.classList.remove("hidden");
+        includeSetupCommission.checked = false;
+      } else {
+        setupCommissionLabel.classList.add("hidden");
+        includeSetupCommission.checked = false;
       }
     }
   });
@@ -1072,16 +1096,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const price = parseFloat(document.getElementById("salesPrice").value);
     const qty = parseInt(document.getElementById("salesQty").value, 10);
     const info = salesData[asset]?.[make]?.[model]?.[variant]?.[category]?.[item] || {};
+    const part = data[asset]?.[make]?.[model]?.[variant]?.[category]?.[item]?.part_number;
     const setupSelected = includeSetup.checked && info.setupCost;
     const commissionSelected = includeCommission.checked && info.commissionCost;
+    const setupCommissionSelected = includeSetupCommission.checked && SETUP_COMMISSION_PARTS.includes(part);
     if (!asset || !make || !model || !variant || !category || !item || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
     const desc = descField || `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
-    salesItems.push({ asset, make, model, variant, category, itemName: item, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0 });
+    salesItems.push({ asset, make, model, variant, category, itemName: item, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCommissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0, partNumber: part });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
     document.getElementById("salesDesc").value = "";
     document.getElementById("salesQty").value = 1;
+    includeSetup.checked = false;
+    includeCommission.checked = false;
+    includeSetupCommission.checked = false;
+    document.getElementById("salesExtras").classList.add("hidden");
     populateSalesAssets();
     document.getElementById("salesMakeSection").classList.add("hidden");
   });
@@ -1637,6 +1667,9 @@ function renderSalesQuote() {
       itemPrice += item.commissionCost;
       extras.push(`Commission +£${item.commissionCost.toFixed(2)}`);
     }
+    if (item.setupCommissionSelected) {
+      extras.push('Setup & Commission (Price includes delivery)');
+    }
     const total = itemPrice * item.qty;
     subtotal += total;
     lines.innerHTML += `
@@ -1743,6 +1776,9 @@ async function generateSalesPDF() {
       price += item.commissionCost;
       extras.push('Commission');
     }
+    if (item.setupCommissionSelected) {
+      extras.push('Setup & Commission');
+    }
     const descExtras = extras.length ? ` (${extras.join(' + ')})` : '';
     return [
       `${item.asset} - ${item.make} - ${item.model} - ${item.variant} - ${item.category} - ${item.itemName}${descExtras}`,
@@ -1790,6 +1826,16 @@ async function generateSalesPDF() {
   const centreX = pageWidth / 2;
   if (document.getElementById("vatExemptSales").checked) {
     doc.text("VAT Exempt: Yes", centreX, summaryY + summaryHeight + 6, { align: "center" });
+  }
+
+  const hasSetupCommission = salesItems.some(it => it.setupCommissionSelected);
+  let extrasBoxY = summaryY + summaryHeight + 6;
+  if (hasSetupCommission) {
+    const text = "Optional Setup & Commission (Price includes delivery)";
+    const boxHeight = lineHeight + 4;
+    doc.rect(margin, extrasBoxY, pageWidth - margin * 2, boxHeight);
+    doc.text(text, centreX, extrasBoxY + lineHeight, { align: "center" });
+    extrasBoxY += boxHeight + 6;
   }
 
   const disclaimerLines = [
