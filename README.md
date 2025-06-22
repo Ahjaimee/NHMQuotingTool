@@ -28,3 +28,4 @@ Tool for estimating repair and sales quotes for mobility equipment.
 - Repair dropdown now shows equipment sales parts in grey with an
   "Equipment Sales" tag.
 - Added data for Savaria Monarch Portable Overhead Hoist in both repair and sales sections.
+- Added asset data for Drive DeVilbiss Casa/Classic FS beds.
