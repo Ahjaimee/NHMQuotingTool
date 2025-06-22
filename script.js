@@ -192,6 +192,178 @@ const data = {
       }
     }
   },
+  "Bed": {
+    "Drive DeVillbiss": {
+      "Sidhill / Bradshaw": {
+        "Bradshaw Standard": {
+          "Accessories & Fittings": {
+            "Grab Handle for 1275 Bradshaw Standard Beds": {
+              labour_hours: 0.5,
+              material_cost: 50.0,
+              part_number: "EQ212-0026",
+            }
+          },
+          "Platform Components": {
+            "Bradshaw BARI Platform Length Extension Frame Only": {
+              labour_hours: 1.2,
+              material_cost: 227.85,
+              part_number: "EQ212-0018",
+            }
+          }
+        },
+        "Bradshaw Bariatric": {
+          "Accessories & Fittings": {
+            "Grab Handle for Bradshaw Bariatric Bed": {
+              labour_hours: 0.5,
+              material_cost: 89.62,
+              part_number: "EQ212-0022",
+            }
+          },
+          "Complete Beds": {
+            "Bradshaw Petite Low Profiling Bed (noRails)": {
+              labour_hours: 2,
+              material_cost: 996.9,
+              part_number: "EQ212-0027",
+            },
+            "New Sidhil Bradshaw Low Bed Light Oak": {
+              labour_hours: 2,
+              material_cost: 734.3,
+              part_number: "EQ212-0006",
+            },
+            "New Sidhil Bradshaw Standard Bed Light Oak": {
+              labour_hours: 2,
+              material_cost: 584.5,
+              part_number: "EQ212-0007",
+            }
+          },
+          "Mattresses & Cushions": {
+            "Acclaim Foam Mattress Junior bradshaw": {
+              labour_hours: 0.2,
+              material_cost: 246.0,
+              part_number: "EQ212-0029",
+            },
+            "Bradshaw BARI VE Matress Extension Cushion": {
+              labour_hours: 0,
+              material_cost: 146.98,
+              part_number: "EQ212-0020",
+            }
+          },
+          "Motors & Actuators": {
+            "HiLo Foot end actuator 1275 bed": {
+              labour_hours: 0.5,
+              material_cost: 104.65,
+              part_number: "SPX212-0233",
+            }
+          },
+          "Platform Components": {
+            "Bradshaw Bari Kneebreak Inner Calf Section": {
+              labour_hours: 0.8,
+              material_cost: 0.0,
+              part_number: "SPX212-0250",
+            }
+          }
+        },
+        "Bradshaw Junior": {
+          "Castors & Mobility": {
+            "Twin Braked Castor 75mm - Bradshaw Low": {
+              labour_hours: 0.3,
+              material_cost: 10.64,
+              part_number: "SPX212-0174",
+            }
+          }
+        },
+        "Bradshaw Petite Low": {
+          "Platform Components": {
+            "Bradshaw Bari Kneebreak Inner Thigh Section": {
+              labour_hours: 0.8,
+              material_cost: 92.66,
+              part_number: "SPX212-0251",
+            },
+            "Bradshaw Bari Kneebreak Outer Platform Frame": {
+              labour_hours: 0.8,
+              material_cost: 104.29,
+              part_number: "SPX212-0249",
+            }
+          }
+        },
+        "Bradshaw Low": {
+          "Platform Components": {
+            "Bradshaw Bari Kneebreak Platform Assy Complete": {
+              labour_hours: 1.5,
+              material_cost: 418.89,
+              part_number: "SPX212-0248",
+            }
+          },
+          "Side Rails & Extensions": {
+            "Bradshaw BARI Side Rail & Platform Length Extension Set": {
+              labour_hours: 0.5,
+              material_cost: 543.2,
+              part_number: "EQ212-0015",
+            },
+            "Bradshaw Petite Side Rail (Single)": {
+              labour_hours: 0.5,
+              material_cost: 21.85,
+              part_number: "EQ212-0028",
+            }
+          }
+        }
+      }
+    }
+  },
+  "Bed": {
+    "Drive DeVillbiss": {
+      "Sidhill / Bradshaw": {
+        "Bradshaw Standard": {
+          "Accessories & Fittings": {
+            "Grab Handle for 1275 Bradshaw Standard Beds": { cost: 50.0, price: 134.0 }
+          },
+          "Platform Components": {
+            "Bradshaw BARI Platform Length Extension Frame Only": { cost: 227.85, price: 375.65 }
+          }
+        },
+        "Bradshaw Bariatric": {
+          "Accessories & Fittings": {
+            "Grab Handle for Bradshaw Bariatric Bed": { cost: 89.62, price: 169.47 }
+          },
+          "Complete Beds": {
+            "Bradshaw Petite Low Profiling Bed (noRails)": { cost: 996.9, price: 1812.5 },
+            "New Sidhil Bradshaw Low Bed Light Oak": { cost: 734.3, price: 1200.06 },
+            "New Sidhil Bradshaw Standard Bed Light Oak": { cost: 584.5, price: 955.24 }
+          },
+          "Mattresses & Cushions": {
+            "Acclaim Foam Mattress Junior bradshaw": { cost: 246.0, price: 398.0 },
+            "Bradshaw BARI VE Matress Extension Cushion": { cost: 146.98, price: 280.25 }
+          },
+          "Motors & Actuators": {
+            "HiLo Foot end actuator 1275 bed": { cost: 104.65, price: 168.48 }
+          },
+          "Platform Components": {
+            "Bradshaw Bari Kneebreak Inner Calf Section": { cost: 0.0, price: 246.47 }
+          }
+        },
+        "Bradshaw Junior": {
+          "Castors & Mobility": {
+            "Twin Braked Castor 75mm - Bradshaw Low": { cost: 10.64, price: 49.17 }
+          }
+        },
+        "Bradshaw Petite Low": {
+          "Platform Components": {
+            "Bradshaw Bari Kneebreak Inner Thigh Section": { cost: 92.66, price: 154.43 },
+            "Bradshaw Bari Kneebreak Outer Platform Frame": { cost: 104.29, price: 209.8 }
+          }
+        },
+        "Bradshaw Low": {
+          "Platform Components": {
+            "Bradshaw Bari Kneebreak Platform Assy Complete": { cost: 418.89, price: 761.62 }
+          },
+          "Side Rails & Extensions": {
+            "Bradshaw BARI Side Rail & Platform Length Extension Set": { cost: 543.2, price: 1124.55 },
+            "Bradshaw Petite Side Rail (Single)": { cost: 21.85, price: 47.6 }
+          }
+        }
+      }
+    }
+  },
   "Portable Overhead Hoist": {
     "Savaria": {
       "Monarch": {
