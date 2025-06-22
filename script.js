@@ -422,7 +422,7 @@ const data = {
               material_cost: 39.00,
               part_number: "SPX323-0068",
             },
-            "Power Cord Uk for Charger (auto apply when the above is selected)": {
+            "Power Cord Uk for Charger": {
               labour_hours: 0.2,
               material_cost: 10.00,
               part_number: "SPX323-0096",
@@ -459,7 +459,7 @@ const data = {
           },
           "Power Supply": {
             "Li-Ion Charger W/O Cord": { cost: 39.00, price: 118.32 },
-            "Power Cord Uk for Charger (auto apply when the above is selected)": { cost: 10.00, price: 32.00 },
+            "Power Cord Uk for Charger": { cost: 10.00, price: 32.00 },
             "Battery - Monarch": { cost: 195.00, price: 260.00 }
           }
         }
