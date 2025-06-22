@@ -193,7 +193,7 @@ const data = {
     }
   },
   "Bed": {
-    "Drive DeVillbiss": {
+    "Drive DeVilbiss": {
       "Sidhill / Bradshaw": {
         "Bradshaw Standard": {
           "Accessories & Fittings": {
@@ -311,7 +311,7 @@ const data = {
     }
   },
   "Bed": {
-    "Drive DeVillbiss": {
+    "Drive DeVilbiss": {
       "Sidhill / Bradshaw": {
         "Bradshaw Standard": {
           "Accessories & Fittings": {
