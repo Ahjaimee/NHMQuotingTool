@@ -299,7 +299,8 @@ const data = {
               material_cost: 1217.34,
               part_number: "EQ055-0014",
             }
-=======
+          }
+        },
       "Sidhill / Bradshaw": {
         "Bradshaw Standard": {
           "Accessories & Fittings": {
