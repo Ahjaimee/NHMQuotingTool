@@ -507,8 +507,16 @@ function populateRepairs() {
   const repairs = Object.keys(data[asset]?.[make]?.[model]?.[variant]?.[category] || {});
   const select = document.getElementById("repairSelect");
   repairChoices.destroy();
-  select.innerHTML = `<option value="" disabled selected>Select Repair</option>` +
-    repairs.map(r => `<option value="${r}">${r}</option>`).join("");
+  select.innerHTML =
+    `<option value="" disabled selected>Select Repair</option>` +
+    repairs
+      .map(r => {
+        const info = data[asset]?.[make]?.[model]?.[variant]?.[category]?.[r];
+        const isEq = info && info.part_number && info.part_number.startsWith("EQ");
+        const label = isEq ? `${r} (Sales Order Item)` : r;
+        return `<option value="${r}" ${isEq ? "disabled" : ""}>${label}</option>`;
+      })
+      .join("");
   repairChoices = new Choices(select, {
     searchEnabled: true,
     shouldSort: false,
