@@ -513,7 +513,7 @@ function populateRepairs() {
       .map(r => {
         const info = data[asset]?.[make]?.[model]?.[variant]?.[category]?.[r];
         const isEq = info && info.part_number && info.part_number.startsWith("EQ");
-        const label = isEq ? `${r} (Sales Order Item)` : r;
+        const label = isEq ? `${r} (Sales Order)` : r;
         return `<option value="${r}" ${isEq ? "disabled" : ""}>${label}</option>`;
       })
       .join("");

@@ -94,6 +94,7 @@ select option[disabled] {
 
 .choices__item--disabled {
   opacity: 0.5;
+  color: #999;
 }
 
 .choices__list--dropdown {
