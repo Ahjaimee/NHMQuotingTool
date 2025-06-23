@@ -18,27 +18,7 @@ if (typeof window !== 'undefined' && typeof window.Choices === 'undefined') {
   };
 }
 
-const data = {
-  "Bath": {
-    "Parker": {
-      "Rise & Tilt Bath": {
-        "Standard": {
-          "Accessories & Fittings": {
-            "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
-              labour_hours: 0.5,
-              material_cost: 47.59,
-              part_number: "SPX271-0001",
-            }
-          },
-          "Core Components": {},
-          "Electrical & Control": {},
-          "Labelling & Identification": {},
-          "Plumbing & Valves": {}
-        }
-      }
-    }
-  }
-};
+let data = {};
 
 // Fixed carriage charge applied to all sales quotes
 const SALES_CARRIAGE = 15.95;
@@ -47,23 +27,7 @@ const LABOUR_RATE = 30.5; // £15.25 per 0.5 hour
 const DEFAULT_MIN_LABOUR_COST = 74.75;
 let minLabourCost = DEFAULT_MIN_LABOUR_COST;
 // Cost and default selling price for sales items
-const salesData = {
-  "Bath": {
-    "Parker": {
-      "Rise & Tilt Bath": {
-        "Standard": {
-          "Accessories & Fittings": {
-            "Oregon Ducting Waste Pipe Kit 1.2Mtr": { cost: 47.59, price: 118.32 }
-          },
-          "Core Components": {},
-          "Electrical & Control": {},
-          "Labelling & Identification": {},
-          "Plumbing & Valves": {}
-        }
-      }
-    }
-  }
-};
+let salesData = {};
 
 let quoteItems = [];
 let salesItems = [];
@@ -165,8 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
     includeSetup = document.getElementById("includeSetup");
     includeCommission = document.getElementById("includeCommission");
 
-  populateAssets();
-  populateSalesAssets();
+  fetch('data.json')
+    .then(r => r.json())
+    .then(json => {
+      data = json.repairs || {};
+      salesData = json.sales || {};
+      populateAssets();
+      populateSalesAssets();
+    })
+    .catch(() => {
+      populateAssets();
+      populateSalesAssets();
+    });
 
   document.getElementById("repairTab").addEventListener("click", () => {
     document.getElementById("repairTab").classList.add("active");
