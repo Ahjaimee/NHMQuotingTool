@@ -288,6 +288,112 @@
               }
             }
           }
+        },
+        "Casa/Classic FS": {
+          "Classic FS Low": {
+            "Head/Foot Boards": {
+              "Standard headboard for FS Low bed": {
+                "labour_hours": 0.5,
+                "material_cost": 277.45,
+                "part_number": "SPX055-0251"
+              },
+              "Days brand headboard for FS Low bed": {
+                "labour_hours": 0.5,
+                "material_cost": 222.28,
+                "part_number": "SPX055-0228"
+              }
+            },
+            "Motors & Actuators": {
+              "Hi-Lo actuator \u2013 FS Low bed (ED3 Dewert)": {
+                "labour_hours": 0.5,
+                "material_cost": 180.17,
+                "part_number": "SPX055-0270"
+              }
+            },
+            "Complete Beds": {
+              "Complete FS Low bed \u2013 beech finish": {
+                "labour_hours": 0.4,
+                "material_cost": 1427.71,
+                "part_number": "EQ055-0009"
+              }
+            },
+            "Side Rails & Extensions": {
+              "Wooden side rails \u2013 FS Low (115mm)": {
+                "labour_hours": 0.4,
+                "material_cost": 75.36,
+                "part_number": "SPX055-0613"
+              },
+              "Grey cotside rail slider \u2013 FS Low (post-2018)": {
+                "labour_hours": 0.2,
+                "material_cost": 18.58,
+                "part_number": "SPX055-0274"
+              },
+              "Beige deluxe side rail slider \u2013 FS Low": {
+                "labour_hours": 0.2,
+                "material_cost": 18.58,
+                "part_number": "SPX055-0229"
+              }
+            },
+            "Structural Components": {
+              "Head/foot board & frame assembly \u2013 FS Low": {
+                "labour_hours": 0.8,
+                "material_cost": 250.35,
+                "part_number": "SPX055-0287"
+              },
+              "Metal end frame assembly \u2013 FS Low": {
+                "labour_hours": 0.8,
+                "material_cost": 118.03,
+                "part_number": "SPX055-0286"
+              }
+            }
+          },
+          "Classic FS": {
+            "Motors & Actuators": {
+              "Hi-Lo actuator \u2013 FS bed (ED3 Dewert 71176)": {
+                "labour_hours": 0.5,
+                "material_cost": 180.17,
+                "part_number": "SPX055-0140"
+              }
+            },
+            "Structural Components": {
+              "End frame \u2013 FS bed (metal only)": {
+                "labour_hours": 0.8,
+                "material_cost": 125.68,
+                "part_number": "SPX055-0112"
+              },
+              "Head/foot board & frame assembly \u2013 FS": {
+                "labour_hours": 0.8,
+                "material_cost": 214.09,
+                "part_number": "SPX055-0108"
+              }
+            },
+            "Head/Foot Boards": {
+              "Ultra FS headboard/footboard combo": {
+                "labour_hours": 0.4,
+                "material_cost": 154.14,
+                "part_number": "SPX055-0109"
+              },
+              "CFS wooden headboard": {
+                "labour_hours": 0.4,
+                "material_cost": 165.07,
+                "part_number": "SPX055-0110"
+              },
+              "Standard side rail slider \u2013 Casa FS": {
+                "labour_hours": 0.2,
+                "material_cost": 18.62,
+                "part_number": "SPX055-0183"
+              }
+            }
+          },
+          "Ultra FS Bariatric": {
+            "Complete Beds": {
+              "Complete bariatric FS bed with metal side rails": {
+                "labour_hours": 0.4,
+                "material_cost": 2345.2,
+                "part_number": "EQ055-0014"
+              }
+            }
+          }
         }
       }
     }
@@ -531,6 +637,98 @@
               "Twin Braked Castor 75mm - Bradshaw Low": {
                 "cost": 10.64,
                 "price": 49.17
+              }
+            }
+          }
+        },
+        "Casa/Classic FS": {
+          "Classic FS Low": {
+            "Head/Foot Boards": {
+              "Standard headboard for FS Low bed": {
+                "cost": 120.0,
+                "price": 277.45
+              },
+              "Days brand headboard for FS Low bed": {
+                "cost": 90.92,
+                "price": 222.28
+              }
+            },
+            "Motors & Actuators": {
+              "Hi-Lo actuator \u2013 FS Low bed (ED3 Dewert)": {
+                "cost": 66.88,
+                "price": 180.17
+              }
+            },
+            "Complete Beds": {
+              "Complete FS Low bed \u2013 beech finish": {
+                "cost": 577.31,
+                "price": 1427.71
+              }
+            },
+            "Side Rails & Extensions": {
+              "Wooden side rails \u2013 FS Low (115mm)": {
+                "cost": 41.18,
+                "price": 75.36
+              },
+              "Grey cotside rail slider \u2013 FS Low (post-2018)": {
+                "cost": 3.09,
+                "price": 18.58
+              },
+              "Beige deluxe side rail slider \u2013 FS Low": {
+                "cost": 2.77,
+                "price": 18.58
+              }
+            },
+            "Structural Components": {
+              "Head/foot board & frame assembly \u2013 FS Low": {
+                "cost": 128.85,
+                "price": 250.35
+              },
+              "Metal end frame assembly \u2013 FS Low": {
+                "cost": 56.55,
+                "price": 118.03
+              }
+            }
+          },
+          "Classic FS": {
+            "Motors & Actuators": {
+              "Hi-Lo actuator \u2013 FS bed (ED3 Dewert 71176)": {
+                "cost": 80.16,
+                "price": 180.17
+              }
+            },
+            "Structural Components": {
+              "End frame \u2013 FS bed (metal only)": {
+                "cost": 24.85,
+                "price": 125.68
+              },
+              "Head/foot board & frame assembly \u2013 FS": {
+                "cost": 116.99,
+                "price": 214.09
+              }
+            },
+            "Head/Foot Boards": {
+              "Ultra FS headboard/footboard combo": {
+                "cost": 43.0,
+                "price": 154.14
+              },
+              "CFS wooden headboard": {
+                "cost": 82.81,
+                "price": 165.07
+              }
+            },
+            "Side Rails & Extensions": {
+              "Standard side rail slider \u2013 Casa FS": {
+                "cost": 1.99,
+                "price": 18.62
+              }
+            }
+          },
+          "Ultra FS Bariatric": {
+            "Complete Beds": {
+              "Complete bariatric FS bed with metal side rails": {
+                "cost": 1217.34,
+                "price": 2345.2
               }
             }
           }
