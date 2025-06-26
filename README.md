@@ -1,36 +1,46 @@
 # NHMQuotingTool
-Tool for estimating repair and sales quotes for mobility equipment.
+Simple tool for creating repair estimates and sales quotes for mobility equipment.
 
-### Recent Updates
-- Styled the sales quote buttons to match the repair tab.
-- PDFs now include a short footer message and slightly larger text for a cleaner look.
-- Sales quotes now support entering our cost, setting a profit margin and automatically
-  calculating the customer price.
-- When a sales item is chosen its configured cost and default selling price are loaded
-  automatically. The tool calculates the profit margin between those values and shows
-  it in an editable field so the margin or final price can be adjusted on the fly.
-- Cost on sales items is now read-only and the customer price fields and quote output
-  explicitly show values excluding VAT.
-- Labour rate is £15.25 per 0.5 hours with a £74.75 minimum labour charge per
-  quote. The page now displays this requirement instead of listing it on quotes.
-- The repair and sales forms now include a "Category" dropdown between the
-  variant and item fields. Categories depend on the selected asset type. Existing
-  demo data was replaced with a single Bath example using these categories.
-- Repair quotes now include an optional work description and a disclaimer that
-  the estimate is typically 95% accurate and subject to final approval before
-  any work is carried out.
-- When a work description is provided, the on-page quote now displays it in a
-  dedicated "Description of work(s)" box above the line items.
-- PDFs now show this description in a matching box when text is entered.
-- PDF exports redesigned with boxed sections and clearer disclaimers at the bottom.
-- Added an option to override the default £74.75 minimum labour charge when
-  preparing a repair quote.
-- Repair dropdown now shows equipment sales parts in grey with an
+## Overview
+Use the **Repair Estimate** tab when you need a price for fixing equipment. Use the
+**Sales Order Quote** tab when selling new equipment. Enter the customer details,
+pick the asset, and add any parts or items. The tool works out labour, materials,
+carriage and VAT. When you're happy with the quote you can download it as a PDF.
+
+### Repair quotes
+* Labour is £15.25 for every half hour with a minimum charge of £74.75 per quote.
+  You can override this if needed.
+* Each quote shows a note saying it is about 95% accurate and must be approved
+  before work starts.
+
+### Sales quotes
+* Prices shown exclude VAT unless you tick the **VAT Exempt** box.
+* Sales items can include optional setup and commission charges if they are available.
+
+## Recent Updates
+* The sales tab now uses the same button style as the repair tab.
+* PDF exports include a small footer message and use larger text so they are easier to read.
+* When preparing a sales quote you can enter our cost and a profit margin; the tool
+  calculates the customer price for you.
+* Choosing a sales item fills in the cost and default price automatically and shows
+  the profit margin so you can adjust it if required.
+* Our cost field is read-only and prices on screen clearly show amounts without VAT.
+* Labour is charged at £15.25 per half hour with a minimum of £74.75. This reminder
+  now appears on the page.
+* Both forms now include a **Category** dropdown after the variant field. Categories
+  change based on the asset type. The sample data now focuses on one bath example.
+* Repair quotes can include a short work description and a note that the estimate
+  needs final approval.
+* If you enter a work description it appears in its own box above the line items
+  and in the PDF.
+* PDF exports now have boxed sections and clearer notes at the bottom.
+* You can override the default £74.75 minimum labour charge when preparing a repair quote.
+* Repair dropdown lists show parts used for equipment sales in grey with an
   "Equipment Sales" tag.
-- Added data for Savaria Monarch Portable Overhead Hoist in both repair and sales sections.
-- Added asset data for Drive DeVilbiss Casa/Classic FS beds.
-- Added asset data for Drive DeVilbiss Sidhill Bradshaw beds.
-- Asset data is now loaded from a separate `data.json` file for easier updates.
-- Republished new site
-- Sales order items with EQ part numbers now show optional Setup and Commission
-  checkboxes allowing these charges to be added.
+* Added data for the Savaria Monarch Portable Overhead Hoist in both repair and sales lists.
+* Added data for Drive DeVilbiss Casa/Classic FS beds.
+* Added data for Drive DeVilbiss Sidhill Bradshaw beds.
+* Item information now loads from a separate `data.json` file for easier updates.
+* Site republished with the new changes.
+* Sales items with part numbers starting with "EQ" now display optional Setup and
+  Commission checkboxes so these charges can be added.
