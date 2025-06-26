@@ -32,3 +32,5 @@ Tool for estimating repair and sales quotes for mobility equipment.
 - Added asset data for Drive DeVilbiss Sidhill Bradshaw beds.
 - Asset data is now loaded from a separate `data.json` file for easier updates.
 - Republished new site
+- Sales order items with EQ part numbers now show optional Setup and Commission
+  checkboxes allowing these charges to be added.

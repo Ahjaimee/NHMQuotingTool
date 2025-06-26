@@ -26,11 +26,18 @@ const SALES_CARRIAGE = 15.95;
 const LABOUR_RATE = 30.5; // £15.25 per 0.5 hour
 const DEFAULT_MIN_LABOUR_COST = 74.75;
 let minLabourCost = DEFAULT_MIN_LABOUR_COST;
+// Default charges applied to equipment (EQ) sales when no specific costs are provided
+const DEFAULT_SETUP_COST = 100;
+const DEFAULT_COMMISSION_COST = 50;
 // Cost and default selling price for sales items
 let salesData = {};
 
 let quoteItems = [];
 let salesItems = [];
+
+// Track the optional charges for the currently selected sales item
+let currentSetupCost = 0;
+let currentCommissionCost = 0;
 
 // Base carriage charge applied once per quote when "Supply Only" is selected
 const CARRIAGE_CHARGE = 15.95;
@@ -296,26 +303,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = document.getElementById("salesItemSelect").value;
     document.getElementById("salesDesc").value = `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
     const info = salesData[asset]?.[make]?.[model]?.[variant]?.[category]?.[item];
+    const repairInfo = data[asset]?.[make]?.[model]?.[variant]?.[category]?.[item];
+    currentSetupCost = 0;
+    currentCommissionCost = 0;
     if (info) {
       document.getElementById("salesCost").value = info.cost.toFixed(2);
       const margin = ((info.price - info.cost) / info.cost) * 100;
       document.getElementById("salesMargin").value = margin.toFixed(2);
       document.getElementById("salesPrice").value = info.price.toFixed(2);
-      if (info.setupCost || info.commissionCost) {
+
+      const isEQ = repairInfo && repairInfo.part_number && repairInfo.part_number.startsWith("EQ");
+      currentSetupCost = typeof info.setupCost !== "undefined" ? info.setupCost : (isEQ ? DEFAULT_SETUP_COST : 0);
+      currentCommissionCost = typeof info.commissionCost !== "undefined" ? info.commissionCost : (isEQ ? DEFAULT_COMMISSION_COST : 0);
+
+      if (currentSetupCost || currentCommissionCost) {
         document.getElementById("salesExtras").classList.remove("hidden");
-        if (info.setupCost) {
+        if (currentSetupCost) {
           setupLabel.classList.remove("hidden");
           includeSetup.checked = false;
-          setupLabel.innerHTML = `<input type="checkbox" id="includeSetup" /> Include Setup (+£${info.setupCost.toFixed(2)})`;
+          setupLabel.innerHTML = `<input type="checkbox" id="includeSetup" /> Include Setup (+£${currentSetupCost.toFixed(2)})`;
           includeSetup = document.getElementById("includeSetup");
         } else {
           setupLabel.classList.add("hidden");
           includeSetup.checked = false;
         }
-        if (info.commissionCost) {
+        if (currentCommissionCost) {
           commissionLabel.classList.remove("hidden");
           includeCommission.checked = false;
-          commissionLabel.innerHTML = `<input type="checkbox" id="includeCommission" /> Include Commission (+£${info.commissionCost.toFixed(2)})`;
+          commissionLabel.innerHTML = `<input type="checkbox" id="includeCommission" /> Include Commission (+£${currentCommissionCost.toFixed(2)})`;
           includeCommission = document.getElementById("includeCommission");
         } else {
           commissionLabel.classList.add("hidden");
@@ -401,11 +416,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const price = parseFloat(document.getElementById("salesPrice").value);
     const qty = parseInt(document.getElementById("salesQty").value, 10);
     const info = salesData[asset]?.[make]?.[model]?.[variant]?.[category]?.[item] || {};
-    const setupSelected = includeSetup.checked && info.setupCost;
-    const commissionSelected = includeCommission.checked && info.commissionCost;
+    const setupSelected = includeSetup.checked && currentSetupCost;
+    const commissionSelected = includeCommission.checked && currentCommissionCost;
     if (!asset || !make || !model || !variant || !category || !item || isNaN(cost) || isNaN(margin) || isNaN(price) || isNaN(qty)) return;
     const desc = descField || `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
-    salesItems.push({ asset, make, model, variant, category, itemName: item, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: info.setupCost || 0, commissionCost: info.commissionCost || 0 });
+    salesItems.push({ asset, make, model, variant, category, itemName: item, desc, cost, margin, price, qty, setupSelected, commissionSelected, setupCost: currentSetupCost, commissionCost: currentCommissionCost });
     renderSalesQuote();
     document.getElementById("salesQuoteSection").classList.remove("hidden");
     document.getElementById("downloadSalesPDF").classList.remove("hidden");
