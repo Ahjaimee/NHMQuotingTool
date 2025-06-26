@@ -8,165 +8,196 @@
               "Grey gelcoat panel finish": {
                 "labour_hours": 0.5,
                 "material_cost": 237.98,
-                "part_number": "SPX017-8163"
+                "part_number": "SPX017-8163",
+                "description": "Repair item 'Grey gelcoat panel finish' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               },
               "Polyurethane hand grip for user support": {
                 "labour_hours": 0.5,
                 "material_cost": 123.03,
-                "part_number": "SPX017-20566"
+                "part_number": "SPX017-20566",
+                "description": "Repair item 'Polyurethane hand grip for user support' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               },
               "Knee pad kit for user comfort": {
                 "labour_hours": 0.5,
                 "material_cost": 222.11,
-                "part_number": "SPX017-20568"
+                "part_number": "SPX017-20568",
+                "description": "Repair item 'Knee pad kit for user comfort' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               },
               "Screen for chair access or splash guard": {
                 "labour_hours": 0.5,
                 "material_cost": 208.23,
-                "part_number": "SPX017-6839"
+                "part_number": "SPX017-6839",
+                "description": "Repair item 'Screen for chair access or splash guard' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               }
             },
             "Core Components": {
               "Arjo Parker Bath Reservoir or base unit": {
                 "labour_hours": 1,
                 "material_cost": 9.46,
-                "part_number": "SPX017-20337"
+                "part_number": "SPX017-20337",
+                "description": "Repair item 'Arjo Parker Bath Reservoir or base unit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Low front panel for Parker bath": {
                 "labour_hours": 1,
                 "material_cost": 222.14,
-                "part_number": "SPX017-20565"
+                "part_number": "SPX017-20565",
+                "description": "Repair item 'Low front panel for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Rod link assembly for mechanism": {
                 "labour_hours": 1,
                 "material_cost": 263.79,
-                "part_number": "SPX017-20573"
+                "part_number": "SPX017-20573",
+                "description": "Repair item 'Rod link assembly for mechanism' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Pop-up waste component for Parker 500": {
                 "labour_hours": 1,
                 "material_cost": 155.2,
-                "part_number": "SPX017-5720"
+                "part_number": "SPX017-5720",
+                "description": "Repair item 'Pop-up waste component for Parker 500' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Parker 500 Tilt Bath including autofill feature": {
                 "labour_hours": 1,
                 "material_cost": 15080.0,
-                "part_number": "EQ017-0218"
+                "part_number": "EQ017-0218",
+                "description": "Repair item 'Parker 500 Tilt Bath including autofill feature' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Fitting for Parker bath door": {
                 "labour_hours": 1,
                 "material_cost": 736.94,
-                "part_number": "SPX017-15282"
+                "part_number": "SPX017-15282",
+                "description": "Repair item 'Fitting for Parker bath door' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Extension panel for Parker bath": {
                 "labour_hours": 1,
                 "material_cost": 0,
-                "part_number": "SPX017-17612"
+                "part_number": "SPX017-17612",
+                "description": "Repair item 'Extension panel for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Foot bar accessory for Parker bath": {
                 "labour_hours": 1,
                 "material_cost": 106.8,
-                "part_number": "SPX017-15484"
+                "part_number": "SPX017-15484",
+                "description": "Repair item 'Foot bar accessory for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Handle to adjust leg settings": {
                 "labour_hours": 1,
                 "material_cost": 434.36,
-                "part_number": "SPX017-20571"
+                "part_number": "SPX017-20571",
+                "description": "Repair item 'Handle to adjust leg settings' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Pivot pin for adjustable leg mechanism": {
                 "labour_hours": 1,
                 "material_cost": 55.93,
-                "part_number": "SPX017-20570"
+                "part_number": "SPX017-20570",
+                "description": "Repair item 'Pivot pin for adjustable leg mechanism' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               }
             },
             "Electrical & Control": {
               "Updated handset for Parker bath": {
                 "labour_hours": 1,
                 "material_cost": 279.28,
-                "part_number": "SPX017-6426"
+                "part_number": "SPX017-6426",
+                "description": "Repair item 'Updated handset for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Charger for Parker bath power unit": {
                 "labour_hours": 1,
                 "material_cost": 184.79,
-                "part_number": "SPX017-20572"
+                "part_number": "SPX017-20572",
+                "description": "Repair item 'Charger for Parker bath power unit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Emergency stop button or switch": {
                 "labour_hours": 1,
                 "material_cost": 239.03,
-                "part_number": "SPX017-20569"
+                "part_number": "SPX017-20569",
+                "description": "Repair item 'Emergency stop button or switch' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Hand control for Parker bath": {
                 "labour_hours": 1,
                 "material_cost": 121.32,
-                "part_number": "SPX017-20567"
+                "part_number": "SPX017-20567",
+                "description": "Repair item 'Hand control for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "3-pin version of the Parker handset": {
                 "labour_hours": 1,
                 "material_cost": 649.62,
-                "part_number": "SPX017-20563"
+                "part_number": "SPX017-20563",
+                "description": "Repair item '3-pin version of the Parker handset' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "PCB set, version 14.7A": {
                 "labour_hours": 1,
                 "material_cost": 691.31,
-                "part_number": "SPX017-20564"
+                "part_number": "SPX017-20564",
+                "description": "Repair item 'PCB set, version 14.7A' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Handset for Sovereign model (compatible)": {
                 "labour_hours": 1,
                 "material_cost": 280.65,
-                "part_number": "SPX017-0278"
+                "part_number": "SPX017-0278",
+                "description": "Repair item 'Handset for Sovereign model (compatible)' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Power transformer unit": {
                 "labour_hours": 1,
                 "material_cost": 0,
-                "part_number": "SPX017-17615"
+                "part_number": "SPX017-17615",
+                "description": "Repair item 'Power transformer unit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "New PCB for Parker bath": {
                 "labour_hours": 1,
                 "material_cost": 730.6,
-                "part_number": "SPX017-4995"
+                "part_number": "SPX017-4995",
+                "description": "Repair item 'New PCB for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Assembled PCB unit for Parker bath": {
                 "labour_hours": 1,
                 "material_cost": 542.81,
-                "part_number": "SPX017-18609"
+                "part_number": "SPX017-18609",
+                "description": "Repair item 'Assembled PCB unit for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               }
             },
             "Labelling & Identification": {
               "Product or component label": {
                 "labour_hours": 0.1,
                 "material_cost": 9.46,
-                "part_number": "SPX017-17671"
+                "part_number": "SPX017-17671",
+                "description": "Repair item 'Product or component label' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Labelling & Identification"
               }
             },
             "Plumbing & Valves": {
               "Ball valve used in Parker bath system": {
                 "labour_hours": 0.75,
                 "material_cost": 111.15,
-                "part_number": "SPX017-8153"
+                "part_number": "SPX017-8153",
+                "description": "Repair item 'Ball valve used in Parker bath system' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Electrical cabling for Parker bath": {
                 "labour_hours": 0.75,
                 "material_cost": 178.47,
-                "part_number": "SPX017-4977"
+                "part_number": "SPX017-4977",
+                "description": "Repair item 'Electrical cabling for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Check valve component for water flow control": {
                 "labour_hours": 0.75,
                 "material_cost": 60.86,
-                "part_number": "SPX017-20613"
+                "part_number": "SPX017-20613",
+                "description": "Repair item 'Check valve component for water flow control' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Drain upgrade kit": {
                 "labour_hours": 0.75,
                 "material_cost": 292.91,
-                "part_number": "SPX017-18554"
+                "part_number": "SPX017-18554",
+                "description": "Repair item 'Drain upgrade kit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Universal pop-up plug for multiple bath models": {
                 "labour_hours": 0.75,
                 "material_cost": 53.08,
-                "part_number": "SPX017-0044"
+                "part_number": "SPX017-0044",
+                "description": "Repair item 'Universal pop-up plug for multiple bath models' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
                 "labour_hours": 0.75,
                 "material_cost": 52.26,
-                "part_number": "SPX271-0001"
+                "part_number": "SPX271-0001",
+                "description": "Repair item 'Oregon Ducting Waste Pipe Kit 1.2Mtr' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               }
             }
           }
@@ -181,14 +212,16 @@
               "Grab Handle for 1275 Bradshaw Standard Beds": {
                 "labour_hours": 0.5,
                 "material_cost": 134.0,
-                "part_number": "EQ212-0026"
+                "part_number": "EQ212-0026",
+                "description": "Repair item 'Grab Handle for 1275 Bradshaw Standard Beds' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Standard > Accessories & Fittings"
               }
             },
             "Platform Components": {
               "Bradshaw BARI Platform Length Extension Frame Only": {
                 "labour_hours": 1.2,
                 "material_cost": 375.65,
-                "part_number": "EQ212-0018"
+                "part_number": "EQ212-0018",
+                "description": "Repair item 'Bradshaw BARI Platform Length Extension Frame Only' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Standard > Platform Components"
               }
             }
           },
@@ -197,50 +230,58 @@
               "Grab Handle for Bradshaw Bariatric Bed": {
                 "labour_hours": 0.5,
                 "material_cost": 169.47,
-                "part_number": "EQ212-0022"
+                "part_number": "EQ212-0022",
+                "description": "Repair item 'Grab Handle for Bradshaw Bariatric Bed' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Accessories & Fittings"
               }
             },
             "Complete Beds": {
               "Bradshaw Petite Low Profiling Bed (noRails)": {
                 "labour_hours": 2,
                 "material_cost": 1812.5,
-                "part_number": "EQ212-0027"
+                "part_number": "EQ212-0027",
+                "description": "Repair item 'Bradshaw Petite Low Profiling Bed (noRails)' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Complete Beds"
               },
               "New Sidhil Bradshaw Low Bed Light Oak": {
                 "labour_hours": 2,
                 "material_cost": 1200.06,
-                "part_number": "EQ212-0006"
+                "part_number": "EQ212-0006",
+                "description": "Repair item 'New Sidhil Bradshaw Low Bed Light Oak' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Complete Beds"
               },
               "New Sidhil Bradshaw Standard Bed Light Oak": {
                 "labour_hours": 2,
                 "material_cost": 955.24,
-                "part_number": "EQ212-0007"
+                "part_number": "EQ212-0007",
+                "description": "Repair item 'New Sidhil Bradshaw Standard Bed Light Oak' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Complete Beds"
               }
             },
             "Mattresses & Cushions": {
               "Acclaim Foam Mattress Junior bradshaw": {
                 "labour_hours": 0.2,
                 "material_cost": 398.0,
-                "part_number": "EQ212-0029"
+                "part_number": "EQ212-0029",
+                "description": "Repair item 'Acclaim Foam Mattress Junior bradshaw' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Mattresses & Cushions"
               },
               "Bradshaw BARI VE Matress Extension Cushion": {
                 "labour_hours": 0,
                 "material_cost": 280.25,
-                "part_number": "EQ212-0020"
+                "part_number": "EQ212-0020",
+                "description": "Repair item 'Bradshaw BARI VE Matress Extension Cushion' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Mattresses & Cushions"
               }
             },
             "Motors & Actuators": {
               "HiLo Foot end actuator 1275 bed": {
                 "labour_hours": 0.5,
                 "material_cost": 168.48,
-                "part_number": "SPX212-0233"
+                "part_number": "SPX212-0233",
+                "description": "Repair item 'HiLo Foot end actuator 1275 bed' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Motors & Actuators"
               }
             },
             "Platform Components": {
               "Bradshaw Bari Kneebreak Inner Calf Section": {
                 "labour_hours": 0.8,
                 "material_cost": 246.47,
-                "part_number": "SPX212-0250"
+                "part_number": "SPX212-0250",
+                "description": "Repair item 'Bradshaw Bari Kneebreak Inner Calf Section' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Platform Components"
               }
             }
           },
@@ -249,12 +290,14 @@
               "Bradshaw Bari Kneebreak Inner Thigh Section": {
                 "labour_hours": 0.8,
                 "material_cost": 154.43,
-                "part_number": "SPX212-0251"
+                "part_number": "SPX212-0251",
+                "description": "Repair item 'Bradshaw Bari Kneebreak Inner Thigh Section' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Petite Low > Platform Components"
               },
               "Bradshaw Bari Kneebreak Outer Platform Frame": {
                 "labour_hours": 0.8,
                 "material_cost": 209.8,
-                "part_number": "SPX212-0249"
+                "part_number": "SPX212-0249",
+                "description": "Repair item 'Bradshaw Bari Kneebreak Outer Platform Frame' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Petite Low > Platform Components"
               }
             }
           },
@@ -263,19 +306,22 @@
               "Bradshaw Bari Kneebreak Platform Assy Complete": {
                 "labour_hours": 1.5,
                 "material_cost": 761.62,
-                "part_number": "SPX212-0248"
+                "part_number": "SPX212-0248",
+                "description": "Repair item 'Bradshaw Bari Kneebreak Platform Assy Complete' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Low > Platform Components"
               }
             },
             "Side Rails & Extensions": {
               "Bradshaw BARI Side Rail & Platform Length Extension Set": {
                 "labour_hours": 0.5,
                 "material_cost": 1124.55,
-                "part_number": "EQ212-0015"
+                "part_number": "EQ212-0015",
+                "description": "Repair item 'Bradshaw BARI Side Rail & Platform Length Extension Set' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Low > Side Rails & Extensions"
               },
               "Bradshaw Petite Side Rail (Single)": {
                 "labour_hours": 0.5,
                 "material_cost": 47.6,
-                "part_number": "EQ212-0028"
+                "part_number": "EQ212-0028",
+                "description": "Repair item 'Bradshaw Petite Side Rail (Single)' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Low > Side Rails & Extensions"
               }
             }
           },
@@ -284,7 +330,8 @@
               "Twin Braked Castor 75mm - Bradshaw Low": {
                 "labour_hours": 0.3,
                 "material_cost": 49.17,
-                "part_number": "SPX212-0174"
+                "part_number": "SPX212-0174",
+                "description": "Repair item 'Twin Braked Castor 75mm - Bradshaw Low' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Junior > Castors & Mobility"
               }
             }
           }
@@ -295,55 +342,64 @@
               "Standard headboard for FS Low bed": {
                 "labour_hours": 0.5,
                 "material_cost": 277.45,
-                "part_number": "SPX055-0251"
+                "part_number": "SPX055-0251",
+                "description": "Repair item 'Standard headboard for FS Low bed' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Head/Foot Boards"
               },
               "Days brand headboard for FS Low bed": {
                 "labour_hours": 0.5,
                 "material_cost": 222.28,
-                "part_number": "SPX055-0228"
+                "part_number": "SPX055-0228",
+                "description": "Repair item 'Days brand headboard for FS Low bed' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Head/Foot Boards"
               }
             },
             "Motors & Actuators": {
               "Hi-Lo actuator \u2013 FS Low bed (ED3 Dewert)": {
                 "labour_hours": 0.5,
                 "material_cost": 180.17,
-                "part_number": "SPX055-0270"
+                "part_number": "SPX055-0270",
+                "description": "Repair item 'Hi-Lo actuator \u2013 FS Low bed (ED3 Dewert)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Motors & Actuators"
               }
             },
             "Complete Beds": {
               "Complete FS Low bed \u2013 beech finish": {
                 "labour_hours": 0.4,
                 "material_cost": 1427.71,
-                "part_number": "EQ055-0009"
+                "part_number": "EQ055-0009",
+                "description": "Repair item 'Complete FS Low bed \u2013 beech finish' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Complete Beds"
               }
             },
             "Side Rails & Extensions": {
               "Wooden side rails \u2013 FS Low (115mm)": {
                 "labour_hours": 0.4,
                 "material_cost": 75.36,
-                "part_number": "SPX055-0613"
+                "part_number": "SPX055-0613",
+                "description": "Repair item 'Wooden side rails \u2013 FS Low (115mm)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Side Rails & Extensions"
               },
               "Grey cotside rail slider \u2013 FS Low (post-2018)": {
                 "labour_hours": 0.2,
                 "material_cost": 18.58,
-                "part_number": "SPX055-0274"
+                "part_number": "SPX055-0274",
+                "description": "Repair item 'Grey cotside rail slider \u2013 FS Low (post-2018)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Side Rails & Extensions"
               },
               "Beige deluxe side rail slider \u2013 FS Low": {
                 "labour_hours": 0.2,
                 "material_cost": 18.58,
-                "part_number": "SPX055-0229"
+                "part_number": "SPX055-0229",
+                "description": "Repair item 'Beige deluxe side rail slider \u2013 FS Low' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Side Rails & Extensions"
               }
             },
             "Structural Components": {
               "Head/foot board & frame assembly \u2013 FS Low": {
                 "labour_hours": 0.8,
                 "material_cost": 250.35,
-                "part_number": "SPX055-0287"
+                "part_number": "SPX055-0287",
+                "description": "Repair item 'Head/foot board & frame assembly \u2013 FS Low' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Structural Components"
               },
               "Metal end frame assembly \u2013 FS Low": {
                 "labour_hours": 0.8,
                 "material_cost": 118.03,
-                "part_number": "SPX055-0286"
+                "part_number": "SPX055-0286",
+                "description": "Repair item 'Metal end frame assembly \u2013 FS Low' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Structural Components"
               }
             }
           },
@@ -352,36 +408,42 @@
               "Hi-Lo actuator \u2013 FS bed (ED3 Dewert 71176)": {
                 "labour_hours": 0.5,
                 "material_cost": 180.17,
-                "part_number": "SPX055-0140"
+                "part_number": "SPX055-0140",
+                "description": "Repair item 'Hi-Lo actuator \u2013 FS bed (ED3 Dewert 71176)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Motors & Actuators"
               }
             },
             "Structural Components": {
               "End frame \u2013 FS bed (metal only)": {
                 "labour_hours": 0.8,
                 "material_cost": 125.68,
-                "part_number": "SPX055-0112"
+                "part_number": "SPX055-0112",
+                "description": "Repair item 'End frame \u2013 FS bed (metal only)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Structural Components"
               },
               "Head/foot board & frame assembly \u2013 FS": {
                 "labour_hours": 0.8,
                 "material_cost": 214.09,
-                "part_number": "SPX055-0108"
+                "part_number": "SPX055-0108",
+                "description": "Repair item 'Head/foot board & frame assembly \u2013 FS' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Structural Components"
               }
             },
             "Head/Foot Boards": {
               "Ultra FS headboard/footboard combo": {
                 "labour_hours": 0.4,
                 "material_cost": 154.14,
-                "part_number": "SPX055-0109"
+                "part_number": "SPX055-0109",
+                "description": "Repair item 'Ultra FS headboard/footboard combo' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Head/Foot Boards"
               },
               "CFS wooden headboard": {
                 "labour_hours": 0.4,
                 "material_cost": 165.07,
-                "part_number": "SPX055-0110"
+                "part_number": "SPX055-0110",
+                "description": "Repair item 'CFS wooden headboard' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Head/Foot Boards"
               },
               "Standard side rail slider \u2013 Casa FS": {
                 "labour_hours": 0.2,
                 "material_cost": 18.62,
-                "part_number": "SPX055-0183"
+                "part_number": "SPX055-0183",
+                "description": "Repair item 'Standard side rail slider \u2013 Casa FS' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Head/Foot Boards"
               }
             }
           },
@@ -390,7 +452,8 @@
               "Complete bariatric FS bed with metal side rails": {
                 "labour_hours": 0.4,
                 "material_cost": 2345.2,
-                "part_number": "EQ055-0014"
+                "part_number": "EQ055-0014",
+                "description": "Repair item 'Complete bariatric FS bed with metal side rails' for Bed > Drive DeVillbiss > Casa/Classic FS > Ultra FS Bariatric > Complete Beds"
               }
             }
           }
@@ -405,65 +468,76 @@
               "Cable Retainer Monarch Portable": {
                 "labour_hours": 0.2,
                 "material_cost": 5.44,
-                "part_number": "SPX323-0130"
+                "part_number": "SPX323-0130",
+                "description": "Repair item 'Cable Retainer Monarch Portable' for Portable Overhead Hoist > Savaria > Monarch > Standard > Accessories & Fittings"
               },
               "Cabin Kit Monarch Portable": {
                 "labour_hours": 1.2,
                 "material_cost": 215.83,
-                "part_number": "SPX323-0095"
+                "part_number": "SPX323-0095",
+                "description": "Repair item 'Cabin Kit Monarch Portable' for Portable Overhead Hoist > Savaria > Monarch > Standard > Accessories & Fittings"
               },
               "Opemed Reacher Stick for Monarch Portable Hoist": {
                 "labour_hours": 0.4,
                 "material_cost": 162.45,
-                "part_number": "EQ323-0002"
+                "part_number": "EQ323-0002",
+                "description": "Repair item 'Opemed Reacher Stick for Monarch Portable Hoist' for Portable Overhead Hoist > Savaria > Monarch > Standard > Accessories & Fittings"
               }
             },
             "Controls": {
               "Handset Monarch": {
                 "labour_hours": 0.3,
                 "material_cost": 207.11,
-                "part_number": "SPX323-0117"
+                "part_number": "SPX323-0117",
+                "description": "Repair item 'Handset Monarch' for Portable Overhead Hoist > Savaria > Monarch > Standard > Controls"
               },
               "Monarch Keypad Membrane Left Hand": {
                 "labour_hours": 0.6,
                 "material_cost": 66.81,
-                "part_number": "SPX323-0127"
+                "part_number": "SPX323-0127",
+                "description": "Repair item 'Monarch Keypad Membrane Left Hand' for Portable Overhead Hoist > Savaria > Monarch > Standard > Controls"
               },
               "Monarch Keypad Membrane Right Hand": {
                 "labour_hours": 0.6,
                 "material_cost": 66.81,
-                "part_number": "SPX323-0128"
+                "part_number": "SPX323-0128",
+                "description": "Repair item 'Monarch Keypad Membrane Right Hand' for Portable Overhead Hoist > Savaria > Monarch > Standard > Controls"
               }
             },
             "Electronics": {
               "Pcb Assy - Monarch": {
                 "labour_hours": 1,
                 "material_cost": 252.37,
-                "part_number": "SPX323-0083"
+                "part_number": "SPX323-0083",
+                "description": "Repair item 'Pcb Assy - Monarch' for Portable Overhead Hoist > Savaria > Monarch > Standard > Electronics"
               }
             },
             "Main Unit": {
               "Monarch Portable Hoist Pod 200kg": {
                 "labour_hours": 2,
                 "material_cost": 1595.88,
-                "part_number": "EQ323-0001"
+                "part_number": "EQ323-0001",
+                "description": "Repair item 'Monarch Portable Hoist Pod 200kg' for Portable Overhead Hoist > Savaria > Monarch > Standard > Main Unit"
               }
             },
             "Power Supply": {
               "Li-Ion Charger W/O Cord": {
                 "labour_hours": 0.5,
                 "material_cost": 118.32,
-                "part_number": "SPX323-0068"
+                "part_number": "SPX323-0068",
+                "description": "Repair item 'Li-Ion Charger W/O Cord' for Portable Overhead Hoist > Savaria > Monarch > Standard > Power Supply"
               },
               "Power Cord Uk for Charger (auto apply when the above is selected)": {
                 "labour_hours": 0.2,
                 "material_cost": 32.0,
-                "part_number": "SPX323-0096"
+                "part_number": "SPX323-0096",
+                "description": "Repair item 'Power Cord Uk for Charger (auto apply when the above is selected)' for Portable Overhead Hoist > Savaria > Monarch > Standard > Power Supply"
               },
               "Battery - Monarch": {
                 "labour_hours": 0.5,
                 "material_cost": 260.0,
-                "part_number": "SPX323-0119"
+                "part_number": "SPX323-0119",
+                "description": "Repair item 'Battery - Monarch' for Portable Overhead Hoist > Savaria > Monarch > Standard > Power Supply"
               }
             }
           }
@@ -479,135 +553,166 @@
             "Accessories & Fittings": {
               "Grey gelcoat panel finish": {
                 "cost": 124.45,
-                "price": 237.98
+                "price": 237.98,
+                "description": "Sales item 'Grey gelcoat panel finish' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               },
               "Polyurethane hand grip for user support": {
                 "cost": 47.45,
-                "price": 123.03
+                "price": 123.03,
+                "description": "Sales item 'Polyurethane hand grip for user support' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               },
               "Knee pad kit for user comfort": {
                 "cost": 85.66,
-                "price": 222.11
+                "price": 222.11,
+                "description": "Sales item 'Knee pad kit for user comfort' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               },
               "Screen for chair access or splash guard": {
                 "cost": 109.21,
-                "price": 208.23
+                "price": 208.23,
+                "description": "Sales item 'Screen for chair access or splash guard' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Accessories & Fittings"
               }
             },
             "Core Components": {
               "Arjo Parker Bath Reservoir or base unit": {
                 "cost": 2.65,
-                "price": 9.46
+                "price": 9.46,
+                "description": "Sales item 'Arjo Parker Bath Reservoir or base unit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Low front panel for Parker bath": {
                 "cost": 93.46,
-                "price": 222.14
+                "price": 222.14,
+                "description": "Sales item 'Low front panel for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Rod link assembly for mechanism": {
                 "cost": 110.99,
-                "price": 263.79
+                "price": 263.79,
+                "description": "Sales item 'Rod link assembly for mechanism' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Pop-up waste component for Parker 500": {
                 "cost": 86.23,
-                "price": 155.2
+                "price": 155.2,
+                "description": "Sales item 'Pop-up waste component for Parker 500' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Parker 500 Tilt Bath including autofill feature": {
                 "cost": 9400.0,
-                "price": 15080.0
+                "price": 15080.0,
+                "description": "Sales item 'Parker 500 Tilt Bath including autofill feature' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Fitting for Parker bath door": {
                 "cost": 387.58,
-                "price": 736.94
+                "price": 736.94,
+                "description": "Sales item 'Fitting for Parker bath door' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Extension panel for Parker bath": {
                 "cost": 0,
-                "price": 0
+                "price": 0,
+                "description": "Sales item 'Extension panel for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Foot bar accessory for Parker bath": {
                 "cost": 48.68,
-                "price": 106.8
+                "price": 106.8,
+                "description": "Sales item 'Foot bar accessory for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Handle to adjust leg settings": {
                 "cost": 213.21,
-                "price": 434.36
+                "price": 434.36,
+                "description": "Sales item 'Handle to adjust leg settings' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               },
               "Pivot pin for adjustable leg mechanism": {
                 "cost": 19.61,
-                "price": 55.93
+                "price": 55.93,
+                "description": "Sales item 'Pivot pin for adjustable leg mechanism' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Core Components"
               }
             },
             "Electrical & Control": {
               "Updated handset for Parker bath": {
                 "cost": 117.5,
-                "price": 279.28
+                "price": 279.28,
+                "description": "Sales item 'Updated handset for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Charger for Parker bath power unit": {
                 "cost": 71.27,
-                "price": 184.79
+                "price": 184.79,
+                "description": "Sales item 'Charger for Parker bath power unit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Emergency stop button or switch": {
                 "cost": 100.57,
-                "price": 239.03
+                "price": 239.03,
+                "description": "Sales item 'Emergency stop button or switch' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Hand control for Parker bath": {
                 "cost": 46.79,
-                "price": 121.32
+                "price": 121.32,
+                "description": "Sales item 'Hand control for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "3-pin version of the Parker handset": {
                 "cost": 318.88,
-                "price": 649.62
+                "price": 649.62,
+                "description": "Sales item '3-pin version of the Parker handset' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "PCB set, version 14.7A": {
                 "cost": 363.64,
-                "price": 691.31
+                "price": 691.31,
+                "description": "Sales item 'PCB set, version 14.7A' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Handset for Sovereign model (compatible)": {
                 "cost": 139.87,
-                "price": 280.65
+                "price": 280.65,
+                "description": "Sales item 'Handset for Sovereign model (compatible)' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Power transformer unit": {
                 "cost": 0,
-                "price": 0
+                "price": 0,
+                "description": "Sales item 'Power transformer unit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "New PCB for Parker bath": {
                 "cost": 384.25,
-                "price": 730.6
+                "price": 730.6,
+                "description": "Sales item 'New PCB for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               },
               "Assembled PCB unit for Parker bath": {
                 "cost": 266.45,
-                "price": 542.81
+                "price": 542.81,
+                "description": "Sales item 'Assembled PCB unit for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Electrical & Control"
               }
             },
             "Labelling & Identification": {
               "Product or component label": {
                 "cost": 2.65,
-                "price": 9.46
+                "price": 9.46,
+                "description": "Sales item 'Product or component label' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Labelling & Identification"
               }
             },
             "Plumbing & Valves": {
               "Ball valve used in Parker bath system": {
                 "cost": 45.07,
-                "price": 111.15
+                "price": 111.15,
+                "description": "Sales item 'Ball valve used in Parker bath system' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Electrical cabling for Parker bath": {
                 "cost": 93.33,
-                "price": 178.47
+                "price": 178.47,
+                "description": "Sales item 'Electrical cabling for Parker bath' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Check valve component for water flow control": {
                 "cost": 21.34,
-                "price": 60.86
+                "price": 60.86,
+                "description": "Sales item 'Check valve component for water flow control' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Drain upgrade kit": {
                 "cost": 123.24,
-                "price": 292.91
+                "price": 292.91,
+                "description": "Sales item 'Drain upgrade kit' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Universal pop-up plug for multiple bath models": {
                 "cost": 23.49,
-                "price": 53.08
+                "price": 53.08,
+                "description": "Sales item 'Universal pop-up plug for multiple bath models' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               },
               "Oregon Ducting Waste Pipe Kit 1.2Mtr": {
                 "cost": 2.27,
-                "price": 52.26
+                "price": 52.26,
+                "description": "Sales item 'Oregon Ducting Waste Pipe Kit 1.2Mtr' for Bath > Arjo > Parker / Rise & Tilt Bath > Standard > Plumbing & Valves"
               }
             }
           }
@@ -621,13 +726,15 @@
             "Accessories & Fittings": {
               "Grab Handle for 1275 Bradshaw Standard Beds": {
                 "cost": 50.0,
-                "price": 134.0
+                "price": 134.0,
+                "description": "Sales item 'Grab Handle for 1275 Bradshaw Standard Beds' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Standard > Accessories & Fittings"
               }
             },
             "Platform Components": {
               "Bradshaw BARI Platform Length Extension Frame Only": {
                 "cost": 227.85,
-                "price": 375.65
+                "price": 375.65,
+                "description": "Sales item 'Bradshaw BARI Platform Length Extension Frame Only' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Standard > Platform Components"
               }
             }
           },
@@ -635,43 +742,51 @@
             "Accessories & Fittings": {
               "Grab Handle for Bradshaw Bariatric Bed": {
                 "cost": 89.62,
-                "price": 169.47
+                "price": 169.47,
+                "description": "Sales item 'Grab Handle for Bradshaw Bariatric Bed' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Accessories & Fittings"
               }
             },
             "Complete Beds": {
               "Bradshaw Petite Low Profiling Bed (noRails)": {
                 "cost": 996.9,
-                "price": 1812.5
+                "price": 1812.5,
+                "description": "Sales item 'Bradshaw Petite Low Profiling Bed (noRails)' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Complete Beds"
               },
               "New Sidhil Bradshaw Low Bed Light Oak": {
                 "cost": 734.3,
-                "price": 1200.06
+                "price": 1200.06,
+                "description": "Sales item 'New Sidhil Bradshaw Low Bed Light Oak' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Complete Beds"
               },
               "New Sidhil Bradshaw Standard Bed Light Oak": {
                 "cost": 584.5,
-                "price": 955.24
+                "price": 955.24,
+                "description": "Sales item 'New Sidhil Bradshaw Standard Bed Light Oak' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Complete Beds"
               }
             },
             "Mattresses & Cushions": {
               "Acclaim Foam Mattress Junior bradshaw": {
                 "cost": 246.0,
-                "price": 398.0
+                "price": 398.0,
+                "description": "Sales item 'Acclaim Foam Mattress Junior bradshaw' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Mattresses & Cushions"
               },
               "Bradshaw BARI VE Matress Extension Cushion": {
                 "cost": 146.98,
-                "price": 280.25
+                "price": 280.25,
+                "description": "Sales item 'Bradshaw BARI VE Matress Extension Cushion' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Mattresses & Cushions"
               }
             },
             "Motors & Actuators": {
               "HiLo Foot end actuator 1275 bed": {
                 "cost": 104.65,
-                "price": 168.48
+                "price": 168.48,
+                "description": "Sales item 'HiLo Foot end actuator 1275 bed' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Motors & Actuators"
               }
             },
             "Platform Components": {
               "Bradshaw Bari Kneebreak Inner Calf Section": {
                 "cost": 0,
-                "price": 246.47
+                "price": 246.47,
+                "description": "Sales item 'Bradshaw Bari Kneebreak Inner Calf Section' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Bariatric > Platform Components"
               }
             }
           },
@@ -679,11 +794,13 @@
             "Platform Components": {
               "Bradshaw Bari Kneebreak Inner Thigh Section": {
                 "cost": 92.66,
-                "price": 154.43
+                "price": 154.43,
+                "description": "Sales item 'Bradshaw Bari Kneebreak Inner Thigh Section' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Petite Low > Platform Components"
               },
               "Bradshaw Bari Kneebreak Outer Platform Frame": {
                 "cost": 104.29,
-                "price": 209.8
+                "price": 209.8,
+                "description": "Sales item 'Bradshaw Bari Kneebreak Outer Platform Frame' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Petite Low > Platform Components"
               }
             }
           },
@@ -691,17 +808,20 @@
             "Platform Components": {
               "Bradshaw Bari Kneebreak Platform Assy Complete": {
                 "cost": 418.89,
-                "price": 761.62
+                "price": 761.62,
+                "description": "Sales item 'Bradshaw Bari Kneebreak Platform Assy Complete' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Low > Platform Components"
               }
             },
             "Side Rails & Extensions": {
               "Bradshaw BARI Side Rail & Platform Length Extension Set": {
                 "cost": 543.2,
-                "price": 1124.55
+                "price": 1124.55,
+                "description": "Sales item 'Bradshaw BARI Side Rail & Platform Length Extension Set' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Low > Side Rails & Extensions"
               },
               "Bradshaw Petite Side Rail (Single)": {
                 "cost": 21.85,
-                "price": 47.6
+                "price": 47.6,
+                "description": "Sales item 'Bradshaw Petite Side Rail (Single)' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Low > Side Rails & Extensions"
               }
             }
           },
@@ -709,7 +829,8 @@
             "Castors & Mobility": {
               "Twin Braked Castor 75mm - Bradshaw Low": {
                 "cost": 10.64,
-                "price": 49.17
+                "price": 49.17,
+                "description": "Sales item 'Twin Braked Castor 75mm - Bradshaw Low' for Bed > Drive DeVillbiss > Sidhill / Bradshaw > Bradshaw Junior > Castors & Mobility"
               }
             }
           }
@@ -719,47 +840,56 @@
             "Head/Foot Boards": {
               "Standard headboard for FS Low bed": {
                 "cost": 120.0,
-                "price": 277.45
+                "price": 277.45,
+                "description": "Sales item 'Standard headboard for FS Low bed' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Head/Foot Boards"
               },
               "Days brand headboard for FS Low bed": {
                 "cost": 90.92,
-                "price": 222.28
+                "price": 222.28,
+                "description": "Sales item 'Days brand headboard for FS Low bed' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Head/Foot Boards"
               }
             },
             "Motors & Actuators": {
               "Hi-Lo actuator \u2013 FS Low bed (ED3 Dewert)": {
                 "cost": 66.88,
-                "price": 180.17
+                "price": 180.17,
+                "description": "Sales item 'Hi-Lo actuator \u2013 FS Low bed (ED3 Dewert)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Motors & Actuators"
               }
             },
             "Complete Beds": {
               "Complete FS Low bed \u2013 beech finish": {
                 "cost": 577.31,
-                "price": 1427.71
+                "price": 1427.71,
+                "description": "Sales item 'Complete FS Low bed \u2013 beech finish' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Complete Beds"
               }
             },
             "Side Rails & Extensions": {
               "Wooden side rails \u2013 FS Low (115mm)": {
                 "cost": 41.18,
-                "price": 75.36
+                "price": 75.36,
+                "description": "Sales item 'Wooden side rails \u2013 FS Low (115mm)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Side Rails & Extensions"
               },
               "Grey cotside rail slider \u2013 FS Low (post-2018)": {
                 "cost": 3.09,
-                "price": 18.58
+                "price": 18.58,
+                "description": "Sales item 'Grey cotside rail slider \u2013 FS Low (post-2018)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Side Rails & Extensions"
               },
               "Beige deluxe side rail slider \u2013 FS Low": {
                 "cost": 2.77,
-                "price": 18.58
+                "price": 18.58,
+                "description": "Sales item 'Beige deluxe side rail slider \u2013 FS Low' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Side Rails & Extensions"
               }
             },
             "Structural Components": {
               "Head/foot board & frame assembly \u2013 FS Low": {
                 "cost": 128.85,
-                "price": 250.35
+                "price": 250.35,
+                "description": "Sales item 'Head/foot board & frame assembly \u2013 FS Low' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Structural Components"
               },
               "Metal end frame assembly \u2013 FS Low": {
                 "cost": 56.55,
-                "price": 118.03
+                "price": 118.03,
+                "description": "Sales item 'Metal end frame assembly \u2013 FS Low' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS Low > Structural Components"
               }
             }
           },
@@ -767,33 +897,39 @@
             "Motors & Actuators": {
               "Hi-Lo actuator \u2013 FS bed (ED3 Dewert 71176)": {
                 "cost": 80.16,
-                "price": 180.17
+                "price": 180.17,
+                "description": "Sales item 'Hi-Lo actuator \u2013 FS bed (ED3 Dewert 71176)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Motors & Actuators"
               }
             },
             "Structural Components": {
               "End frame \u2013 FS bed (metal only)": {
                 "cost": 24.85,
-                "price": 125.68
+                "price": 125.68,
+                "description": "Sales item 'End frame \u2013 FS bed (metal only)' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Structural Components"
               },
               "Head/foot board & frame assembly \u2013 FS": {
                 "cost": 116.99,
-                "price": 214.09
+                "price": 214.09,
+                "description": "Sales item 'Head/foot board & frame assembly \u2013 FS' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Structural Components"
               }
             },
             "Head/Foot Boards": {
               "Ultra FS headboard/footboard combo": {
                 "cost": 43.0,
-                "price": 154.14
+                "price": 154.14,
+                "description": "Sales item 'Ultra FS headboard/footboard combo' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Head/Foot Boards"
               },
               "CFS wooden headboard": {
                 "cost": 82.81,
-                "price": 165.07
+                "price": 165.07,
+                "description": "Sales item 'CFS wooden headboard' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Head/Foot Boards"
               }
             },
             "Side Rails & Extensions": {
               "Standard side rail slider \u2013 Casa FS": {
                 "cost": 1.99,
-                "price": 18.62
+                "price": 18.62,
+                "description": "Sales item 'Standard side rail slider \u2013 Casa FS' for Bed > Drive DeVillbiss > Casa/Classic FS > Classic FS > Side Rails & Extensions"
               }
             }
           },
@@ -801,7 +937,8 @@
             "Complete Beds": {
               "Complete bariatric FS bed with metal side rails": {
                 "cost": 1217.34,
-                "price": 2345.2
+                "price": 2345.2,
+                "description": "Sales item 'Complete bariatric FS bed with metal side rails' for Bed > Drive DeVillbiss > Casa/Classic FS > Ultra FS Bariatric > Complete Beds"
               }
             }
           }
@@ -815,55 +952,66 @@
             "Accessories & Fittings": {
               "Cable Retainer Monarch Portable": {
                 "cost": 2.0,
-                "price": 5.44
+                "price": 5.44,
+                "description": "Sales item 'Cable Retainer Monarch Portable' for Portable Overhead Hoist > Savaria > Monarch > Standard > Accessories & Fittings"
               },
               "Cabin Kit Monarch Portable": {
                 "cost": 120.0,
-                "price": 215.83
+                "price": 215.83,
+                "description": "Sales item 'Cabin Kit Monarch Portable' for Portable Overhead Hoist > Savaria > Monarch > Standard > Accessories & Fittings"
               },
               "Opemed Reacher Stick for Monarch Portable Hoist": {
                 "cost": 99.0,
-                "price": 162.45
+                "price": 162.45,
+                "description": "Sales item 'Opemed Reacher Stick for Monarch Portable Hoist' for Portable Overhead Hoist > Savaria > Monarch > Standard > Accessories & Fittings"
               }
             },
             "Controls": {
               "Handset Monarch": {
                 "cost": 69.0,
-                "price": 207.11
+                "price": 207.11,
+                "description": "Sales item 'Handset Monarch' for Portable Overhead Hoist > Savaria > Monarch > Standard > Controls"
               },
               "Monarch Keypad Membrane Left Hand": {
                 "cost": 30.0,
-                "price": 66.81
+                "price": 66.81,
+                "description": "Sales item 'Monarch Keypad Membrane Left Hand' for Portable Overhead Hoist > Savaria > Monarch > Standard > Controls"
               },
               "Monarch Keypad Membrane Right Hand": {
                 "cost": 30.0,
-                "price": 66.81
+                "price": 66.81,
+                "description": "Sales item 'Monarch Keypad Membrane Right Hand' for Portable Overhead Hoist > Savaria > Monarch > Standard > Controls"
               }
             },
             "Electronics": {
               "Pcb Assy - Monarch": {
                 "cost": 135.0,
-                "price": 252.37
+                "price": 252.37,
+                "description": "Sales item 'Pcb Assy - Monarch' for Portable Overhead Hoist > Savaria > Monarch > Standard > Electronics"
               }
             },
             "Main Unit": {
               "Monarch Portable Hoist Pod 200kg": {
                 "cost": 760.0,
-                "price": 1595.88
+                "price": 1595.88,
+                "description": "Sales item 'Monarch Portable Hoist Pod 200kg' for Portable Overhead Hoist > Savaria > Monarch > Standard > Main Unit"
               }
             },
             "Power Supply": {
               "Li-Ion Charger W/O Cord": {
                 "cost": 39.0,
-                "price": 118.32
+                "price": 118.32,
+                "description": "Sales item 'Li-Ion Charger W/O Cord' for Portable Overhead Hoist > Savaria > Monarch > Standard > Power Supply"
               },
               "Power Cord Uk for Charger (auto apply when the above is selected)": {
                 "cost": 10.0,
-                "price": 32.0
+                "price": 32.0,
+                "description": "Sales item 'Power Cord Uk for Charger (auto apply when the above is selected)' for Portable Overhead Hoist > Savaria > Monarch > Standard > Power Supply"
               },
               "Battery - Monarch": {
                 "cost": 195.0,
-                "price": 260.0
+                "price": 260.0,
+                "description": "Sales item 'Battery - Monarch' for Portable Overhead Hoist > Savaria > Monarch > Standard > Power Supply"
               }
             }
           }
