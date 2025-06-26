@@ -780,6 +780,9 @@ async function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
+  // Use a consistent grey stroke colour for all outline boxes
+  doc.setDrawColor(160);
+
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 15;
@@ -947,7 +950,7 @@ async function generatePDF() {
   }
 
   const disclaimerLines = [
-    "This repair quote is an estimate only and typically 95% accurate.",
+    "This document is provided as an estimate only and is typically 95% accurate.",
     "If you are happy with this estimate we can send a final",
     "quote for your approval before any work proceeds.",
     "Thank you for choosing NHM. Please contact us with any questions."
@@ -1030,6 +1033,9 @@ function removeSalesItem(index) {
 async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+
+  // Use the same grey stroke colour for all outline boxes
+  doc.setDrawColor(160);
 
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -1139,7 +1145,7 @@ async function generateSalesPDF() {
 
   const disclaimerLines = [
     "All prices exclude VAT unless marked exempt.",
-    "This quote is valid for 30 days.",
+    "This document is provided as an estimate and is valid for 30 days.",
     "Thank you for choosing NHM. Please contact us with any questions."
   ];
   const discHeight = disclaimerLines.length * lineHeight + 4;
