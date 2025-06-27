@@ -833,7 +833,8 @@ async function generatePDF() {
   doc.text("Quoted Repair Estimate", pageWidth / 2, 12, { align: "center" });
   doc.setTextColor(0, 0, 0);
 
-  const infoStartY = 30;
+  const lineHeight = 6;
+  let currentY = 30;
 
   const name = document.getElementById("customerName").value || "(No name)";
   const email = document.getElementById("customerEmail").value || "";
@@ -841,34 +842,69 @@ async function generatePDF() {
   const desc = document.getElementById("workDesc").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
 
-  const infoLines = [
-    `Quote #: ${number}`,
-    `Customer: ${name}`,
-    `Phone: ${phone || "(N/A)"}`,
-    `Email: ${email || "(N/A)"}`,
-    `Date: ${new Date().toLocaleDateString()}`
+  const infoRows = [
+    ["Quote #", number],
+    ["Customer", name],
+    ["Phone", phone || "(N/A)"],
+    ["Email", email || "(N/A)"],
+    ["Date", new Date().toLocaleDateString()]
   ];
 
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Customer Details", margin, currentY);
   doc.setFontSize(11);
-  const lineHeight = 6;
-  const infoBoxWidth = pageWidth - margin * 2;
-  const infoBoxHeight = infoLines.length * lineHeight + 4;
-  doc.rect(margin, infoStartY, infoBoxWidth, infoBoxHeight);
-  infoLines.forEach((t, i) => {
-    doc.text(t, margin + 2, infoStartY + lineHeight * (i + 1));
+  doc.setFont(undefined, "normal");
+  currentY += lineHeight + 4;
+
+  doc.autoTable({
+    startY: currentY,
+    head: [["Field", "Value"]],
+    body: infoRows,
+    margin: { left: margin, right: margin },
+    tableWidth: pageWidth - margin * 2,
+    theme: "grid",
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
+    styles: { fontSize: 10, cellPadding: 3, halign: "left" },
+    alternateRowStyles: { fillColor: [245, 245, 245] }
   });
 
-  let infoY = infoStartY + infoBoxHeight + 6;
+  currentY = doc.lastAutoTable.finalY + 10;
 
   if (desc) {
-    const descLines = doc.splitTextToSize(desc, infoBoxWidth - 4);
-    const descHeight = descLines.length * lineHeight + 4;
-    doc.rect(margin, infoY, infoBoxWidth, descHeight);
-    doc.text(descLines, margin + 2, infoY + lineHeight);
-    infoY += descHeight + 6;
+    const descLines = doc.splitTextToSize(desc, pageWidth - margin * 2 - 4);
+    const descRows = descLines.map(l => [l]);
+
+    doc.setFontSize(13);
+    doc.setFont(undefined, "bold");
+    doc.text("Quote Description", margin, currentY);
+    doc.setFontSize(11);
+    doc.setFont(undefined, "normal");
+    currentY += lineHeight + 4;
+
+    doc.autoTable({
+      startY: currentY,
+      head: [["Description"]],
+      body: descRows,
+      margin: { left: margin, right: margin },
+      tableWidth: pageWidth - margin * 2,
+      theme: "grid",
+      headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
+      styles: { fontSize: 10, cellPadding: 3, halign: "left" },
+      alternateRowStyles: { fillColor: [245, 245, 245] }
+    });
+
+    currentY = doc.lastAutoTable.finalY + 10;
   }
 
-  const tableStartY = infoY;
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Quote Details", margin, currentY);
+  doc.setFontSize(11);
+  doc.setFont(undefined, "normal");
+  currentY += lineHeight + 4;
+
+  const tableStartY = currentY;
 
   const rows = [];
   let labourSubtotal = 0;
@@ -940,26 +976,44 @@ async function generatePDF() {
     }
   });
 
+  currentY = doc.lastAutoTable.finalY + 10;
+
   const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[6].replace("£", "")), 0);
   const vat = document.getElementById("vatExempt").checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
-  const finalY = doc.lastAutoTable.finalY || 60;
 
   const summaryBoxWidth = 60;
   const summaryX = pageWidth - margin - summaryBoxWidth;
-  const summaryY = finalY + 6;
-  const summaryLines = [
-    `Subtotal: £${subtotal.toFixed(2)}`,
-    `VAT: £${vat.toFixed(2)}`,
-    `Total: £${total.toFixed(2)}`
+
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Quote Summary", margin, currentY);
+  doc.setFontSize(11);
+  doc.setFont(undefined, "normal");
+  currentY += lineHeight + 4;
+
+  const summaryRows = [
+    ["Subtotal", `£${subtotal.toFixed(2)}`],
+    ["VAT", `£${vat.toFixed(2)}`],
+    ["Total", `£${total.toFixed(2)}`]
   ];
-  const summaryHeight = summaryLines.length * lineHeight + 4;
-  doc.rect(summaryX, summaryY, summaryBoxWidth, summaryHeight);
-  summaryLines.forEach((t, i) => {
-    doc.text(t, summaryX + summaryBoxWidth - 2, summaryY + lineHeight * (i + 1), { align: "right" });
+
+  doc.autoTable({
+    startY: currentY,
+    head: [["Summary", "Amount"]],
+    body: summaryRows,
+    margin: { left: summaryX, right: margin },
+    tableWidth: summaryBoxWidth,
+    theme: "grid",
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
+    styles: { fontSize: 10, cellPadding: 3, halign: "right" },
+    alternateRowStyles: { fillColor: [245, 245, 245] },
+    columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
   });
 
-  let noteY = summaryY + summaryHeight + 8;
+  currentY = doc.lastAutoTable.finalY;
+
+  let noteY = currentY + 8;
   const centreX = pageWidth / 2;
   if (document.getElementById("supplyOnly").checked) {
     doc.text("Supply Only: Yes", centreX, noteY, { align: "center" });
@@ -1084,29 +1138,49 @@ async function generateSalesPDF() {
   doc.text("Sales Order Quote", pageWidth / 2, 12, { align: "center" });
   doc.setTextColor(0, 0, 0);
 
-  const infoStartY = 30;
+  const lineHeight = 6;
+  let currentY = 30;
+
   const name = document.getElementById("salesCustomerName").value || "(No name)";
   const email = document.getElementById("salesCustomerEmail").value || "";
   const phone = document.getElementById("salesCustomerPhone").value || "";
   const number = document.getElementById("salesQuoteNumber").value || "(No #)";
-  const infoLines = [
-    `Quote #: ${number}`,
-    `Customer: ${name}`,
-    `Phone: ${phone || "(N/A)"}`,
-    `Email: ${email || "(N/A)"}`,
-    `Date: ${new Date().toLocaleDateString()}`
+  const infoRows = [
+    ["Quote #", number],
+    ["Customer", name],
+    ["Phone", phone || "(N/A)"],
+    ["Email", email || "(N/A)"],
+    ["Date", new Date().toLocaleDateString()]
   ];
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Customer Details", margin, currentY);
   doc.setFontSize(11);
-  const lineHeight = 6;
-  const infoBoxWidth = pageWidth - margin * 2;
-  const infoBoxHeight = infoLines.length * lineHeight + 4;
-  doc.rect(margin, infoStartY, infoBoxWidth, infoBoxHeight);
-  infoLines.forEach((t, i) => {
-    doc.text(t, margin + 2, infoStartY + lineHeight * (i + 1));
-  });
-  let infoY = infoStartY + infoBoxHeight + 6;
+  doc.setFont(undefined, "normal");
+  currentY += lineHeight + 4;
 
-  const tableStartY = infoY;
+  doc.autoTable({
+    startY: currentY,
+    head: [["Field", "Value"]],
+    body: infoRows,
+    margin: { left: margin, right: margin },
+    tableWidth: pageWidth - margin * 2,
+    theme: "grid",
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
+    styles: { fontSize: 10, cellPadding: 3, halign: "left" },
+    alternateRowStyles: { fillColor: [245, 245, 245] }
+  });
+
+  currentY = doc.lastAutoTable.finalY + 10;
+
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Quote Details", margin, currentY);
+  doc.setFontSize(11);
+  doc.setFont(undefined, "normal");
+  currentY += lineHeight + 4;
+
+  const tableStartY = currentY;
 
   const rows = salesItems.map(item => {
     let price = item.price;
@@ -1145,28 +1219,46 @@ async function generateSalesPDF() {
     columnStyles: { 0: { halign: "left" } }
   });
 
+  currentY = doc.lastAutoTable.finalY + 10;
+
   const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[3].replace("£", "")), 0);
   const vat = document.getElementById("vatExemptSales").checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
-  const finalY = doc.lastAutoTable.finalY || 60;
 
   const summaryBoxWidth = 60;
   const summaryX = pageWidth - margin - summaryBoxWidth;
-  const summaryY = finalY + 6;
-  const summaryLines = [
-    `Subtotal: £${subtotal.toFixed(2)}`,
-    `VAT: £${vat.toFixed(2)}`,
-    `Total: £${total.toFixed(2)}`
+
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Quote Summary", margin, currentY);
+  doc.setFontSize(11);
+  doc.setFont(undefined, "normal");
+  currentY += lineHeight + 4;
+
+  const summaryRows = [
+    ["Subtotal", `£${subtotal.toFixed(2)}`],
+    ["VAT", `£${vat.toFixed(2)}`],
+    ["Total", `£${total.toFixed(2)}`]
   ];
-  const summaryHeight = summaryLines.length * lineHeight + 4;
-  doc.rect(summaryX, summaryY, summaryBoxWidth, summaryHeight);
-  summaryLines.forEach((t, i) => {
-    doc.text(t, summaryX + summaryBoxWidth - 2, summaryY + lineHeight * (i + 1), { align: "right" });
+
+  doc.autoTable({
+    startY: currentY,
+    head: [["Summary", "Amount"]],
+    body: summaryRows,
+    margin: { left: summaryX, right: margin },
+    tableWidth: summaryBoxWidth,
+    theme: "grid",
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
+    styles: { fontSize: 10, cellPadding: 3, halign: "right" },
+    alternateRowStyles: { fillColor: [245, 245, 245] },
+    columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
   });
+
+  currentY = doc.lastAutoTable.finalY;
 
   const centreX = pageWidth / 2;
   if (document.getElementById("vatExemptSales").checked) {
-    doc.text("VAT Exempt: Yes", centreX, summaryY + summaryHeight + 6, { align: "center" });
+    doc.text("VAT Exempt: Yes", centreX, currentY + 6, { align: "center" });
   }
 
   const disclaimerLines = [
