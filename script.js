@@ -237,6 +237,14 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       labourInput.value = "";
     }
+    const descBox = document.getElementById("serviceDesc");
+    const descText = document.getElementById("serviceDescText");
+    if (info && info.description) {
+      descText.textContent = info.description;
+      descBox.classList.remove("hidden");
+    } else {
+      descBox.classList.add("hidden");
+    }
     document.getElementById("repairQty").value = 1;
     document.getElementById("labourSection").classList.remove("hidden");
   });
@@ -301,8 +309,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const variant = document.getElementById("salesVariantSelect").value;
     const category = document.getElementById("salesCategorySelect").value;
     const item = document.getElementById("salesItemSelect").value;
-    document.getElementById("salesDesc").value = `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
     const info = salesData[asset]?.[make]?.[model]?.[variant]?.[category]?.[item];
+    document.getElementById("salesDesc").value = info?.description || `${asset} - ${make} - ${model} - ${variant} - ${category} - ${item}`;
     const repairInfo = data[asset]?.[make]?.[model]?.[variant]?.[category]?.[item];
     currentSetupCost = 0;
     currentCommissionCost = 0;
