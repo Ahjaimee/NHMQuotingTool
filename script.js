@@ -984,6 +984,9 @@ async function generatePDF() {
     doc.text(t, pageWidth / 2, discY + lineHeight * (i + 1), { align: "center" });
   });
 
+  // Footer with contact details at the very bottom
+  addPdfFooter(doc, pageWidth, pageHeight);
+
   doc.save("NHM_Quote.pdf");
 }
 
@@ -1179,5 +1182,31 @@ async function generateSalesPDF() {
     doc.text(t, pageWidth / 2, discY + lineHeight * (i + 1), { align: "center" });
   });
 
+  // Footer with contact details at the very bottom
+  addPdfFooter(doc, pageWidth, pageHeight);
+
   doc.save("NHM_Sales_Quote.pdf");
+}
+
+// Draws a consistent footer on all PDF pages
+function addPdfFooter(doc, pageWidth, pageHeight) {
+  const line1Prefix = "01444 250 350 \u2022 sales@nhmaintenance.com \u2022 ";
+  const website = "www.nhmaintenance.com";
+  const address =
+    "N H Maintenance Ltd, Consort House, Jubilee Road, Victoria Industrial Park, Burgess Hill, West Sussex, RH15 9TL";
+
+  doc.setFontSize(10);
+  const fullWidth = doc.getTextWidth(line1Prefix + website);
+  const startX = (pageWidth - fullWidth) / 2;
+  const lineY = pageHeight - 12; // ~12mm from bottom
+
+  // First line with website in burnt orange
+  doc.setTextColor(0, 0, 0);
+  doc.text(line1Prefix, startX, lineY);
+  doc.setTextColor(169, 111, 43);
+  doc.text(website, startX + doc.getTextWidth(line1Prefix), lineY);
+
+  // Second line in black centred
+  doc.setTextColor(0, 0, 0);
+  doc.text(address, pageWidth / 2, lineY + 5, { align: "center" });
 }
