@@ -239,6 +239,37 @@ input[type="checkbox"]:active {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Layout for table based quote details */
+.quote-details {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.95rem;
+}
+
+.quote-table th,
+.quote-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.quote-table th {
+  background: #f2f2f2;
+  text-align: left;
+}
+
+.quote-table th.num,
+.quote-table td.num {
+  text-align: right;
+}
+
 .quote-line {
   margin-bottom: 15px;
   background: #f9f9f9;
@@ -276,13 +307,30 @@ input[type="checkbox"]:active {
   background: #a41e1e;
 }
 
-#estimate {
+.remove-btn {
+  background: none;
+  border: none;
+  color: #c62828;
+  margin-left: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.quote-summary {
   background: #eef7ec;
   padding: 12px;
-  margin-top: 15px;
   border-left: 5px solid #4caf50;
   border-radius: 6px;
   text-align: right;
+  margin-top: 10px;
+}
+
+.quote-summary p {
+  margin: 4px 0;
+}
+
+.quote-summary p:last-child {
+  font-weight: bold;
 }
 
 .desc-box {
