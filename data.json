@@ -1,4 +1,175 @@
 {
-  "repairs": {},
-  "sales": {}
+  "repairs": {
+    "Chair Scale": {
+      "Marsden": {
+        "M-200 Bariatric Chair Scale": {
+          "Standard": {
+            "Batteries": {
+              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in M-200 Chair Scale."
+              }
+            }
+          }
+        },
+        "M-210 Chair Scale": {
+          "Standard": {
+            "Batteries": {
+              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in M-210 Chair Scale."
+              }
+            }
+          }
+        },
+        "M-225 Chair Scale": {
+          "Standard": {
+            "Batteries": {
+              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in M-225 Chair Scale."
+              }
+            }
+          }
+        },
+        "MPDC-250 Professional Chair Scale": {
+          "Standard": {
+            "Batteries": {
+              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in MPDC-250 Chair Scale."
+              }
+            }
+          }
+        },
+        "M-250 Chair Scale": {
+          "Standard": {
+            "Batteries": {
+              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0004",
+                "description": "Install replacement long-connection battery in M-250 Chair Scale."
+              }
+            }
+          }
+        },
+        "M-950 Bed & Trolley Scale": {
+          "Standard": {
+            "Batteries": {
+              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0004",
+                "description": "Install replacement long-connection battery in M-950 Bed & Trolley Scale."
+              }
+            }
+          }
+        },
+        "M-610 Hoist Weigher (Heavy Duty)": {
+          "Standard": {
+            "Batteries": {
+              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0004",
+                "description": "Install replacement long-connection battery in M-610 Hoist Weigher."
+              }
+            }
+          }
+        }
+      }
+    },
+    "Hoist Attachment Scale": {
+      "Marsden": {
+        "M-600 Hoist Weigher Attachment": {
+          "Standard": {
+            "Batteries": {
+              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in M-600 Hoist Weigher."
+              }
+            }
+          }
+        },
+        "M-615 Hoist Weigher Attachment": {
+          "Standard": {
+            "Batteries": {
+              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0004",
+                "description": "Install replacement long-connection battery in M-615 Hoist Weigher."
+              }
+            }
+          }
+        },
+        "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
+          "Standard": {
+            "Main Unit": {
+              "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
+                "labour_hours": 0,
+                "material_cost": 0,
+                "part_number": "EQ141-0004",
+                "description": "Equipment Sales"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sales": {
+    "Chair Scale": {
+      "Marsden": {
+        "M-210 Digital Chair Scale": {
+          "Standard": {
+            "Main Unit": {
+              "Marsden Professional Chair Scale with BMI M-210": {
+                "cost": 425.0,
+                "price": 726.96,
+                "description": "Marsden Professional Chair Scale with BMI M-210"
+              }
+            }
+          }
+        },
+        "M-225  Digital Chair Scale": {
+          "Standard": {
+            "Main Unit": {
+              "Marsden Easy-Use Entry Level Chair Scale": {
+                "cost": 459.0,
+                "price": 624.0,
+                "description": "Marsden Easy-Use Entry Level Chair Scale"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Hoist Attachment Scale": {
+      "Marsden": {
+        "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
+          "Standard": {
+            "Main Unit": {
+              "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
+                "cost": 569.0,
+                "price": 724.0,
+                "description": "Marsden Hoist Weigher Scale Attachment M-600 with BMI"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
