@@ -23,6 +23,14 @@
                 "part_number": "SPX141-0003",
                 "description": "Install replacement battery in M-210 Chair Scale."
               }
+            },
+            "Castors & Wheels": {
+              "100 X 32 M12 Braked Castors": {
+                "labour_hours": 0.2,
+                "material_cost": 8.12,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
             }
           }
         },
@@ -34,6 +42,14 @@
                 "material_cost": 70.94,
                 "part_number": "SPX141-0003",
                 "description": "Install replacement battery in M-225 Chair Scale."
+              }
+            },
+            "Castors & Wheels": {
+              "100 X 32 M12 Braked Castors": {
+                "labour_hours": 0.2,
+                "material_cost": 8.12,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
               }
             }
           }
@@ -47,6 +63,14 @@
                 "part_number": "SPX141-0003",
                 "description": "Install replacement battery in MPDC-250 Chair Scale."
               }
+            },
+            "Castors & Wheels": {
+              "100 X 32 M12 Braked Castors": {
+                "labour_hours": 0.2,
+                "material_cost": 8.12,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
             }
           }
         },
@@ -58,6 +82,14 @@
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
                 "description": "Install replacement long-connection battery in M-250 Chair Scale."
+              }
+            },
+            "Castors & Wheels": {
+              "100 X 32 M12 Braked Castors": {
+                "labour_hours": 0.2,
+                "material_cost": 8.12,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
               }
             }
           }
