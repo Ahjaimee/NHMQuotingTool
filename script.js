@@ -1195,18 +1195,24 @@ function addPdfFooter(doc, pageWidth, pageHeight) {
   const address =
     "N H Maintenance Ltd, Consort House, Jubilee Road, Victoria Industrial Park, Burgess Hill, West Sussex, RH15 9TL";
 
-  doc.setFontSize(10);
-  const fullWidth = doc.getTextWidth(line1Prefix + website);
-  const startX = (pageWidth - fullWidth) / 2;
-  const lineY = pageHeight - 12; // ~12mm from bottom
+  const pages = doc.getNumberOfPages();
+  for (let i = 1; i <= pages; i++) {
+    doc.setPage(i);
+    const w = doc.internal.pageSize.getWidth();
+    const h = doc.internal.pageSize.getHeight();
+    doc.setFontSize(10);
+    const fullWidth = doc.getTextWidth(line1Prefix + website);
+    const startX = (w - fullWidth) / 2;
+    const lineY = h - 12; // ~12mm from bottom
 
-  // First line with website in burnt orange
-  doc.setTextColor(0, 0, 0);
-  doc.text(line1Prefix, startX, lineY);
-  doc.setTextColor(169, 111, 43);
-  doc.text(website, startX + doc.getTextWidth(line1Prefix), lineY);
+    // First line with website in burnt orange
+    doc.setTextColor(0, 0, 0);
+    doc.text(line1Prefix, startX, lineY);
+    doc.setTextColor(169, 111, 43);
+    doc.text(website, startX + doc.getTextWidth(line1Prefix), lineY);
 
-  // Second line in black centred
-  doc.setTextColor(0, 0, 0);
-  doc.text(address, pageWidth / 2, lineY + 5, { align: "center" });
+    // Second line in black centred
+    doc.setTextColor(0, 0, 0);
+    doc.text(address, w / 2, lineY + 5, { align: "center" });
+  }
 }
