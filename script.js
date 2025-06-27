@@ -856,16 +856,17 @@ async function generatePDF() {
     ["Date", new Date().toLocaleDateString()]
   ];
 
+  const infoText = infoRows.map(([k, v]) => `${k}: ${v}`).join("\n");
+
   doc.autoTable({
     startY: currentY,
     head: [["Customer Details"]],
-    body: infoRows.map(([k, v]) => [`${k}: ${v}`]),
-    margin: { left: margin, right: margin },
-    tableWidth: pageWidth - margin * 2,
+    body: [[infoText]],
+    margin: { left: margin },
+    tableWidth: 80,
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
-    alternateRowStyles: { fillColor: [245, 245, 245] }
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
   currentY = doc.lastAutoTable.finalY + 10;
@@ -925,8 +926,8 @@ async function generatePDF() {
     const materials = info.material_cost * item.qty;
     const total = labour + materials;
     rows.push([
-      `${item.model}`,
-      `${item.category} - ${item.repair}`,
+      `${item.asset} ${item.model}`,
+      info.description || `${item.category} - ${item.repair}`,
       info.part_number,
       item.qty,
       `£${labour.toFixed(2)}`,
@@ -942,7 +943,7 @@ async function generatePDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [[{ content: "Quote Details", colSpan: 7 }], ["Model", "Category/Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
+    head: [["Model", "Service Description", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
@@ -954,8 +955,8 @@ async function generatePDF() {
     },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: {
-      0: { halign: "left", cellWidth: 28 },
-      1: { halign: "left", cellWidth: 50 },
+      0: { halign: "left", cellWidth: 40, fontStyle: "bold" },
+      1: { halign: "left", cellWidth: 65 },
       2: { halign: "center", cellWidth: 22 },
       3: { halign: "center", cellWidth: 12 },
       4: { halign: "right", cellWidth: 22 },
@@ -1145,16 +1146,16 @@ async function generateSalesPDF() {
     ["Email", email || "(N/A)"],
     ["Date", new Date().toLocaleDateString()]
   ];
+  const salesInfo = infoRows.map(([k, v]) => `${k}: ${v}`).join("\n");
   doc.autoTable({
     startY: currentY,
     head: [["Customer Details"]],
-    body: infoRows.map(([k, v]) => [`${k}: ${v}`]),
-    margin: { left: margin, right: margin },
-    tableWidth: pageWidth - margin * 2,
+    body: [[salesInfo]],
+    margin: { left: margin },
+    tableWidth: 80,
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
-    alternateRowStyles: { fillColor: [245, 245, 245] }
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
   currentY = doc.lastAutoTable.finalY + 10;
@@ -1188,7 +1189,7 @@ async function generateSalesPDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [[{ content: "Quote Details", colSpan: 4 }], ["Item Description", "Qty", "Price (ex VAT)", "Total"]],
+    head: [["Item Description", "Qty", "Price (ex VAT)", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     tableWidth: pageWidth - margin * 2,
@@ -1197,10 +1198,10 @@ async function generateSalesPDF() {
     styles: { halign: "center", fontSize: 10, cellPadding: TABLE_PADDING },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: {
-      0: { halign: "left", cellWidth: 100 },
+      0: { halign: "left", cellWidth: 100, fontStyle: "bold" },
       1: { cellWidth: 20 },
-      2: { cellWidth: 30, halign: "right" },
-      3: { cellWidth: 30, halign: "right" }
+      2: { cellWidth: 35, halign: "right" },
+      3: { cellWidth: 35, halign: "right" }
     }
   });
 
