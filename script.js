@@ -45,6 +45,7 @@ let assetChoices, makeChoices, modelChoices, variantChoices, categoryChoices, re
 let salesAssetChoices, salesMakeChoices, salesModelChoices,
     salesVariantChoices, salesCategoryChoices, salesItemChoices;
 let setupLabel, commissionLabel, includeSetup, includeCommission;
+let overrideCarriage, customCarriage;
 
 document.addEventListener("DOMContentLoaded", () => {
   assetChoices = new Choices("#assetSelect", {
@@ -135,6 +136,8 @@ document.addEventListener("DOMContentLoaded", () => {
     commissionLabel = document.getElementById("commissionLabel");
     includeSetup = document.getElementById("includeSetup");
     includeCommission = document.getElementById("includeCommission");
+    overrideCarriage = document.getElementById("overrideCarriage");
+    customCarriage = document.getElementById("customCarriage");
 
   fetch('data.json')
     .then(r => r.json())
@@ -439,6 +442,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("vatExemptSales").addEventListener("change", renderSalesQuote);
+  document.getElementById("overrideCarriage").addEventListener("change", () => {
+    const input = document.getElementById("customCarriage");
+    input.classList.toggle("hidden", !document.getElementById("overrideCarriage").checked);
+    renderSalesQuote();
+  });
+  document.getElementById("customCarriage").addEventListener("input", () => {
+    if (document.getElementById("overrideCarriage").checked) {
+      renderSalesQuote();
+    }
+  });
   document.getElementById("downloadSalesPDF").addEventListener("click", generateSalesPDF);
 });
 
@@ -1008,11 +1021,12 @@ function renderSalesQuote() {
     `;
   });
 
-  subtotal += SALES_CARRIAGE;
+  const carriage = overrideCarriage.checked ? parseFloat(customCarriage.value) || 0 : SALES_CARRIAGE;
+  subtotal += carriage;
   if (salesItems.length > 0) {
     lines.innerHTML += `
       <div class="quote-line">
-        <p><strong class="label">Carriage</strong><strong class="value">£${SALES_CARRIAGE.toFixed(2)}</strong></p>
+        <p><strong class="label">Carriage</strong><strong class="value">£${carriage.toFixed(2)}</strong></p>
       </div>
     `;
   }
@@ -1111,8 +1125,9 @@ async function generateSalesPDF() {
     ];
   });
 
+  const carriage = overrideCarriage.checked ? parseFloat(customCarriage.value) || 0 : SALES_CARRIAGE;
   if (rows.length > 0) {
-    rows.push(["Carriage", "", "", `£${SALES_CARRIAGE.toFixed(2)}`]);
+    rows.push(["Carriage", "", "", `£${carriage.toFixed(2)}`]);
   }
 
   doc.autoTable({
