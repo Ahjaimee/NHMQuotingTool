@@ -2,7 +2,7 @@
   "repairs": {
     "Chair Scale": {
       "Marsden": {
-        "M-200 Bariatric Chair Scale": {
+        "M-200": {
           "Standard": {
             "Batteries": {
               "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
@@ -14,7 +14,7 @@
             }
           }
         },
-        "M-210 Chair Scale": {
+        "M-210": {
           "Standard": {
             "Batteries": {
               "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
@@ -27,14 +27,14 @@
             "Castors & Wheels": {
               "100 X 32 M12 Braked Castors": {
                 "labour_hours": 0.2,
-                "material_cost": 8.12,
+                "material_cost": 59.61,
                 "part_number": "SPX074-0010",
                 "description": "Replace broken or worn castor."
               }
             }
           }
         },
-        "M-225 Chair Scale": {
+        "M-225": {
           "Standard": {
             "Batteries": {
               "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
@@ -43,18 +43,10 @@
                 "part_number": "SPX141-0003",
                 "description": "Install replacement battery in M-225 Chair Scale."
               }
-            },
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 8.12,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor."
-              }
             }
           }
         },
-        "MPDC-250 Professional Chair Scale": {
+        "MPDC-250": {
           "Standard": {
             "Batteries": {
               "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
@@ -63,18 +55,10 @@
                 "part_number": "SPX141-0003",
                 "description": "Install replacement battery in MPDC-250 Chair Scale."
               }
-            },
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 8.12,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor."
-              }
             }
           }
         },
-        "M-250 Chair Scale": {
+        "M-250": {
           "Standard": {
             "Batteries": {
               "Marsden Scale Battery DP-3800 (V3) Long Conn": {
@@ -83,18 +67,10 @@
                 "part_number": "SPX141-0004",
                 "description": "Install replacement long-connection battery in M-250 Chair Scale."
               }
-            },
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 8.12,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor."
-              }
             }
           }
         },
-        "M-950 Bed & Trolley Scale": {
+        "M-950": {
           "Standard": {
             "Batteries": {
               "Marsden Scale Battery DP-3800 (V3) Long Conn": {
@@ -106,7 +82,7 @@
             }
           }
         },
-        "M-610 Hoist Weigher (Heavy Duty)": {
+        "M-610": {
           "Standard": {
             "Batteries": {
               "Marsden Scale Battery DP-3800 (V3) Long Conn": {
@@ -122,7 +98,7 @@
     },
     "Hoist Attachment Scale": {
       "Marsden": {
-        "M-600 Hoist Weigher Attachment": {
+        "M-600": {
           "Standard": {
             "Batteries": {
               "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales – short connector": {
@@ -134,7 +110,7 @@
             }
           }
         },
-        "M-615 Hoist Weigher Attachment": {
+        "M-615": {
           "Standard": {
             "Batteries": {
               "Marsden Scale Battery DP-3800 (V3) Long Conn": {
@@ -145,18 +121,6 @@
               }
             }
           }
-        },
-        "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
-          "Standard": {
-            "Main Unit": {
-              "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
-                "labour_hours": 0,
-                "material_cost": 0,
-                "part_number": "EQ141-0004",
-                "description": "Equipment Sales"
-              }
-            }
-          }
         }
       }
     }
@@ -164,24 +128,24 @@
   "sales": {
     "Chair Scale": {
       "Marsden": {
-        "M-210 Digital Chair Scale": {
+        "M-210": {
           "Standard": {
             "Main Unit": {
               "Marsden Professional Chair Scale with BMI M-210": {
-                "cost": 425.0,
                 "price": 726.96,
-                "description": "Marsden Professional Chair Scale with BMI M-210"
+                "part_number": "EQ141-0002",
+                "description": "Equipment Sales"
               }
             }
           }
         },
-        "M-225  Digital Chair Scale": {
+        "M-225": {
           "Standard": {
             "Main Unit": {
               "Marsden Easy-Use Entry Level Chair Scale": {
-                "cost": 459.0,
                 "price": 624.0,
-                "description": "Marsden Easy-Use Entry Level Chair Scale"
+                "part_number": "EQ141-0003",
+                "description": "Equipment Sales"
               }
             }
           }
@@ -190,13 +154,13 @@
     },
     "Hoist Attachment Scale": {
       "Marsden": {
-        "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
+        "M-600": {
           "Standard": {
             "Main Unit": {
               "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
-                "cost": 569.0,
                 "price": 724.0,
-                "description": "Marsden Hoist Weigher Scale Attachment M-600 with BMI"
+                "part_number": "EQ141-0004",
+                "description": "Equipment Sales"
               }
             }
           }
