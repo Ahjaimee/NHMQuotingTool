@@ -710,8 +710,8 @@ function resetRepairFields() {
 }
 
 function renderQuote() {
-  const quoteLines = document.getElementById("quoteLines");
-  const estimate = document.getElementById("estimate");
+  const tableBody = document.getElementById("quoteLines");
+  const summaryBox = document.getElementById("quoteSummary");
   const descBox = document.getElementById("workDescription");
   const descValue = document.getElementById("workDesc").value.trim();
   if (descValue) {
@@ -723,7 +723,7 @@ function renderQuote() {
   const supplyOnly = document.getElementById("supplyOnly").checked;
   const vatExempt = document.getElementById("vatExempt").checked;
 
-  quoteLines.innerHTML = "";
+  tableBody.innerHTML = "";
   let subtotal = 0;
   let labourSubtotal = 0;
   const items = [];
@@ -758,36 +758,31 @@ function renderQuote() {
     const materials = info.material_cost * item.qty;
     const total = labour + materials;
     subtotal += total;
-    quoteLines.innerHTML += `
-      <div class="quote-line">
-        <p class="desc"><strong>${item.asset} → ${item.make} → ${item.model} → ${item.variant} → ${item.category} → ${item.repair}</strong></p>
-        <p><span class="label">Part #:</span><span class="value">${info.part_number}</span></p>
-        <p><span class="label">Qty:</span><span class="value">${item.qty}</span></p>
-        <p><span class="label">Labour:</span><span class="value">${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</span></p>
-        <p><span class="label">Materials:</span><span class="value">£${materials.toFixed(2)}</span></p>
-        <p class="total-line"><strong class="label">Total:</strong><strong class="value">£${total.toFixed(2)}</strong></p>
-        <button onclick="removeItem(${index})">Remove</button>
-      </div>
-    `;
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><button class="remove-btn" onclick="removeItem(${index})">\u2716</button>${item.asset} ${item.model}</td>
+      <td>${info.description || `${item.category} - ${item.repair}`}</td>
+      <td>${info.part_number}</td>
+      <td class="num">${item.qty}</td>
+      <td class="num">${supplyOnly ? 'N/A' : `£${labour.toFixed(2)}`}</td>
+      <td class="num">£${materials.toFixed(2)}</td>
+      <td class="num">£${total.toFixed(2)}</td>`;
+    tableBody.appendChild(row);
   });
 
   if (carriageCharge > 0) {
     subtotal += carriageCharge;
-    quoteLines.innerHTML += `
-      <div class="quote-line">
-        <p><strong class="label">Carriage</strong><strong class="value">£${carriageCharge.toFixed(2)}</strong></p>
-      </div>
-    `;
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>Carriage</td><td></td><td></td><td></td><td></td><td></td><td class="num">£${carriageCharge.toFixed(2)}</td>`;
+    tableBody.appendChild(row);
   }
 
   const vat = vatExempt ? 0 : subtotal * 0.2;
   const grandTotal = subtotal + vat;
 
-  estimate.innerHTML = `
-    <h3>Quote Summary</h3>
-    <p>Items: ${items.length}</p>
+  summaryBox.innerHTML = `
     <p>Subtotal: £${subtotal.toFixed(2)}</p>
-    <p>VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}</p>
+    <p>VAT: £${vat.toFixed(2)}</p>
     <p><strong>Total: £${grandTotal.toFixed(2)}</strong></p>
   `;
 }
@@ -870,7 +865,7 @@ async function generatePDF() {
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
-  currentY = doc.lastAutoTable.finalY + 10;
+  currentY = doc.lastAutoTable.finalY;
 
   if (desc) {
     const descLines = doc.splitTextToSize(desc, pageWidth - margin * 2 - 4);
@@ -966,14 +961,11 @@ async function generatePDF() {
     }
   });
 
-  currentY = doc.lastAutoTable.finalY + 10;
+  currentY = doc.lastAutoTable.finalY;
 
   const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[6].replace("£", "")), 0);
   const vat = document.getElementById("vatExempt").checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
-
-  const summaryBoxWidth = 60;
-  const summaryX = pageWidth - margin - summaryBoxWidth;
 
   const summaryRows = [
     ["Subtotal", `£${subtotal.toFixed(2)}`],
@@ -981,8 +973,13 @@ async function generatePDF() {
     ["Total", `£${total.toFixed(2)}`]
   ];
 
+  const summaryBoxWidth = 60;
+  const summaryX = pageWidth - margin - summaryBoxWidth;
+  const summaryHeight = (summaryRows.length + 1) * (lineHeight + 1);
+  const summaryY = currentY - summaryHeight;
+
   doc.autoTable({
-    startY: currentY,
+    startY: summaryY,
     head: [[{ content: "Quote Summary", colSpan: 2 }]],
     body: summaryRows,
     margin: { left: summaryX, right: margin },
@@ -1159,7 +1156,7 @@ async function generateSalesPDF() {
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
-  currentY = doc.lastAutoTable.finalY + 10;
+  currentY = doc.lastAutoTable.finalY;
 
   const tableStartY = currentY;
 
@@ -1206,14 +1203,11 @@ async function generateSalesPDF() {
     }
   });
 
-  currentY = doc.lastAutoTable.finalY + 10;
+  currentY = doc.lastAutoTable.finalY;
 
   const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[3].replace("£", "")), 0);
   const vat = document.getElementById("vatExemptSales").checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
-
-  const summaryBoxWidth = 60;
-  const summaryX = pageWidth - margin - summaryBoxWidth;
 
   const summaryRows = [
     ["Subtotal", `£${subtotal.toFixed(2)}`],
@@ -1221,8 +1215,13 @@ async function generateSalesPDF() {
     ["Total", `£${total.toFixed(2)}`]
   ];
 
+  const summaryBoxWidth = 60;
+  const summaryX = pageWidth - margin - summaryBoxWidth;
+  const summaryHeight = (summaryRows.length + 1) * (lineHeight + 1);
+  const summaryY = currentY - summaryHeight;
+
   doc.autoTable({
-    startY: currentY,
+    startY: summaryY,
     head: [[{ content: "Quote Summary", colSpan: 2 }]],
     body: summaryRows,
     margin: { left: summaryX, right: margin },
