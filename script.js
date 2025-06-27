@@ -32,6 +32,9 @@ const DEFAULT_COMMISSION_COST = 50;
 // Cost and default selling price for sales items
 let salesData = {};
 
+// Padding used for all PDF tables for consistent styling
+const TABLE_PADDING = 6;
+
 let quoteItems = [];
 let salesItems = [];
 
@@ -865,7 +868,7 @@ async function generatePDF() {
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
-    styles: { fontSize: 10, cellPadding: 3, halign: "left" },
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
     alternateRowStyles: { fillColor: [245, 245, 245] }
   });
 
@@ -890,7 +893,7 @@ async function generatePDF() {
       tableWidth: pageWidth - margin * 2,
       theme: "grid",
       headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
-      styles: { fontSize: 10, cellPadding: 3, halign: "left" },
+      styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
       alternateRowStyles: { fillColor: [245, 245, 245] }
     });
 
@@ -965,7 +968,7 @@ async function generatePDF() {
     styles: {
       halign: "center",
       fontSize: 10,
-      cellPadding: 3
+      cellPadding: TABLE_PADDING
     },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: {
@@ -1006,7 +1009,7 @@ async function generatePDF() {
     tableWidth: summaryBoxWidth,
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
-    styles: { fontSize: 10, cellPadding: 3, halign: "right" },
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
   });
@@ -1030,10 +1033,20 @@ async function generatePDF() {
     "quote for your approval before any work proceeds.",
     "Thank you for choosing NHM. Please contact us with any questions."
   ];
+  const footerGap = 7; // ~20px spacing from the footer
   const discHeight = disclaimerLines.length * lineHeight + 4;
-  const discY = pageHeight - discHeight - margin;
+  const discY = pageHeight - discHeight - 12 - footerGap;
+
+  const headingY = discY - lineHeight - 4;
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Disclaimer", margin, headingY);
   doc.setFontSize(10);
-  doc.rect(margin, discY, pageWidth - margin * 2, discHeight);
+  doc.setFont(undefined, "normal");
+
+  doc.setFillColor(245, 245, 245);
+  doc.rect(margin, discY, pageWidth - margin * 2, discHeight, "F");
+  doc.setTextColor(0, 0, 0);
   disclaimerLines.forEach((t, i) => {
     doc.text(t, pageWidth / 2, discY + lineHeight * (i + 1), { align: "center" });
   });
@@ -1167,7 +1180,7 @@ async function generateSalesPDF() {
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
-    styles: { fontSize: 10, cellPadding: 3, halign: "left" },
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
     alternateRowStyles: { fillColor: [245, 245, 245] }
   });
 
@@ -1214,7 +1227,7 @@ async function generateSalesPDF() {
     margin: { left: 15, right: 15 },
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
-    styles: { halign: "center", fontSize: 10, cellPadding: 3 },
+    styles: { halign: "center", fontSize: 10, cellPadding: TABLE_PADDING },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: { 0: { halign: "left" } }
   });
@@ -1249,7 +1262,7 @@ async function generateSalesPDF() {
     tableWidth: summaryBoxWidth,
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
-    styles: { fontSize: 10, cellPadding: 3, halign: "right" },
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
   });
@@ -1266,10 +1279,20 @@ async function generateSalesPDF() {
     "This document is provided as an estimate and is valid for 30 days.",
     "Thank you for choosing NHM. Please contact us with any questions."
   ];
+  const footerGap = 7; // ~20px spacing from the footer
   const discHeight = disclaimerLines.length * lineHeight + 4;
-  const discY = pageHeight - discHeight - margin;
+  const discY = pageHeight - discHeight - 12 - footerGap;
+
+  const headingY = discY - lineHeight - 4;
+  doc.setFontSize(13);
+  doc.setFont(undefined, "bold");
+  doc.text("Disclaimer", margin, headingY);
   doc.setFontSize(10);
-  doc.rect(margin, discY, pageWidth - margin * 2, discHeight);
+  doc.setFont(undefined, "normal");
+
+  doc.setFillColor(245, 245, 245);
+  doc.rect(margin, discY, pageWidth - margin * 2, discHeight, "F");
+  doc.setTextColor(0, 0, 0);
   disclaimerLines.forEach((t, i) => {
     doc.text(t, pageWidth / 2, discY + lineHeight * (i + 1), { align: "center" });
   });
@@ -1300,7 +1323,7 @@ function addPdfFooter(doc, pageWidth, pageHeight) {
     // First line with website in burnt orange
     doc.setTextColor(0, 0, 0);
     doc.text(line1Prefix, startX, lineY);
-    doc.setTextColor(169, 111, 43);
+    doc.setTextColor(227, 123, 12);
     doc.text(website, startX + doc.getTextWidth(line1Prefix), lineY);
 
     // Second line in black centred
