@@ -853,21 +853,14 @@ async function generatePDF() {
     ["Date", new Date().toLocaleDateString()]
   ];
 
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text("Customer Details", margin, currentY);
-  doc.setFontSize(11);
-  doc.setFont(undefined, "normal");
-  currentY += lineHeight + 4;
-
   doc.autoTable({
     startY: currentY,
-    head: [["Field", "Value"]],
-    body: infoRows,
+    head: [["Customer Details"]],
+    body: infoRows.map(([k, v]) => [`${k}: ${v}`]),
     margin: { left: margin, right: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
     alternateRowStyles: { fillColor: [245, 245, 245] }
   });
@@ -878,34 +871,20 @@ async function generatePDF() {
     const descLines = doc.splitTextToSize(desc, pageWidth - margin * 2 - 4);
     const descRows = descLines.map(l => [l]);
 
-    doc.setFontSize(13);
-    doc.setFont(undefined, "bold");
-    doc.text("Quote Description", margin, currentY);
-    doc.setFontSize(11);
-    doc.setFont(undefined, "normal");
-    currentY += lineHeight + 4;
-
     doc.autoTable({
       startY: currentY,
-      head: [["Description"]],
+      head: [["Quote Description"]],
       body: descRows,
       margin: { left: margin, right: margin },
       tableWidth: pageWidth - margin * 2,
       theme: "grid",
-      headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
+      headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
       styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
       alternateRowStyles: { fillColor: [245, 245, 245] }
     });
 
     currentY = doc.lastAutoTable.finalY + 10;
   }
-
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text("Quote Details", margin, currentY);
-  doc.setFontSize(11);
-  doc.setFont(undefined, "normal");
-  currentY += lineHeight + 4;
 
   const tableStartY = currentY;
 
@@ -960,11 +939,11 @@ async function generatePDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [["Model", "Category/Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
+    head: [[{ content: "Quote Details", colSpan: 7 }], ["Model", "Category/Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
     styles: {
       halign: "center",
       fontSize: 10,
@@ -988,13 +967,6 @@ async function generatePDF() {
   const summaryBoxWidth = 60;
   const summaryX = pageWidth - margin - summaryBoxWidth;
 
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text("Quote Summary", margin, currentY);
-  doc.setFontSize(11);
-  doc.setFont(undefined, "normal");
-  currentY += lineHeight + 4;
-
   const summaryRows = [
     ["Subtotal", `£${subtotal.toFixed(2)}`],
     ["VAT", `£${vat.toFixed(2)}`],
@@ -1003,12 +975,12 @@ async function generatePDF() {
 
   doc.autoTable({
     startY: currentY,
-    head: [["Summary", "Amount"]],
+    head: [[{ content: "Quote Summary", colSpan: 2 }], ["Summary", "Amount"]],
     body: summaryRows,
     margin: { left: summaryX, right: margin },
     tableWidth: summaryBoxWidth,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
@@ -1034,7 +1006,8 @@ async function generatePDF() {
     "Thank you for choosing NHM. Please contact us with any questions."
   ];
   const footerGap = 7; // ~20px spacing from the footer
-  const discHeight = disclaimerLines.length * lineHeight + 4;
+  const discPadding = 7; // extra padding at bottom of disclaimer box
+  const discHeight = disclaimerLines.length * lineHeight + 4 + discPadding;
   const discY = pageHeight - discHeight - 12 - footerGap;
 
   const headingY = discY - lineHeight - 4;
@@ -1165,33 +1138,19 @@ async function generateSalesPDF() {
     ["Email", email || "(N/A)"],
     ["Date", new Date().toLocaleDateString()]
   ];
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text("Customer Details", margin, currentY);
-  doc.setFontSize(11);
-  doc.setFont(undefined, "normal");
-  currentY += lineHeight + 4;
-
   doc.autoTable({
     startY: currentY,
-    head: [["Field", "Value"]],
-    body: infoRows,
+    head: [["Customer Details"]],
+    body: infoRows.map(([k, v]) => [`${k}: ${v}`]),
     margin: { left: margin, right: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left" },
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
     alternateRowStyles: { fillColor: [245, 245, 245] }
   });
 
   currentY = doc.lastAutoTable.finalY + 10;
-
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text("Quote Details", margin, currentY);
-  doc.setFontSize(11);
-  doc.setFont(undefined, "normal");
-  currentY += lineHeight + 4;
 
   const tableStartY = currentY;
 
@@ -1222,11 +1181,11 @@ async function generateSalesPDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [["Item", "Qty", "Price (ex VAT)", "Total"]],
+    head: [[{ content: "Quote Details", colSpan: 4 }], ["Item", "Qty", "Price (ex VAT)", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
+    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
     styles: { halign: "center", fontSize: 10, cellPadding: TABLE_PADDING },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: { 0: { halign: "left" } }
@@ -1241,13 +1200,6 @@ async function generateSalesPDF() {
   const summaryBoxWidth = 60;
   const summaryX = pageWidth - margin - summaryBoxWidth;
 
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text("Quote Summary", margin, currentY);
-  doc.setFontSize(11);
-  doc.setFont(undefined, "normal");
-  currentY += lineHeight + 4;
-
   const summaryRows = [
     ["Subtotal", `£${subtotal.toFixed(2)}`],
     ["VAT", `£${vat.toFixed(2)}`],
@@ -1256,7 +1208,7 @@ async function generateSalesPDF() {
 
   doc.autoTable({
     startY: currentY,
-    head: [["Summary", "Amount"]],
+    head: [[{ content: "Quote Summary", colSpan: 2 }], ["Summary", "Amount"]],
     body: summaryRows,
     margin: { left: summaryX, right: margin },
     tableWidth: summaryBoxWidth,
@@ -1280,7 +1232,8 @@ async function generateSalesPDF() {
     "Thank you for choosing NHM. Please contact us with any questions."
   ];
   const footerGap = 7; // ~20px spacing from the footer
-  const discHeight = disclaimerLines.length * lineHeight + 4;
+  const discPadding = 7; // extra padding at bottom of disclaimer box
+  const discHeight = disclaimerLines.length * lineHeight + 4 + discPadding;
   const discY = pageHeight - discHeight - 12 - footerGap;
 
   const headingY = discY - lineHeight - 4;
