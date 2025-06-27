@@ -803,6 +803,7 @@ function removeItem(index) {
 async function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+  doc.setFont("helvetica", "normal");
 
   // Use a consistent grey stroke colour for all outline boxes
   doc.setDrawColor(160);
@@ -833,7 +834,9 @@ async function generatePDF() {
   doc.setTextColor(39, 72, 143);
   doc.setFontSize(16);
   // Title displayed prominently at the top of the page
+  doc.setFont(undefined, "bold");
   doc.text("Quoted Repair Estimate", pageWidth / 2, 12, { align: "center" });
+  doc.setFont(undefined, "normal");
   doc.setTextColor(0, 0, 0);
 
   const lineHeight = 6;
@@ -951,10 +954,13 @@ async function generatePDF() {
     },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: {
-      0: { halign: "left" },
-      1: { halign: "left" },
-      2: { halign: "center" },
-      3: { halign: "center" }
+      0: { halign: "left", cellWidth: 28 },
+      1: { halign: "left", cellWidth: 50 },
+      2: { halign: "center", cellWidth: 22 },
+      3: { halign: "center", cellWidth: 12 },
+      4: { halign: "right", cellWidth: 22 },
+      5: { halign: "right", cellWidth: 22 },
+      6: { halign: "right", cellWidth: 24 }
     }
   });
 
@@ -1096,6 +1102,7 @@ function removeSalesItem(index) {
 async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+  doc.setFont("helvetica", "normal");
 
   // Use the same grey stroke colour for all outline boxes
   doc.setDrawColor(160);
@@ -1119,7 +1126,9 @@ async function generateSalesPDF() {
   doc.addImage(logo, "PNG", 10, 5, 0, 15);
   doc.setTextColor(39, 72, 143);
   doc.setFontSize(16);
+  doc.setFont(undefined, "bold");
   doc.text("Sales Order Quote", pageWidth / 2, 12, { align: "center" });
+  doc.setFont(undefined, "normal");
   doc.setTextColor(0, 0, 0);
 
   const lineHeight = 6;
