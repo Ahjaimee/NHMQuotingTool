@@ -891,7 +891,7 @@ async function generatePDF() {
     const materials = info.material_cost * item.qty;
     const total = labour + materials;
     rows.push([
-      `${item.asset} - ${item.make} - ${item.model} - ${item.variant}`,
+      `${item.model}`,
       `${item.category} - ${item.repair}`,
       info.part_number,
       item.qty,
@@ -908,7 +908,7 @@ async function generatePDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [["Asset", "Category/Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
+    head: [["Model", "Category/Repair", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
