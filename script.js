@@ -975,7 +975,7 @@ async function generatePDF() {
 
   doc.autoTable({
     startY: currentY,
-    head: [[{ content: "Quote Summary", colSpan: 2 }], ["Summary", "Amount"]],
+    head: [[{ content: "Quote Summary", colSpan: 2 }]],
     body: summaryRows,
     margin: { left: summaryX, right: margin },
     tableWidth: summaryBoxWidth,
@@ -1000,12 +1000,10 @@ async function generatePDF() {
   }
 
   const disclaimerLines = [
-    "This document is provided as an estimate only and is typically 95% accurate.",
-    "If you are happy with this estimate we can send a final",
-    "quote for your approval before any work proceeds.",
-    "Thank you for choosing NHM. Please contact us with any questions."
+    "All prices exclude VAT unless marked exempt.",
+    "This document is provided as an estimate and is valid for 30 days."
   ];
-  const footerGap = 7; // ~20px spacing from the footer
+  const footerGap = 9; // ~20px spacing from the footer
   const discPadding = 7; // extra padding at bottom of disclaimer box
   const discHeight = disclaimerLines.length * lineHeight + 4 + discPadding;
   const discY = pageHeight - discHeight - 12 - footerGap;
@@ -1181,14 +1179,20 @@ async function generateSalesPDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [[{ content: "Quote Details", colSpan: 4 }], ["Item", "Qty", "Price (ex VAT)", "Total"]],
+    head: [[{ content: "Quote Details", colSpan: 4 }], ["Item Description", "Qty", "Price (ex VAT)", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
+    tableWidth: pageWidth - margin * 2,
     theme: "grid",
     headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
     styles: { halign: "center", fontSize: 10, cellPadding: TABLE_PADDING },
     alternateRowStyles: { fillColor: [245, 245, 245] },
-    columnStyles: { 0: { halign: "left" } }
+    columnStyles: {
+      0: { halign: "left", cellWidth: 100 },
+      1: { cellWidth: 20 },
+      2: { cellWidth: 30, halign: "right" },
+      3: { cellWidth: 30, halign: "right" }
+    }
   });
 
   currentY = doc.lastAutoTable.finalY + 10;
@@ -1208,7 +1212,7 @@ async function generateSalesPDF() {
 
   doc.autoTable({
     startY: currentY,
-    head: [[{ content: "Quote Summary", colSpan: 2 }], ["Summary", "Amount"]],
+    head: [[{ content: "Quote Summary", colSpan: 2 }]],
     body: summaryRows,
     margin: { left: summaryX, right: margin },
     tableWidth: summaryBoxWidth,
@@ -1228,10 +1232,9 @@ async function generateSalesPDF() {
 
   const disclaimerLines = [
     "All prices exclude VAT unless marked exempt.",
-    "This document is provided as an estimate and is valid for 30 days.",
-    "Thank you for choosing NHM. Please contact us with any questions."
+    "This document is provided as an estimate and is valid for 30 days."
   ];
-  const footerGap = 7; // ~20px spacing from the footer
+  const footerGap = 9; // ~20px spacing from the footer
   const discPadding = 7; // extra padding at bottom of disclaimer box
   const discHeight = disclaimerLines.length * lineHeight + 4 + discPadding;
   const discY = pageHeight - discHeight - 12 - footerGap;
