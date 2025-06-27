@@ -33,7 +33,8 @@ const DEFAULT_COMMISSION_COST = 50;
 let salesData = {};
 
 // Padding used for all PDF tables for consistent styling
-const TABLE_PADDING = 6;
+// Reduced from 6 to make table headers shorter
+const TABLE_PADDING = 4;
 
 let quoteItems = [];
 let salesItems = [];
@@ -943,7 +944,7 @@ async function generatePDF() {
 
   doc.autoTable({
     startY: tableStartY,
-    head: [["Model", "Service Description", "Part#", "Qty", "Labour", "Materials", "Total"]],
+    head: [["Model", "Service", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: 15, right: 15 },
     theme: "grid",
@@ -955,13 +956,13 @@ async function generatePDF() {
     },
     alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: {
-      0: { halign: "left", cellWidth: 40, fontStyle: "bold" },
-      1: { halign: "left", cellWidth: 65 },
-      2: { halign: "center", cellWidth: 22 },
-      3: { halign: "center", cellWidth: 12 },
-      4: { halign: "right", cellWidth: 22 },
-      5: { halign: "right", cellWidth: 22 },
-      6: { halign: "right", cellWidth: 24 }
+      0: { halign: "left", cellWidth: 35, fontStyle: "bold" },
+      1: { halign: "left", cellWidth: 58 },
+      2: { halign: "center", cellWidth: 20 },
+      3: { halign: "center", cellWidth: 10 },
+      4: { halign: "right", cellWidth: 18 },
+      5: { halign: "right", cellWidth: 18 },
+      6: { halign: "right", cellWidth: 21 }
     }
   });
 
@@ -1015,10 +1016,10 @@ async function generatePDF() {
   const discHeight = disclaimerLines.length * lineHeight + 4 + discPadding;
   const discY = pageHeight - discHeight - 12 - footerGap;
 
-  const headingY = discY - lineHeight - 4;
+  const headingY = discY - 2; // small gap above the box
   doc.setFontSize(13);
   doc.setFont(undefined, "bold");
-  doc.text("Disclaimer", margin, headingY);
+  doc.text("Disclaimer", pageWidth / 2, headingY, { align: "center" });
   doc.setFontSize(10);
   doc.setFont(undefined, "normal");
 
@@ -1249,10 +1250,10 @@ async function generateSalesPDF() {
   const discHeight = disclaimerLines.length * lineHeight + 4 + discPadding;
   const discY = pageHeight - discHeight - 12 - footerGap;
 
-  const headingY = discY - lineHeight - 4;
+  const headingY = discY - 2; // small gap above the box
   doc.setFontSize(13);
   doc.setFont(undefined, "bold");
-  doc.text("Disclaimer", margin, headingY);
+  doc.text("Disclaimer", pageWidth / 2, headingY, { align: "center" });
   doc.setFontSize(10);
   doc.setFont(undefined, "normal");
 
