@@ -803,7 +803,7 @@ function removeItem(index) {
 
 async function generatePDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc = new jsPDF({ orientation: "landscape" });
   doc.setFont("helvetica", "normal");
 
   // Use a consistent grey stroke colour for all outline boxes
@@ -1103,7 +1103,7 @@ function removeSalesItem(index) {
 
 async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc = new jsPDF({ orientation: "landscape" });
   doc.setFont("helvetica", "normal");
 
   // Use the same grey stroke colour for all outline boxes
