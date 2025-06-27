@@ -320,3 +320,12 @@ input[type="checkbox"]:active {
   box-sizing: border-box;
 }
 
+#customCarriage {
+  width: 90px;
+  padding: 6px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
