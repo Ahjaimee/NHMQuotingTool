@@ -767,7 +767,7 @@ function renderQuote() {
     subtotal += total;
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${item.asset} ${item.model}<button class="remove-btn" onclick="removeItem(${index})">\u2716</button></td>
+      <td>${item.asset} ${item.model}<button class="remove-btn" title="Remove item" onclick="removeItem(${index})">\u2716</button></td>
       <td>${info.description || `${item.category} - ${item.repair}`}</td>
       <td>${info.part_number}</td>
       <td class="num">${item.qty}</td>
@@ -788,9 +788,9 @@ function renderQuote() {
   const grandTotal = subtotal + vat;
 
   summaryBox.innerHTML = `
-    <p>Subtotal: £${subtotal.toFixed(2)}</p>
-    <p>VAT: £${vat.toFixed(2)}</p>
-    <p><strong>Total: £${grandTotal.toFixed(2)}</strong></p>
+    <div class="summary-row"><span>Subtotal</span><span>£${subtotal.toFixed(2)}</span></div>
+    <div class="summary-row"><span>VAT</span><span>£${vat.toFixed(2)}</span></div>
+    <div class="summary-row total"><span>Total</span><span>£${grandTotal.toFixed(2)}</span></div>
   `;
 }
 
