@@ -805,7 +805,7 @@ function removeItem(index) {
 
 async function generatePDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: "landscape" });
+  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
   doc.setFont("helvetica", "normal");
 
   // Use a consistent grey stroke colour for all outline boxes
@@ -813,7 +813,7 @@ async function generatePDF() {
 
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 15;
+  const margin = 20;
 
   // Logo as data URL
   const logo = await fetch("nhm-logo.png")
@@ -827,23 +827,26 @@ async function generatePDF() {
         })
     );
 
-  // Header band
-  doc.setFillColor(245, 245, 245);
-  doc.rect(0, 0, pageWidth, 25, "F");
-
-  // Logo and title
-  // Maintain logo aspect ratio by letting jsPDF calculate width
-  doc.addImage(logo, "PNG", 10, 5, 0, 15);
-  doc.setTextColor(39, 72, 143);
-  doc.setFontSize(16);
-  // Title displayed prominently at the top of the page
+  // Header with company information
+  doc.setFontSize(10);
   doc.setFont(undefined, "bold");
-  doc.text("Quoted Repair Estimate", pageWidth / 2, 12, { align: "center" });
+  doc.text(COMPANY_NAME, margin, margin);
+  doc.setFontSize(8);
   doc.setFont(undefined, "normal");
-  doc.setTextColor(0, 0, 0);
+  doc.text(COMPANY_ADDRESS, margin, margin + 4);
+  doc.text(`${COMPANY_REG} \u2022 ${COMPANY_VAT}`, margin, margin + 8);
+  doc.text(COMPANY_CONTACT, pageWidth - margin, margin, { align: "right" });
+  doc.text(COMPANY_EMAIL, pageWidth - margin, margin + 4, { align: "right" });
+  doc.text("www.nhmaintenance.com", pageWidth - margin, margin + 8, { align: "right" });
+  doc.setDrawColor(160);
+  doc.line(margin, margin + 11, pageWidth - margin, margin + 11);
 
+  doc.setFontSize(14);
+  doc.setFont(undefined, "bold");
+  doc.text("Quoted Repair Estimate", pageWidth / 2, margin + 18, { align: "center" });
+  doc.setFont(undefined, "normal");
   const lineHeight = 6;
-  let currentY = 30;
+  let currentY = margin + 24;
 
   const name = document.getElementById("customerName").value || "(No name)";
   const email = document.getElementById("customerEmail").value || "";
@@ -851,28 +854,39 @@ async function generatePDF() {
   const desc = document.getElementById("workDesc").value || "";
   const number = document.getElementById("quoteNumber").value || "(No #)";
 
-  const infoRows = [
-    ["Quote #", number],
-    ["Customer", name],
-    ["Phone", phone || "(N/A)"],
-    ["Email", email || "(N/A)"],
-    ["Date", new Date().toLocaleDateString()]
-  ];
+  // Customer details box
+  const boxHeight = 40;
+  doc.rect(margin, currentY, pageWidth - margin * 2, boxHeight);
+  doc.setFontSize(10);
+  doc.setFont(undefined, "bold");
+  doc.text("Customer Details", margin + 2, currentY + 6);
 
-  const infoText = infoRows.map(([k, v]) => `${k}: ${v}`).join("\n");
+  let infoY = currentY + 12;
+  const gap = 6;
+  doc.text("Quote #:", margin + 2, infoY);
+  doc.setFont(undefined, "normal");
+  doc.text(number, margin + 26, infoY);
+  doc.setFont(undefined, "bold");
+  doc.text("Date:", pageWidth / 2, infoY);
+  doc.setFont(undefined, "normal");
+  doc.text(new Date().toLocaleDateString(), pageWidth / 2 + 18, infoY);
+  infoY += gap;
+  doc.setFont(undefined, "bold");
+  doc.text("Customer:", margin + 2, infoY);
+  doc.setFont(undefined, "normal");
+  doc.text(name, margin + 26, infoY);
+  infoY += gap;
+  doc.setFont(undefined, "bold");
+  doc.text("Phone:", margin + 2, infoY);
+  doc.setFont(undefined, "normal");
+  doc.text(phone || "(N/A)", margin + 26, infoY);
+  infoY += gap;
+  doc.setFont(undefined, "bold");
+  doc.text("Email:", margin + 2, infoY);
+  doc.setFont(undefined, "normal");
+  doc.text(email || "(N/A)", margin + 26, infoY);
 
-  doc.autoTable({
-    startY: currentY,
-    head: [["Customer Details"]],
-    body: [[infoText]],
-    margin: { left: margin },
-    tableWidth: 80,
-    theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
-  });
-
-  currentY = doc.lastAutoTable.finalY + 10;
+  currentY += boxHeight + 10;
 
   if (desc) {
     const descLines = doc.splitTextToSize(desc, pageWidth - margin * 2 - 4);
@@ -948,23 +962,25 @@ async function generatePDF() {
     startY: tableStartY,
     head: [["Model", "Service", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
-    margin: { left: 15, right: 15 },
+    margin: { left: margin, right: margin },
+    tableWidth: 160,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
+    headStyles: { halign: "center", fontStyle: "bold" },
     styles: {
       halign: "center",
       fontSize: 10,
-      cellPadding: TABLE_PADDING
+      cellPadding: TABLE_PADDING,
+      valign: "middle",
+      minCellHeight: 10
     },
-    alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: {
-      0: { halign: "left", cellWidth: 35, fontStyle: "bold" },
-      1: { halign: "left", cellWidth: 58 },
+      0: { halign: "left", cellWidth: 30, fontStyle: "bold" },
+      1: { halign: "left", cellWidth: 50 },
       2: { halign: "center", cellWidth: 20 },
       3: { halign: "center", cellWidth: 10 },
-      4: { halign: "right", cellWidth: 18 },
-      5: { halign: "right", cellWidth: 18 },
-      6: { halign: "right", cellWidth: 21 }
+      4: { halign: "right", cellWidth: 15 },
+      5: { halign: "right", cellWidth: 15 },
+      6: { halign: "right", cellWidth: 20 }
     }
   });
 
@@ -974,7 +990,7 @@ async function generatePDF() {
   const vat = document.getElementById("vatExempt").checked ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
 
-  const summaryBoxWidth = 60;
+  const summaryBoxWidth = 50;
   const summaryX = pageWidth - margin - summaryBoxWidth;
 
   const summaryRows = [
@@ -998,39 +1014,16 @@ async function generatePDF() {
 
   currentY = doc.lastAutoTable.finalY;
 
-  let noteY = currentY + 8;
-  const centreX = pageWidth / 2;
-  if (document.getElementById("supplyOnly").checked) {
-    doc.text("Supply Only: Yes", centreX, noteY, { align: "center" });
-    noteY += 6;
-  }
-  if (document.getElementById("vatExempt").checked) {
-    doc.text("VAT Exempt: Yes", centreX, noteY, { align: "center" });
-    noteY += 6;
-  }
-
-  const disclaimerLines = [
-    "All prices exclude VAT unless marked exempt.",
-    "This document is provided as an estimate and is valid for 30 days."
-  ];
-  const footerGap = 9; // ~20px spacing from the footer
-  const discPadding = 7; // extra padding at bottom of disclaimer box
-  const discHeight = disclaimerLines.length * lineHeight + 4 + discPadding;
-  const discY = pageHeight - discHeight - 12 - footerGap;
-
-  const headingY = discY - 2; // small gap above the box
-  doc.setFontSize(13);
-  doc.setFont(undefined, "bold");
-  doc.text("Disclaimer", pageWidth / 2, headingY, { align: "center" });
-  doc.setFontSize(10);
-  doc.setFont(undefined, "normal");
-
-  doc.setFillColor(245, 245, 245);
+  const disclaimerText =
+    "All prices exclude VAT unless marked exempt. This document is an estimate and valid for 30 days.";
+  const discY = currentY + 8;
+  const discHeight = 8;
+  doc.setFillColor(240);
   doc.rect(margin, discY, pageWidth - margin * 2, discHeight, "F");
-  doc.setTextColor(0, 0, 0);
-  disclaimerLines.forEach((t, i) => {
-    doc.text(t, pageWidth / 2, discY + lineHeight * (i + 1), { align: "center" });
-  });
+  doc.setFontSize(8);
+  doc.setTextColor(80);
+  doc.text(disclaimerText, pageWidth / 2, discY + 5, { align: "center" });
+  doc.setTextColor(0);
 
   // Footer with contact details at the very bottom
   addPdfFooter(doc, pageWidth, pageHeight);
@@ -1106,13 +1099,13 @@ function removeSalesItem(index) {
 
 async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: "landscape" });
+  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
   doc.setFont("helvetica", "normal");
   doc.setDrawColor(160);
 
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 15;
+  const margin = 20;
   const lineHeight = 6;
 
   // Header with company info
@@ -1264,10 +1257,9 @@ async function generateSalesPDF() {
 }
 // Draws a consistent footer on all PDF pages
 function addPdfFooter(doc, pageWidth, pageHeight) {
-  const line1Prefix = "01444 250 350 \u2022 sales@nhmaintenance.com \u2022 ";
-  const website = "www.nhmaintenance.com";
-  const address =
-    "N H Maintenance Ltd, Consort House, Jubilee Road, Victoria Industrial Park, Burgess Hill, West Sussex, RH15 9TL";
+  const margin = 20;
+  const contact = `${COMPANY_CONTACT} \u2022 ${COMPANY_EMAIL} \u2022 www.nhmaintenance.com`;
+  const address = COMPANY_ADDRESS;
   const services = "Installations • Servicing • Repairs • Sales";
 
   const pages = doc.getNumberOfPages();
@@ -1275,20 +1267,13 @@ function addPdfFooter(doc, pageWidth, pageHeight) {
     doc.setPage(i);
     const w = doc.internal.pageSize.getWidth();
     const h = doc.internal.pageSize.getHeight();
-    doc.setFontSize(10);
-    const fullWidth = doc.getTextWidth(line1Prefix + website);
-    const startX = (w - fullWidth) / 2;
-    const lineY = h - 12; // ~12mm from bottom
-
-    // First line with website in burnt orange
-    doc.setTextColor(0, 0, 0);
-    doc.text(line1Prefix, startX, lineY);
-    doc.setTextColor(227, 123, 12);
-    doc.text(website, startX + doc.getTextWidth(line1Prefix), lineY);
-
-    // Second line in black centred
-    doc.setTextColor(0, 0, 0);
-    doc.text(address, w / 2, lineY + 5, { align: "center" });
-    doc.text(services, w / 2, lineY + 10, { align: "center" });
+    const y = h - 12;
+    doc.setDrawColor(200);
+    doc.line(margin, y - 4, w - margin, y - 4);
+    doc.setFontSize(8);
+    doc.setTextColor(0);
+    doc.text(contact, w / 2, y, { align: "center" });
+    doc.text(address, w / 2, y + 4, { align: "center" });
+    doc.text(services, w / 2, y + 8, { align: "center" });
   }
 }
