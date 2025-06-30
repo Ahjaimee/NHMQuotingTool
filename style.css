@@ -242,7 +242,7 @@ input[type="checkbox"]:active {
 /* Layout for table based quote details */
 .quote-details {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 150px;
+  grid-template-columns: minmax(0, 1fr) 130px;
   gap: 0;
   align-items: end;
 }
@@ -351,7 +351,7 @@ input[type="checkbox"]:active {
   border-left: 1px solid #ccc;
   border-bottom-right-radius: 6px;
   text-align: right;
-  width: 150px;
+  width: 130px;
   margin-top: 0;
 }
 
