@@ -901,9 +901,8 @@ async function generatePDF() {
       margin: { left: margin, right: margin },
       tableWidth: pageWidth - margin * 2,
       theme: "grid",
-      headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
-      styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
-      alternateRowStyles: { fillColor: [245, 245, 245] }
+      headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+      styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
     });
 
     currentY = doc.lastAutoTable.finalY + 10;
@@ -1008,9 +1007,8 @@ async function generatePDF() {
     margin: { left: summaryX, right: margin },
     tableWidth: summaryBoxWidth,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
+    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
-    alternateRowStyles: { fillColor: [245, 245, 245] },
     columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
   });
 
@@ -1019,12 +1017,9 @@ async function generatePDF() {
   const disclaimerText =
     "All prices exclude VAT unless marked exempt. This document is an estimate and valid for 30 days.";
   const discY = currentY + 8;
-  const discHeight = 8;
-  doc.setFillColor(240);
-  doc.rect(margin, discY, pageWidth - margin * 2, discHeight, "F");
   doc.setFontSize(8);
   doc.setTextColor(80);
-  doc.text(disclaimerText, pageWidth / 2, discY + 5, { align: "center" });
+  doc.text(disclaimerText, pageWidth / 2, discY + 3, { align: "center" });
   doc.setTextColor(0);
 
   // Footer with contact details at the very bottom
@@ -1103,33 +1098,50 @@ async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
   doc.setFont("helvetica", "normal");
-  doc.setDrawColor(160);
+  doc.setDrawColor(150);
 
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
-  const lineHeight = 6;
 
-  // Header with company info
-  doc.setFillColor(245, 245, 245);
-  doc.rect(0, 0, pageWidth, 20, "F");
-  doc.setFontSize(14);
+  // Load logo if available and place it at the top left
+  let logoData;
+  try {
+    const blob = await fetch("nhm-logo.png").then(r => r.blob());
+    logoData = await new Promise(res => {
+      const reader = new FileReader();
+      reader.onload = () => res(reader.result);
+      reader.readAsDataURL(blob);
+    });
+    doc.addImage(logoData, "PNG", margin, margin, 40, 0);
+  } catch (e) {}
+
+  // Company header to the right of the logo
+  doc.setFontSize(10);
   doc.setFont(undefined, "bold");
-  doc.text(COMPANY_NAME, margin, 8);
+  doc.text(COMPANY_NAME, pageWidth - margin, margin, { align: "right" });
   doc.setFontSize(8);
   doc.setFont(undefined, "normal");
-  doc.text(COMPANY_ADDRESS, margin, 12);
-  doc.text(`${COMPANY_CONTACT} \u2022 ${COMPANY_EMAIL}`, margin, 15);
-  doc.text(`${COMPANY_REG} \u2022 ${COMPANY_VAT}`, margin, 18);
+  doc.text(COMPANY_ADDRESS, pageWidth - margin, margin + 4, { align: "right" });
+  doc.text(COMPANY_CONTACT, pageWidth - margin, margin + 8, { align: "right" });
+  doc.text(COMPANY_EMAIL, pageWidth - margin, margin + 12, { align: "right" });
+  doc.text("www.nhmaintenance.com", pageWidth - margin, margin + 16, {
+    align: "right",
+  });
+  doc.text(`${COMPANY_REG} \u2022 ${COMPANY_VAT}`, pageWidth - margin, margin + 20, {
+    align: "right",
+  });
 
-  const quoteNo = document.getElementById("salesQuoteNumber").value || "(No #)";
-  doc.setFontSize(16);
+  // Quote title
+  const quoteNo = document.getElementById("salesQuoteNumber").value || "";
+  doc.setFontSize(14);
   doc.setFont(undefined, "bold");
-  doc.text(`Quotation: #${quoteNo}`, pageWidth - margin, 8, { align: "right" });
+  doc.text(`Quotation: #${quoteNo}`, pageWidth - margin, margin + 30, {
+    align: "right",
+  });
   doc.setFontSize(10);
-  doc.setFont(undefined, "normal");
 
-  let currentY = 25;
+  let currentY = margin + 40;
 
   const custName = document.getElementById("salesCustomerName").value || "(No name)";
   const custPhone = document.getElementById("salesCustomerPhone").value || "";
@@ -1145,8 +1157,8 @@ async function generateSalesPDF() {
     margin: { left: margin },
     tableWidth: boxWidth,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
-    styles: { fontSize: 9, cellPadding: TABLE_PADDING, halign: "left" }
+    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
   doc.autoTable({
@@ -1156,8 +1168,8 @@ async function generateSalesPDF() {
     margin: { left: margin + boxWidth + 10 },
     tableWidth: boxWidth,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
-    styles: { fontSize: 9, cellPadding: TABLE_PADDING, halign: "left" }
+    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
   currentY = doc.lastAutoTable.finalY + 5;
@@ -1165,7 +1177,8 @@ async function generateSalesPDF() {
   const details = [
     ["Date", new Date().toLocaleDateString()],
     ["Prepared by", COMPANY_NAME],
-    ["Job Description", salesItems[0] ? salesItems[0].desc : ""]
+    ["Customer Ref", quoteNo],
+    ["Job Notes", salesItems[0] ? salesItems[0].desc : ""]
   ];
 
   doc.autoTable({
@@ -1175,8 +1188,8 @@ async function generateSalesPDF() {
     margin: { left: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "left", fontStyle: "bold" },
-    styles: { fontSize: 9, cellPadding: TABLE_PADDING, halign: "left" },
+    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
     columnStyles: { 0: { fontStyle: "bold", cellWidth: 40 } }
   });
 
@@ -1206,10 +1219,19 @@ async function generateSalesPDF() {
     margin: { left: margin, right: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center", fontStyle: "bold" },
-    styles: { fontSize: 9, cellPadding: TABLE_PADDING, halign: "center" },
-    alternateRowStyles: { fillColor: [245, 245, 245] },
-    columnStyles: { 0: { halign: "left" }, 1: { cellWidth: 20 }, 2: { halign: "right" }, 3: { halign: "right" } }
+    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    styles: {
+      fontSize: 10,
+      cellPadding: TABLE_PADDING,
+      halign: "left",
+      overflow: "hidden",
+    },
+    columnStyles: {
+      0: { halign: "left" },
+      1: { halign: "right", cellWidth: 20 },
+      2: { halign: "right" },
+      3: { halign: "right" },
+    },
   });
 
   currentY = doc.lastAutoTable.finalY + 5;
@@ -1230,15 +1252,17 @@ async function generateSalesPDF() {
     margin: { left: pageWidth - margin - 60 },
     tableWidth: 60,
     theme: "grid",
-    styles: { fontSize: 9, cellPadding: TABLE_PADDING, halign: "right" },
-    columnStyles: { 0: { fontStyle: "bold", halign: "left" }, 1: { halign: "right" } }
+    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
+    columnStyles: {
+      0: { fontStyle: "bold", halign: "left" },
+      1: { halign: "right" },
+    },
   });
 
   currentY = doc.lastAutoTable.finalY + 5;
 
   const notes = [
-    "Prices exclude VAT unless stated otherwise.",
-    `Created ${new Date().toLocaleDateString()}`
+    "All prices exclude VAT unless marked exempt. This document is an estimate and valid for 30 days.",
   ];
 
   doc.autoTable({
@@ -1248,8 +1272,8 @@ async function generateSalesPDF() {
     margin: { left: margin, right: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { fillColor: [39, 72, 143], textColor: 255, halign: "center" },
-    styles: { fontSize: 8, cellPadding: TABLE_PADDING, halign: "left" }
+    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    styles: { fontSize: 8, cellPadding: TABLE_PADDING, halign: "left" },
   });
 
   currentY = doc.lastAutoTable.finalY;
@@ -1273,7 +1297,7 @@ function addPdfFooter(doc, pageWidth, pageHeight) {
     doc.setDrawColor(200);
     doc.line(margin, y - 4, w - margin, y - 4);
     doc.setFontSize(8);
-    doc.setTextColor(0);
+    doc.setTextColor(80);
     doc.text(contact, w / 2, y, { align: "center" });
     doc.text(address, w / 2, y + 4, { align: "center" });
     doc.text(services, w / 2, y + 8, { align: "center" });
