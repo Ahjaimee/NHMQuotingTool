@@ -242,7 +242,7 @@ input[type="checkbox"]:active {
 /* Layout for table based quote details */
 .quote-details {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 130px;
+  grid-template-columns: minmax(0, 1fr) 110px;
   gap: 0;
   align-items: end;
 }
@@ -258,6 +258,12 @@ input[type="checkbox"]:active {
 .quote-table td {
   padding: 6px 8px;
   border-bottom: 1px solid #ccc;
+  white-space: nowrap;
+}
+
+.quote-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .quote-table th {
@@ -273,11 +279,11 @@ input[type="checkbox"]:active {
 /* set proportional column widths */
 .quote-table th:nth-child(1),
 .quote-table td:nth-child(1) {
-  width: 18%;
+  width: 20%;
 }
 .quote-table th:nth-child(2),
 .quote-table td:nth-child(2) {
-  width: 24%;
+  width: 23%;
 }
 .quote-table th:nth-child(3),
 .quote-table td:nth-child(3) {
@@ -295,7 +301,7 @@ input[type="checkbox"]:active {
 }
 .quote-table th:nth-child(7),
 .quote-table td:nth-child(7) {
-  width: 14%;
+  width: 13%;
 }
 
 .quote-line {
@@ -351,7 +357,7 @@ input[type="checkbox"]:active {
   border-left: 1px solid #ccc;
   border-bottom-right-radius: 6px;
   text-align: right;
-  width: 130px;
+  width: 110px;
   margin-top: 0;
 }
 
