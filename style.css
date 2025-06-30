@@ -242,7 +242,7 @@ input[type="checkbox"]:active {
 /* Layout for table based quote details */
 .quote-details {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr 260px;
   gap: 10px;
   align-items: end;
 }
@@ -311,7 +311,7 @@ input[type="checkbox"]:active {
   background: #c62828;
   border: none;
   color: #fff;
-  margin-left: 6px;
+  margin-right: 6px;
   cursor: pointer;
   font-size: 0.85rem;
   padding: 2px 6px;
