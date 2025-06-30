@@ -326,6 +326,11 @@ input[type="checkbox"]:active {
   margin-top: 10px;
 }
 
+.quote-summary h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
 .quote-summary .summary-row {
   display: flex;
   justify-content: space-between;
@@ -334,6 +339,7 @@ input[type="checkbox"]:active {
 
 .quote-summary .summary-row.total {
   font-weight: bold;
+  font-size: 1.05rem;
 }
 
 .desc-box {

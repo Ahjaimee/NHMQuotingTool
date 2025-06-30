@@ -788,6 +788,8 @@ function renderQuote() {
   const grandTotal = subtotal + vat;
 
   summaryBox.innerHTML = `
+    <h3>Quote Summary</h3>
+    <div class="summary-row"><span>Items</span><span>${items.length}</span></div>
     <div class="summary-row"><span>Subtotal</span><span>£${subtotal.toFixed(2)}</span></div>
     <div class="summary-row"><span>VAT</span><span>£${vat.toFixed(2)}</span></div>
     <div class="summary-row total"><span>Total</span><span>£${grandTotal.toFixed(2)}</span></div>
@@ -1087,10 +1089,10 @@ function renderSalesQuote() {
 
   estimate.innerHTML = `
     <h3>Quote Summary</h3>
-    <p>Items: ${salesItems.length}</p>
-    <p>Subtotal: £${subtotal.toFixed(2)}</p>
-    <p>VAT (${vatExempt ? "Exempt" : "20%"}): £${vat.toFixed(2)}</p>
-    <p><strong>Total: £${grandTotal.toFixed(2)}</strong></p>
+    <div class="summary-row"><span>Items</span><span>${salesItems.length}</span></div>
+    <div class="summary-row"><span>Subtotal</span><span>£${subtotal.toFixed(2)}</span></div>
+    <div class="summary-row"><span>VAT${vatExempt ? " (Exempt)" : ""}</span><span>£${vat.toFixed(2)}</span></div>
+    <div class="summary-row total"><span>Total</span><span>£${grandTotal.toFixed(2)}</span></div>
   `;
 }
 
