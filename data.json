@@ -5,61 +5,45 @@
         "M-200": {
           "Standard": {
             "Batteries": {
-              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales \u2013 short connector": {
+              "Install replacement battery in M-200 Chair Scale.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0003",
-                "description": "Install replacement battery in M-200 Chair Scale"
-              }
-            }
-          },
-          "100 X 32 M12 Braked Castors": {
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
-              }
-            }
-          },
-          "Marsden Scale Battery 2000mAh V2": {
-            "Batteries": {
-              "Marsden Scale Battery 2000mAh V2": {
+                "description": "Install replacement battery in M-200 Chair Scale."
+              },
+              "Replace battery.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
-                "description": "Replace battery"
+                "description": "Replace battery."
               }
-            }
-          },
-          "Battery Compartment Cover - BT-0961": {
+            },
+            "Castors & Wheels": {
+              "Replace broken or worn castor.": {
+                "labour_hours": 0.2,
+                "material_cost": 59.61,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
+            },
             "Casing": {
-              "Battery Compartment Cover - BT-0961": {
+              "Replace battery compartment cover.": {
                 "labour_hours": 0.2,
                 "material_cost": 18.57,
                 "part_number": "SPX141-0006",
-                "description": "Replace battery compartment cover"
-              }
-            }
-          },
-          "Control Bottom Housing Cover - MP02000801": {
-            "Casing": {
-              "Control Bottom Housing Cover - MP02000801": {
+                "description": "Replace battery compartment cover."
+              },
+              "Replace bottom control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
-                "description": "Replace bottom control housing"
-              }
-            }
-          },
-          "Control Top Housing Cover - MP01001231": {
-            "Casing": {
-              "Control Top Housing Cover - MP01001231": {
+                "description": "Replace bottom control housing."
+              },
+              "Replace top control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
-                "description": "Replace top control housing"
+                "description": "Replace top control housing."
               }
             }
           }
@@ -67,79 +51,53 @@
         "M-210": {
           "Standard": {
             "Batteries": {
-              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales \u2013 short connector": {
+              "Install replacement battery in M-210 Chair Scale.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0003",
-                "description": "Install replacement battery in M-210 Chair Scale"
-              }
-            },
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
-              }
-            }
-          },
-          "Foam Arm Cover - FG145": {
-            "Accessories": {
-              "Foam Arm Cover - FG145": {
-                "labour_hours": 0.2,
-                "material_cost": 27.43,
-                "part_number": "SPX141-0005",
-                "description": "Replace foam arm pad"
-              }
-            }
-          },
-          "100 X 32 M12 Braked Castors": {
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
-              }
-            }
-          },
-          "Marsden Scale Battery 2000mAh V2": {
-            "Batteries": {
-              "Marsden Scale Battery 2000mAh V2": {
+                "description": "Install replacement battery in M-210 Chair Scale."
+              },
+              "Replace battery.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
-                "description": "Replace battery"
+                "description": "Replace battery."
               }
-            }
-          },
-          "Battery Compartment Cover - BT-0961": {
+            },
+            "Castors & Wheels": {
+              "Replace broken or worn castor.": {
+                "labour_hours": 0.2,
+                "material_cost": 59.61,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
+            },
+            "Accessories": {
+              "Replace foam arm pad.": {
+                "labour_hours": 0.2,
+                "material_cost": 27.43,
+                "part_number": "SPX141-0005",
+                "description": "Replace foam arm pad."
+              }
+            },
             "Casing": {
-              "Battery Compartment Cover - BT-0961": {
+              "Replace battery compartment cover.": {
                 "labour_hours": 0.2,
                 "material_cost": 18.57,
                 "part_number": "SPX141-0006",
-                "description": "Replace battery compartment cover"
-              }
-            }
-          },
-          "Control Bottom Housing Cover - MP02000801": {
-            "Casing": {
-              "Control Bottom Housing Cover - MP02000801": {
+                "description": "Replace battery compartment cover."
+              },
+              "Replace bottom control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
-                "description": "Replace bottom control housing"
-              }
-            }
-          },
-          "Control Top Housing Cover - MP01001231": {
-            "Casing": {
-              "Control Top Housing Cover - MP01001231": {
+                "description": "Replace bottom control housing."
+              },
+              "Replace top control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
-                "description": "Replace top control housing"
+                "description": "Replace top control housing."
               }
             }
           }
@@ -147,69 +105,45 @@
         "M-225": {
           "Standard": {
             "Batteries": {
-              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales \u2013 short connector": {
+              "Install replacement battery in M-225 Chair Scale.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0003",
-                "description": "Install replacement battery in M-225 Chair Scale"
-              }
-            },
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
-              }
-            }
-          },
-          "100 X 32 M12 Braked Castors": {
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
-              }
-            }
-          },
-          "Marsden Scale Battery 2000mAh V2": {
-            "Batteries": {
-              "Marsden Scale Battery 2000mAh V2": {
+                "description": "Install replacement battery in M-225 Chair Scale."
+              },
+              "Replace battery.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
-                "description": "Replace battery"
+                "description": "Replace battery."
               }
-            }
-          },
-          "Battery Compartment Cover - BT-0961": {
+            },
+            "Castors & Wheels": {
+              "Replace broken or worn castor.": {
+                "labour_hours": 0.2,
+                "material_cost": 59.61,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
+            },
             "Casing": {
-              "Battery Compartment Cover - BT-0961": {
+              "Replace battery compartment cover.": {
                 "labour_hours": 0.2,
                 "material_cost": 18.57,
                 "part_number": "SPX141-0006",
-                "description": "Replace battery compartment cover"
-              }
-            }
-          },
-          "Control Bottom Housing Cover - MP02000801": {
-            "Casing": {
-              "Control Bottom Housing Cover - MP02000801": {
+                "description": "Replace battery compartment cover."
+              },
+              "Replace bottom control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
-                "description": "Replace bottom control housing"
-              }
-            }
-          },
-          "Control Top Housing Cover - MP01001231": {
-            "Casing": {
-              "Control Top Housing Cover - MP01001231": {
+                "description": "Replace bottom control housing."
+              },
+              "Replace top control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
-                "description": "Replace top control housing"
+                "description": "Replace top control housing."
               }
             }
           }
@@ -217,19 +151,19 @@
         "MPDC-250": {
           "Standard": {
             "Batteries": {
-              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales \u2013 short connector": {
+              "Install replacement battery in MPDC-250 Chair Scale.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0003",
-                "description": "Install replacement battery in MPDC-250 Chair Scale"
+                "description": "Install replacement battery in MPDC-250 Chair Scale."
               }
             },
             "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
+              "Replace broken or worn castor.": {
                 "labour_hours": 0.2,
                 "material_cost": 59.61,
                 "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
+                "description": "Replace broken or worn castor."
               }
             }
           }
@@ -237,69 +171,45 @@
         "M-250": {
           "Standard": {
             "Batteries": {
-              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+              "Install replacement long-connection battery in M-250 Chair Scale.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
-                "description": "Install replacement long-connection battery in M-250 Chair Scale"
+                "description": "Install replacement long-connection battery in M-250 Chair Scale."
+              },
+              "Replace battery.": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0004",
+                "description": "Replace battery."
               }
             },
             "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
+              "Replace broken or worn castor.": {
                 "labour_hours": 0.2,
                 "material_cost": 59.61,
                 "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
+                "description": "Replace broken or worn castor."
               }
-            }
-          },
-          "100 X 32 M12 Braked Castors": {
-            "Castors & Wheels": {
-              "100 X 32 M12 Braked Castors": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor"
-              }
-            }
-          },
-          "Marsden Scale Battery 2000mAh V2": {
-            "Batteries": {
-              "Marsden Scale Battery 2000mAh V2": {
-                "labour_hours": 0.2,
-                "material_cost": 70.94,
-                "part_number": "SPX141-0004",
-                "description": "Replace battery"
-              }
-            }
-          },
-          "Battery Compartment Cover - BT-0961": {
+            },
             "Casing": {
-              "Battery Compartment Cover - BT-0961": {
+              "Replace battery compartment cover.": {
                 "labour_hours": 0.2,
                 "material_cost": 18.57,
                 "part_number": "SPX141-0006",
-                "description": "Replace battery compartment cover"
-              }
-            }
-          },
-          "Control Bottom Housing Cover - MP02000801": {
-            "Casing": {
-              "Control Bottom Housing Cover - MP02000801": {
+                "description": "Replace battery compartment cover."
+              },
+              "Replace bottom control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
-                "description": "Replace bottom control housing"
-              }
-            }
-          },
-          "Control Top Housing Cover - MP01001231": {
-            "Casing": {
-              "Control Top Housing Cover - MP01001231": {
+                "description": "Replace bottom control housing."
+              },
+              "Replace top control housing.": {
                 "labour_hours": 0.2,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
-                "description": "Replace top control housing"
+                "description": "Replace top control housing."
               }
             }
           }
@@ -307,11 +217,11 @@
         "M-950": {
           "Standard": {
             "Batteries": {
-              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+              "Install replacement long-connection battery in M-950 Bed & Trolley Scale.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
-                "description": "Install replacement long-connection battery in M-950 Bed & Trolley Scale"
+                "description": "Install replacement long-connection battery in M-950 Bed & Trolley Scale."
               }
             }
           }
@@ -319,11 +229,11 @@
         "M-610": {
           "Standard": {
             "Batteries": {
-              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+              "Install replacement long-connection battery in M-610 Hoist Weigher.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
-                "description": "Install replacement long-connection battery in M-610 Hoist Weigher"
+                "description": "Install replacement long-connection battery in M-610 Hoist Weigher."
               }
             }
           }
@@ -335,11 +245,11 @@
         "M-600": {
           "Standard": {
             "Batteries": {
-              "2000mAh replacement battery for Marsden DP-3800/DP-3810 scales \u2013 short connector": {
+              "Install replacement battery in M-600 Hoist Weigher.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0003",
-                "description": "Install replacement battery in M-600 Hoist Weigher"
+                "description": "Install replacement battery in M-600 Hoist Weigher."
               }
             }
           }
@@ -347,11 +257,11 @@
         "M-615": {
           "Standard": {
             "Batteries": {
-              "Marsden Scale Battery DP-3800 (V3) Long Conn": {
+              "Install replacement long-connection battery in M-615 Hoist Weigher.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
-                "description": "Install replacement long-connection battery in M-615 Hoist Weigher"
+                "description": "Install replacement long-connection battery in M-615 Hoist Weigher."
               }
             }
           }
@@ -365,21 +275,19 @@
         "M-210": {
           "Standard": {
             "Main Unit": {
-              "Marsden Professional Chair Scale with BMI M-210": {
+              "Equipment Sales": {
                 "cost": 0,
                 "price": 726.96,
                 "part_number": "EQ141-0002",
                 "description": "Equipment Sales"
               }
-            }
-          },
-          "Chair Scale with BMI": {
+            },
             "Weighing Equipment": {
-              "Chair Scale with BMI": {
+              "Supply professional chair scale.": {
                 "cost": 0,
                 "price": 726.96,
                 "part_number": "EQ141-0002",
-                "description": "Supply professional chair scale"
+                "description": "Supply professional chair scale."
               }
             }
           }
@@ -387,45 +295,43 @@
         "M-225": {
           "Standard": {
             "Main Unit": {
-              "Marsden Easy-Use Entry Level Chair Scale": {
+              "Equipment Sales": {
                 "cost": 0,
                 "price": 624.0,
                 "part_number": "EQ141-0003",
                 "description": "Equipment Sales"
               }
-            }
-          },
-          "Marsden Digital Chair Scale - M-225": {
+            },
             "Weighing Equipment": {
-              "Marsden Digital Chair Scale - M-225": {
+              "Supply chair scale.": {
                 "cost": 0,
                 "price": 624.0,
                 "part_number": "EQ141-0003",
-                "description": "Supply chair scale"
+                "description": "Supply chair scale."
               }
             }
           }
         },
         "M-250": {
-          "Chair Scale w/ Power Stand Assist": {
+          "Standard": {
             "Weighing Equipment": {
-              "Chair Scale w/ Power Stand Assist": {
+              "Supply premium chair scale.": {
                 "cost": 0,
                 "price": 1180.4,
                 "part_number": "EQ141-0010",
-                "description": "Supply premium chair scale"
+                "description": "Supply premium chair scale."
               }
             }
           }
         },
         "M-200": {
-          "Chair Scale with BMI - M-200": {
+          "Standard": {
             "Weighing Equipment": {
-              "Chair Scale with BMI - M-200": {
+              "Supply chair scale.": {
                 "cost": 0,
                 "price": 830.96,
                 "part_number": "EQ141-0001",
-                "description": "Supply chair scale"
+                "description": "Supply chair scale."
               }
             }
           }
@@ -437,53 +343,47 @@
         "M-600": {
           "Standard": {
             "Main Unit": {
-              "Marsden Hoist Weigher Scale Attachment M-600 with BMI": {
+              "Equipment Sales": {
                 "cost": 0,
                 "price": 724.0,
                 "part_number": "EQ141-0004",
                 "description": "Equipment Sales"
               }
-            }
-          },
-          "Hoist Weigher with BMI - M-600": {
+            },
             "Weighing Equipment": {
-              "Hoist Weigher with BMI - M-600": {
+              "Supply hoist weigher scale.": {
                 "cost": 0,
                 "price": 724.0,
                 "part_number": "EQ141-0004",
-                "description": "Supply hoist weigher scale"
+                "description": "Supply hoist weigher scale."
               }
-            }
-          },
-          "Carry Case for Marsden M-600": {
+            },
             "Accessories": {
-              "Carry Case for Marsden M-600": {
+              "Supply carry case.": {
                 "cost": 0,
                 "price": 46.8,
                 "part_number": "EQ141-0012",
-                "description": "Supply carry case"
+                "description": "Supply carry case."
               }
             }
           }
         },
         "M-605": {
-          "Hoist Weigher with BMI - M-605": {
+          "Standard": {
             "Weighing Equipment": {
-              "Hoist Weigher with BMI - M-605": {
+              "Supply hoist weigher scale.": {
                 "cost": 0,
                 "price": 795.6,
                 "part_number": "EQ141-0005",
-                "description": "Supply hoist weigher scale"
+                "description": "Supply hoist weigher scale."
               }
-            }
-          },
-          "Carry Case for Marsden M-605 - Large": {
+            },
             "Accessories": {
-              "Carry Case for Marsden M-605 - Large": {
+              "Supply carry case.": {
                 "cost": 0,
                 "price": 46.8,
                 "part_number": "EQ141-0013",
-                "description": "Supply carry case"
+                "description": "Supply carry case."
               }
             }
           }
