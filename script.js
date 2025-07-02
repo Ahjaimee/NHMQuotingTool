@@ -811,7 +811,7 @@ function removeItem(index) {
 
 async function generatePDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
+  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
   doc.setFont("helvetica", "normal");
 
   // Use a consistent grey stroke colour for all outline boxes
@@ -976,7 +976,7 @@ async function generatePDF() {
     head: [["Model", "Service", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: margin, right: margin },
-    tableWidth: 160,
+    tableWidth: pageWidth - margin * 2,
     theme: "grid",
     headStyles: { fillColor: BRAND_BLUE, textColor: 255, halign: "center", fontStyle: "bold" },
     styles: {
@@ -987,13 +987,13 @@ async function generatePDF() {
       minCellHeight: 10
     },
     columnStyles: {
-      0: { halign: "left", cellWidth: 30, fontStyle: "bold" },
-      1: { halign: "left", cellWidth: 50 },
-      2: { halign: "center", cellWidth: 20 },
-      3: { halign: "center", cellWidth: 10 },
-      4: { halign: "right", cellWidth: 15 },
-      5: { halign: "right", cellWidth: 15 },
-      6: { halign: "right", cellWidth: 20 }
+      0: { halign: "left", fontStyle: "bold" },
+      1: { halign: "left" },
+      2: { halign: "center" },
+      3: { halign: "center" },
+      4: { halign: "right" },
+      5: { halign: "right" },
+      6: { halign: "right" }
     }
   });
 
@@ -1114,7 +1114,7 @@ function removeSalesItem(index) {
 
 async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
+  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
   doc.setFont("helvetica", "normal");
   doc.setDrawColor(150);
 
