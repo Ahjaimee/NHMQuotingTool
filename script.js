@@ -976,7 +976,7 @@ async function generatePDF() {
     head: [["Model", "Service", "Part#", "Qty", "Labour", "Materials", "Total"]],
     body: rows,
     margin: { left: margin, right: margin },
-    tableWidth: 160,
+    tableWidth: 200,
     theme: "grid",
     headStyles: { fillColor: BRAND_BLUE, textColor: 255, halign: "center", fontStyle: "bold" },
     styles: {
@@ -988,11 +988,11 @@ async function generatePDF() {
     },
     columnStyles: {
       0: { halign: "left", cellWidth: 30, fontStyle: "bold" },
-      1: { halign: "left", cellWidth: 50 },
+      1: { halign: "left", cellWidth: 80 },
       2: { halign: "center", cellWidth: 20 },
       3: { halign: "center", cellWidth: 10 },
-      4: { halign: "right", cellWidth: 15 },
-      5: { halign: "right", cellWidth: 15 },
+      4: { halign: "right", cellWidth: 20 },
+      5: { halign: "right", cellWidth: 20 },
       6: { halign: "right", cellWidth: 20 }
     }
   });
