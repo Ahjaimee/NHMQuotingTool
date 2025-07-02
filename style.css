@@ -247,6 +247,16 @@ input[type="checkbox"]:active {
   align-items: end;
 }
 
+@media (max-width: 600px) {
+  .quote-details {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .quote-summary {
+    margin-top: 15px;
+  }
+}
+
 .quote-table {
   width: 100%;
   border-collapse: collapse;
