@@ -36,6 +36,10 @@ let salesData = {};
 // Reduced from 6 to make table headers shorter
 const TABLE_PADDING = 4;
 
+// Brand colours used in PDFs
+const BRAND_BLUE = [39, 72, 143];
+const ACCENT_ORANGE = [245, 128, 32];
+
 const COMPANY_NAME = "N H Maintenance Ltd";
 const COMPANY_ADDRESS = "Consort House, Jubilee Road, Victoria Industrial Park, Burgess Hill, West Sussex, RH15 9TL";
 const COMPANY_CONTACT = "01444 250 350";
@@ -845,7 +849,9 @@ async function generatePDF() {
 
   doc.setFontSize(14);
   doc.setFont(undefined, "bold");
+  doc.setTextColor(...BRAND_BLUE);
   doc.text("Quoted Repair Estimate", pageWidth / 2, margin + 18, { align: "center" });
+  doc.setTextColor(0);
   doc.setFont(undefined, "normal");
   const lineHeight = 6;
   let currentY = margin + 24;
@@ -901,7 +907,13 @@ async function generatePDF() {
       margin: { left: margin, right: margin },
       tableWidth: pageWidth - margin * 2,
       theme: "grid",
-      headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+      headStyles: {
+        fillColor: BRAND_BLUE,
+        textColor: 255,
+        fontStyle: "bold",
+        halign: "left",
+        fontSize: 11,
+      },
       styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
     });
 
@@ -966,7 +978,7 @@ async function generatePDF() {
     margin: { left: margin, right: margin },
     tableWidth: 160,
     theme: "grid",
-    headStyles: { halign: "center", fontStyle: "bold" },
+    headStyles: { fillColor: BRAND_BLUE, textColor: 255, halign: "center", fontStyle: "bold" },
     styles: {
       halign: "center",
       fontSize: 10,
@@ -1007,7 +1019,13 @@ async function generatePDF() {
     margin: { left: summaryX, right: margin },
     tableWidth: summaryBoxWidth,
     theme: "grid",
-    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    headStyles: {
+      fillColor: BRAND_BLUE,
+      textColor: 255,
+      fontStyle: "bold",
+      halign: "left",
+      fontSize: 11,
+    },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
     columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
   });
@@ -1018,7 +1036,7 @@ async function generatePDF() {
     "All prices exclude VAT unless marked exempt. This document is an estimate and valid for 30 days.";
   const discY = currentY + 8;
   doc.setFontSize(8);
-  doc.setTextColor(80);
+  doc.setTextColor(...ACCENT_ORANGE);
   doc.text(disclaimerText, pageWidth / 2, discY + 3, { align: "center" });
   doc.setTextColor(0);
 
@@ -1136,9 +1154,11 @@ async function generateSalesPDF() {
   const quoteNo = document.getElementById("salesQuoteNumber").value || "";
   doc.setFontSize(14);
   doc.setFont(undefined, "bold");
+  doc.setTextColor(...BRAND_BLUE);
   doc.text(`Quotation: #${quoteNo}`, pageWidth - margin, margin + 30, {
     align: "right",
   });
+  doc.setTextColor(0);
   doc.setFontSize(10);
 
   let currentY = margin + 40;
@@ -1157,7 +1177,13 @@ async function generateSalesPDF() {
     margin: { left: margin },
     tableWidth: boxWidth,
     theme: "grid",
-    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    headStyles: {
+      fillColor: BRAND_BLUE,
+      textColor: 255,
+      fontStyle: "bold",
+      halign: "left",
+      fontSize: 11,
+    },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
@@ -1168,7 +1194,13 @@ async function generateSalesPDF() {
     margin: { left: margin + boxWidth + 10 },
     tableWidth: boxWidth,
     theme: "grid",
-    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    headStyles: {
+      fillColor: BRAND_BLUE,
+      textColor: 255,
+      fontStyle: "bold",
+      halign: "left",
+      fontSize: 11,
+    },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
   });
 
@@ -1188,7 +1220,13 @@ async function generateSalesPDF() {
     margin: { left: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    headStyles: {
+      fillColor: BRAND_BLUE,
+      textColor: 255,
+      fontStyle: "bold",
+      halign: "left",
+      fontSize: 11,
+    },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
     columnStyles: { 0: { fontStyle: "bold", cellWidth: 40 } }
   });
@@ -1219,7 +1257,13 @@ async function generateSalesPDF() {
     margin: { left: margin, right: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
+    headStyles: {
+      fillColor: BRAND_BLUE,
+      textColor: 255,
+      fontStyle: "bold",
+      halign: "left",
+      fontSize: 11,
+    },
     styles: {
       fontSize: 10,
       cellPadding: TABLE_PADDING,
@@ -1248,10 +1292,18 @@ async function generateSalesPDF() {
 
   doc.autoTable({
     startY: currentY,
+    head: [[{ content: "Totals", colSpan: 2 }]],
     body: summaryRows,
     margin: { left: pageWidth - margin - 60 },
     tableWidth: 60,
     theme: "grid",
+    headStyles: {
+      fillColor: BRAND_BLUE,
+      textColor: 255,
+      fontStyle: "bold",
+      halign: "left",
+      fontSize: 11,
+    },
     styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
     columnStyles: {
       0: { fontStyle: "bold", halign: "left" },
@@ -1272,8 +1324,19 @@ async function generateSalesPDF() {
     margin: { left: margin, right: margin },
     tableWidth: pageWidth - margin * 2,
     theme: "grid",
-    headStyles: { textColor: 0, fontStyle: "bold", halign: "left", fontSize: 11 },
-    styles: { fontSize: 8, cellPadding: TABLE_PADDING, halign: "left" },
+    headStyles: {
+      fillColor: BRAND_BLUE,
+      textColor: 255,
+      fontStyle: "bold",
+      halign: "left",
+      fontSize: 11,
+    },
+    styles: {
+      fontSize: 8,
+      cellPadding: TABLE_PADDING,
+      halign: "left",
+      textColor: ACCENT_ORANGE,
+    },
   });
 
   currentY = doc.lastAutoTable.finalY;
@@ -1294,7 +1357,7 @@ function addPdfFooter(doc, pageWidth, pageHeight) {
     const w = doc.internal.pageSize.getWidth();
     const h = doc.internal.pageSize.getHeight();
     const y = h - 12;
-    doc.setDrawColor(200);
+    doc.setDrawColor(...BRAND_BLUE);
     doc.line(margin, y - 4, w - margin, y - 4);
     doc.setFontSize(8);
     doc.setTextColor(80);
