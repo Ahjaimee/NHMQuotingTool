@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-  max-width: 700px;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
   padding-bottom: 60px;
@@ -268,6 +268,7 @@ input[type="checkbox"]:active {
 .quote-table td {
   padding: 6px 8px;
   border-bottom: 1px solid #ccc;
+  word-break: break-word;
 }
 
 .quote-table th {
