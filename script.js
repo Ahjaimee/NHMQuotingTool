@@ -869,69 +869,82 @@ async function generatePDF(quoteData) {
   img.src = 'nhm-logo.png';
   try { await img.decode(); } catch(e) {}
   doc.addImage(img, 'PNG', 10, 10, 30, 30);
-  doc.setFontSize(10);
-  let headerY = 15;
-  const headerX = 45;
-  doc.text(COMPANY_NAME, headerX, headerY);
-  doc.text(COMPANY_ADDRESS, headerX, headerY += 5);
-  doc.text(COMPANY_CONTACT, headerX, headerY += 5);
-  doc.text(COMPANY_EMAIL, headerX, headerY += 5);
-  let y = Math.max(45, headerY + 10);
-  doc.setFontSize(14);
+
+  // company info tile on the right
+  const infoX = 110;
+  const infoWidth = 90;
+  doc.setFillColor(230);
+  doc.rect(infoX, 10, infoWidth, 25, 'F');
+  doc.setFontSize(11);
+  doc.setFont(undefined, 'bold');
+  let tY = 15;
+  [COMPANY_NAME,
+   ...COMPANY_ADDRESS.split(', '),
+   COMPANY_CONTACT,
+   COMPANY_EMAIL
+  ].forEach(line => {
+    doc.text(line, infoX + 2, tY);
+    tY += 5;
+  });
+  doc.setFont(undefined, 'normal');
+
+  let y = Math.max(45, tY + 5);
+  doc.setFontSize(16);
   doc.setTextColor(...BRAND_BLUE);
-  doc.text('Repair Estimate', 20, y += 10);
+  doc.text('Repair Estimate', 20, y);
   doc.setTextColor(0,0,0);
   const estimateNumber = `E${Date.now().toString().slice(-6)}`;
   const today = new Date().toLocaleDateString('en-GB');
-  doc.setFontSize(10);
-  doc.text(`Estimate Number: ${estimateNumber}`, 20, y += 8);
-  doc.text(`Date: ${today}`, 20, y += 6);
-  doc.text(`Customer: ${quoteData.customerName}`, 20, y += 8);
-  doc.text(`Phone: ${quoteData.customerPhone}`, 20, y += 5);
-  doc.text(`Email: ${quoteData.customerEmail}`, 20, y += 5);
-  y += 10;
-  doc.setFontSize(11);
-  doc.setTextColor(...BRAND_BLUE);
-  doc.text('Model', 20, y);
-  doc.text('Service', 50, y);
-  doc.text('Part#', 100, y);
-  doc.text('Qty', 125, y);
-  doc.text('Labour', 140, y);
-  doc.text('Materials', 160, y);
-  doc.text('Total', 180, y);
-  doc.setDrawColor(...BRAND_BLUE);
-  doc.line(20, y += 2, 200, y);
-  doc.setTextColor(0,0,0);
-  doc.setFontSize(10);
-  quoteData.items.forEach(item => {
-    y += 6;
-    doc.text(item.asset, 20, y, { maxWidth: 25 });
-    doc.text(item.model, 50, y, { maxWidth: 45 });
-    doc.text(item.part, 100, y);
-    doc.text(String(item.qty), 125, y);
-    doc.text(`£${item.labour.toFixed(2)}`, 140, y);
-    doc.text(`£${item.materials.toFixed(2)}`, 160, y);
-    doc.text(`£${item.total.toFixed(2)}`, 180, y);
-  });
+  doc.setFontSize(12);
+  y += 8;
+  doc.text(`Estimate Number: ${estimateNumber}`, 20, y);
   y += 6;
-  doc.line(20, y, 200, y);
-  doc.text('Subtotal:', 160, y += 6);
-  doc.text(`£${quoteData.subtotal.toFixed(2)}`, 180, y);
-  doc.text('VAT:', 160, y += 6);
-  doc.text(`£${quoteData.vat.toFixed(2)}`, 180, y);
+  doc.text(`Date: ${today}`, 20, y);
+  y += 6;
+  doc.text(`Customer: ${quoteData.customerName}`, 20, y);
+  y += 6;
+  doc.text(`Phone: ${quoteData.customerPhone}`, 20, y);
+  y += 6;
+  doc.text(`Email: ${quoteData.customerEmail}`, 20, y);
+  y += 10;
+
+  // table of items using autotable for dynamic heights
+  const body = quoteData.items.map(it => [it.asset, it.model, it.part,
+    `£${it.labour.toFixed(2)}`, `£${it.materials.toFixed(2)}`, `£${it.total.toFixed(2)}`]);
+  doc.autoTable({
+    head: [['Model', 'Service', 'Part#', 'Labour', 'Materials', 'Total']],
+    body,
+    startY: y,
+    styles: { lineColor: [150,150,150], lineWidth: 0.1, fontSize: 11 },
+    headStyles: { fillColor: 230, textColor: 0, fontStyle: 'bold', halign: 'center' },
+    margin: { left: 20, right: 10 },
+    tableWidth: 170
+  });
+
+  y = doc.lastAutoTable.finalY + 6;
+  doc.setFontSize(12);
+  doc.text('Subtotal:', 150, y);
+  doc.text(`£${quoteData.subtotal.toFixed(2)}`, 190, y, { align: 'right' });
+  y += 6;
+  doc.text('VAT:', 150, y);
+  doc.text(`£${quoteData.vat.toFixed(2)}`, 190, y, { align: 'right' });
+  y += 6;
+  doc.setFont(undefined, 'bold');
   doc.setTextColor(...BRAND_BLUE);
-  doc.setFontSize(11);
-  doc.text('Total:', 160, y += 6);
-  doc.text(`£${quoteData.total.toFixed(2)}`, 180, y);
+  doc.text('Total:', 150, y);
+  doc.text(`£${quoteData.total.toFixed(2)}`, 190, y, { align: 'right' });
   doc.setTextColor(0,0,0);
+  doc.setFont(undefined, 'normal');
+
   const pageHeight = doc.internal.pageSize.getHeight();
   const footerY = pageHeight - 15;
   doc.setFontSize(8);
   doc.setTextColor(...ACCENT_ORANGE);
-  doc.text(COMPANY_NAME, 20, footerY);
+  const footer = `${COMPANY_NAME} | ${COMPANY_ADDRESS} | ${COMPANY_CONTACT} | ${COMPANY_EMAIL}`;
+  doc.text(footer, doc.internal.pageSize.getWidth() / 2, footerY, { align: 'center' });
   doc.setTextColor(0,0,0);
-  doc.text('Consort House, Jubilee Road, Victoria Business Park, Burgess Hill, RH15 9TL 01444 250 350 sales@nhmaintenance.com www.nhmaintenance.com', 20, footerY + 5);
-  doc.text(`${COMPANY_REG} ${COMPANY_VAT}`, 20, footerY + 10);
+  doc.text(`${COMPANY_REG} ${COMPANY_VAT}`, doc.internal.pageSize.getWidth() / 2, footerY + 5, { align: 'center' });
+
   doc.save(`NHM_Estimate_${estimateNumber}.pdf`);
 }
 function renderSalesQuote() {
@@ -1010,6 +1023,7 @@ async function generateSalesPDF() {
   try { await img.decode(); } catch(e) {}
   doc.addImage(img, 'PNG', 10, 10, 30, 30);
 
+  // services list under logo
   const services = [
     'Medical Equipment:',
     'Sales',
@@ -1025,21 +1039,24 @@ async function generateSalesPDF() {
   let y = 12;
   services.forEach(line => { doc.text(line, x, y); y += 4; });
 
-  const company = [
-    'N H Maintenance Ltd',
-    'Consort House',
-    'Jubilee Road',
-    'Victoria Business Park',
-    'Burgess Hill',
-    'RH15 9TL',
-    'T: 01444 250350',
-    'E: admin@nhmaintenance.com',
-    'W: nhmaintenance.com'
-  ];
-  doc.setTextColor(0,0,0);
-  x = 60; y = 12;
-  company.forEach(line => { doc.text(line, x, y); y += 4; });
-  y += 4;
+  // company info tile aligned right
+  const infoX = 110;
+  const infoWidth = 90;
+  doc.setFillColor(230);
+  doc.rect(infoX, 10, infoWidth, 25, 'F');
+  doc.setFontSize(11);
+  doc.setFont(undefined, 'bold');
+  let tY = 15;
+  [COMPANY_NAME,
+   ...COMPANY_ADDRESS.split(', '),
+   COMPANY_CONTACT,
+   COMPANY_EMAIL
+  ].forEach(line => {
+    doc.text(line, infoX + 2, tY);
+    tY += 5;
+  });
+  doc.setFont(undefined, 'normal');
+  y = Math.max(y, tY) + 4;
 
   let quoteNo = document.getElementById('salesQuoteNumber').value.trim();
   if (!quoteNo) {
@@ -1054,17 +1071,18 @@ async function generateSalesPDF() {
     document.getElementById('salesQuoteNumber').value = quoteNo;
   }
 
-  doc.setFontSize(12);
+  doc.setFontSize(14);
   doc.setTextColor(...BRAND_BLUE);
   doc.text(`Quotation: ${quoteNo}`, 10, y);
   y += 8;
 
   function sectionHeader(title) {
-    doc.setFillColor(...BRAND_BLUE);
-    doc.setTextColor(255,255,255);
+    doc.setFillColor(230);
+    doc.setTextColor(0,0,0);
+    doc.setFont(undefined, 'bold');
     doc.rect(10, y, 190, 7, 'F');
     doc.text(title, 12, y + 5);
-    doc.setTextColor(0,0,0);
+    doc.setFont(undefined, 'normal');
     y += 9;
   }
 
@@ -1097,19 +1115,19 @@ async function generateSalesPDF() {
     if (item.commissionSelected) sell += item.commissionCost;
     const total = sell * item.qty;
     subtotal += total;
-    body.push([item.desc, String(item.qty), `£${sell.toFixed(2)}`, `£${total.toFixed(2)}`]);
+    body.push([item.desc, `£${sell.toFixed(2)}`, `£${total.toFixed(2)}`]);
   });
   subtotal += carriage;
   if (salesItems.length > 0) {
-    body.push(['Carriage', '', '', `£${carriage.toFixed(2)}`]);
+    body.push(['Carriage', '', `£${carriage.toFixed(2)}`]);
   }
 
   doc.autoTable({
-    head: [['Description', 'Quantity', 'Sell', 'Total (Ex VAT)']],
+    head: [['Description', 'Sell', 'Total (Ex VAT)']],
     body,
     startY: y,
     styles: { lineColor: [150,150,150], lineWidth: 0.1 },
-    headStyles: { fillColor: BRAND_BLUE, textColor: 255, halign: 'center' },
+    headStyles: { fillColor: 230, textColor: 0, fontStyle: 'bold', halign: 'center' },
     margin: { left: 10, right: 10 },
     tableWidth: 190
   });
@@ -1142,10 +1160,10 @@ async function generateSalesPDF() {
   const footerY = pageHeight - 15;
   doc.setFontSize(8);
   doc.setTextColor(...ACCENT_ORANGE);
-  doc.text('N H Maintenance Ltd', 10, footerY);
+  const footer = `${COMPANY_NAME} | ${COMPANY_ADDRESS} | ${COMPANY_CONTACT} | ${COMPANY_EMAIL}`;
+  doc.text(footer, doc.internal.pageSize.getWidth()/2, footerY, { align: 'center' });
   doc.setTextColor(0,0,0);
-  doc.text('Consort House, Jubilee Road, Victoria Business Park, Burgess Hill, RH15 9TL 01444 250 350 sales@nhmaintenance.com www.nhmaintenance.com', 10, footerY + 5);
-  doc.text('Limited Company registered in England and Wales with number 08462490 VAT number: 427637085', 10, footerY + 10);
+  doc.text('Limited Company registered in England and Wales with number 08462490 VAT number: 427637085', doc.internal.pageSize.getWidth()/2, footerY + 5, { align: 'center' });
 
   doc.save(`NHM_Sales_Quote_${quoteNo}.pdf`);
 }
