@@ -870,29 +870,89 @@ async function generatePDF(quoteData) {
   try { await img.decode(); } catch(e) {}
   doc.addImage(img, 'PNG', 10, 10, 30, 30);
 
-  // company info tile on the right
-  const infoX = 110;
-  const infoWidth = 90;
+  // services tile left of company info
+  const serviceLines = [
+    { text: 'Medical Equipment:', header: true },
+    { text: 'Sales' },
+    { text: 'Service' },
+    { text: 'Spares and repairs' },
+    { text: 'Consultancy and technical support' },
+    { text: 'Contract hire and loan' },
+    { text: 'Storage' }
+  ];
+  const serviceLineHeight = 4;
+  const serviceWidths = serviceLines.map(l => {
+    const base = doc.getTextWidth(l.text);
+    return l.header ? base : doc.getTextWidth('+ ') + base;
+  });
+  const serviceWidth = Math.max(...serviceWidths) + 4;
+  let serviceX; // positioned once infoX is known
+  const serviceHeight = serviceLines.length * serviceLineHeight + 4;
+
+  // company info tile on the right - width adjusts to longest line
+  const pageWidth = doc.internal.pageSize.getWidth();
   const infoLines = [
     COMPANY_NAME,
     ...COMPANY_ADDRESS.split(', '),
-    COMPANY_CONTACT,
-    COMPANY_EMAIL
+    `T: ${COMPANY_CONTACT}`,
+    `E: ${COMPANY_EMAIL}`
   ];
   const infoLineHeight = 4;
+  const infoWidth = Math.max(...infoLines.map(l => doc.getTextWidth(l))) + 4;
+  const infoX = pageWidth - infoWidth - 10;
   const infoHeight = infoLines.length * infoLineHeight + 4;
+
+  // draw services tile now that we know infoX
+  serviceX = Math.max(45, infoX - serviceWidth - 5);
+  doc.setFillColor(230);
+  doc.rect(serviceX, 10, serviceWidth, serviceHeight, 'F');
+  doc.setFontSize(9);
+  let sy = 12;
+  serviceLines.forEach(l => {
+    doc.setFont(undefined, l.header ? 'bold' : 'normal');
+    if (l.header) {
+      doc.setTextColor(...BRAND_BLUE);
+      doc.text(l.text, serviceX + 2, sy);
+    } else {
+      doc.setTextColor(...ACCENT_ORANGE);
+      doc.text('+', serviceX + 2, sy);
+      doc.setTextColor(...BRAND_BLUE);
+      doc.text(l.text, serviceX + 4 + doc.getTextWidth('+'), sy);
+    }
+    sy += serviceLineHeight;
+  });
+  doc.setFont(undefined, 'normal');
+  doc.setTextColor(0,0,0);
   doc.setFillColor(230);
   doc.rect(infoX, 10, infoWidth, infoHeight, 'F');
   doc.setFontSize(9);
-  doc.setFont(undefined, 'bold');
   let tY = 12;
-  infoLines.forEach(line => {
-    doc.text(line, infoX + 2, tY);
+  infoLines.forEach((line, idx) => {
+    const x = infoX + infoWidth - 2;
+    if (idx === infoLines.length - 2) { // phone line
+      const val = COMPANY_CONTACT;
+      const valWidth = doc.getTextWidth(val);
+      doc.setTextColor(...ACCENT_ORANGE);
+      doc.text('T:', x - valWidth - doc.getTextWidth('T: ') , tY);
+      doc.setTextColor(...BRAND_BLUE);
+      doc.text(val, x, tY, { align: 'right' });
+    } else if (idx === infoLines.length - 1) { // email line
+      const val = COMPANY_EMAIL;
+      const valWidth = doc.getTextWidth(val);
+      doc.setTextColor(...ACCENT_ORANGE);
+      doc.text('E:', x - valWidth - doc.getTextWidth('E: ') , tY);
+      doc.setTextColor(...BRAND_BLUE);
+      doc.text(val, x, tY, { align: 'right' });
+    } else {
+      doc.setTextColor(...BRAND_BLUE);
+      doc.text(line, x, tY, { align: 'right' });
+    }
     tY += infoLineHeight;
   });
-  doc.setFont(undefined, 'normal');
+  doc.setTextColor(0,0,0);
 
-  let y = Math.max(45, tY + 5);
+  const tileBottom = Math.max(10 + infoHeight, 10 + serviceHeight);
+  let y = Math.max(45, tileBottom + 5);
   const estimateNumber = `E${Date.now().toString().slice(-6)}`;
   const today = new Date().toLocaleDateString('en-GB');
   const headerLines = [
