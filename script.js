@@ -811,237 +811,28 @@ function removeItem(index) {
 
 async function generatePDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
+  const doc = new jsPDF();
   doc.setFont("helvetica", "normal");
-
-  // Use a consistent grey stroke colour for all outline boxes
-  doc.setDrawColor(160);
-
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 20;
-
-  // Logo as data URL
-  const logo = await fetch("nhm-logo.png")
-    .then(r => r.blob())
-    .then(
-      blob =>
-        new Promise(resolve => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.readAsDataURL(blob);
-        })
-    );
-
-  // Header with company information
-  doc.setFontSize(10);
-  doc.setFont(undefined, "bold");
-  doc.text(COMPANY_NAME, margin, margin);
-  doc.setFontSize(8);
-  doc.setFont(undefined, "normal");
-  doc.text(COMPANY_ADDRESS, margin, margin + 4);
-  doc.text(`${COMPANY_REG} \u2022 ${COMPANY_VAT}`, margin, margin + 8);
-  doc.text(COMPANY_CONTACT, pageWidth - margin, margin, { align: "right" });
-  doc.text(COMPANY_EMAIL, pageWidth - margin, margin + 4, { align: "right" });
-  doc.text("www.nhmaintenance.com", pageWidth - margin, margin + 8, { align: "right" });
-  doc.setDrawColor(160);
-  doc.line(margin, margin + 11, pageWidth - margin, margin + 11);
-
-  doc.setFontSize(14);
-  doc.setFont(undefined, "bold");
-  doc.setTextColor(...BRAND_BLUE);
-  doc.text("Quoted Repair Estimate", pageWidth / 2, margin + 18, { align: "center" });
-  doc.setTextColor(0);
-  doc.setFont(undefined, "normal");
-  const lineHeight = 6;
-  let currentY = margin + 24;
+  doc.setFontSize(16);
+  doc.text("NHM Repair Estimate", 105, 10, { align: "center" });
 
   const name = document.getElementById("customerName").value || "(No name)";
-  const email = document.getElementById("customerEmail").value || "";
-  const phone = document.getElementById("customerPhone").value || "";
-  const desc = document.getElementById("workDesc").value || "";
-  const number = document.getElementById("quoteNumber").value || "(No #)";
+  const quoteNo = document.getElementById("quoteNumber").value || "(No #)";
+  doc.setFontSize(12);
+  doc.text(`Quote #: ${quoteNo}`, 10, 20);
+  doc.text(`Customer: ${name}`, 10, 30);
 
-  // Customer details box
-  const boxHeight = 40;
-  doc.rect(margin, currentY, pageWidth - margin * 2, boxHeight);
-  doc.setFontSize(10);
-  doc.setFont(undefined, "bold");
-  doc.text("Customer Details", margin + 2, currentY + 6);
-
-  let infoY = currentY + 12;
-  const gap = 6;
-  doc.text("Quote #:", margin + 2, infoY);
-  doc.setFont(undefined, "normal");
-  doc.text(number, margin + 26, infoY);
-  doc.setFont(undefined, "bold");
-  doc.text("Date:", pageWidth / 2, infoY);
-  doc.setFont(undefined, "normal");
-  doc.text(new Date().toLocaleDateString(), pageWidth / 2 + 18, infoY);
-  infoY += gap;
-  doc.setFont(undefined, "bold");
-  doc.text("Customer:", margin + 2, infoY);
-  doc.setFont(undefined, "normal");
-  doc.text(name, margin + 26, infoY);
-  infoY += gap;
-  doc.setFont(undefined, "bold");
-  doc.text("Phone:", margin + 2, infoY);
-  doc.setFont(undefined, "normal");
-  doc.text(phone || "(N/A)", margin + 26, infoY);
-  infoY += gap;
-  doc.setFont(undefined, "bold");
-  doc.text("Email:", margin + 2, infoY);
-  doc.setFont(undefined, "normal");
-  doc.text(email || "(N/A)", margin + 26, infoY);
-
-  currentY += boxHeight + 10;
-
-  if (desc) {
-    const descLines = doc.splitTextToSize(desc, pageWidth - margin * 2 - 4);
-    const descRows = descLines.map(l => [l]);
-
-    doc.autoTable({
-      startY: currentY,
-      head: [["Quote Description"]],
-      body: descRows,
-      margin: { left: margin, right: margin },
-      tableWidth: pageWidth - margin * 2,
-      theme: "grid",
-      headStyles: {
-        fillColor: BRAND_BLUE,
-        textColor: 255,
-        fontStyle: "bold",
-        halign: "left",
-        fontSize: 11,
-      },
-      styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
-    });
-
-    currentY = doc.lastAutoTable.finalY + 10;
-  }
-
-  const tableStartY = currentY;
-
-  const rows = [];
-  let labourSubtotal = 0;
-  const supplyOnlyFlag = document.getElementById("supplyOnly").checked;
-  const items = [];
+  let y = 40;
   quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.model][item.variant][item.category][item.repair];
-    if (info.part_number && info.part_number.startsWith("EQ")) {
-      return;
-    }
-    const hours = parseFloat(item.labourHours);
-    const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
-    const labour = supplyOnlyFlag ? 0 : labourPerItem * item.qty;
-    labourSubtotal += labour;
-    items.push({ item, info, labour });
-  });
-
-  if (!supplyOnlyFlag && items.length > 0) {
-    const override = document.getElementById("overrideLabour").checked;
-    const customVal = parseFloat(document.getElementById("customLabour").value);
-    if (override && !isNaN(customVal)) {
-      const diff = customVal - labourSubtotal;
-      items[0].labour += diff;
-      labourSubtotal = customVal;
-    } else if (labourSubtotal < minLabourCost) {
-      const diff = minLabourCost - labourSubtotal;
-      items[0].labour += diff;
-      labourSubtotal = minLabourCost;
-    }
-  }
-
-  items.forEach(({ item, info, labour }) => {
+    if (info.part_number && info.part_number.startsWith("EQ")) return;
+    const hours = parseFloat(item.labourHours) || 0;
+    const labour = hours * LABOUR_RATE * item.qty;
     const materials = info.material_cost * item.qty;
-    const total = labour + materials;
-    rows.push([
-      `${item.asset} ${item.model}`,
-      info.description || `${item.category} - ${item.repair}`,
-      info.part_number,
-      item.qty,
-      `£${labour.toFixed(2)}`,
-      `£${materials.toFixed(2)}`,
-      `£${total.toFixed(2)}`
-    ]);
+    doc.text(info.description || item.repair, 10, y);
+    doc.text(`£${(labour + materials).toFixed(2)}`, 190, y, { align: "right" });
+    y += 8;
   });
-
-  const carriageCharge = document.getElementById("supplyOnly").checked && rows.length > 0 ? CARRIAGE_CHARGE : 0;
-  if (carriageCharge > 0) {
-    rows.push(["Carriage", "", "", "", "", "", `£${carriageCharge.toFixed(2)}`]);
-  }
-
-  doc.autoTable({
-    startY: tableStartY,
-    head: [["Model", "Service", "Part#", "Qty", "Labour", "Materials", "Total"]],
-    body: rows,
-    margin: { left: margin, right: margin },
-    tableWidth: 200,
-    theme: "grid",
-    headStyles: { fillColor: BRAND_BLUE, textColor: 255, halign: "center", fontStyle: "bold" },
-    styles: {
-      halign: "center",
-      fontSize: 10,
-      cellPadding: TABLE_PADDING,
-      valign: "middle",
-      minCellHeight: 10
-    },
-    columnStyles: {
-      0: { halign: "left", cellWidth: 30, fontStyle: "bold" },
-      1: { halign: "left", cellWidth: 80 },
-      2: { halign: "center", cellWidth: 20 },
-      3: { halign: "center", cellWidth: 10 },
-      4: { halign: "right", cellWidth: 20 },
-      5: { halign: "right", cellWidth: 20 },
-      6: { halign: "right", cellWidth: 20 }
-    }
-  });
-
-  currentY = doc.lastAutoTable.finalY + 10;
-
-  const subtotal = rows.reduce((sum, r) => sum + parseFloat(r[6].replace("£", "")), 0);
-  const vat = document.getElementById("vatExempt").checked ? 0 : subtotal * 0.2;
-  const total = subtotal + vat;
-
-  const summaryBoxWidth = 50;
-  const summaryX = pageWidth - margin - summaryBoxWidth;
-
-  const summaryRows = [
-    ["Subtotal", `£${subtotal.toFixed(2)}`],
-    ["VAT", `£${vat.toFixed(2)}`],
-    ["Total", `£${total.toFixed(2)}`]
-  ];
-
-  doc.autoTable({
-    startY: currentY,
-    head: [[{ content: "Quote Summary", colSpan: 2 }]],
-    body: summaryRows,
-    margin: { left: summaryX, right: margin },
-    tableWidth: summaryBoxWidth,
-    theme: "grid",
-    headStyles: {
-      fillColor: BRAND_BLUE,
-      textColor: 255,
-      fontStyle: "bold",
-      halign: "left",
-      fontSize: 11,
-    },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
-    columnStyles: { 0: { halign: "left" }, 1: { halign: "right" } }
-  });
-
-  currentY = doc.lastAutoTable.finalY;
-
-  const disclaimerText =
-    "All prices exclude VAT unless marked exempt. This document is an estimate and valid for 30 days.";
-  const discY = currentY + 8;
-  doc.setFontSize(8);
-  doc.setTextColor(...ACCENT_ORANGE);
-  doc.text(disclaimerText, pageWidth / 2, discY + 3, { align: "center" });
-  doc.setTextColor(0);
-
-  // Footer with contact details at the very bottom
-  addPdfFooter(doc, pageWidth, pageHeight);
 
   doc.save("NHM_Quote.pdf");
 }
@@ -1114,255 +905,27 @@ function removeSalesItem(index) {
 
 async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" });
+  const doc = new jsPDF();
   doc.setFont("helvetica", "normal");
-  doc.setDrawColor(150);
+  doc.setFontSize(16);
+  doc.text("NHM Sales Quote", 105, 10, { align: "center" });
 
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 20;
+  const name = document.getElementById("salesCustomerName").value || "(No name)";
+  const quoteNo = document.getElementById("salesQuoteNumber").value || "(No #)";
+  doc.setFontSize(12);
+  doc.text(`Quote #: ${quoteNo}`, 10, 20);
+  doc.text(`Customer: ${name}`, 10, 30);
 
-  // Load logo if available and place it at the top left
-  let logoData;
-  try {
-    const blob = await fetch("nhm-logo.png").then(r => r.blob());
-    logoData = await new Promise(res => {
-      const reader = new FileReader();
-      reader.onload = () => res(reader.result);
-      reader.readAsDataURL(blob);
-    });
-    doc.addImage(logoData, "PNG", margin, margin, 40, 0);
-  } catch (e) {}
-
-  // Company header to the right of the logo
-  doc.setFontSize(10);
-  doc.setFont(undefined, "bold");
-  doc.text(COMPANY_NAME, pageWidth - margin, margin, { align: "right" });
-  doc.setFontSize(8);
-  doc.setFont(undefined, "normal");
-  doc.text(COMPANY_ADDRESS, pageWidth - margin, margin + 4, { align: "right" });
-  doc.text(COMPANY_CONTACT, pageWidth - margin, margin + 8, { align: "right" });
-  doc.text(COMPANY_EMAIL, pageWidth - margin, margin + 12, { align: "right" });
-  doc.text("www.nhmaintenance.com", pageWidth - margin, margin + 16, {
-    align: "right",
-  });
-  doc.text(`${COMPANY_REG} \u2022 ${COMPANY_VAT}`, pageWidth - margin, margin + 20, {
-    align: "right",
-  });
-
-  // Quote title
-  const quoteNo = document.getElementById("salesQuoteNumber").value || "";
-  doc.setFontSize(14);
-  doc.setFont(undefined, "bold");
-  doc.setTextColor(...BRAND_BLUE);
-  doc.text(`Quotation: #${quoteNo}`, pageWidth - margin, margin + 30, {
-    align: "right",
-  });
-  doc.setTextColor(0);
-  doc.setFontSize(10);
-
-  let currentY = margin + 40;
-
-  const custName = document.getElementById("salesCustomerName").value || "(No name)";
-  const custPhone = document.getElementById("salesCustomerPhone").value || "";
-  const custEmail = document.getElementById("salesCustomerEmail").value || "";
-  const custLines = [custName, custPhone, custEmail];
-  const siteLines = custLines;
-  const boxWidth = (pageWidth - margin * 2 - 10) / 2;
-
-  doc.autoTable({
-    startY: currentY,
-    head: [["Customer Details"]],
-    body: [[custLines.join("\n")]],
-    margin: { left: margin },
-    tableWidth: boxWidth,
-    theme: "grid",
-    headStyles: {
-      fillColor: BRAND_BLUE,
-      textColor: 255,
-      fontStyle: "bold",
-      halign: "left",
-      fontSize: 11,
-    },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
-  });
-
-  doc.autoTable({
-    startY: currentY,
-    head: [["Site Details"]],
-    body: [[siteLines.join("\n")]],
-    margin: { left: margin + boxWidth + 10 },
-    tableWidth: boxWidth,
-    theme: "grid",
-    headStyles: {
-      fillColor: BRAND_BLUE,
-      textColor: 255,
-      fontStyle: "bold",
-      halign: "left",
-      fontSize: 11,
-    },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" }
-  });
-
-  currentY = doc.lastAutoTable.finalY + 5;
-
-  const details = [
-    ["Date", new Date().toLocaleDateString()],
-    ["Prepared by", COMPANY_NAME],
-    ["Customer Ref", quoteNo],
-    ["Job Notes", salesItems[0] ? salesItems[0].desc : ""]
-  ];
-
-  doc.autoTable({
-    startY: currentY,
-    head: [["Quotation Details"]],
-    body: details.map(d => [d[0] + ":", d[1]]),
-    margin: { left: margin },
-    tableWidth: pageWidth - margin * 2,
-    theme: "grid",
-    headStyles: {
-      fillColor: BRAND_BLUE,
-      textColor: 255,
-      fontStyle: "bold",
-      halign: "left",
-      fontSize: 11,
-    },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "left" },
-    columnStyles: { 0: { fontStyle: "bold", cellWidth: 40 } }
-  });
-
-  currentY = doc.lastAutoTable.finalY + 5;
-
-  const rows = [];
-  let subtotal = 0;
+  let y = 40;
   salesItems.forEach(item => {
     let sell = item.price;
     if (item.setupSelected) sell += item.setupCost;
     if (item.commissionSelected) sell += item.commissionCost;
-    const tot = sell * item.qty;
-    subtotal += tot;
-    rows.push([item.desc, item.qty, `\u00a3${sell.toFixed(2)}`, `\u00a3${tot.toFixed(2)}`]);
+    const total = sell * item.qty;
+    doc.text(item.desc, 10, y);
+    doc.text(`£${total.toFixed(2)}`, 190, y, { align: "right" });
+    y += 8;
   });
-
-  const carriage = overrideCarriage.checked ? parseFloat(customCarriage.value) || 0 : SALES_CARRIAGE;
-  if (rows.length > 0) {
-    rows.push(["Carriage", "", "", `\u00a3${carriage.toFixed(2)}`]);
-    subtotal += carriage;
-  }
-
-  doc.autoTable({
-    startY: currentY,
-    head: [["Description", "Quantity", "Sell", "Total (Ex VAT)"]],
-    body: rows,
-    margin: { left: margin, right: margin },
-    tableWidth: pageWidth - margin * 2,
-    theme: "grid",
-    headStyles: {
-      fillColor: BRAND_BLUE,
-      textColor: 255,
-      fontStyle: "bold",
-      halign: "left",
-      fontSize: 11,
-    },
-    styles: {
-      fontSize: 10,
-      cellPadding: TABLE_PADDING,
-      halign: "left",
-      overflow: "hidden",
-    },
-    columnStyles: {
-      0: { halign: "left" },
-      1: { halign: "right", cellWidth: 20 },
-      2: { halign: "right" },
-      3: { halign: "right" },
-    },
-  });
-
-  currentY = doc.lastAutoTable.finalY + 5;
-
-  const discount = 0;
-  const vat = document.getElementById("vatExemptSales").checked ? 0 : (subtotal - discount) * 0.2;
-  const grand = subtotal - discount + vat;
-  const summaryRows = [
-    ["Subtotal", `\u00a3${subtotal.toFixed(2)}`],
-    ["Discount", `\u00a3${discount.toFixed(2)}`],
-    ["VAT", `\u00a3${vat.toFixed(2)}`],
-    ["Grand Total", `\u00a3${grand.toFixed(2)}`]
-  ];
-
-  doc.autoTable({
-    startY: currentY,
-    head: [[{ content: "Totals", colSpan: 2 }]],
-    body: summaryRows,
-    margin: { left: pageWidth - margin - 60 },
-    tableWidth: 60,
-    theme: "grid",
-    headStyles: {
-      fillColor: BRAND_BLUE,
-      textColor: 255,
-      fontStyle: "bold",
-      halign: "left",
-      fontSize: 11,
-    },
-    styles: { fontSize: 10, cellPadding: TABLE_PADDING, halign: "right" },
-    columnStyles: {
-      0: { fontStyle: "bold", halign: "left" },
-      1: { halign: "right" },
-    },
-  });
-
-  currentY = doc.lastAutoTable.finalY + 5;
-
-  const notes = [
-    "All prices exclude VAT unless marked exempt. This document is an estimate and valid for 30 days.",
-  ];
-
-  doc.autoTable({
-    startY: currentY,
-    head: [["Notes"]],
-    body: [notes],
-    margin: { left: margin, right: margin },
-    tableWidth: pageWidth - margin * 2,
-    theme: "grid",
-    headStyles: {
-      fillColor: BRAND_BLUE,
-      textColor: 255,
-      fontStyle: "bold",
-      halign: "left",
-      fontSize: 11,
-    },
-    styles: {
-      fontSize: 8,
-      cellPadding: TABLE_PADDING,
-      halign: "left",
-      textColor: ACCENT_ORANGE,
-    },
-  });
-
-  currentY = doc.lastAutoTable.finalY;
-  addPdfFooter(doc, pageWidth, pageHeight);
 
   doc.save("NHM_Sales_Quote.pdf");
-}
-// Draws a consistent footer on all PDF pages
-function addPdfFooter(doc, pageWidth, pageHeight) {
-  const margin = 20;
-  const contact = `${COMPANY_CONTACT} \u2022 ${COMPANY_EMAIL} \u2022 www.nhmaintenance.com`;
-  const address = COMPANY_ADDRESS;
-  const services = "Installations • Servicing • Repairs • Sales";
-
-  const pages = doc.getNumberOfPages();
-  for (let i = 1; i <= pages; i++) {
-    doc.setPage(i);
-    const w = doc.internal.pageSize.getWidth();
-    const h = doc.internal.pageSize.getHeight();
-    const y = h - 12;
-    doc.setDrawColor(...BRAND_BLUE);
-    doc.line(margin, y - 4, w - margin, y - 4);
-    doc.setFontSize(8);
-    doc.setTextColor(80);
-    doc.text(contact, w / 2, y, { align: "center" });
-    doc.text(address, w / 2, y + 4, { align: "center" });
-    doc.text(services, w / 2, y + 8, { align: "center" });
-  }
 }
