@@ -427,7 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   document.getElementById("workDesc").addEventListener("input", renderQuote);
-  document.getElementById("downloadPDF").addEventListener("click", generatePDF);
+  document.getElementById("downloadPDF").addEventListener("click", () => generatePDF(buildQuoteData()));
 
   document.getElementById("addSalesItem").addEventListener("click", () => {
     const asset = document.getElementById("salesAssetSelect").value;
@@ -809,124 +809,126 @@ function removeItem(index) {
   }
 }
 
-async function generatePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
 
-  doc.setFont("helvetica", "normal");
-
-  doc.setFontSize(16);
-  doc.text("N H Maintenance Ltd", 105, 15, { align: "center" });
-  doc.setFontSize(10);
-  doc.text(
-    "Consort House, Jubilee Road, Victoria Industrial Park, Burgess Hill, RH15 9TL",
-    105,
-    21,
-    { align: "center" }
-  );
-  doc.text(
-    "01444 250 350 | sales@nhmaintenance.com",
-    105,
-    26,
-    { align: "center" }
-  );
-
-  let y = 36;
-  doc.setFontSize(14);
-  doc.text("Repair Quote", 105, y, { align: "center" });
-  y += 8;
-
-  const quoteNo = document.getElementById("quoteNumber").value || "(No #)";
-  const customer = document.getElementById("customerName").value || "";
-  const today = new Date().toLocaleDateString("en-GB");
-
-  doc.setFontSize(11);
-  doc.text(`Quote Number: ${quoteNo}`, 20, y);
-  y += 6;
-  doc.text(`Date: ${today}`, 20, y);
-  y += 6;
-  if (customer) {
-    doc.text(`Customer: ${customer}`, 20, y);
-    y += 6;
-  }
-
-  const desc = document.getElementById("workDesc").value.trim();
-  if (desc) {
-    y += 4;
-    doc.setFontSize(11);
-    doc.text("Work Description", 20, y);
-    y += 5;
-    doc.setFontSize(10);
-    const descLines = doc.splitTextToSize(desc, 170);
-    doc.text(descLines, 20, y);
-    y += descLines.length * 5 + 4;
-  }
-
+function buildQuoteData() {
+  const customerName = document.getElementById("customerName").value || "";
+  const customerPhone = document.getElementById("customerPhone").value || "";
+  const customerEmail = document.getElementById("customerEmail").value || "";
   const supplyOnly = document.getElementById("supplyOnly").checked;
   const vatExempt = document.getElementById("vatExempt").checked;
-
-  let subtotal = 0;
+  const overrideLabour = document.getElementById("overrideLabour").checked;
+  const customLabour = parseFloat(document.getElementById("customLabour").value);
+  let items = [];
   let labourSubtotal = 0;
-  const rows = [];
-
-  quoteItems.forEach(item => {
-    const info = data[item.asset][item.make][item.model][item.variant][item.category][item.repair];
+  quoteItems.forEach(q => {
+    const info = data[q.asset][q.make][q.model][q.variant][q.category][q.repair];
     if (info.part_number && info.part_number.startsWith("EQ")) return;
-    const hours = parseFloat(item.labourHours);
+    const hours = parseFloat(q.labourHours);
     const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
-    const labour = supplyOnly ? 0 : labourPerItem * item.qty;
+    let labour = supplyOnly ? 0 : labourPerItem * q.qty;
     labourSubtotal += labour;
-    const materials = info.material_cost * item.qty;
-    const total = labour + materials;
-    subtotal += total;
-    rows.push([
-      `${item.asset} ${item.model}`,
-      info.description || `${item.category} - ${item.repair}`,
-      info.part_number,
-      String(item.qty),
-      supplyOnly ? "N/A" : `£${labour.toFixed(2)}`,
-      `£${materials.toFixed(2)}`,
-      `£${total.toFixed(2)}`
-    ]);
+    const materials = info.material_cost * q.qty;
+    items.push({
+      asset: `${q.asset} ${q.model}`,
+      model: info.description || `${q.category} - ${q.repair}`,
+      part: info.part_number,
+      qty: q.qty,
+      labour,
+      materials,
+      total: labour + materials
+    });
   });
-
-  const carriageCharge = supplyOnly && rows.length > 0 ? CARRIAGE_CHARGE : 0;
-  if (carriageCharge > 0) {
-    subtotal += carriageCharge;
-    rows.push(["Carriage", "", "", "", "", "", `£${carriageCharge.toFixed(2)}`]);
-  }
-
-  doc.autoTable({
-    head: [["Model/Asset", "Service Description", "Part#", "Qty", "Labour", "Materials", "Total"]],
-    body: rows,
-    startY: y,
-    styles: { font: "helvetica", fontSize: 10 },
-    headStyles: { fillColor: [242, 242, 242] },
-    alternateRowStyles: { fillColor: [245, 245, 245] },
-    columnStyles: {
-      3: { halign: "right" },
-      4: { halign: "right" },
-      5: { halign: "right" },
-      6: { halign: "right" }
+  if (!supplyOnly && items.length > 0) {
+    if (overrideLabour && !isNaN(customLabour)) {
+      const diff = customLabour - labourSubtotal;
+      items[0].labour += diff;
+      items[0].total += diff;
+      labourSubtotal = customLabour;
+    } else if (labourSubtotal < minLabourCost) {
+      const diff = minLabourCost - labourSubtotal;
+      items[0].labour += diff;
+      items[0].total += diff;
+      labourSubtotal = minLabourCost;
     }
-  });
-
-  y = doc.lastAutoTable.finalY + 6;
-
+  }
+  let subtotal = items.reduce((s, it) => s + it.total, 0);
+  const carriageCharge = supplyOnly && items.length > 0 ? CARRIAGE_CHARGE : 0;
+  if (carriageCharge) {
+    subtotal += carriageCharge;
+    items.push({ asset: "Carriage", model: "", part: "", qty: "", labour: 0, materials: 0, total: carriageCharge });
+  }
   const vat = vatExempt ? 0 : subtotal * 0.2;
-  const grandTotal = subtotal + vat;
-
-  doc.setFontSize(11);
-  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 160, y);
-  y += 6;
-  doc.text(`VAT${vatExempt ? " (Exempt)" : ""}: £${vat.toFixed(2)}`, 160, y);
-  y += 6;
-  doc.setFontSize(12);
-  doc.text(`Total: £${grandTotal.toFixed(2)}`, 160, y);
-
-  doc.save("NHM_Quote.pdf");
+  const total = subtotal + vat;
+  return { customerName, customerPhone, customerEmail, items, subtotal, vat, total };
 }
 
+async function generatePDF(quoteData) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let y = 20;
+  const img = new Image();
+  img.src = 'nhm-logo.png';
+  try { await img.decode(); } catch(e) {}
+  doc.addImage(img, 'PNG', 20, y, 30, 20);
+  y += 25;
+  doc.setFontSize(10);
+  doc.text(COMPANY_NAME, 55, y);
+  doc.text(COMPANY_ADDRESS, 55, y += 5);
+  doc.text(`${COMPANY_CONTACT}`, 55, y += 5);
+  doc.text(COMPANY_EMAIL, 55, y += 5);
+  y += 10;
+  doc.setFontSize(14);
+  doc.setTextColor(...BRAND_BLUE);
+  doc.text('Repair Quote', 20, y += 10);
+  doc.setTextColor(0,0,0);
+  const quoteNumber = `Q${Date.now().toString().slice(-6)}`;
+  const today = new Date().toLocaleDateString('en-GB');
+  doc.setFontSize(10);
+  doc.text(`Quote Number: ${quoteNumber}`, 20, y += 8);
+  doc.text(`Date: ${today}`, 20, y += 6);
+  doc.text(`Customer: ${quoteData.customerName}`, 20, y += 8);
+  doc.text(`Phone: ${quoteData.customerPhone}`, 20, y += 5);
+  doc.text(`Email: ${quoteData.customerEmail}`, 20, y += 5);
+  y += 10;
+  doc.setFontSize(11);
+  doc.setTextColor(...BRAND_BLUE);
+  doc.text('Model', 20, y);
+  doc.text('Service', 50, y);
+  doc.text('Part#', 100, y);
+  doc.text('Qty', 125, y);
+  doc.text('Labour', 140, y);
+  doc.text('Materials', 160, y);
+  doc.text('Total', 180, y);
+  doc.setDrawColor(...BRAND_BLUE);
+  doc.line(20, y += 2, 200, y);
+  doc.setTextColor(0,0,0);
+  doc.setFontSize(10);
+  quoteData.items.forEach(item => {
+    y += 6;
+    doc.text(item.asset, 20, y);
+    doc.text(item.model, 50, y, { maxWidth: 45 });
+    doc.text(item.part, 100, y);
+    doc.text(String(item.qty), 125, y);
+    doc.text(`£${item.labour.toFixed(2)}`, 140, y);
+    doc.text(`£${item.materials.toFixed(2)}`, 160, y);
+    doc.text(`£${item.total.toFixed(2)}`, 180, y);
+  });
+  y += 6;
+  doc.line(20, y, 200, y);
+  doc.text('Subtotal:', 160, y += 6);
+  doc.text(`£${quoteData.subtotal.toFixed(2)}`, 180, y);
+  doc.text('VAT:', 160, y += 6);
+  doc.text(`£${quoteData.vat.toFixed(2)}`, 180, y);
+  doc.setTextColor(...BRAND_BLUE);
+  doc.setFontSize(11);
+  doc.text('Total:', 160, y += 6);
+  doc.text(`£${quoteData.total.toFixed(2)}`, 180, y);
+  doc.setTextColor(0,0,0);
+  y += 20;
+  doc.setFontSize(8);
+  doc.text('Medical Equipment: Sales • Service • Spares • Consultancy • Contract Hire • Storage', 20, y);
+  doc.save(`NHM_Quote_${quoteNumber}.pdf`);
+}
 function renderSalesQuote() {
   const lines = document.getElementById("salesQuoteLines");
   const estimate = document.getElementById("salesEstimate");
