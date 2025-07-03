@@ -812,27 +812,117 @@ function removeItem(index) {
 async function generatePDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+
   doc.setFont("helvetica", "normal");
+
   doc.setFontSize(16);
-  doc.text("NHM Repair Estimate", 105, 10, { align: "center" });
+  doc.text("N H Maintenance Ltd", 105, 15, { align: "center" });
+  doc.setFontSize(10);
+  doc.text(
+    "Consort House, Jubilee Road, Victoria Industrial Park, Burgess Hill, RH15 9TL",
+    105,
+    21,
+    { align: "center" }
+  );
+  doc.text(
+    "01444 250 350 | sales@nhmaintenance.com",
+    105,
+    26,
+    { align: "center" }
+  );
 
-  const name = document.getElementById("customerName").value || "(No name)";
+  let y = 36;
+  doc.setFontSize(14);
+  doc.text("Repair Quote", 105, y, { align: "center" });
+  y += 8;
+
   const quoteNo = document.getElementById("quoteNumber").value || "(No #)";
-  doc.setFontSize(12);
-  doc.text(`Quote #: ${quoteNo}`, 10, 20);
-  doc.text(`Customer: ${name}`, 10, 30);
+  const customer = document.getElementById("customerName").value || "";
+  const today = new Date().toLocaleDateString("en-GB");
 
-  let y = 40;
+  doc.setFontSize(11);
+  doc.text(`Quote Number: ${quoteNo}`, 20, y);
+  y += 6;
+  doc.text(`Date: ${today}`, 20, y);
+  y += 6;
+  if (customer) {
+    doc.text(`Customer: ${customer}`, 20, y);
+    y += 6;
+  }
+
+  const desc = document.getElementById("workDesc").value.trim();
+  if (desc) {
+    y += 4;
+    doc.setFontSize(11);
+    doc.text("Work Description", 20, y);
+    y += 5;
+    doc.setFontSize(10);
+    const descLines = doc.splitTextToSize(desc, 170);
+    doc.text(descLines, 20, y);
+    y += descLines.length * 5 + 4;
+  }
+
+  const supplyOnly = document.getElementById("supplyOnly").checked;
+  const vatExempt = document.getElementById("vatExempt").checked;
+
+  let subtotal = 0;
+  let labourSubtotal = 0;
+  const rows = [];
+
   quoteItems.forEach(item => {
     const info = data[item.asset][item.make][item.model][item.variant][item.category][item.repair];
     if (info.part_number && info.part_number.startsWith("EQ")) return;
-    const hours = parseFloat(item.labourHours) || 0;
-    const labour = hours * LABOUR_RATE * item.qty;
+    const hours = parseFloat(item.labourHours);
+    const labourPerItem = isNaN(hours) ? 0 : hours * LABOUR_RATE;
+    const labour = supplyOnly ? 0 : labourPerItem * item.qty;
+    labourSubtotal += labour;
     const materials = info.material_cost * item.qty;
-    doc.text(info.description || item.repair, 10, y);
-    doc.text(`£${(labour + materials).toFixed(2)}`, 190, y, { align: "right" });
-    y += 8;
+    const total = labour + materials;
+    subtotal += total;
+    rows.push([
+      `${item.asset} ${item.model}`,
+      info.description || `${item.category} - ${item.repair}`,
+      info.part_number,
+      String(item.qty),
+      supplyOnly ? "N/A" : `£${labour.toFixed(2)}`,
+      `£${materials.toFixed(2)}`,
+      `£${total.toFixed(2)}`
+    ]);
   });
+
+  const carriageCharge = supplyOnly && rows.length > 0 ? CARRIAGE_CHARGE : 0;
+  if (carriageCharge > 0) {
+    subtotal += carriageCharge;
+    rows.push(["Carriage", "", "", "", "", "", `£${carriageCharge.toFixed(2)}`]);
+  }
+
+  doc.autoTable({
+    head: [["Model/Asset", "Service Description", "Part#", "Qty", "Labour", "Materials", "Total"]],
+    body: rows,
+    startY: y,
+    styles: { font: "helvetica", fontSize: 10 },
+    headStyles: { fillColor: [242, 242, 242] },
+    alternateRowStyles: { fillColor: [245, 245, 245] },
+    columnStyles: {
+      3: { halign: "right" },
+      4: { halign: "right" },
+      5: { halign: "right" },
+      6: { halign: "right" }
+    }
+  });
+
+  y = doc.lastAutoTable.finalY + 6;
+
+  const vat = vatExempt ? 0 : subtotal * 0.2;
+  const grandTotal = subtotal + vat;
+
+  doc.setFontSize(11);
+  doc.text(`Subtotal: £${subtotal.toFixed(2)}`, 160, y);
+  y += 6;
+  doc.text(`VAT${vatExempt ? " (Exempt)" : ""}: £${vat.toFixed(2)}`, 160, y);
+  y += 6;
+  doc.setFontSize(12);
+  doc.text(`Total: £${grandTotal.toFixed(2)}`, 160, y);
 
   doc.save("NHM_Quote.pdf");
 }
@@ -930,20 +1020,3 @@ async function generateSalesPDF() {
   doc.save("NHM_Sales_Quote.pdf");
 }
 
-// Basic PDF generator example
-async function generatePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Example content – this will go on the PDF
-  doc.setFontSize(16);
-  doc.text("NHM Quotation", 20, 20);
-  doc.setFontSize(12);
-  doc.text("Customer: John Smith", 20, 30);
-  doc.text("Quote ID: Q123456", 20, 40);
-  doc.text("Service: Bed Repair", 20, 50);
-  doc.text("Total: £250.00", 20, 60);
-
-  // Save the file
-  doc.save("nhm-quote.pdf");
-}
