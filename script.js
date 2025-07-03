@@ -41,11 +41,11 @@ const BRAND_BLUE = [39, 72, 143];
 const ACCENT_ORANGE = [245, 128, 32];
 
 const COMPANY_NAME = "N H Maintenance Ltd";
-const COMPANY_ADDRESS = "Consort House, Jubilee Road, Victoria Industrial Park, Burgess Hill, West Sussex, RH15 9TL";
+const COMPANY_ADDRESS = "Consort House, Jubilee Road, Victoria Business Park, Burgess Hill, West Sussex, RH15 9TL";
 const COMPANY_CONTACT = "01444 250 350";
 const COMPANY_EMAIL = "sales@nhmaintenance.com";
-const COMPANY_REG = "Reg No 12345678";
-const COMPANY_VAT = "VAT No GB987654321";
+const COMPANY_REG = "Limited Company registered in England and Wales with number 08462490";
+const COMPANY_VAT = "VAT number: 427637085";
 
 let quoteItems = [];
 let salesItems = [];
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("repairTab").addEventListener("click", () => {
     document.getElementById("repairTab").classList.add("active");
     document.getElementById("salesTab").classList.remove("active");
-    document.getElementById("toolTitle").textContent = "Repair Quote Estimator";
+    document.getElementById("toolTitle").textContent = "Repair Estimate Tool";
     document.getElementById("quoteForm").classList.remove("hidden");
     document.getElementById("quoteSection").classList.add("hidden");
     document.getElementById("salesForm").classList.add("hidden");
@@ -865,26 +865,26 @@ function buildQuoteData() {
 async function generatePDF(quoteData) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  let y = 20;
   const img = new Image();
   img.src = 'nhm-logo.png';
   try { await img.decode(); } catch(e) {}
-  doc.addImage(img, 'PNG', 20, y, 30, 20);
-  y += 25;
+  doc.addImage(img, 'PNG', 10, 10, 30, 30);
   doc.setFontSize(10);
-  doc.text(COMPANY_NAME, 55, y);
-  doc.text(COMPANY_ADDRESS, 55, y += 5);
-  doc.text(`${COMPANY_CONTACT}`, 55, y += 5);
-  doc.text(COMPANY_EMAIL, 55, y += 5);
-  y += 10;
+  let headerY = 15;
+  const headerX = 45;
+  doc.text(COMPANY_NAME, headerX, headerY);
+  doc.text(COMPANY_ADDRESS, headerX, headerY += 5);
+  doc.text(COMPANY_CONTACT, headerX, headerY += 5);
+  doc.text(COMPANY_EMAIL, headerX, headerY += 5);
+  let y = Math.max(45, headerY + 10);
   doc.setFontSize(14);
   doc.setTextColor(...BRAND_BLUE);
-  doc.text('Repair Quote', 20, y += 10);
+  doc.text('Repair Estimate', 20, y += 10);
   doc.setTextColor(0,0,0);
-  const quoteNumber = `Q${Date.now().toString().slice(-6)}`;
+  const estimateNumber = `E${Date.now().toString().slice(-6)}`;
   const today = new Date().toLocaleDateString('en-GB');
   doc.setFontSize(10);
-  doc.text(`Quote Number: ${quoteNumber}`, 20, y += 8);
+  doc.text(`Estimate Number: ${estimateNumber}`, 20, y += 8);
   doc.text(`Date: ${today}`, 20, y += 6);
   doc.text(`Customer: ${quoteData.customerName}`, 20, y += 8);
   doc.text(`Phone: ${quoteData.customerPhone}`, 20, y += 5);
@@ -905,7 +905,7 @@ async function generatePDF(quoteData) {
   doc.setFontSize(10);
   quoteData.items.forEach(item => {
     y += 6;
-    doc.text(item.asset, 20, y);
+    doc.text(item.asset, 20, y, { maxWidth: 25 });
     doc.text(item.model, 50, y, { maxWidth: 45 });
     doc.text(item.part, 100, y);
     doc.text(String(item.qty), 125, y);
@@ -924,10 +924,15 @@ async function generatePDF(quoteData) {
   doc.text('Total:', 160, y += 6);
   doc.text(`£${quoteData.total.toFixed(2)}`, 180, y);
   doc.setTextColor(0,0,0);
-  y += 20;
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const footerY = pageHeight - 15;
   doc.setFontSize(8);
-  doc.text('Medical Equipment: Sales • Service • Spares • Consultancy • Contract Hire • Storage', 20, y);
-  doc.save(`NHM_Quote_${quoteNumber}.pdf`);
+  doc.setTextColor(...ACCENT_ORANGE);
+  doc.text(COMPANY_NAME, 20, footerY);
+  doc.setTextColor(0,0,0);
+  doc.text('Consort House, Jubilee Road, Victoria Business Park, Burgess Hill, RH15 9TL 01444 250 350 sales@nhmaintenance.com www.nhmaintenance.com', 20, footerY + 5);
+  doc.text(`${COMPANY_REG} ${COMPANY_VAT}`, 20, footerY + 10);
+  doc.save(`NHM_Estimate_${estimateNumber}.pdf`);
 }
 function renderSalesQuote() {
   const lines = document.getElementById("salesQuoteLines");
@@ -1003,7 +1008,7 @@ async function generateSalesPDF() {
   const img = new Image();
   img.src = 'nhm-logo.png';
   try { await img.decode(); } catch(e) {}
-  doc.addImage(img, 'PNG', 10, 10, 30, 20);
+  doc.addImage(img, 'PNG', 10, 10, 30, 30);
 
   const services = [
     'Medical Equipment:',
@@ -1032,7 +1037,7 @@ async function generateSalesPDF() {
     'W: nhmaintenance.com'
   ];
   doc.setTextColor(0,0,0);
-  x = 120; y = 12;
+  x = 60; y = 12;
   company.forEach(line => { doc.text(line, x, y); y += 4; });
   y += 4;
 
@@ -1133,10 +1138,14 @@ async function generateSalesPDF() {
     y += 4;
   }
 
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const footerY = pageHeight - 15;
   doc.setFontSize(8);
-  doc.text('N H Maintenance Ltd', 10, y);
-  doc.text('Consort House, Jubilee Road, Victoria Business Park, Burgess Hill, RH15 9TL 01444 250 350 sales@nhmaintenance.com www.nhmaintenance.com', 10, y + 5);
-  doc.text('Limited Company registered in England and Wales with number 08462490 VAT number: 427637085', 10, y + 10);
+  doc.setTextColor(...ACCENT_ORANGE);
+  doc.text('N H Maintenance Ltd', 10, footerY);
+  doc.setTextColor(0,0,0);
+  doc.text('Consort House, Jubilee Road, Victoria Business Park, Burgess Hill, RH15 9TL 01444 250 350 sales@nhmaintenance.com www.nhmaintenance.com', 10, footerY + 5);
+  doc.text('Limited Company registered in England and Wales with number 08462490 VAT number: 427637085', 10, footerY + 10);
 
   doc.save(`NHM_Sales_Quote_${quoteNo}.pdf`);
 }
