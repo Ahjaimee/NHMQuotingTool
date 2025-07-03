@@ -70,6 +70,15 @@ input[type="text"], input[type="number"], select {
   box-sizing: border-box;
 }
 
+textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
 select option[disabled] {
   color: #999;
 }
