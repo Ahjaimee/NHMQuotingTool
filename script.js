@@ -1010,19 +1010,21 @@ async function generatePDF(quoteData) {
   doc.setTextColor(0,0,0);
   doc.setFont(undefined, 'normal');
 
-  y += 8;
-  doc.setFontSize(9);
-  doc.setFont(undefined, 'bold');
-  doc.text('Disclaimer:', 12, y);
-  doc.setFont(undefined, 'normal');
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const footerY = pageHeight - 15;
+
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
   const discLines = doc.splitTextToSize(disclaimer, 186);
-  doc.text(discLines, 12, y + 5);
-  y += discLines.length * 5 + 3;
+  const discHeight = discLines.length * 5 + 5;
+  let discY = footerY - discHeight - 2;
+  doc.setFontSize(10);
+  doc.setTextColor(...BRAND_BLUE);
+  doc.setFont(undefined, 'bold');
+  doc.text('Disclaimer:', 12, discY);
+  doc.setFont(undefined, 'normal');
+  doc.text(discLines, 12, discY + 5);
 
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const footerY = pageHeight - 15;
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
   const footerSegments = [
@@ -1258,6 +1260,19 @@ async function generateSalesPDF() {
 
   const pageHeight = doc.internal.pageSize.getHeight();
   const footerY = pageHeight - 15;
+
+  const disclaimer =
+    'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
+  const discLines = doc.splitTextToSize(disclaimer, 186);
+  const discHeight = discLines.length * 5 + 5;
+  let discY = footerY - discHeight - 2;
+  doc.setFontSize(10);
+  doc.setTextColor(...BRAND_BLUE);
+  doc.setFont(undefined, 'bold');
+  doc.text('Disclaimer:', 12, discY);
+  doc.setFont(undefined, 'normal');
+  doc.text(discLines, 12, discY + 5);
+
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
   const footerSegments = [
