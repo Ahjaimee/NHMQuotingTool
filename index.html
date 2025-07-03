@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -130,7 +131,7 @@
         </table>
         <div id="quoteSummary" class="quote-summary"></div>
       </div>
-      <button id="downloadPDF" class="hidden">Download PDF</button>
+      <button id="downloadPDF" class="hidden" onclick="generatePDF()">Download Quote PDF</button>
     </div>
 
     <form id="salesForm" class="hidden">

@@ -929,3 +929,21 @@ async function generateSalesPDF() {
 
   doc.save("NHM_Sales_Quote.pdf");
 }
+
+// Basic PDF generator example
+async function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Example content – this will go on the PDF
+  doc.setFontSize(16);
+  doc.text("NHM Quotation", 20, 20);
+  doc.setFontSize(12);
+  doc.text("Customer: John Smith", 20, 30);
+  doc.text("Quote ID: Q123456", 20, 40);
+  doc.text("Service: Bed Repair", 20, 50);
+  doc.text("Total: £250.00", 20, 60);
+
+  // Save the file
+  doc.save("nhm-quote.pdf");
+}
