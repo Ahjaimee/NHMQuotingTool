@@ -15,12 +15,15 @@ body {
 .logo-container {
   text-align: center;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .logo {
   width: 130px;
   height: auto;
   max-width: 100%;
+  margin: 0 auto;
 }
 
 .tab-buttons {
