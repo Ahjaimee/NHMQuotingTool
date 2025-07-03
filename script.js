@@ -995,20 +995,31 @@ async function generatePDF(quoteData) {
     tableWidth: 188
   });
 
-  y = doc.lastAutoTable.finalY + 6;
+  y = doc.lastAutoTable.finalY + 8;
   doc.setFontSize(12);
   doc.text('Subtotal:', 150, y);
-  doc.text(`£${quoteData.subtotal.toFixed(2)}`, 190, y, { align: 'right' });
+  doc.text(`£${quoteData.subtotal.toFixed(2)}`, 200, y, { align: 'right' });
   y += 6;
   doc.text('VAT:', 150, y);
-  doc.text(`£${quoteData.vat.toFixed(2)}`, 190, y, { align: 'right' });
+  doc.text(`£${quoteData.vat.toFixed(2)}`, 200, y, { align: 'right' });
   y += 6;
   doc.setFont(undefined, 'bold');
   doc.setTextColor(...BRAND_BLUE);
   doc.text('Total:', 150, y);
-  doc.text(`£${quoteData.total.toFixed(2)}`, 190, y, { align: 'right' });
+  doc.text(`£${quoteData.total.toFixed(2)}`, 200, y, { align: 'right' });
   doc.setTextColor(0,0,0);
   doc.setFont(undefined, 'normal');
+
+  y += 8;
+  doc.setFontSize(9);
+  doc.setFont(undefined, 'bold');
+  doc.text('Disclaimer:', 12, y);
+  doc.setFont(undefined, 'normal');
+  const disclaimer =
+    'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
+  const discLines = doc.splitTextToSize(disclaimer, 186);
+  doc.text(discLines, 12, y + 5);
+  y += discLines.length * 5 + 3;
 
   const pageHeight = doc.internal.pageSize.getHeight();
   const footerY = pageHeight - 15;
