@@ -880,14 +880,12 @@ async function generatePDF(quoteData) {
     { text: 'Contract hire and loan' },
     { text: 'Storage' }
   ];
-  const serviceLineHeight = 4;
   const serviceWidths = serviceLines.map(l => {
     const base = doc.getTextWidth(l.text);
     return l.header ? base : doc.getTextWidth('+ ') + base;
   });
   const serviceWidth = Math.max(...serviceWidths) + 4;
   let serviceX; // positioned once infoX is known
-  const serviceHeight = serviceLines.length * serviceLineHeight + 4;
 
   // company info tile on the right - width adjusts to longest line
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -902,9 +900,13 @@ async function generatePDF(quoteData) {
   const infoX = pageWidth - infoWidth - 10;
   const infoHeight = infoLines.length * infoLineHeight + 4;
 
+  // line height for services adjusted so bottom aligns with company info tile
+  const serviceLineHeight = (infoHeight - 4) / serviceLines.length;
+  const serviceHeight = serviceLines.length * serviceLineHeight + 4;
+
   // draw services tile now that we know infoX
   serviceX = Math.max(45, infoX - serviceWidth - 5);
-  doc.setFillColor(230);
+  doc.setFillColor(255);
   doc.rect(serviceX, 10, serviceWidth, serviceHeight, 'F');
   doc.setFontSize(9);
   let sy = 12;
@@ -923,7 +925,7 @@ async function generatePDF(quoteData) {
   });
   doc.setFont(undefined, 'normal');
   doc.setTextColor(0,0,0);
-  doc.setFillColor(230);
+  doc.setFillColor(255);
   doc.rect(infoX, 10, infoWidth, infoHeight, 'F');
   doc.setFontSize(9);
   let tY = 12;
@@ -963,11 +965,13 @@ async function generatePDF(quoteData) {
     `Email: ${quoteData.customerEmail}`
   ];
   const headerHeight = headerLines.length * 6 + 14;
-  doc.setFillColor(230);
+  doc.setFillColor(255);
   doc.rect(10, y, 190, headerHeight, 'F');
   doc.setFontSize(14);
   doc.setTextColor(...BRAND_BLUE);
+  doc.setFont(undefined, 'bold');
   doc.text('Repair Estimate', 12, y + 8);
+  doc.setFont(undefined, 'normal');
   doc.setFontSize(10);
   doc.setTextColor(0,0,0);
   let hy = y + 14;
@@ -987,8 +991,8 @@ async function generatePDF(quoteData) {
     styles: { lineColor: [150,150,150], lineWidth: 0.1, fontSize: 11 },
     headStyles: { fillColor: BRAND_BLUE, textColor: 255, fontStyle: 'bold', halign: 'center' },
     bodyStyles: { textColor: 0 },
-    margin: { left: 20, right: 10 },
-    tableWidth: 170
+    margin: { left: 12, right: 10 },
+    tableWidth: 188
   });
 
   y = doc.lastAutoTable.finalY + 6;
@@ -1131,7 +1135,7 @@ async function generateSalesPDF() {
   ];
   const infoLineHeight = 4;
   const infoHeight = infoLines.length * infoLineHeight + 4;
-  doc.setFillColor(230);
+  doc.setFillColor(255);
   doc.rect(infoX, 10, infoWidth, infoHeight, 'F');
   doc.setFontSize(9);
   doc.setFont(undefined, 'bold');
@@ -1162,7 +1166,7 @@ async function generateSalesPDF() {
   y += 8;
 
   function sectionHeader(title) {
-    doc.setFillColor(230);
+    doc.setFillColor(255);
     doc.setTextColor(0,0,0);
     doc.setFont(undefined, 'bold');
     doc.rect(10, y, 190, 7, 'F');
@@ -1212,7 +1216,7 @@ async function generateSalesPDF() {
     body,
     startY: y,
     styles: { lineColor: [150,150,150], lineWidth: 0.1 },
-    headStyles: { fillColor: 230, textColor: 0, fontStyle: 'bold', halign: 'center' },
+    headStyles: { fillColor: 255, textColor: 0, fontStyle: 'bold', halign: 'center' },
     margin: { left: 10, right: 10 },
     tableWidth: 190
   });
