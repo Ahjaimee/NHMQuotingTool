@@ -970,7 +970,7 @@ async function generatePDF(quoteData) {
   doc.setFontSize(14);
   doc.setTextColor(...BRAND_BLUE);
   doc.setFont(undefined, 'bold');
-  doc.text('Repair Estimate', 12, y + 8);
+  doc.text('Repair Estimate', pageWidth / 2, y + 8, { align: 'center' });
   doc.setFont(undefined, 'normal');
   doc.setFontSize(10);
   doc.setTextColor(0,0,0);
@@ -1015,7 +1015,7 @@ async function generatePDF(quoteData) {
 
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
-  const discLines = doc.splitTextToSize(disclaimer, 186);
+  const discLines = doc.splitTextToSize(disclaimer, pageWidth - 24);
   const discHeight = discLines.length * 5 + 5;
   let discY = footerY - discHeight - 2;
   doc.setFontSize(10);
@@ -1114,6 +1114,7 @@ function removeSalesItem(index) {
 async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
+  const pageWidth = doc.internal.pageSize.getWidth();
   doc.setFont("helvetica", "normal");
 
   const img = new Image();
@@ -1175,7 +1176,7 @@ async function generateSalesPDF() {
 
   doc.setFontSize(14);
   doc.setTextColor(...BRAND_BLUE);
-  doc.text(`Quotation: ${quoteNo}`, 10, y);
+  doc.text(`Quotation: ${quoteNo}`, pageWidth / 2, y, { align: 'center' });
   y += 8;
 
   function sectionHeader(title) {
@@ -1263,7 +1264,7 @@ async function generateSalesPDF() {
 
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
-  const discLines = doc.splitTextToSize(disclaimer, 186);
+  const discLines = doc.splitTextToSize(disclaimer, pageWidth - 24);
   const discHeight = discLines.length * 5 + 5;
   let discY = footerY - discHeight - 2;
   doc.setFontSize(10);
