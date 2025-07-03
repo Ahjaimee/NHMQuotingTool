@@ -873,40 +873,49 @@ async function generatePDF(quoteData) {
   // company info tile on the right
   const infoX = 110;
   const infoWidth = 90;
+  const infoLines = [
+    COMPANY_NAME,
+    ...COMPANY_ADDRESS.split(', '),
+    COMPANY_CONTACT,
+    COMPANY_EMAIL
+  ];
+  const infoLineHeight = 4;
+  const infoHeight = infoLines.length * infoLineHeight + 4;
   doc.setFillColor(230);
-  doc.rect(infoX, 10, infoWidth, 25, 'F');
-  doc.setFontSize(11);
+  doc.rect(infoX, 10, infoWidth, infoHeight, 'F');
+  doc.setFontSize(9);
   doc.setFont(undefined, 'bold');
-  let tY = 15;
-  [COMPANY_NAME,
-   ...COMPANY_ADDRESS.split(', '),
-   COMPANY_CONTACT,
-   COMPANY_EMAIL
-  ].forEach(line => {
+  let tY = 12;
+  infoLines.forEach(line => {
     doc.text(line, infoX + 2, tY);
-    tY += 5;
+    tY += infoLineHeight;
   });
   doc.setFont(undefined, 'normal');
 
   let y = Math.max(45, tY + 5);
-  doc.setFontSize(16);
-  doc.setTextColor(...BRAND_BLUE);
-  doc.text('Repair Estimate', 20, y);
-  doc.setTextColor(0,0,0);
   const estimateNumber = `E${Date.now().toString().slice(-6)}`;
   const today = new Date().toLocaleDateString('en-GB');
-  doc.setFontSize(12);
-  y += 8;
-  doc.text(`Estimate Number: ${estimateNumber}`, 20, y);
-  y += 6;
-  doc.text(`Date: ${today}`, 20, y);
-  y += 6;
-  doc.text(`Customer: ${quoteData.customerName}`, 20, y);
-  y += 6;
-  doc.text(`Phone: ${quoteData.customerPhone}`, 20, y);
-  y += 6;
-  doc.text(`Email: ${quoteData.customerEmail}`, 20, y);
-  y += 10;
+  const headerLines = [
+    `Estimate Number: ${estimateNumber}`,
+    `Date: ${today}`,
+    `Customer: ${quoteData.customerName}`,
+    `Phone: ${quoteData.customerPhone}`,
+    `Email: ${quoteData.customerEmail}`
+  ];
+  const headerHeight = headerLines.length * 6 + 14;
+  doc.setFillColor(230);
+  doc.rect(10, y, 190, headerHeight, 'F');
+  doc.setFontSize(14);
+  doc.setTextColor(...BRAND_BLUE);
+  doc.text('Repair Estimate', 12, y + 8);
+  doc.setFontSize(10);
+  doc.setTextColor(0,0,0);
+  let hy = y + 14;
+  headerLines.forEach(line => {
+    doc.text(line, 12, hy);
+    hy += 6;
+  });
+  y += headerHeight + 6;
 
   // table of items using autotable for dynamic heights
   const body = quoteData.items.map(it => [it.asset, it.model, it.part,
@@ -916,7 +925,8 @@ async function generatePDF(quoteData) {
     body,
     startY: y,
     styles: { lineColor: [150,150,150], lineWidth: 0.1, fontSize: 11 },
-    headStyles: { fillColor: 230, textColor: 0, fontStyle: 'bold', halign: 'center' },
+    headStyles: { fillColor: BRAND_BLUE, textColor: 255, fontStyle: 'bold', halign: 'center' },
+    bodyStyles: { textColor: 0 },
     margin: { left: 20, right: 10 },
     tableWidth: 170
   });
@@ -939,11 +949,22 @@ async function generatePDF(quoteData) {
   const pageHeight = doc.internal.pageSize.getHeight();
   const footerY = pageHeight - 15;
   doc.setFontSize(8);
-  doc.setTextColor(...ACCENT_ORANGE);
-  const footer = `${COMPANY_NAME} | ${COMPANY_ADDRESS} | ${COMPANY_CONTACT} | ${COMPANY_EMAIL}`;
-  doc.text(footer, doc.internal.pageSize.getWidth() / 2, footerY, { align: 'center' });
-  doc.setTextColor(0,0,0);
-  doc.text(`${COMPANY_REG} ${COMPANY_VAT}`, doc.internal.pageSize.getWidth() / 2, footerY + 5, { align: 'center' });
+  const centerX = doc.internal.pageSize.getWidth() / 2;
+  const footerSegments = [
+    { text: `${COMPANY_NAME} | ${COMPANY_ADDRESS} | `, color: BRAND_BLUE },
+    { text: COMPANY_CONTACT, color: ACCENT_ORANGE },
+    { text: ' | ', color: BRAND_BLUE },
+    { text: COMPANY_EMAIL, color: ACCENT_ORANGE }
+  ];
+  const totalWidth = footerSegments.reduce((w, s) => w + doc.getTextWidth(s.text), 0);
+  let fx = centerX - totalWidth / 2;
+  footerSegments.forEach(seg => {
+    doc.setTextColor(...seg.color);
+    doc.text(seg.text, fx, footerY);
+    fx += doc.getTextWidth(seg.text);
+  });
+  doc.setTextColor(...BRAND_BLUE);
+  doc.text(`${COMPANY_REG} ${COMPANY_VAT}`, centerX, footerY + 5, { align: 'center' });
 
   doc.save(`NHM_Estimate_${estimateNumber}.pdf`);
 }
@@ -1042,18 +1063,22 @@ async function generateSalesPDF() {
   // company info tile aligned right
   const infoX = 110;
   const infoWidth = 90;
+  const infoLines = [
+    COMPANY_NAME,
+    ...COMPANY_ADDRESS.split(', '),
+    COMPANY_CONTACT,
+    COMPANY_EMAIL
+  ];
+  const infoLineHeight = 4;
+  const infoHeight = infoLines.length * infoLineHeight + 4;
   doc.setFillColor(230);
-  doc.rect(infoX, 10, infoWidth, 25, 'F');
-  doc.setFontSize(11);
+  doc.rect(infoX, 10, infoWidth, infoHeight, 'F');
+  doc.setFontSize(9);
   doc.setFont(undefined, 'bold');
-  let tY = 15;
-  [COMPANY_NAME,
-   ...COMPANY_ADDRESS.split(', '),
-   COMPANY_CONTACT,
-   COMPANY_EMAIL
-  ].forEach(line => {
+  let tY = 12;
+  infoLines.forEach(line => {
     doc.text(line, infoX + 2, tY);
-    tY += 5;
+    tY += infoLineHeight;
   });
   doc.setFont(undefined, 'normal');
   y = Math.max(y, tY) + 4;
@@ -1159,11 +1184,22 @@ async function generateSalesPDF() {
   const pageHeight = doc.internal.pageSize.getHeight();
   const footerY = pageHeight - 15;
   doc.setFontSize(8);
-  doc.setTextColor(...ACCENT_ORANGE);
-  const footer = `${COMPANY_NAME} | ${COMPANY_ADDRESS} | ${COMPANY_CONTACT} | ${COMPANY_EMAIL}`;
-  doc.text(footer, doc.internal.pageSize.getWidth()/2, footerY, { align: 'center' });
-  doc.setTextColor(0,0,0);
-  doc.text('Limited Company registered in England and Wales with number 08462490 VAT number: 427637085', doc.internal.pageSize.getWidth()/2, footerY + 5, { align: 'center' });
+  const centerX = doc.internal.pageSize.getWidth() / 2;
+  const footerSegments = [
+    { text: `${COMPANY_NAME} | ${COMPANY_ADDRESS} | `, color: BRAND_BLUE },
+    { text: COMPANY_CONTACT, color: ACCENT_ORANGE },
+    { text: ' | ', color: BRAND_BLUE },
+    { text: COMPANY_EMAIL, color: ACCENT_ORANGE }
+  ];
+  const totalWidth = footerSegments.reduce((w, s) => w + doc.getTextWidth(s.text), 0);
+  let fx = centerX - totalWidth / 2;
+  footerSegments.forEach(seg => {
+    doc.setTextColor(...seg.color);
+    doc.text(seg.text, fx, footerY);
+    fx += doc.getTextWidth(seg.text);
+  });
+  doc.setTextColor(...BRAND_BLUE);
+  doc.text('Limited Company registered in England and Wales with number 08462490 VAT number: 427637085', centerX, footerY + 5, { align: 'center' });
 
   doc.save(`NHM_Sales_Quote_${quoteNo}.pdf`);
 }
