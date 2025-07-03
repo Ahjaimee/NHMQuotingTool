@@ -999,26 +999,145 @@ async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(16);
-  doc.text("NHM Sales Quote", 105, 10, { align: "center" });
 
-  const name = document.getElementById("salesCustomerName").value || "(No name)";
-  const quoteNo = document.getElementById("salesQuoteNumber").value || "(No #)";
+  const img = new Image();
+  img.src = 'nhm-logo.png';
+  try { await img.decode(); } catch(e) {}
+  doc.addImage(img, 'PNG', 10, 10, 30, 20);
+
+  const services = [
+    'Medical Equipment:',
+    'Sales',
+    'Service',
+    'Spares and repairs',
+    'Consultancy and technical support',
+    'Contract hire and loan',
+    'Storage'
+  ];
+  doc.setFontSize(9);
+  doc.setTextColor(...BRAND_BLUE);
+  let x = 45;
+  let y = 12;
+  services.forEach(line => { doc.text(line, x, y); y += 4; });
+
+  const company = [
+    'N H Maintenance Ltd',
+    'Consort House',
+    'Jubilee Road',
+    'Victoria Business Park',
+    'Burgess Hill',
+    'RH15 9TL',
+    'T: 01444 250350',
+    'E: admin@nhmaintenance.com',
+    'W: nhmaintenance.com'
+  ];
+  doc.setTextColor(0,0,0);
+  x = 120; y = 12;
+  company.forEach(line => { doc.text(line, x, y); y += 4; });
+  y += 4;
+
+  let quoteNo = document.getElementById('salesQuoteNumber').value.trim();
+  if (!quoteNo) {
+    const now = new Date();
+    quoteNo = 'Q' +
+      now.getFullYear().toString().slice(-2) +
+      String(now.getMonth()+1).padStart(2,'0') +
+      String(now.getDate()).padStart(2,'0') +
+      String(now.getHours()).padStart(2,'0') +
+      String(now.getMinutes()).padStart(2,'0') +
+      String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('salesQuoteNumber').value = quoteNo;
+  }
+
   doc.setFontSize(12);
-  doc.text(`Quote #: ${quoteNo}`, 10, 20);
-  doc.text(`Customer: ${name}`, 10, 30);
+  doc.setTextColor(...BRAND_BLUE);
+  doc.text(`Quotation: ${quoteNo}`, 10, y);
+  y += 8;
 
-  let y = 40;
+  function sectionHeader(title) {
+    doc.setFillColor(...BRAND_BLUE);
+    doc.setTextColor(255,255,255);
+    doc.rect(10, y, 190, 7, 'F');
+    doc.text(title, 12, y + 5);
+    doc.setTextColor(0,0,0);
+    y += 9;
+  }
+
+  sectionHeader('Customer Details');
+  doc.setFontSize(10);
+  const custName = document.getElementById('salesCustomerName').value || '';
+  const address = document.getElementById('salesCustomerAddress').value || '';
+  const custLines = [custName, ...address.split(/\n/)].filter(l => l);
+  custLines.forEach(line => { doc.text(line, 12, y); y += 5; });
+
+  sectionHeader('Quotation Details');
+  const today = new Date().toLocaleDateString('en-GB');
+  const preparedBy = document.getElementById('salesPreparedBy').value || '';
+  doc.text(`Date: ${today}`, 12, y);
+  doc.text(`Prepared by: ${preparedBy}`, 100, y);
+  y += 7;
+
+  sectionHeader('Job Description / Notes');
+  const notes = document.getElementById('salesNotes').value || '';
+  notes.split(/\n/).forEach(line => { doc.text(line, 12, y); y += 5; });
+
+  sectionHeader('Quotation Lines');
+  const vatExempt = document.getElementById('vatExemptSales').checked;
+  const carriage = overrideCarriage.checked ? parseFloat(customCarriage.value) || 0 : SALES_CARRIAGE;
+  let subtotal = 0;
+  const body = [];
   salesItems.forEach(item => {
     let sell = item.price;
     if (item.setupSelected) sell += item.setupCost;
     if (item.commissionSelected) sell += item.commissionCost;
     const total = sell * item.qty;
-    doc.text(item.desc, 10, y);
-    doc.text(`£${total.toFixed(2)}`, 190, y, { align: "right" });
-    y += 8;
+    subtotal += total;
+    body.push([item.desc, String(item.qty), `£${sell.toFixed(2)}`, `£${total.toFixed(2)}`]);
+  });
+  subtotal += carriage;
+  if (salesItems.length > 0) {
+    body.push(['Carriage', '', '', `£${carriage.toFixed(2)}`]);
+  }
+
+  doc.autoTable({
+    head: [['Description', 'Quantity', 'Sell', 'Total (Ex VAT)']],
+    body,
+    startY: y,
+    styles: { lineColor: [150,150,150], lineWidth: 0.1 },
+    headStyles: { fillColor: BRAND_BLUE, textColor: 255, halign: 'center' },
+    margin: { left: 10, right: 10 },
+    tableWidth: 190
   });
 
-  doc.save("NHM_Sales_Quote.pdf");
+  y = doc.lastAutoTable.finalY + 6;
+  const vat = vatExempt ? 0 : subtotal * 0.2;
+  const grandTotal = subtotal + vat;
+
+  doc.autoTable({
+    body: [
+      ['Total Excluding VAT:', `£${subtotal.toFixed(2)}`],
+      ['VAT Amount:', `£${vat.toFixed(2)}`],
+      ['Grand Total:', `£${grandTotal.toFixed(2)}`]
+    ],
+    startY: y,
+    theme: 'plain',
+    styles: { lineColor: [150,150,150], lineWidth: 0.1 },
+    columnStyles: { 0: { halign: 'right' }, 1: { halign: 'right' } },
+    margin: { left: 120, right: 10 }
+  });
+
+  y = doc.lastAutoTable.finalY + 6;
+  doc.setFontSize(9);
+  if (vatExempt) {
+    doc.text('VAT Exempt sale', 10, y);
+    y += 4;
+  }
+
+  doc.setFontSize(8);
+  doc.text('N H Maintenance Ltd', 10, y);
+  doc.text('Consort House, Jubilee Road, Victoria Business Park, Burgess Hill, RH15 9TL 01444 250 350 sales@nhmaintenance.com www.nhmaintenance.com', 10, y + 5);
+  doc.text('Limited Company registered in England and Wales with number 08462490 VAT number: 427637085', 10, y + 10);
+
+  doc.save(`NHM_Sales_Quote_${quoteNo}.pdf`);
 }
 
