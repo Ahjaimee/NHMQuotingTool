@@ -1015,7 +1015,7 @@ async function generatePDF(quoteData) {
 
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
-  const discLines = doc.splitTextToSize(disclaimer, pageWidth - 10);
+  const discLines = doc.splitTextToSize(disclaimer, pageWidth - 20);
   const discHeight = discLines.length * 5 + 5;
   let discY = footerY - discHeight - 2;
   doc.setFontSize(10);
@@ -1023,7 +1023,7 @@ async function generatePDF(quoteData) {
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', pageWidth / 2, discY, { align: 'center' });
   doc.setFont(undefined, 'normal');
-  doc.text(discLines, 5, discY + 5);
+  doc.text(discLines, 10, discY + 5);
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
@@ -1264,7 +1264,7 @@ async function generateSalesPDF() {
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
   const pageWidth = doc.internal.pageSize.getWidth();
-  const discLines = doc.splitTextToSize(disclaimer, pageWidth - 10);
+  const discLines = doc.splitTextToSize(disclaimer, pageWidth - 20);
   const discHeight = discLines.length * 5 + 5;
   let discY = footerY - discHeight - 2;
   doc.setFontSize(10);
@@ -1272,7 +1272,7 @@ async function generateSalesPDF() {
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', pageWidth / 2, discY, { align: 'center' });
   doc.setFont(undefined, 'normal');
-  doc.text(discLines, 5, discY + 5);
+  doc.text(discLines, 10, discY + 5);
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
