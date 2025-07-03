@@ -50,6 +50,28 @@ const COMPANY_VAT = "VAT number: 427637085";
 let quoteItems = [];
 let salesItems = [];
 
+// Helper to render fully justified paragraphs in PDFs
+function drawJustifiedText(doc, lines, x, y, width, lineHeight) {
+  lines.forEach((line, idx) => {
+    const words = line.trim().split(/\s+/);
+    if (words.length <= 1 || idx === lines.length - 1) {
+      doc.text(line.trim(), x, y);
+    } else {
+      const lineWidth = words.reduce((w, word) => w + doc.getTextWidth(word), 0);
+      const gap = (width - lineWidth) / (words.length - 1);
+      let cx = x;
+      words.forEach((word, i) => {
+        doc.text(word, cx, y);
+        if (i < words.length - 1) {
+          cx += doc.getTextWidth(word) + gap;
+        }
+      });
+    }
+    y += lineHeight;
+  });
+  return y;
+}
+
 // Track the optional charges for the currently selected sales item
 let currentSetupCost = 0;
 let currentCommissionCost = 0;
@@ -1021,9 +1043,9 @@ async function generatePDF(quoteData) {
   doc.setFontSize(10);
   doc.setTextColor(...BRAND_BLUE);
   doc.setFont(undefined, 'bold');
-  doc.text('Disclaimer:', pageWidth / 2, discY, { align: 'center' });
+  doc.text('Disclaimer:', 10, discY);
   doc.setFont(undefined, 'normal');
-  doc.text(discLines, 10, discY + 5);
+  drawJustifiedText(doc, discLines, 10, discY + 5, pageWidth - 20, 5);
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
@@ -1270,9 +1292,9 @@ async function generateSalesPDF() {
   doc.setFontSize(10);
   doc.setTextColor(...BRAND_BLUE);
   doc.setFont(undefined, 'bold');
-  doc.text('Disclaimer:', pageWidth / 2, discY, { align: 'center' });
+  doc.text('Disclaimer:', 10, discY);
   doc.setFont(undefined, 'normal');
-  doc.text(discLines, 10, discY + 5);
+  drawJustifiedText(doc, discLines, 10, discY + 5, pageWidth - 20, 5);
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
