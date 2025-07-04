@@ -1045,7 +1045,11 @@ async function generatePDF(quoteData) {
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
   doc.setFont(undefined, 'normal');
-  drawJustifiedText(doc, discLines, 10, discY + 5, pageWidth - 20, 5);
+  let lineY = discY + 5;
+  discLines.forEach(line => {
+    doc.text(line, 10, lineY, { maxWidth: pageWidth - 20 });
+    lineY += 5;
+  });
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
@@ -1294,7 +1298,11 @@ async function generateSalesPDF() {
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
   doc.setFont(undefined, 'normal');
-  drawJustifiedText(doc, discLines, 10, discY + 5, pageWidth - 20, 5);
+  let lineY = discY + 5;
+  discLines.forEach(line => {
+    doc.text(line, 10, lineY, { maxWidth: pageWidth - 20 });
+    lineY += 5;
+  });
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
