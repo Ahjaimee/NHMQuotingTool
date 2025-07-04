@@ -52,20 +52,26 @@ let salesItems = [];
 
 // Helper to render fully justified paragraphs in PDFs
 function drawJustifiedText(doc, lines, x, y, width, lineHeight) {
+  const spaceWidth = doc.getTextWidth(" ");
   lines.forEach((line, idx) => {
     const words = line.trim().split(/\s+/);
     if (words.length <= 1 || idx === lines.length - 1) {
       doc.text(line.trim(), x, y);
     } else {
       const lineWidth = words.reduce((w, word) => w + doc.getTextWidth(word), 0);
-      const gap = (width - lineWidth) / (words.length - 1);
-      let cx = x;
-      words.forEach((word, i) => {
-        doc.text(word, cx, y);
-        if (i < words.length - 1) {
-          cx += doc.getTextWidth(word) + gap;
-        }
-      });
+      const gapCount = words.length - 1;
+      let gap = (width - lineWidth) / gapCount;
+      if (gap > spaceWidth * 3) {
+        doc.text(line.trim(), x, y);
+      } else {
+        let cx = x;
+        words.forEach((word, i) => {
+          doc.text(word, cx, y);
+          if (i < gapCount) {
+            cx += doc.getTextWidth(word) + gap;
+          }
+        });
+      }
     }
     y += lineHeight;
   });
@@ -1045,11 +1051,7 @@ async function generatePDF(quoteData) {
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
   doc.setFont(undefined, 'normal');
-  let lineY = discY + 5;
-  discLines.forEach(line => {
-    doc.text(line, 10, lineY, { maxWidth: pageWidth - 20 });
-    lineY += 5;
-  });
+  drawJustifiedText(doc, discLines, 10, discY + 5, pageWidth - 20, 5);
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
@@ -1298,11 +1300,7 @@ async function generateSalesPDF() {
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
   doc.setFont(undefined, 'normal');
-  let lineY = discY + 5;
-  discLines.forEach(line => {
-    doc.text(line, 10, lineY, { maxWidth: pageWidth - 20 });
-    lineY += 5;
-  });
+  drawJustifiedText(doc, discLines, 10, discY + 5, pageWidth - 20, 5);
 
   doc.setFontSize(8);
   const centerX = doc.internal.pageSize.getWidth() / 2;
