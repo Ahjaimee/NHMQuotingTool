@@ -4,26 +4,26 @@
       "Marsden": {
         "M-200": {
           "Standard": {
+            "Castors & Wheels": {
+              "Replace broken or worn castor.": {
+                "labour_hours": 0.3,
+                "material_cost": 59.61,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
+            },
             "Batteries": {
-              "Install replacement battery in M-200 Chair Scale.": {
-                "labour_hours": 0.2,
-                "material_cost": 70.94,
-                "part_number": "SPX141-0003",
-                "description": "Install replacement battery in M-200 Chair Scale."
-              },
               "Replace battery.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
                 "description": "Replace battery."
-              }
-            },
-            "Castors & Wheels": {
-              "Replace broken or worn castor.": {
+              },
+              "Install replacement battery in M-200 Chair Scale.": {
                 "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor."
+                "material_cost": 70.94,
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in M-200 Chair Scale."
               }
             },
             "Casing": {
@@ -34,13 +34,13 @@
                 "description": "Replace battery compartment cover."
               },
               "Replace bottom control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
                 "description": "Replace bottom control housing."
               },
               "Replace top control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
                 "description": "Replace top control housing."
@@ -50,23 +50,9 @@
         },
         "M-210": {
           "Standard": {
-            "Batteries": {
-              "Install replacement battery in M-210 Chair Scale.": {
-                "labour_hours": 0.2,
-                "material_cost": 70.94,
-                "part_number": "SPX141-0003",
-                "description": "Install replacement battery in M-210 Chair Scale."
-              },
-              "Replace battery.": {
-                "labour_hours": 0.2,
-                "material_cost": 70.94,
-                "part_number": "SPX141-0004",
-                "description": "Replace battery."
-              }
-            },
             "Castors & Wheels": {
               "Replace broken or worn castor.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.3,
                 "material_cost": 59.61,
                 "part_number": "SPX074-0010",
                 "description": "Replace broken or worn castor."
@@ -74,10 +60,24 @@
             },
             "Accessories": {
               "Replace foam arm pad.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.3,
                 "material_cost": 27.43,
                 "part_number": "SPX141-0005",
                 "description": "Replace foam arm pad."
+              }
+            },
+            "Batteries": {
+              "Replace battery.": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0004",
+                "description": "Replace battery."
+              },
+              "Install replacement battery in M-210 Chair Scale.": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in M-210 Chair Scale."
               }
             },
             "Casing": {
@@ -88,13 +88,13 @@
                 "description": "Replace battery compartment cover."
               },
               "Replace bottom control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
                 "description": "Replace bottom control housing."
               },
               "Replace top control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
                 "description": "Replace top control housing."
@@ -104,13 +104,15 @@
         },
         "M-225": {
           "Standard": {
+            "Castors & Wheels": {
+              "Replace broken or worn castor.": {
+                "labour_hours": 0.0,
+                "material_cost": 59.61,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
+            },
             "Batteries": {
-              "Install replacement battery in M-225 Chair Scale.": {
-                "labour_hours": 0.2,
-                "material_cost": 70.94,
-                "part_number": "SPX141-0003",
-                "description": "Install replacement battery in M-225 Chair Scale."
-              },
               "Replace battery.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
@@ -118,52 +120,24 @@
                 "description": "Replace battery."
               }
             },
-            "Castors & Wheels": {
-              "Replace broken or worn castor.": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor."
-              }
-            },
             "Casing": {
               "Replace battery compartment cover.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 18.57,
                 "part_number": "SPX141-0006",
                 "description": "Replace battery compartment cover."
               },
               "Replace bottom control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
                 "description": "Replace bottom control housing."
               },
               "Replace top control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.0,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
                 "description": "Replace top control housing."
-              }
-            }
-          }
-        },
-        "MPDC-250": {
-          "Standard": {
-            "Batteries": {
-              "Install replacement battery in MPDC-250 Chair Scale.": {
-                "labour_hours": 0.2,
-                "material_cost": 70.94,
-                "part_number": "SPX141-0003",
-                "description": "Install replacement battery in MPDC-250 Chair Scale."
-              }
-            },
-            "Castors & Wheels": {
-              "Replace broken or worn castor.": {
-                "labour_hours": 0.2,
-                "material_cost": 59.61,
-                "part_number": "SPX074-0010",
-                "description": "Replace broken or worn castor."
               }
             }
           }
@@ -172,13 +146,13 @@
           "Standard": {
             "Batteries": {
               "Install replacement long-connection battery in M-250 Chair Scale.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.3,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
                 "description": "Install replacement long-connection battery in M-250 Chair Scale."
               },
               "Replace battery.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
                 "description": "Replace battery."
@@ -186,7 +160,7 @@
             },
             "Castors & Wheels": {
               "Replace broken or worn castor.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.0,
                 "material_cost": 59.61,
                 "part_number": "SPX074-0010",
                 "description": "Replace broken or worn castor."
@@ -194,22 +168,34 @@
             },
             "Casing": {
               "Replace battery compartment cover.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.5,
                 "material_cost": 18.57,
                 "part_number": "SPX141-0006",
                 "description": "Replace battery compartment cover."
               },
               "Replace bottom control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.0,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0012",
                 "description": "Replace bottom control housing."
               },
               "Replace top control housing.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.0,
                 "material_cost": 85.14,
                 "part_number": "SPX141-0011",
                 "description": "Replace top control housing."
+              }
+            }
+          }
+        },
+        "M-610": {
+          "Standard": {
+            "Batteries": {
+              "Install replacement long-connection battery in M-610 Hoist Weigher.": {
+                "labour_hours": 0.2,
+                "material_cost": 70.94,
+                "part_number": "SPX141-0004",
+                "description": "Install replacement long-connection battery in M-610 Hoist Weigher."
               }
             }
           }
@@ -226,14 +212,22 @@
             }
           }
         },
-        "M-610": {
+        "MPDC-250": {
           "Standard": {
+            "Castors & Wheels": {
+              "Replace broken or worn castor.": {
+                "labour_hours": 0.0,
+                "material_cost": 59.61,
+                "part_number": "SPX074-0010",
+                "description": "Replace broken or worn castor."
+              }
+            },
             "Batteries": {
-              "Install replacement long-connection battery in M-610 Hoist Weigher.": {
+              "Install replacement battery in MPDC-250 Chair Scale.": {
                 "labour_hours": 0.2,
                 "material_cost": 70.94,
-                "part_number": "SPX141-0004",
-                "description": "Install replacement long-connection battery in M-610 Hoist Weigher."
+                "part_number": "SPX141-0003",
+                "description": "Install replacement battery in MPDC-250 Chair Scale."
               }
             }
           }
@@ -258,7 +252,7 @@
           "Standard": {
             "Batteries": {
               "Install replacement long-connection battery in M-615 Hoist Weigher.": {
-                "labour_hours": 0.2,
+                "labour_hours": 0.3,
                 "material_cost": 70.94,
                 "part_number": "SPX141-0004",
                 "description": "Install replacement long-connection battery in M-615 Hoist Weigher."
@@ -272,16 +266,20 @@
   "sales": {
     "Chair Scale": {
       "Marsden": {
+        "M-200": {
+          "Standard": {
+            "Weighing Equipment": {
+              "Supply chair scale.": {
+                "cost": 0,
+                "price": 830.96,
+                "part_number": "EQ141-0001",
+                "description": "Supply chair scale."
+              }
+            }
+          }
+        },
         "M-210": {
           "Standard": {
-            "Main Unit": {
-              "Equipment Sales": {
-                "cost": 0,
-                "price": 726.96,
-                "part_number": "EQ141-0002",
-                "description": "Equipment Sales"
-              }
-            },
             "Weighing Equipment": {
               "Supply professional chair scale.": {
                 "cost": 0,
@@ -289,25 +287,33 @@
                 "part_number": "EQ141-0002",
                 "description": "Supply professional chair scale."
               }
+            },
+            "Main Unit": {
+              "Equipment Sales": {
+                "cost": 0,
+                "price": 726.96,
+                "part_number": "EQ141-0002",
+                "description": "Equipment Sales"
+              }
             }
           }
         },
         "M-225": {
           "Standard": {
-            "Main Unit": {
-              "Equipment Sales": {
-                "cost": 0,
-                "price": 624.0,
-                "part_number": "EQ141-0003",
-                "description": "Equipment Sales"
-              }
-            },
             "Weighing Equipment": {
               "Supply chair scale.": {
                 "cost": 0,
                 "price": 624.0,
                 "part_number": "EQ141-0003",
                 "description": "Supply chair scale."
+              }
+            },
+            "Main Unit": {
+              "Equipment Sales": {
+                "cost": 0,
+                "price": 624.0,
+                "part_number": "EQ141-0003",
+                "description": "Equipment Sales"
               }
             }
           }
@@ -320,18 +326,6 @@
                 "price": 1180.4,
                 "part_number": "EQ141-0010",
                 "description": "Supply premium chair scale."
-              }
-            }
-          }
-        },
-        "M-200": {
-          "Standard": {
-            "Weighing Equipment": {
-              "Supply chair scale.": {
-                "cost": 0,
-                "price": 830.96,
-                "part_number": "EQ141-0001",
-                "description": "Supply chair scale."
               }
             }
           }
