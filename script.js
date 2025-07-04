@@ -1058,7 +1058,7 @@ async function generatePDF(quoteData) {
   doc.setFontSize(10);
   const discLines = doc.splitTextToSize(disclaimer, pageWidth - 20);
   const discHeight = discLines.length * 5 + 5;
-  let discY = footerY - discHeight - 2;
+  let discY = footerY - discHeight - 10; // move disclaimer up slightly
   doc.setTextColor(...BRAND_BLUE);
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
@@ -1155,6 +1155,7 @@ async function generateSalesPDF() {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   doc.setFont("helvetica", "normal");
+  const pageWidth = doc.internal.pageSize.getWidth();
 
   const img = new Image();
   img.src = 'nhm-logo.png';
@@ -1244,7 +1245,16 @@ async function generateSalesPDF() {
 
   sectionHeader('Job Description / Notes');
   const notes = document.getElementById('salesNotes').value || '';
-  notes.split(/\n/).forEach(line => { doc.text(line, 12, y); y += 5; });
+  if (notes) {
+    const noteLines = doc.splitTextToSize(notes, pageWidth - 20);
+    const noteHeight = noteLines.length * 5 + 6;
+    doc.setFillColor(255);
+    doc.rect(10, y, 190, noteHeight, 'F');
+    doc.setFontSize(11);
+    let ny = y + 5;
+    noteLines.forEach(line => { doc.text(line, 12, ny); ny += 5; });
+    y += noteHeight + 4;
+  }
 
   sectionHeader('Quotation Lines');
   const vatExempt = document.getElementById('vatExemptSales').checked;
@@ -1304,10 +1314,9 @@ async function generateSalesPDF() {
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
   doc.setFontSize(10);
-  const pageWidth = doc.internal.pageSize.getWidth();
   const discLines = doc.splitTextToSize(disclaimer, pageWidth - 20);
   const discHeight = discLines.length * 5 + 5;
-  let discY = footerY - discHeight - 2;
+  let discY = footerY - discHeight - 10; // move disclaimer up slightly
   doc.setTextColor(...BRAND_BLUE);
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
