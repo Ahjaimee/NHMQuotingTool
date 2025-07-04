@@ -842,6 +842,7 @@ function buildQuoteData() {
   const customerName = document.getElementById("customerName").value || "";
   const customerPhone = document.getElementById("customerPhone").value || "";
   const customerEmail = document.getElementById("customerEmail").value || "";
+  const workDesc = document.getElementById("workDesc").value.trim();
   const supplyOnly = document.getElementById("supplyOnly").checked;
   const vatExempt = document.getElementById("vatExempt").checked;
   const overrideLabour = document.getElementById("overrideLabour").checked;
@@ -887,7 +888,7 @@ function buildQuoteData() {
   }
   const vat = vatExempt ? 0 : subtotal * 0.2;
   const total = subtotal + vat;
-  return { customerName, customerPhone, customerEmail, items, subtotal, vat, total };
+  return { customerName, customerPhone, customerEmail, workDesc, items, subtotal, vat, total };
 }
 
 async function generatePDF(quoteData) {
@@ -1008,6 +1009,17 @@ async function generatePDF(quoteData) {
     hy += 6;
   });
   y += headerHeight + 6;
+
+  if (quoteData.workDesc) {
+    const descLines = doc.splitTextToSize(quoteData.workDesc, pageWidth - 20);
+    const descHeight = descLines.length * 5 + 6;
+    doc.setFillColor(255);
+    doc.rect(10, y, 190, descHeight, 'F');
+    doc.setFontSize(11);
+    let dy = y + 5;
+    descLines.forEach(line => { doc.text(line, 12, dy); dy += 5; });
+    y += descHeight + 4;
+  }
 
   // table of items using autotable for dynamic heights
   const body = quoteData.items.map(it => [it.asset, it.model, it.part,
