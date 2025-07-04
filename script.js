@@ -1043,10 +1043,10 @@ async function generatePDF(quoteData) {
 
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
+  doc.setFontSize(10);
   const discLines = doc.splitTextToSize(disclaimer, pageWidth - 20);
   const discHeight = discLines.length * 5 + 5;
   let discY = footerY - discHeight - 2;
-  doc.setFontSize(10);
   doc.setTextColor(...BRAND_BLUE);
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
@@ -1291,11 +1291,11 @@ async function generateSalesPDF() {
 
   const disclaimer =
     'This quotation is provided as a good-faith estimate for the repair of equipment and reflects approximately 95% of the anticipated total cost. Please note that this estimate is subject to change upon further inspection, parts availability, and during the formal approval process. No work will be carried out without your full knowledge and explicit approval of any changes to cost or scope. This estimate is not a final invoice and does not constitute a binding agreement until formally accepted.';
+  doc.setFontSize(10);
   const pageWidth = doc.internal.pageSize.getWidth();
   const discLines = doc.splitTextToSize(disclaimer, pageWidth - 20);
   const discHeight = discLines.length * 5 + 5;
   let discY = footerY - discHeight - 2;
-  doc.setFontSize(10);
   doc.setTextColor(...BRAND_BLUE);
   doc.setFont(undefined, 'bold');
   doc.text('Disclaimer:', 10, discY);
