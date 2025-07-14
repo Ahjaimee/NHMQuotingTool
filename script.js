@@ -89,8 +89,15 @@ let salesAssetChoices, salesMakeChoices, salesModelChoices,
     salesVariantChoices, salesCategoryChoices, salesItemChoices;
 let setupLabel, commissionLabel, includeSetup, includeCommission;
 let overrideCarriage, customCarriage;
+let popup, popupText;
 
 document.addEventListener("DOMContentLoaded", () => {
+  popup = document.getElementById("repairPopup");
+  popupText = document.getElementById("popupText");
+  document.getElementById("popupClose").addEventListener("click", () => {
+    popup.classList.add("hidden");
+  });
+
   assetChoices = new Choices("#assetSelect", {
     searchEnabled: true,
     shouldSort: false,
@@ -275,6 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const make = document.getElementById("makeSelect").value;
     const model = document.getElementById("modelSelect").value;
     const variant = document.getElementById("variantSelect").value;
+    const category = document.getElementById("categorySelect").value;
     const repair = document.getElementById("repairSelect").value;
     const info = data[asset]?.[make]?.[model]?.[variant]?.[repair];
     const labourInput = document.getElementById("labourHours");
@@ -290,6 +298,20 @@ document.addEventListener("DOMContentLoaded", () => {
       descBox.classList.remove("hidden");
     } else {
       descBox.classList.add("hidden");
+    }
+
+    if (
+      asset === "Chair Scale" &&
+      make === "Marsden" &&
+      model === "M-200" &&
+      variant === "Standard" &&
+      category === "Casing" &&
+      repair === "Replace battery compartment cover."
+    ) {
+      popupText.textContent = "You may need to consider adding xyz with this repair";
+      popup.classList.remove("hidden");
+    } else {
+      popup.classList.add("hidden");
     }
     document.getElementById("repairQty").value = 1;
     document.getElementById("labourSection").classList.remove("hidden");
@@ -746,6 +768,7 @@ function resetRepairFields() {
   variantChoices.clearStore();
   categoryChoices.clearStore();
   repairChoices.clearStore();
+  if (popup) popup.classList.add("hidden");
 }
 
 function renderQuote() {
