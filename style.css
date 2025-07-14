@@ -409,3 +409,24 @@ input[type="checkbox"]:active {
   box-sizing: border-box;
 }
 
+.popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 260px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  padding: 12px 16px;
+  z-index: 1000;
+}
+
+.popup .close-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
