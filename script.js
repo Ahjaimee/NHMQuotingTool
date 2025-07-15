@@ -78,6 +78,12 @@ function drawJustifiedText(doc, lines, x, y, width, lineHeight) {
   return y;
 }
 
+function showWithFade(el) {
+  el.classList.remove("hidden");
+  el.classList.add("fade-in");
+  setTimeout(() => el.classList.remove("fade-in"), 300);
+}
+
 // Track the optional charges for the currently selected sales item
 let currentSetupCost = 0;
 let currentCommissionCost = 0;
@@ -206,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("repairTab").classList.add("active");
     document.getElementById("salesTab").classList.remove("active");
     document.getElementById("toolTitle").textContent = "Repair Estimate Tool";
-    document.getElementById("quoteForm").classList.remove("hidden");
+    showWithFade(document.getElementById("quoteForm"));
     document.getElementById("quoteSection").classList.add("hidden");
     document.getElementById("salesForm").classList.add("hidden");
     document.getElementById("salesQuoteSection").classList.add("hidden");
@@ -218,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("toolTitle").textContent = "Sales Order Quote";
     document.getElementById("quoteForm").classList.add("hidden");
     document.getElementById("quoteSection").classList.add("hidden");
-    document.getElementById("salesForm").classList.remove("hidden");
+    showWithFade(document.getElementById("salesForm"));
     document.getElementById("salesQuoteSection").classList.add("hidden");
   });
 
