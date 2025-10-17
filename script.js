@@ -32,6 +32,12 @@ const DEFAULT_COMMISSION_COST = 50;
 // Cost and default selling price for sales items
 let salesData = {};
 
+function applyLoadedData(json) {
+  if (!json || typeof json !== 'object') return;
+  data = json.repairs || {};
+  salesData = json.sales || {};
+}
+
 // Padding used for all PDF tables for consistent styling
 // Reduced from 6 to make table headers shorter
 const TABLE_PADDING = 4;
@@ -195,15 +201,24 @@ document.addEventListener("DOMContentLoaded", () => {
     overrideCarriage = document.getElementById("overrideCarriage");
     customCarriage = document.getElementById("customCarriage");
 
+  const embeddedData = window.NHM_EMBEDDED_DATA;
   fetch('data.json')
-    .then(r => r.json())
-    .then(json => {
-      data = json.repairs || {};
-      salesData = json.sales || {};
-      populateAssets();
-      populateSalesAssets();
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      return response.json();
     })
-    .catch(() => {
+    .then(json => {
+      applyLoadedData(json);
+    })
+    .catch(err => {
+      console.warn('Failed to load data.json, using embedded fallback data if available.', err);
+      if (embeddedData) {
+        applyLoadedData(embeddedData);
+      }
+    })
+    .finally(() => {
       populateAssets();
       populateSalesAssets();
     });
